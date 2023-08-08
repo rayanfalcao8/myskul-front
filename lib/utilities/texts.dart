@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class TextHelper {
 
   //BOLD
-  
+  final xxlb = const TextStyle(
+      fontSize: 33, fontWeight: FontWeight.w900, color: Color(0xff000000));    
+
   final h1b = const TextStyle(
-      fontSize: 20, fontWeight: FontWeight.w900, color: Color(0xff000000));
+      fontSize: 20, fontWeight: FontWeight.w900, color: Color(0xff000000)); 
 
   late var h2b = h1b.copyWith(fontSize: 18);
 
@@ -16,6 +18,8 @@ class TextHelper {
   late var bodyTextb = h1b.copyWith(fontSize: 12);
 
   //REGULAR
+final xxlr = const TextStyle(
+      fontSize: 35, fontWeight: FontWeight.w500, color: Color(0xff000000));    
 
   final h1r = const TextStyle(
       fontSize: 20, fontWeight: FontWeight.w500, color: Color(0xff000000));
@@ -29,6 +33,9 @@ class TextHelper {
   late var bodyTextr = h1r.copyWith(fontSize: 12);
 
   //LIGHT
+
+  final xxll = const TextStyle(
+      fontSize: 35, fontWeight: FontWeight.w300, color: Color(0xff000000));    
 
   final h1l = const TextStyle(
       fontSize: 20, fontWeight: FontWeight.w300, color: Color(0xff000000));
