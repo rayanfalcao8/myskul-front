@@ -3,10 +3,10 @@ import 'package:myskul/utilities/colors.dart';
 import 'screens/splash.dart';
 
 void main() {
-  runApp(Home());
+  runApp(Home1());
 }
 
-class Home extends StatelessWidget {
+class Home1 extends StatelessWidget {
 
   Map<int, Color> color = {
     50: ColorHelper().green,

@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/components/genderBox.dart';
 import 'package:myskul/components/newInputInter.dart';
 import 'package:myskul/screens/auth/login.dart';
+import 'package:myskul/screens/auth/terms.dart';
+import 'package:myskul/screens/auth/domain.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
@@ -51,12 +53,12 @@ class _RegisterState extends State<Register> {
             children: [
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 1.4,
+                height: MediaQuery.of(context).size.height * 2,
                 decoration: BoxDecoration(
                     color: couleurs.white.withOpacity(0.5),
                     image: DecorationImage(
                         image: AssetImage("assets/images/math.png"),
-                        opacity: 0.08,
+                        opacity: 0.04,
                         fit: BoxFit.cover)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -167,10 +169,12 @@ class _RegisterState extends State<Register> {
                               textes: textes,
                               condition: 0,
                               gender: "HOMME",
+                              width: 140,
+                              height: 80,
                             ),
                           ),
                           SizedBox(
-                            width: 10,
+                            width: 20,
                           ),
                           GestureDetector(
                             onTap: () {
@@ -186,6 +190,8 @@ class _RegisterState extends State<Register> {
                               textes: textes,
                               condition: 1,
                               gender: "FEMME",
+                              width: 140,
+                              height: 80,
                             ),
                           )
                         ],
@@ -215,29 +221,46 @@ class _RegisterState extends State<Register> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Checkbox(value: checkbox, onChanged: (v){
-                            setState(() {
-                              checkbox=v;
-                            });
-                          }),
+                          Checkbox(
+                              value: checkbox,
+                              onChanged: (v) {
+                                setState(() {
+                                  checkbox = v;
+                                });
+                              }),
                           Row(
                             children: [
                               Text(
                                 "J’ai lu et j’accepte",
                                 style: textes.h4l,
                               ),
-                              Text(" les Termes et conditions",
-                                  style: textes.h4l
-                                      .copyWith(color: couleurs.green))
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return Term();
+                                  }));
+                                },
+                                child: Text(" les Termes et conditions",
+                                    style: textes.h4l
+                                        .copyWith(color: couleurs.green)),
+                              )
                             ],
                           ),
                         ],
                       ),
                       NewButtonG(
-                          textes: textes,
-                          couleurs: couleurs,
-                          icones: icones,
-                          text: "S'ENGREGISTRER"),
+                        textes: textes,
+                        couleurs: couleurs,
+                        icones: icones,
+                        text: "S'ENGREGISTRER",
+                        function: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return Domain();
+                          }));
+                        },
+                      ),
                       SizedBox(
                         height: 30,
                       ),

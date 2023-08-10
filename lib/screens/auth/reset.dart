@@ -7,20 +7,20 @@ import 'package:myskul/utilities/texts.dart';
 import 'package:myskul/components/newButtonG.dart';
 import 'package:myskul/components/newInput.dart';
 
-class Login extends StatelessWidget {
+class Reset extends StatelessWidget {
   var couleurs = ColorHelper();
   var textes = TextHelper();
   var icones = IconHelper();
   var controller = TextEditingController();
   var onSubmit = (String a) {};
-  var keyboardType = TextInputType.emailAddress;
-  var hintText = "Adresse Email";
-  var prefixIcon = Icon(Icons.person);
+  var keyboardType = TextInputType.visiblePassword;
+  var hintText = "Mot de passe";
+  var prefixIcon = Icon(Icons.lock);
 
   var controller2 = TextEditingController();
   var onSubmit2 = (String a) {};
   var keyboardType2 = TextInputType.visiblePassword;
-  var hintText2 = "Mot de passe";
+  var hintText2 = "Confirmation du mot de passe";
   var prefixIcon2 = Icon(Icons.lock);
 
   @override
@@ -77,7 +77,7 @@ class Login extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "BIENVENUE",
+                            "REINITIALISATION DE",
                             style: GoogleFonts.getFont('Lato',
                                 textStyle: textes.h1l),
                           ),
@@ -85,15 +85,17 @@ class Login extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                            "SUR MySkul",
+                            "MOT DE PASSE",
                             style: GoogleFonts.getFont('Lato',
                                 textStyle: textes.h1l),
                           ),
                         ],
                       ),
                       SizedBox(
-                        height: 30,
+                        height: 15,
                       ),
+                       SizedBox(width:300, child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis varius urna arcu, sodales cursus magna porttitor et.", style: textes.h4l, textAlign: TextAlign.center,)),
+                      SizedBox(height: 15,),
                       NewInput(
                           controller: controller,
                           onSubmit: onSubmit,
@@ -110,36 +112,14 @@ class Login extends StatelessWidget {
                           textes: textes,
                           couleurs: couleurs,
                           prefixIcon: prefixIcon2),
-                      NewButtonG(
-                        textes: textes,
-                        couleurs: couleurs,
-                        icones: icones,
-                        text: "SE CONNECTER",
+                           SizedBox(
+                        height: 30,
                       ),
+                      NewButtonG(
+                          textes: textes, couleurs: couleurs, icones: icones, text: "REINITIALISER",),
                       SizedBox(
                         height: 30,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Nouveau ?",
-                            style: textes.h4l,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return Register();
-                              }));
-                            },
-                            child: Text(
-                              " Créer un compte",
-                              style: textes.h4l.copyWith(color: couleurs.green),
-                            ),
-                          )
-                        ],
-                      )
                     ],
                   ),
                 ),

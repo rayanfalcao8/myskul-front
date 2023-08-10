@@ -4,9 +4,8 @@ import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
 
-
-class NewButtonG extends StatelessWidget {
-  const NewButtonG({
+class NewButtonD extends StatelessWidget {
+  const NewButtonD({
     super.key,
     required this.textes,
     required this.couleurs,
@@ -33,29 +32,26 @@ class NewButtonG extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(),
-               SizedBox(),
-              Text(text,
-                  style: GoogleFonts.getFont('Lato',
-                      textStyle: textes.h4b
-                          .copyWith(color: couleurs.white))),
               CircleAvatar(
                 backgroundColor: couleurs.white,
                 child: Icon(
-                  icones.forward,
+                  icones.back,
                   color: couleurs.green,
                   size: 15,
                 ),
-              )
+              ),
+              Text(text,
+                  style: GoogleFonts.getFont('Lato',
+                      textStyle: textes.h4b.copyWith(color: couleurs.white))),
+              SizedBox(),
+               SizedBox(),
             ],
           ),
         ),
         style: ButtonStyle(
           elevation: MaterialStateProperty.all(10),
-          backgroundColor:
-              MaterialStateProperty.all(couleurs.green),
-          shape: MaterialStateProperty.all(
-              const RoundedRectangleBorder(
+          backgroundColor: MaterialStateProperty.all(couleurs.green),
+          shape: MaterialStateProperty.all(const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(25)),
           )),
         ),

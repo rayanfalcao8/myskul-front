@@ -27,7 +27,7 @@ class NewInput extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          width: 270,
+          width: 300,
           height: 51,
           child: TextField(
             controller: controller,
