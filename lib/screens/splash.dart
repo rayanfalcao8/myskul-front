@@ -4,6 +4,8 @@ import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
+import 'package:widget_and_text_animator/widget_and_text_animator.dart';
+import 'package:flutter_bounceable/flutter_bounceable.dart';
 
 class Splash extends StatelessWidget {
   var couleurs = ColorHelper();
@@ -48,106 +50,121 @@ class Splash extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
             ),
-            Center(
-              child: Container(
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Image.asset(
-                    //   "assets/images/logo2.png",
-                    //   width: 100,
-                    // ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Apprendre",
-                          style: GoogleFonts.getFont('Lato',
-                              textStyle:
-                                  textes.xxlb.copyWith(color: couleurs.white)),
-                          textAlign: TextAlign.left,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "devient plus facile !",
-                          style: GoogleFonts.getFont('Lato',
-                              textStyle:
-                                  textes.xxlb.copyWith(color: couleurs.white)),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
+            WidgetAnimator(
+              incomingEffect: WidgetTransitionEffects.incomingSlideInFromBottom(
+                  duration: const Duration(seconds: 2),
+                  delay: const Duration(milliseconds: 100)),
+              child: Center(
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Image.asset(
+                      //   "assets/images/logo2.png",
+                      //   width: 100,
+                      // ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Apprendre",
+                            style: GoogleFonts.getFont('Lato',
+                                textStyle: textes.xxlb
+                                    .copyWith(color: couleurs.white)),
+                            textAlign: TextAlign.left,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "devient plus facile !",
+                            style: GoogleFonts.getFont('Lato',
+                                textStyle: textes.xxlb
+                                    .copyWith(color: couleurs.white)),
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
 
-                    SizedBox(
-                      height: 30,
-                    ),
+                      SizedBox(
+                        height: 30,
+                      ),
 
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Révisez et renforcez ",
-                          style: GoogleFonts.getFont('Lato',
-                              textStyle:
-                                  textes.h1r.copyWith(color: couleurs.white)),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          "vos connaissances ou que vous soyez",
-                          style: GoogleFonts.getFont('Lato',
-                              textStyle:
-                                  textes.h1r.copyWith(color: couleurs.white)),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Révisez et renforcez ",
+                            style: GoogleFonts.getFont('Lato',
+                                textStyle:
+                                    textes.h1r.copyWith(color: couleurs.white)),
+                            textAlign: TextAlign.left,
+                          ),
+                          Text(
+                            "vos connaissances ou que vous soyez",
+                            style: GoogleFonts.getFont('Lato',
+                                textStyle:
+                                    textes.h1r.copyWith(color: couleurs.white)),
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
 
-                    SizedBox(
-                      height: 70,
-                    ),
+                      SizedBox(
+                        height: 70,
+                      ),
 
-                    SizedBox(
-                      width: 300,
-                      height: 50,
-                      child: TextButton(
-                        onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context){ return Login();}));},
-                        child: Padding(
-                          padding: const EdgeInsets.all(0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(),
-                              Text("COMMENCER",
-                                  style: GoogleFonts.getFont('Lato',
-                                      textStyle: textes.h3b.copyWith(
-                                          color: couleurs.green))),
-                              CircleAvatar(
-                                backgroundColor: couleurs.green,
-                                child: Icon(
-                                  icones.forward,
-                                  color: couleurs.white,
-                                  size: 15,
-                                ),
-                              )
-                            ],
+                      Bounceable(
+                        onTap: () {},
+                        child: SizedBox(
+                          width: 300,
+                          height: 50,
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return Login();
+                              }));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(),
+                                  Text("COMMENCER",
+                                      style: GoogleFonts.getFont('Lato',
+                                          textStyle: textes.h3b.copyWith(
+                                              color: couleurs.green))),
+                                  CircleAvatar(
+                                    backgroundColor: couleurs.green,
+                                    child: Icon(
+                                      icones.forward,
+                                      color: couleurs.white,
+                                      size: 15,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            style: ButtonStyle(
+                              elevation: MaterialStateProperty.all(10),
+                              backgroundColor:
+                                  MaterialStateProperty.all(couleurs.white),
+                              shape: MaterialStateProperty.all(
+                                  const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25)),
+                              )),
+                            ),
                           ),
                         ),
-                        style: ButtonStyle(
-                          elevation: MaterialStateProperty.all(10),
-                          backgroundColor:
-                              MaterialStateProperty.all(couleurs.white),
-                          shape: MaterialStateProperty.all(
-                              const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(25)),
-                          )),
-                        ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

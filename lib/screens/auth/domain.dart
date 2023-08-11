@@ -8,6 +8,8 @@ import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
 import 'package:myskul/components/newButtonG.dart';
+import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class Domain extends StatefulWidget {
   @override
@@ -65,103 +67,114 @@ class _DomainState extends State<Domain> {
               ),
               Center(
                 child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 80,
-                      ),
-                      Image.asset(
-                        "assets/images/logo2.png",
-                        width: 100,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                  child: AnimationLimiter(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: AnimationConfiguration.toStaggeredList(
+                        duration: const Duration(milliseconds: 500),
+                        childAnimationBuilder: (widget) => SlideAnimation(
+                          verticalOffset: 50.0,
+                          child: FadeInAnimation(
+                            child: widget,
+                          ),
+                        ),
                         children: [
-                          Text(
-                            "CHOISIS TON DOMAINE !",
-                            style: GoogleFonts.getFont('Lato',
-                                textStyle: textes.h1l),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedSP = 0;
-                              });
-                            },
-                            child: GenderBox(
-                              couleurs: couleurs,
-                              selectedGender: selectedSP,
-                              gradients: gradients,
-                              icones: icones.school,
-                              textes: textes,
-                              condition: 0,
-                              gender: "PREPA",
-                              width: 140,
-                              height: 300,
-                            ),
+                          SizedBox(
+                            height: 80,
+                          ),
+                          Image.asset(
+                            "assets/images/logo2.png",
+                            width: 100,
                           ),
                           SizedBox(
-                            width: 20,
+                            height: 10,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedSP = 1;
-                              });
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "CHOISIS TON DOMAINE !",
+                                style: GoogleFonts.getFont('Lato',
+                                    textStyle: textes.h1l),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Bounceable(
+                                onTap: () {
+                                  setState(() {
+                                    selectedSP = 0;
+                                  });
+                                },
+                                child: GenderBox(
+                                  couleurs: couleurs,
+                                  selectedGender: selectedSP,
+                                  gradients: gradients,
+                                  icones: icones.school,
+                                  textes: textes,
+                                  condition: 0,
+                                  gender: "PREPA",
+                                  width: 140,
+                                  height: 300,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Bounceable(
+                                onTap: () {
+                                  setState(() {
+                                    selectedSP = 1;
+                                  });
+                                },
+                                child: GenderBox(
+                                  couleurs: couleurs,
+                                  selectedGender: selectedSP,
+                                  gradients: gradients,
+                                  icones: icones.school,
+                                  textes: textes,
+                                  condition: 1,
+                                  gender: "BORDS \n NUMERIQUES",
+                                  width: 140,
+                                  height: 300,
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          NewButtonG(
+                            textes: textes,
+                            couleurs: couleurs,
+                            icones: icones,
+                            text: "SUIVANT",
+                            function: () {
+                              if (selectedSP == 0) {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return SP2();
+                                }));
+                              } else {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return SC();
+                                }));
+                              }
                             },
-                            child: GenderBox(
-                              couleurs: couleurs,
-                              selectedGender: selectedSP,
-                              gradients: gradients,
-                              icones: icones.school,
-                              textes: textes,
-                              condition: 1,
-                              gender: "BORDS \n NUMERIQUES",
-                              width: 140,
-                              height: 300,
-                            ),
-                          )
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
                         ],
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      NewButtonG(
-                        textes: textes,
-                        couleurs: couleurs,
-                        icones: icones,
-                        text: "SUIVANT",
-                        function: () {
-                          if (selectedSP == 0) {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return SP2();
-                            }));
-                          } else {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return SC();
-                            }));
-                          }
-                        },
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),

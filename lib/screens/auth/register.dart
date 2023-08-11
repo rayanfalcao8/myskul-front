@@ -11,6 +11,9 @@ import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
 import 'package:myskul/components/newButtonG.dart';
 import 'package:myskul/components/newInput.dart';
+import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:widget_and_text_animator/widget_and_text_animator.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -64,17 +67,27 @@ class _RegisterState extends State<Register> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Positioned(
-                      top: 0.0,
-                      child: Image.asset(
-                        "assets/images/wave-t.png",
+                    WidgetAnimator(
+                      incomingEffect:
+                          WidgetTransitionEffects.incomingSlideInFromTop(
+                              duration: Duration(milliseconds: 500)),
+                      child: Positioned(
+                        top: 0.0,
+                        child: Image.asset(
+                          "assets/images/wave-t.png",
+                        ),
                       ),
                     ),
                     Container(),
-                    Positioned(
-                      bottom: 0.0,
-                      child: Image.asset(
-                        "assets/images/wave-b.png",
+                    WidgetAnimator(
+                      incomingEffect:
+                          WidgetTransitionEffects.incomingSlideInFromBottom(
+                              duration: Duration(milliseconds: 500)),
+                      child: Positioned(
+                        bottom: 0.0,
+                        child: Image.asset(
+                          "assets/images/wave-b.png",
+                        ),
                       ),
                     ),
                   ],
@@ -82,210 +95,222 @@ class _RegisterState extends State<Register> {
               ),
               Center(
                 child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 80,
-                      ),
-                      Image.asset(
-                        "assets/images/logo2.png",
-                        width: 100,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                  child: AnimationLimiter(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: AnimationConfiguration.toStaggeredList(
+                        duration: const Duration(milliseconds: 500),
+                        childAnimationBuilder: (widget) => SlideAnimation(
+                          verticalOffset: 50.0,
+                          child: FadeInAnimation(
+                            child: widget,
+                          ),
+                        ),
                         children: [
-                          Text(
-                            "NOUVEAU COMPTE",
-                            style: GoogleFonts.getFont('Lato',
-                                textStyle: textes.h1l),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      NewInput(
-                          controller: noms,
-                          onSubmit: (g) {},
-                          keyboardType: TextInputType.text,
-                          hintText: "Noms et prénoms",
-                          textes: textes,
-                          couleurs: couleurs,
-                          prefixIcon: Icon(icones.user)),
-                      NewInput(
-                          controller: email,
-                          onSubmit: (g) {},
-                          keyboardType: TextInputType.emailAddress,
-                          hintText: "Adresse Email",
-                          textes: textes,
-                          couleurs: couleurs,
-                          prefixIcon: Icon(icones.user)),
-                      NewInputInter(
-                          controller: num,
-                          onSubmit: (g) {},
-                          keyboardType: TextInputType.phone,
-                          hintText: "Numéro de téléphone",
-                          textes: textes,
-                          couleurs: couleurs,
-                          prefixIcon: Icon(icones.user)),
-                      NewInput(
-                          controller: ville,
-                          onSubmit: (g) {},
-                          keyboardType: TextInputType.text,
-                          hintText: "Ville de résidence",
-                          textes: textes,
-                          couleurs: couleurs,
-                          prefixIcon: Icon(icones.city)),
-                      NewInput(
-                          controller: datenaiss,
-                          onSubmit: (g) {},
-                          keyboardType: TextInputType.datetime,
-                          hintText: "Date de naissance",
-                          textes: textes,
-                          couleurs: couleurs,
-                          prefixIcon: Icon(icones.calendar)),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedGender = 0;
-                              });
-                            },
-                            child: GenderBox(
-                              couleurs: couleurs,
-                              selectedGender: selectedGender,
-                              gradients: gradients,
-                              icones: icones.boy,
-                              textes: textes,
-                              condition: 0,
-                              gender: "HOMME",
-                              width: 140,
-                              height: 80,
-                            ),
+                          SizedBox(
+                            height: 80,
+                          ),
+                          Image.asset(
+                            "assets/images/logo2.png",
+                            width: 100,
                           ),
                           SizedBox(
-                            width: 20,
+                            height: 10,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedGender = 1;
-                              });
-                            },
-                            child: GenderBox(
-                              couleurs: couleurs,
-                              selectedGender: selectedGender,
-                              gradients: gradients,
-                              icones: icones.girl,
-                              textes: textes,
-                              condition: 1,
-                              gender: "FEMME",
-                              width: 140,
-                              height: 80,
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      NewInput(
-                          controller: password,
-                          onSubmit: (g) {},
-                          keyboardType: TextInputType.visiblePassword,
-                          hintText: "Mot de passe",
-                          textes: textes,
-                          couleurs: couleurs,
-                          prefixIcon: Icon(icones.lock)),
-                      NewInput(
-                          controller: passwordConfirm,
-                          onSubmit: (g) {},
-                          keyboardType: TextInputType.visiblePassword,
-                          hintText: "Confirmation du mot de passe",
-                          textes: textes,
-                          couleurs: couleurs,
-                          prefixIcon: Icon(icones.lock)),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Checkbox(
-                              value: checkbox,
-                              onChanged: (v) {
-                                setState(() {
-                                  checkbox = v;
-                                });
-                              }),
-                          Row(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "J’ai lu et j’accepte",
+                                "NOUVEAU COMPTE",
+                                style: GoogleFonts.getFont('Lato',
+                                    textStyle: textes.h1l),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          NewInput(
+                              controller: noms,
+                              onSubmit: (g) {},
+                              keyboardType: TextInputType.text,
+                              hintText: "Noms et prénoms",
+                              textes: textes,
+                              couleurs: couleurs,
+                              prefixIcon: Icon(icones.user)),
+                          NewInput(
+                              controller: email,
+                              onSubmit: (g) {},
+                              keyboardType: TextInputType.emailAddress,
+                              hintText: "Adresse Email",
+                              textes: textes,
+                              couleurs: couleurs,
+                              prefixIcon: Icon(icones.user)),
+                          NewInputInter(
+                              controller: num,
+                              onSubmit: (g) {},
+                              keyboardType: TextInputType.phone,
+                              hintText: "Numéro de téléphone",
+                              textes: textes,
+                              couleurs: couleurs,
+                              prefixIcon: Icon(icones.user)),
+                          NewInput(
+                              controller: ville,
+                              onSubmit: (g) {},
+                              keyboardType: TextInputType.text,
+                              hintText: "Ville de résidence",
+                              textes: textes,
+                              couleurs: couleurs,
+                              prefixIcon: Icon(icones.city)),
+                          NewInput(
+                              controller: datenaiss,
+                              onSubmit: (g) {},
+                              keyboardType: TextInputType.datetime,
+                              hintText: "Date de naissance",
+                              textes: textes,
+                              couleurs: couleurs,
+                              prefixIcon: Icon(icones.calendar)),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Bounceable(
+                                onTap: () {
+                                  setState(() {
+                                    selectedGender = 0;
+                                  });
+                                },
+                                child: GenderBox(
+                                  couleurs: couleurs,
+                                  selectedGender: selectedGender,
+                                  gradients: gradients,
+                                  icones: icones.boy,
+                                  textes: textes,
+                                  condition: 0,
+                                  gender: "HOMME",
+                                  width: 145,
+                                  height: 80,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Bounceable(
+                                onTap: () {
+                                  setState(() {
+                                    selectedGender = 1;
+                                  });
+                                },
+                                child: GenderBox(
+                                  couleurs: couleurs,
+                                  selectedGender: selectedGender,
+                                  gradients: gradients,
+                                  icones: icones.girl,
+                                  textes: textes,
+                                  condition: 1,
+                                  gender: "FEMME",
+                                  width: 145,
+                                  height: 80,
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          NewInput(
+                              controller: password,
+                              onSubmit: (g) {},
+                              keyboardType: TextInputType.visiblePassword,
+                              hintText: "Mot de passe",
+                              textes: textes,
+                              couleurs: couleurs,
+                              prefixIcon: Icon(icones.lock)),
+                          NewInput(
+                              controller: passwordConfirm,
+                              onSubmit: (g) {},
+                              keyboardType: TextInputType.visiblePassword,
+                              hintText: "Confirmation du mot de passe",
+                              textes: textes,
+                              couleurs: couleurs,
+                              prefixIcon: Icon(icones.lock)),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Checkbox(
+                                  value: checkbox,
+                                  onChanged: (v) {
+                                    setState(() {
+                                      checkbox = v;
+                                    });
+                                  }),
+                              Row(
+                                children: [
+                                  Text(
+                                    "J’ai lu et j’accepte",
+                                    style: textes.h4l,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return Term();
+                                      }));
+                                    },
+                                    child: Text(" les Termes et conditions",
+                                        style: textes.h4l
+                                            .copyWith(color: couleurs.green)),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          NewButtonG(
+                            textes: textes,
+                            couleurs: couleurs,
+                            icones: icones,
+                            text: "S'ENGREGISTRER",
+                            function: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return Domain();
+                              }));
+                            },
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Déjà inscrit ? ",
                                 style: textes.h4l,
                               ),
                               GestureDetector(
                                 onTap: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
-                                    return Term();
+                                    return Login();
                                   }));
                                 },
-                                child: Text(" les Termes et conditions",
-                                    style: textes.h4l
-                                        .copyWith(color: couleurs.green)),
+                                child: Text(
+                                  "Se connecter",
+                                  style: textes.h4l
+                                      .copyWith(color: couleurs.green),
+                                ),
                               )
                             ],
-                          ),
-                        ],
-                      ),
-                      NewButtonG(
-                        textes: textes,
-                        couleurs: couleurs,
-                        icones: icones,
-                        text: "S'ENGREGISTRER",
-                        function: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return Domain();
-                          }));
-                        },
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Déjà inscrit ? ",
-                            style: textes.h4l,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return Login();
-                              }));
-                            },
-                            child: Text(
-                              "Se connecter",
-                              style: textes.h4l.copyWith(color: couleurs.green),
-                            ),
                           )
                         ],
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                 ),
               ),

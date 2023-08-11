@@ -6,6 +6,8 @@ import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
 import 'package:myskul/components/newButtonG.dart';
 import 'package:myskul/components/newInput.dart';
+import 'package:widget_and_text_animator/widget_and_text_animator.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class Login extends StatelessWidget {
   var couleurs = ColorHelper();
@@ -43,17 +45,27 @@ class Login extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Positioned(
-                      top: 0.0,
-                      child: Image.asset(
-                        "assets/images/wave-t.png",
+                    WidgetAnimator(
+                      incomingEffect:
+                          WidgetTransitionEffects.incomingSlideInFromTop(
+                              duration: Duration(milliseconds: 500)),
+                      child: Positioned(
+                        top: 0.0,
+                        child: Image.asset(
+                          "assets/images/wave-t.png",
+                        ),
                       ),
                     ),
                     Container(),
-                    Positioned(
-                      bottom: 0.0,
-                      child: Image.asset(
-                        "assets/images/wave-b.png",
+                    WidgetAnimator(
+                      incomingEffect:
+                          WidgetTransitionEffects.incomingSlideInFromBottom(
+                              duration: Duration(milliseconds: 500)),
+                      child: Positioned(
+                        bottom: 0.0,
+                        child: Image.asset(
+                          "assets/images/wave-b.png",
+                        ),
                       ),
                     ),
                   ],
@@ -62,85 +74,97 @@ class Login extends StatelessWidget {
               Center(
                 child: Container(
                   height: MediaQuery.of(context).size.height,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        "assets/images/logo2.png",
-                        width: 100,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                  child: AnimationLimiter(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: AnimationConfiguration.toStaggeredList(
+                        duration: const Duration(milliseconds: 500),
+                        childAnimationBuilder: (widget) => SlideAnimation(
+                          verticalOffset: 50.0,
+                          child: FadeInAnimation(
+                            child: widget,
+                          ),
+                        ),
                         children: [
-                          Text(
-                            "BIENVENUE",
-                            style: GoogleFonts.getFont('Lato',
-                                textStyle: textes.h1l),
+                          Image.asset(
+                            "assets/images/logo2.png",
+                            width: 100,
                           ),
                           SizedBox(
                             height: 10,
                           ),
-                          Text(
-                            "SUR MySkul",
-                            style: GoogleFonts.getFont('Lato',
-                                textStyle: textes.h1l),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "BIENVENUE",
+                                style: GoogleFonts.getFont('Lato',
+                                    textStyle: textes.h1l),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "SUR MySkul",
+                                style: GoogleFonts.getFont('Lato',
+                                    textStyle: textes.h1l),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      NewInput(
-                          controller: controller,
-                          onSubmit: onSubmit,
-                          keyboardType: keyboardType,
-                          hintText: hintText,
-                          textes: textes,
-                          couleurs: couleurs,
-                          prefixIcon: prefixIcon),
-                      NewInput(
-                          controller: controller2,
-                          onSubmit: onSubmit2,
-                          keyboardType: keyboardType2,
-                          hintText: hintText2,
-                          textes: textes,
-                          couleurs: couleurs,
-                          prefixIcon: prefixIcon2),
-                      NewButtonG(
-                        textes: textes,
-                        couleurs: couleurs,
-                        icones: icones,
-                        text: "SE CONNECTER",
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Nouveau ?",
-                            style: textes.h4l,
+                          SizedBox(
+                            height: 30,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return Register();
-                              }));
-                            },
-                            child: Text(
-                              " Créer un compte",
-                              style: textes.h4l.copyWith(color: couleurs.green),
-                            ),
+                          NewInput(
+                              controller: controller,
+                              onSubmit: onSubmit,
+                              keyboardType: keyboardType,
+                              hintText: hintText,
+                              textes: textes,
+                              couleurs: couleurs,
+                              prefixIcon: prefixIcon),
+                          NewInput(
+                              controller: controller2,
+                              onSubmit: onSubmit2,
+                              keyboardType: keyboardType2,
+                              hintText: hintText2,
+                              textes: textes,
+                              couleurs: couleurs,
+                              prefixIcon: prefixIcon2),
+                          NewButtonG(
+                            textes: textes,
+                            couleurs: couleurs,
+                            icones: icones,
+                            text: "SE CONNECTER",
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Nouveau ?",
+                                style: textes.h4l,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return Register();
+                                  }));
+                                },
+                                child: Text(
+                                  " Créer un compte",
+                                  style: textes.h4l
+                                      .copyWith(color: couleurs.green),
+                                ),
+                              )
+                            ],
                           )
                         ],
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                 ),
               ),
