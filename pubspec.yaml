@@ -40,10 +40,17 @@ dependencies:
   widget_and_text_animator: any
   flutter_bounceable: ^1.1.0
   flutter_staggered_animations: ^1.0.0
+  flutter_native_splash: any
+  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_app_name: ^0.1.0
+
+flutter_app_name:
+  name: "MySkul"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

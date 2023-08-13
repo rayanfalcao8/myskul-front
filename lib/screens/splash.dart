@@ -23,7 +23,7 @@ class Splash extends StatelessWidget {
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/splash.jpg"),
+                      image: AssetImage("assets/images/splash_1.jpg"),
                       fit: BoxFit.cover)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -52,7 +52,7 @@ class Splash extends StatelessWidget {
             ),
             WidgetAnimator(
               incomingEffect: WidgetTransitionEffects.incomingSlideInFromBottom(
-                  duration: const Duration(seconds: 2),
+                  duration: const Duration(seconds: 1),
                   delay: const Duration(milliseconds: 100)),
               child: Center(
                 child: Container(
