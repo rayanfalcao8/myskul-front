@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myskul/controllers/auth/login_controller.dart';
 import 'package:myskul/screens/auth/register.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
@@ -8,22 +9,54 @@ import 'package:myskul/components/newButtonG.dart';
 import 'package:myskul/components/newInput.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:http/http.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  
   var couleurs = ColorHelper();
+
   var textes = TextHelper();
+
   var icones = IconHelper();
+
   var controller = TextEditingController();
+
   var onSubmit = (String a) {};
+
   var keyboardType = TextInputType.emailAddress;
+
   var hintText = "Adresse Email";
+
   var prefixIcon = Icon(Icons.person);
 
   var controller2 = TextEditingController();
+
   var onSubmit2 = (String a) {};
+
   var keyboardType2 = TextInputType.visiblePassword;
+
   var hintText2 = "Mot de passe";
+
   var prefixIcon2 = Icon(Icons.lock);
+
+  bool isLoading = false;
+
+  Future auth(String email, String password) async {
+    var url = Uri.https('https://api.digihealthsarl.com', 'api/login');
+
+    var response =
+        await post(url, body: {'email': email, 'password': password});
+
+    print('Response status: ${response.statusCode}');
+
+    print('Response body: ${response.body}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +169,17 @@ class Login extends StatelessWidget {
                             couleurs: couleurs,
                             icones: icones,
                             text: "SE CONNECTER",
+                            function: () async {
+                              setState(() {
+                                EasyLoading.show(status: 'loading...');
+                              });
+                              LoginController().login(controller,controller2);
+
+                              setState(() {
+                                EasyLoading.dismiss();
+                              });
+
+                            },
                           ),
                           SizedBox(
                             height: 30,

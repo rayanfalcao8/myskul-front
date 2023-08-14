@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'screens/splash.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'dart:io';
 
 void main() {
+  HttpOverrides.global = MyHttpOverrides();
   runApp(Home1());
 }
 
-class Home1 extends StatelessWidget {
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 
+class Home1 extends StatelessWidget {
   Map<int, Color> color = {
     50: ColorHelper().green,
     100: ColorHelper().green,
@@ -21,18 +33,16 @@ class Home1 extends StatelessWidget {
     900: ColorHelper().green,
   };
 
- 
-
   @override
   Widget build(BuildContext context) {
+    MaterialColor colorCustom = MaterialColor(0xFF880E4F, color);
 
-  MaterialColor colorCustom = MaterialColor(0xFF880E4F, color);
-  
-    return MaterialApp(
+    return GetMaterialApp(
       theme: ThemeData(
         primarySwatch: colorCustom,
       ),
       debugShowCheckedModeBanner: false,
+      builder: EasyLoading.init(),
       home: Scaffold(
         body: Splash(),
       ),

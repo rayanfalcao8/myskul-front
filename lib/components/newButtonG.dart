@@ -26,7 +26,6 @@ class NewButtonG extends StatelessWidget {
   Widget build(BuildContext context) {
     return Bounceable(
       onTap: () {
-        
       },
       child: SizedBox(
         width: 270,
