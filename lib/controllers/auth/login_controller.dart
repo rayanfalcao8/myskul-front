@@ -4,54 +4,75 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:myskul/main.dart';
+import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class LoginController extends GetxController {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   void login(emailController, passwordController) async {
     try {
-      var header = {'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/json'};
+      var headers = {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Accept": "application/json"
+      };
       var url = Uri.parse(
           ApiEndponits().baseUrl + ApiEndponits().authEndpoints.loginEmail);
       Map body = {
-        "email": emailController.text,
+        "email": emailController.text.trim(),
         "password": passwordController.text
       };
 
-      http.Response res = await http.post(url, body: jsonEncode(body),);
-      
+      EasyLoading.show(status: 'Connexion...');
+
+      http.Response res = await http.post(url,
+          body: utf8.encode(jsonEncode(body)), headers: headers);
+
       print(" encode ${jsonEncode(body)} decode ${res.body} ");
 
+      EasyLoading.dismiss();
+
       if (res.statusCode == 200) {
+        EasyLoading.showSuccess('Success!');
         final json = jsonDecode(res.body);
-        if (json['message'].contains('Successful')) {
-          var token = json['data']['token'];
+        if (json['message'].contains('uccess')) {
+          var tmp = json['data'];
+          var token = tmp['token'];
           print("token $token");
-          // final SharedPreferences prefs = await _prefs;
-          // await prefs.setString('token', token);
-          // Get.to(Home());
-          // emailController.clear();
-          // passwordController.clear();
+          final SharedPreferences prefs = await _prefs;
+          await prefs.setString('token', token);
+          Get.to(Home());
+          emailController.clear();
+          passwordController.clear();
         } else {
-          throw jsonDecode(res.body)['message'] + ' 1 ' ?? "Erreur inconnue";
+          throw jsonDecode(res.body)['message'] ?? "Erreur inconnue";
         }
       } else {
-        throw jsonDecode(res.body)['message'] + ' 2 ' ?? "Erreur inconnue";
+        throw jsonDecode(res.body)['message'] ?? "Erreur inconnue";
       }
     } catch (e) {
-      showDialog(
-          context: Get.context!,
-          builder: (context) {
-            return SimpleDialog(
-              title: Text('Erreur'),
-              contentPadding: EdgeInsets.all(20),
-              children: [Text(e.toString())],
-            );
-          });
+      EasyLoading.showError(e.toString());
+      // showDialog(
+      //     context: Get.context!,
+      //     builder: (context) {
+      //       return SimpleDialog(
+      //         title: Text('Erreur'),
+      //         contentPadding: EdgeInsets.all(20),
+      //         children: [Text(e.toString())],
+      //       );
+      //     });
     }
+  }
+
+  void logout() async {
+    EasyLoading.show(status: 'Déconnexion...');
+    Future.delayed(Duration(seconds: 5));
+    EasyLoading.dismiss();
+    final SharedPreferences? prefs = await _prefs;
+    prefs?.clear();
+    Get.offAll(Login());
   }
 }

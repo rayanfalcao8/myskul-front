@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/components/genderBox.dart';
 import 'package:myskul/components/newInputInter.dart';
+import 'package:myskul/controllers/auth/registration_controller.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/auth/terms.dart';
 import 'package:myskul/screens/auth/domain.dart';
@@ -14,6 +15,7 @@ import 'package:myskul/components/newInput.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -167,7 +169,7 @@ class _RegisterState extends State<Register> {
                               controller: datenaiss,
                               onSubmit: (g) {},
                               keyboardType: TextInputType.datetime,
-                              hintText: "Date de naissance",
+                              hintText: "Date de naissance (YYYY-MM-DD)",
                               textes: textes,
                               couleurs: couleurs,
                               prefixIcon: Icon(icones.calendar)),
@@ -277,10 +279,36 @@ class _RegisterState extends State<Register> {
                             icones: icones,
                             text: "S'ENGREGISTRER",
                             function: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return Domain();
-                              }));
+                              if (noms.text.isEmpty) {
+                                EasyLoading.showError("Nom Requis");
+                              } else if (email.text.isEmpty) {
+                                EasyLoading.showError("Mot de passe Requis");
+                              } else if (num.text.isEmpty) {
+                                EasyLoading.showError("Numéro Requis");
+                              } else if (ville.text.isEmpty) {
+                                EasyLoading.showError("Ville Requis");
+                              } else if (datenaiss.text.isEmpty) {
+                                EasyLoading.showError(
+                                    "Date de naissance Requis");
+                              } else if (password.text.isEmpty) {
+                                EasyLoading.showError("Mot de passe Requis");
+                              } else if (passwordConfirm.text.isEmpty ||
+                                  passwordConfirm.text != password.text) {
+                                EasyLoading.showError(
+                                    "Mot de passe ne correspond pas");
+                              } else if (checkbox == false) {
+                                EasyLoading.showError(
+                                    "Veuillez accepter les conditions d'utlisation");
+                              } else {
+                                RegisterationController().register(
+                                    userController: noms,
+                                    numController: num,
+                                    emailController: email,
+                                    cityController: ville,
+                                    bdController: datenaiss,
+                                    passwordController: password,
+                                    genderController: selectedGender);
+                              }
                             },
                           ),
                           SizedBox(

@@ -1,5 +1,6 @@
 class ApiEndponits {
   final String baseUrl = "https://api.digihealthsarl.com/api";
+ // final String baseUrl = "http://restapi.adequateshop.com/api/AuthAccount";
   final authEndpoints = AuthEndpoints();
 }
 

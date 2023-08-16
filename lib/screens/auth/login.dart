@@ -18,7 +18,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  
   var couleurs = ColorHelper();
 
   var textes = TextHelper();
@@ -47,16 +46,8 @@ class _LoginState extends State<Login> {
 
   bool isLoading = false;
 
-  Future auth(String email, String password) async {
-    var url = Uri.https('https://api.digihealthsarl.com', 'api/login');
-
-    var response =
-        await post(url, body: {'email': email, 'password': password});
-
-    print('Response status: ${response.statusCode}');
-
-    print('Response body: ${response.body}');
-  }
+  bool validEmail = true;
+  bool validPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -163,22 +154,24 @@ class _LoginState extends State<Login> {
                               hintText: hintText2,
                               textes: textes,
                               couleurs: couleurs,
-                              prefixIcon: prefixIcon2),
+                              prefixIcon: prefixIcon2
+                              ),
                           NewButtonG(
                             textes: textes,
                             couleurs: couleurs,
                             icones: icones,
                             text: "SE CONNECTER",
                             function: () async {
-                              setState(() {
-                                EasyLoading.show(status: 'loading...');
-                              });
-                              LoginController().login(controller,controller2);
-
-                              setState(() {
-                                EasyLoading.dismiss();
-                              });
-
+                              if (controller.text.isEmpty) {
+                                 EasyLoading.showError("Email Requis");
+                                validEmail = false;
+                              } else if (controller2.text.isEmpty) {
+                                EasyLoading.showError("Mot de passe Requis");
+                                validPassword = false;
+                              } else {
+                                LoginController()
+                                    .login(controller, controller2);
+                              }
                             },
                           ),
                           SizedBox(
@@ -199,7 +192,7 @@ class _LoginState extends State<Login> {
                                   }));
                                 },
                                 child: Text(
-                                  " Créer un compte",
+                                  " Creer un compte",
                                   style: textes.h4l
                                       .copyWith(color: couleurs.green),
                                 ),

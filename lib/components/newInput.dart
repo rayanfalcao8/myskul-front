@@ -12,6 +12,7 @@ class NewInput extends StatelessWidget {
     required this.textes,
     required this.couleurs,
     required this.prefixIcon,
+    this.errorText,
   });
 
   final TextEditingController controller;
@@ -21,6 +22,7 @@ class NewInput extends StatelessWidget {
   final TextHelper textes;
   final ColorHelper couleurs;
   final Icon prefixIcon;
+  final String? errorText;
 
   @override
   Widget build(BuildContext context) {
