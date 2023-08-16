@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myskul/controllers/auth/password_controller.dart';
 import 'package:myskul/screens/auth/register.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
@@ -8,6 +9,7 @@ import 'package:myskul/components/newButtonG.dart';
 import 'package:myskul/components/newInput.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class Reset extends StatelessWidget {
   var couleurs = ColorHelper();
@@ -149,6 +151,19 @@ class Reset extends StatelessWidget {
                             couleurs: couleurs,
                             icones: icones,
                             text: "REINITIALISER",
+                            function: () {
+                              if (controller.text.isEmpty) {
+                                EasyLoading.showError("Mot de passe Requis");
+                              } else if (controller2.text.isEmpty ||
+                                  controller2.text.isEmpty !=
+                                      controller.text.isEmpty) {
+                                EasyLoading.showError(
+                                    "Les deux Mots de passe ne correspondent pas");
+                              } else {
+                                PasswordController().reset(emailController,
+                                    controller, controller2, token);
+                              }
+                            },
                           ),
                           SizedBox(
                             height: 30,

@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -47,21 +48,16 @@ class RegisterationController extends GetxController {
 
       EasyLoading.show(status: 'Inscription...');
 
-      var res = await post(url, body: jsonEncode(body), headers: headers);
-      print(" encode ${jsonEncode(body)} decode ${res.body} ");
+      http.Response res = await http.post(url,
+          body: utf8.encode(jsonEncode(body)), headers: headers);
+
+
+      EasyLoading.dismiss();
+
       if (res.statusCode == 200) {
-        final json = jsonDecode(res.body);
+        var json = jsonDecode(res.body);
         EasyLoading.showSuccess(json['message']);
-        var tmp = json['data'];
-        String token = tmp['token'];
-        print("token $token");
-        final SharedPreferences prefs = await _prefs;
-        await prefs.setString('token', token);
-        userController.clear();
-        emailController.clear();
-        passwordController.clear();
-        bdController.clear();
-        numController.clear();
+        Get.off(Login());
       } else {
         throw jsonDecode(res.body)['message'] ?? "Erreur inconnue";
       }

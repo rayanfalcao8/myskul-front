@@ -31,8 +31,6 @@ class LoginController extends GetxController {
       http.Response res = await http.post(url,
           body: utf8.encode(jsonEncode(body)), headers: headers);
 
-      print(" encode ${jsonEncode(body)} decode ${res.body} ");
-
       EasyLoading.dismiss();
 
       if (res.statusCode == 200) {
@@ -69,7 +67,7 @@ class LoginController extends GetxController {
 
   void logout() async {
     EasyLoading.show(status: 'Déconnexion...');
-    Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 5));
     EasyLoading.dismiss();
     final SharedPreferences? prefs = await _prefs;
     prefs?.clear();

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/controllers/auth/login_controller.dart';
+import 'package:myskul/screens/auth/password.dart';
 import 'package:myskul/screens/auth/register.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
@@ -154,8 +156,7 @@ class _LoginState extends State<Login> {
                               hintText: hintText2,
                               textes: textes,
                               couleurs: couleurs,
-                              prefixIcon: prefixIcon2
-                              ),
+                              prefixIcon: prefixIcon2),
                           NewButtonG(
                             textes: textes,
                             couleurs: couleurs,
@@ -163,7 +164,7 @@ class _LoginState extends State<Login> {
                             text: "SE CONNECTER",
                             function: () async {
                               if (controller.text.isEmpty) {
-                                 EasyLoading.showError("Email Requis");
+                                EasyLoading.showError("Email Requis");
                                 validEmail = false;
                               } else if (controller2.text.isEmpty) {
                                 EasyLoading.showError("Mot de passe Requis");
@@ -193,6 +194,28 @@ class _LoginState extends State<Login> {
                                 },
                                 child: Text(
                                   " Creer un compte",
+                                  style: textes.h4l
+                                      .copyWith(color: couleurs.green),
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Mot de passe oublié ?",
+                                style: textes.h4l,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(Password());
+                                },
+                                child: Text(
+                                  " Récuprer mon mot de passe",
                                   style: textes.h4l
                                       .copyWith(color: couleurs.green),
                                 ),
