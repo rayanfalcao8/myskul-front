@@ -12,6 +12,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class Reset extends StatelessWidget {
+  Reset({required this.email,required this.token});
   var couleurs = ColorHelper();
   var textes = TextHelper();
   var icones = IconHelper();
@@ -26,6 +27,9 @@ class Reset extends StatelessWidget {
   var keyboardType2 = TextInputType.visiblePassword;
   var hintText2 = "Confirmation du mot de passe";
   var prefixIcon2 = Icon(Icons.lock);
+
+    var email;
+    var token;
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +164,7 @@ class Reset extends StatelessWidget {
                                 EasyLoading.showError(
                                     "Les deux Mots de passe ne correspondent pas");
                               } else {
-                                PasswordController().reset(emailController,
+                                PasswordController().reset(email,
                                     controller, controller2, token);
                               }
                             },

@@ -215,7 +215,7 @@ class _LoginState extends State<Login> {
                                   Get.to(Password());
                                 },
                                 child: Text(
-                                  " Récuprer mon mot de passe",
+                                  " Récupérer mon mot de passe",
                                   style: textes.h4l
                                       .copyWith(color: couleurs.green),
                                 ),

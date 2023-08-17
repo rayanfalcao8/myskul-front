@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:myskul/main.dart';
 import 'package:myskul/screens/auth/Password.dart';
 import 'package:myskul/screens/auth/login.dart';
+import 'package:myskul/screens/auth/reset.dart';
 import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,18 +26,18 @@ class PasswordController extends GetxController {
         "email": emailController.text.trim(),
       };
 
-      EasyLoading.show(status: 'Connexion...');
+      EasyLoading.show(status: 'Envoi...');
 
       http.Response res = await http.post(url,
           body: utf8.encode(jsonEncode(body)), headers: headers);
-
+      print("${jsonDecode(res.body)}");
       EasyLoading.dismiss();
 
       if (res.statusCode == 200) {
-        final json = jsonDecode(res.body);
-        EasyLoading.showSuccess(json(['message']));
+        var json = jsonDecode(res.body);
+        EasyLoading.showSuccess(json["message"]);
         emailController.clear();
-        // Get.off(Reset());
+        Get.to(Reset(token:json["data"]["token"],email:json["data"]["user"]["email"]));
       } else {
         throw jsonDecode(res.body)['message'] ?? "Erreur inconnue";
       }
@@ -66,7 +67,7 @@ class PasswordController extends GetxController {
       Map body = {
         "password": passwordController.text,
         "password_confirmation": passwordConfController.text,
-        "email": emailController.text,
+        "email": emailController,
         "token": token,
       };
 
@@ -75,15 +76,13 @@ class PasswordController extends GetxController {
       http.Response res = await http.post(url,
           body: utf8.encode(jsonEncode(body)), headers: headers);
 
-
       EasyLoading.dismiss();
 
       if (res.statusCode == 200) {
         final json = jsonDecode(res.body);
-        EasyLoading.showSuccess(json(['message']));
+        EasyLoading.showSuccess(json['message']);
         passwordController.clear();
         passwordConfController.clear();
-        emailController.clear();
         Get.off(Login());
       } else {
         throw jsonDecode(res.body)['message'] ?? "Erreur inconnue";

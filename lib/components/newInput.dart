@@ -13,16 +13,20 @@ class NewInput extends StatelessWidget {
     required this.couleurs,
     required this.prefixIcon,
     this.errorText,
+    this.onTap,
+    this.readOnly = false,
   });
 
   final TextEditingController controller;
-  final Null Function(String a) onSubmit;
+  final void Function(String a) onSubmit;
+  final void Function()? onTap;
   final TextInputType keyboardType;
   final String hintText;
   final TextHelper textes;
   final ColorHelper couleurs;
   final Icon prefixIcon;
   final String? errorText;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +38,8 @@ class NewInput extends StatelessWidget {
           child: TextField(
             controller: controller,
             onSubmitted: onSubmit,
+            onTap: onTap,
+            readOnly: readOnly,
             keyboardType: keyboardType,
             decoration: InputDecoration(
                 hintText: hintText,
