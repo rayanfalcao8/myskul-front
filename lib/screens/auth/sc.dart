@@ -49,20 +49,20 @@ class _SCState extends State<SC> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Positioned(
-                      top: 0.0,
-                      child: Image.asset(
-                        "assets/images/wave-t.png",
-                      ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Image.asset(
+                      "assets/images/wave-t.png",
                     ),
-                    Container(),
-                    Positioned(
-                      bottom: 0.0,
-                      child: Image.asset(
-                        "assets/images/wave-b.png",
-                      ),
+                  ),
+                  Container(),
+                  Align(
+                     alignment: Alignment.bottomRight,
+                    child: Image.asset(
+                      "assets/images/wave-b.png",
                     ),
-                  ],
+                  ),
+                ],
                 ),
               ),
               Center(

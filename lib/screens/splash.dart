@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/utilities/colors.dart';
@@ -6,11 +7,29 @@ import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Splash extends StatelessWidget {
+class Splash extends StatefulWidget {
+  @override
+  State<Splash> createState() => _SplashState();
+}
+
+class _SplashState extends State<Splash> {
   var couleurs = ColorHelper();
+
   var textes = TextHelper();
+
   var icones = IconHelper();
+
+  final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
+
+  void first() async {
+    final SharedPreferences prefs = await _prefs2;
+    bool? seen = await prefs.getBool('first');
+    if (seen == null || seen == false) {
+      await prefs.setBool('first', true);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +48,15 @@ class Splash extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Positioned(
-                    top: 0.0,
+                  Align(
+                    alignment: Alignment.topLeft,
                     child: Image.asset(
                       "assets/images/wave-t.png",
                     ),
                   ),
                   Container(),
-                  Positioned(
-                    bottom: 0.0,
+                  Align(
+                    alignment: Alignment.bottomRight,
                     child: Image.asset(
                       "assets/images/wave-b.png",
                     ),
@@ -123,10 +142,8 @@ class Splash extends StatelessWidget {
                           height: 50,
                           child: TextButton(
                             onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return Login();
-                              }));
+                              first();
+                              Get.off(() => Login());
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(0),

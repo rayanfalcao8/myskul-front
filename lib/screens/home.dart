@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/drawer.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
@@ -9,12 +10,24 @@ import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  Home({required this.user});
+  User user;
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
   var couleurs = ColorHelper();
+
   var textes = TextHelper();
+
   var icones = IconHelper();
+
   var gradients = GradientHelper();
+
   List<String> images = [
     "phone.jpg",
     "image1.png",
@@ -22,9 +35,10 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("${widget.user.email}");
     return Scaffold(
       key: scaffoldKey,
-      drawer: MainDrawer(),
+      drawer: MainDrawer(user:widget.user),
       body: SafeArea(
         child: SingleChildScrollView(
           child: AnimationLimiter(

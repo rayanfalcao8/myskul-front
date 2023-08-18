@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/components/genderBox.dart';
 import 'package:myskul/components/newButtonD.dart';
+import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
@@ -49,15 +50,15 @@ class _SP2State extends State<SP2> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Positioned(
-                      top: 0.0,
+                    Align(
+                      alignment: Alignment.topLeft,
                       child: Image.asset(
                         "assets/images/wave-t.png",
                       ),
                     ),
                     Container(),
-                    Positioned(
-                      bottom: 0.0,
+                    Align(
+                      alignment: Alignment.bottomRight,
                       child: Image.asset(
                         "assets/images/wave-b.png",
                       ),
@@ -210,7 +211,7 @@ class _SP2State extends State<SP2> {
                               function: () {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return Home();
+                                  return Login();
                                 }));
                               }),
                           SizedBox(

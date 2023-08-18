@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:myskul/controllers/home_controller.dart';
 import 'package:myskul/main.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/home.dart';
@@ -42,7 +43,10 @@ class LoginController extends GetxController {
           print("token $token");
           final SharedPreferences prefs = await _prefs;
           await prefs.setString('token', token);
-          Get.to(Home());
+         var user = await HomeController().currentUser(token);
+          Get.off(Home(
+            user: user,
+          ));
           emailController.clear();
           passwordController.clear();
         } else {

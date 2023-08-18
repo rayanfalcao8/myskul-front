@@ -13,6 +13,7 @@ import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:http/http.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -50,6 +51,22 @@ class _LoginState extends State<Login> {
 
   bool validEmail = true;
   bool validPassword = true;
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
+
+  void first() async {
+    final SharedPreferences prefs = await _prefs;
+    final SharedPreferences prefs2 = await _prefs2;
+    bool? seen = await prefs2.getBool('first');
+String? token = await prefs.getString('token');
+    print(" first $seen  token $token ");
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    first();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +77,7 @@ class _LoginState extends State<Login> {
             children: [
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
+                height: MediaQuery.of(context).size.height * 1.1,
                 decoration: BoxDecoration(
                     color: couleurs.white.withOpacity(0.5),
                     image: DecorationImage(
@@ -75,8 +92,8 @@ class _LoginState extends State<Login> {
                       incomingEffect:
                           WidgetTransitionEffects.incomingSlideInFromTop(
                               duration: Duration(milliseconds: 500)),
-                      child: Positioned(
-                        top: 0.0,
+                      child: Align(
+                        alignment: Alignment.topLeft,
                         child: Image.asset(
                           "assets/images/wave-t.png",
                         ),
@@ -87,8 +104,8 @@ class _LoginState extends State<Login> {
                       incomingEffect:
                           WidgetTransitionEffects.incomingSlideInFromBottom(
                               duration: Duration(milliseconds: 500)),
-                      child: Positioned(
-                        bottom: 0.0,
+                      child: Align(
+                        alignment: Alignment.bottomRight,
                         child: Image.asset(
                           "assets/images/wave-b.png",
                         ),
@@ -150,6 +167,7 @@ class _LoginState extends State<Login> {
                               couleurs: couleurs,
                               prefixIcon: prefixIcon),
                           NewInput(
+                              obscureText: true,
                               controller: controller2,
                               onSubmit: onSubmit2,
                               keyboardType: keyboardType2,

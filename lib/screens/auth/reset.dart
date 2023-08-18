@@ -12,7 +12,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class Reset extends StatelessWidget {
-  Reset({required this.email,required this.token});
+  Reset({required this.email, required this.token});
   var couleurs = ColorHelper();
   var textes = TextHelper();
   var icones = IconHelper();
@@ -28,8 +28,8 @@ class Reset extends StatelessWidget {
   var hintText2 = "Confirmation du mot de passe";
   var prefixIcon2 = Icon(Icons.lock);
 
-    var email;
-    var token;
+  var email;
+  var token;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class Reset extends StatelessWidget {
             children: [
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
+                height: MediaQuery.of(context).size.height * 1.1,
                 decoration: BoxDecoration(
                     color: couleurs.white.withOpacity(0.5),
                     image: DecorationImage(
@@ -55,8 +55,8 @@ class Reset extends StatelessWidget {
                       incomingEffect:
                           WidgetTransitionEffects.incomingSlideInFromTop(
                               duration: Duration(milliseconds: 500)),
-                      child: Positioned(
-                        top: 0.0,
+                      child: Align(
+                        alignment: Alignment.topLeft,
                         child: Image.asset(
                           "assets/images/wave-t.png",
                         ),
@@ -67,8 +67,8 @@ class Reset extends StatelessWidget {
                       incomingEffect:
                           WidgetTransitionEffects.incomingSlideInFromBottom(
                               duration: Duration(milliseconds: 500)),
-                      child: Positioned(
-                        bottom: 0.0,
+                      child: Align(
+                        alignment: Alignment.bottomRight,
                         child: Image.asset(
                           "assets/images/wave-b.png",
                         ),
@@ -132,6 +132,7 @@ class Reset extends StatelessWidget {
                             height: 15,
                           ),
                           NewInput(
+                              obscureText: true,
                               controller: controller,
                               onSubmit: onSubmit,
                               keyboardType: keyboardType,
@@ -140,6 +141,7 @@ class Reset extends StatelessWidget {
                               couleurs: couleurs,
                               prefixIcon: prefixIcon),
                           NewInput(
+                              obscureText: true,
                               controller: controller2,
                               onSubmit: onSubmit2,
                               keyboardType: keyboardType2,
@@ -164,8 +166,8 @@ class Reset extends StatelessWidget {
                                 EasyLoading.showError(
                                     "Les deux Mots de passe ne correspondent pas");
                               } else {
-                                PasswordController().reset(email,
-                                    controller, controller2, token);
+                                PasswordController().reset(
+                                    email, controller, controller2, token);
                               }
                             },
                           ),

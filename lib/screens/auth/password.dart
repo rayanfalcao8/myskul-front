@@ -44,8 +44,8 @@ class Password extends StatelessWidget {
                       incomingEffect:
                           WidgetTransitionEffects.incomingSlideInFromTop(
                               duration: Duration(milliseconds: 500)),
-                      child: Positioned(
-                        top: 0.0,
+                      child: Align(
+                        alignment: Alignment.topLeft,
                         child: Image.asset(
                           "assets/images/wave-t.png",
                         ),
@@ -56,8 +56,8 @@ class Password extends StatelessWidget {
                       incomingEffect:
                           WidgetTransitionEffects.incomingSlideInFromBottom(
                               duration: Duration(milliseconds: 500)),
-                      child: Positioned(
-                        bottom: 0.0,
+                      child: Align(
+                        alignment: Alignment.bottomRight,
                         child: Image.asset(
                           "assets/images/wave-b.png",
                         ),

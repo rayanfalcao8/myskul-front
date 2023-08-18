@@ -2,16 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
 import 'package:myskul/controllers/auth/login_controller.dart';
+import 'package:myskul/models/user.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
 import 'package:myskul/utilities/gradients.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainDrawer extends StatelessWidget {
+  MainDrawer({required this.user});
+  User user;
   var couleurs = ColorHelper();
+
   var textes = TextHelper();
+
   var icones = IconHelper();
+
   var gradients = GradientHelper();
+
+  final String _url = ('https://wa.link/7ipjc4');
+
+  final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
+
+  Future<void> _launchUrl() async {
+    if (!await launch(_url)) {
+      throw Exception('Could not launch $_url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,61 +43,37 @@ class MainDrawer extends StatelessWidget {
               DrawerHeader(
                 child: Stack(
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Positioned(
-                                top: 0,
-                                right: 10,
-                                child: CircleAvatar(
-                                  backgroundColor:
-                                      couleurs.white.withOpacity(0.1),
-                                  radius: 05,
-                                )),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Positioned(
-                                top: 50,
-                                right: 40,
-                                child: CircleAvatar(
-                                  backgroundColor:
-                                      couleurs.white.withOpacity(0.1),
-                                  radius: 15,
-                                )),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Positioned(
-                                top: 50,
-                                right: 40,
-                                child: CircleAvatar(
-                                  backgroundColor:
-                                      couleurs.white.withOpacity(0.1),
-                                  radius: 20,
-                                )),
-                            SizedBox(
-                              width: 60,
-                            ),
-                            Positioned(
-                                bottom: 0,
-                                right: 10,
-                                child: CircleAvatar(
-                                  backgroundColor:
-                                      couleurs.white.withOpacity(0.1),
-                                  radius: 08,
-                                )),
-                          ],
-                        ),
-                      ],
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                              top: 0,
+                              right: 0,
+                              child: CircleAvatar(
+                                backgroundColor:
+                                    couleurs.white.withOpacity(0.1),
+                                radius: 08,
+                              )),
+                          Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: CircleAvatar(
+                                backgroundColor:
+                                    couleurs.white.withOpacity(0.1),
+                                radius: 15,
+                              )),
+                          Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: CircleAvatar(
+                                backgroundColor:
+                                    couleurs.white.withOpacity(0.1),
+                                radius: 15,
+                              )),
+                        ],
+                      ),
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -86,9 +81,9 @@ class MainDrawer extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Image.asset(
-                              "assets/images/boy.png",
-                              width: 70,
+                            CircleAvatar(
+                              backgroundImage: NetworkImage(user.profile_image),
+                              radius: 30,
                             ),
                             SizedBox()
                           ],
@@ -111,9 +106,14 @@ class MainDrawer extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Gumball Watterson',
-                              style: textes.h4b.copyWith(color: couleurs.white),
+                            SizedBox(
+                              width: 170,
+                              child: Text(
+                                user.first_name + " " + user.last_name,
+                                style:
+                                    textes.h3b.copyWith(color: couleurs.white),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                             SizedBox()
                           ],
@@ -129,43 +129,133 @@ class MainDrawer extends StatelessWidget {
                 ),
               ),
               ListTile(
-                title: Text('Home'),
+                title: Row(
+                  children: [
+                    Icon(
+                      icones.account,
+                      color: couleurs.green,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text("my-account".tr),
+                  ],
+                ),
                 tileColor:
                     Get.currentRoute == '/home' ? Colors.grey[300] : null,
                 onTap: () {},
               ),
               ListTile(
-                title: Text('Item 1'),
+                title: Row(
+                  children: [
+                    Icon(
+                      icones.library,
+                      color: couleurs.green,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('my-lib'.tr),
+                  ],
+                ),
                 tileColor:
-                    Get.currentRoute == '/page1' ? Colors.grey[300] : null,
+                    Get.currentRoute == '/home' ? Colors.grey[300] : null,
                 onTap: () {},
               ),
               ListTile(
-                title: Text('Item 2'),
+                title: Row(
+                  children: [
+                    Icon(
+                      icones.subscription,
+                      color: couleurs.green,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('my-sub'.tr),
+                  ],
+                ),
                 tileColor:
-                    Get.currentRoute == '/page2' ? Colors.grey[300] : null,
+                    Get.currentRoute == '/home' ? Colors.grey[300] : null,
                 onTap: () {},
               ),
+              ListTile(
+                title: Row(
+                  children: [
+                    Icon(
+                      icones.history,
+                      color: couleurs.green,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('history'.tr),
+                  ],
+                ),
+                tileColor:
+                    Get.currentRoute == '/home' ? Colors.grey[300] : null,
+                onTap: () {},
+              ),
+              ListTile(
+                title: Row(
+                  children: [
+                    Icon(
+                      icones.partner,
+                      color: couleurs.green,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('our-part'.tr),
+                  ],
+                ),
+                tileColor:
+                    Get.currentRoute == '/home' ? Colors.grey[300] : null,
+                onTap: () {},
+              ),
+              ListTile(
+                title: Row(
+                  children: [
+                    Icon(
+                      icones.help,
+                      color: couleurs.green,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('sav'.tr),
+                  ],
+                ),
+                onTap: _launchUrl,
+              ),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 2,
+                height: MediaQuery.of(context).size.height / 3.5,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Bounceable(
-                    onTap: () {},
+                    onTap: () async {
+                      Get.updateLocale(Locale("fr"));
+                      final SharedPreferences prefs = await _prefs2;
+                      await prefs.setString('locale', "fr");
+                      print(Get.locale);
+                    },
                     child: Column(
                       children: [
                         Image.asset(
                           "assets/images/fr.png",
                           width: 20,
                         ),
-                        SizedBox(height: 2,),
-                        Container(
-                          width: 20,
-                          height: 5,
-                          color: couleurs.green,
+                        SizedBox(
+                          height: 2,
                         ),
+                        Container(
+                                width: 20,
+                                height: 5,
+                                color:  Get.locale.toString() == "fr"
+                            ?couleurs.green : couleurs.white ,
+                              ),
                       ],
                     ),
                   ),
@@ -174,21 +264,29 @@ class MainDrawer extends StatelessWidget {
                     height: 20,
                     color: couleurs.black.withOpacity(0.1),
                   ),
-
                   Bounceable(
-                    onTap: () {},
+                    onTap: () async {
+                      
+                      Get.updateLocale(Locale("en"));
+                      final SharedPreferences prefs = await _prefs2;
+                      await prefs.setString('locale', "en");
+                      print(Get.locale);
+                    },
                     child: Column(
                       children: [
                         Image.asset(
                           "assets/images/en.png",
                           width: 25,
                         ),
-                        // SizedBox(height: 2,),
-                        // Container(
-                        //   width: 25,
-                        //   height: 5,
-                        //   color: couleurs.green,
-                        // ),
+                        SizedBox(
+                          height: 2,
+                        ),
+                         Container(
+                                width: 20,
+                                height: 5,
+                                color:  Get.locale.toString() == "en"
+                            ?couleurs.green : couleurs.white ,
+                              ),
                       ],
                     ),
                   ),

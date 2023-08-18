@@ -15,6 +15,7 @@ class NewInput extends StatelessWidget {
     this.errorText,
     this.onTap,
     this.readOnly = false,
+    this.obscureText = false,
   });
 
   final TextEditingController controller;
@@ -27,6 +28,7 @@ class NewInput extends StatelessWidget {
   final Icon prefixIcon;
   final String? errorText;
   final bool readOnly;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class NewInput extends StatelessWidget {
           width: 300,
           height: 51,
           child: TextField(
+            obscureText: obscureText,
             controller: controller,
             onSubmitted: onSubmit,
             onTap: onTap,

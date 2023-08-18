@@ -59,7 +59,7 @@ class _RegisterState extends State<Register> {
             children: [
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 2,
+                height: MediaQuery.of(context).size.height * 1.5,
                 decoration: BoxDecoration(
                     color: couleurs.white.withOpacity(0.5),
                     image: DecorationImage(
@@ -74,8 +74,8 @@ class _RegisterState extends State<Register> {
                       incomingEffect:
                           WidgetTransitionEffects.incomingSlideInFromTop(
                               duration: Duration(milliseconds: 500)),
-                      child: Positioned(
-                        top: 0.0,
+                      child: Align(
+                        alignment: Alignment.topLeft,
                         child: Image.asset(
                           "assets/images/wave-t.png",
                         ),
@@ -86,8 +86,8 @@ class _RegisterState extends State<Register> {
                       incomingEffect:
                           WidgetTransitionEffects.incomingSlideInFromBottom(
                               duration: Duration(milliseconds: 500)),
-                      child: Positioned(
-                        bottom: 0.0,
+                      child: Align(
+                        alignment: Alignment.bottomRight,
                         child: Image.asset(
                           "assets/images/wave-b.png",
                         ),
@@ -274,6 +274,7 @@ class _RegisterState extends State<Register> {
                             height: 10,
                           ),
                           NewInput(
+                              obscureText: true,
                               controller: password,
                               onSubmit: (g) {},
                               keyboardType: TextInputType.visiblePassword,
@@ -282,6 +283,7 @@ class _RegisterState extends State<Register> {
                               couleurs: couleurs,
                               prefixIcon: Icon(icones.lock)),
                           NewInput(
+                              obscureText: true,
                               controller: passwordConfirm,
                               onSubmit: (g) {},
                               keyboardType: TextInputType.visiblePassword,

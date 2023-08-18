@@ -21,9 +21,9 @@ class IconHelper {
   late var chatgpt =  Icons.live_help;
   late var fitness =  Icons.fitness_center;
   late var logout =  Icons.logout;
-  late var account =  Icons.account_circle;
-  late var library =  Icons.local_library;
-  late var subscription =  Icons.subscriptions;
+  late var account =  Icons.account_circle_outlined;
+  late var library =  Icons.local_library_outlined;
+  late var subscription =  Icons.subscriptions_outlined;
   late var help =  Icons.help_outline;
   late var history =  Icons.history;
   late var search =  Icons.search;
@@ -31,4 +31,5 @@ class IconHelper {
   late var photo =  Icons.photo_camera;
   late var send =  Icons.send;
   late var download =  Icons.file_download;
+  late var partner =  Icons.workspaces_outlined;
 }
