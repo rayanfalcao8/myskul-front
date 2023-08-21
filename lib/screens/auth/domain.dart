@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/components/genderBox.dart';
 import 'package:myskul/screens/auth/sc.dart';
@@ -94,7 +95,7 @@ class _DomainState extends State<Domain> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "CHOISIS TON DOMAINE !",
+                                'domain'.tr,
                                 style: GoogleFonts.getFont('Lato',
                                     textStyle: textes.h1l),
                               )
@@ -119,7 +120,7 @@ class _DomainState extends State<Domain> {
                                   icones: icones.school,
                                   textes: textes,
                                   condition: 0,
-                                  gender: "PREPA",
+                                  gender: "domain1",
                                   width: 140,
                                   height: 300,
                                 ),
@@ -140,7 +141,7 @@ class _DomainState extends State<Domain> {
                                   icones: icones.school,
                                   textes: textes,
                                   condition: 1,
-                                  gender: "BORDS \n NUMERIQUES",
+                                  gender: "domain2",
                                   width: 140,
                                   height: 300,
                                 ),
@@ -154,7 +155,7 @@ class _DomainState extends State<Domain> {
                             textes: textes,
                             couleurs: couleurs,
                             icones: icones,
-                            text: "SUIVANT",
+                            text: "next",
                             function: () {
                               if (selectedSP == 0) {
                                 Navigator.push(context,

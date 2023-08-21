@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/texts.dart';
 
@@ -45,7 +46,7 @@ class NewInput extends StatelessWidget {
             readOnly: readOnly,
             keyboardType: keyboardType,
             decoration: InputDecoration(
-                hintText: hintText,
+                hintText: hintText.tr,
                 hintStyle: textes.h4l.copyWith(
                     color: MaterialStateColor.resolveWith((states) =>
                         states.contains(MaterialState.focused)

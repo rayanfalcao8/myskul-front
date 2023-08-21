@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/components/genderBox.dart';
 import 'package:myskul/components/newInputInter.dart';
@@ -125,7 +126,7 @@ class _RegisterState extends State<Register> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "NOUVEAU COMPTE",
+                                "new-account",
                                 style: GoogleFonts.getFont('Lato',
                                     textStyle: textes.h1l),
                               )
@@ -138,7 +139,7 @@ class _RegisterState extends State<Register> {
                               controller: noms,
                               onSubmit: (g) {},
                               keyboardType: TextInputType.text,
-                              hintText: "Noms et prénoms",
+                              hintText: "firstname-lastname",
                               textes: textes,
                               couleurs: couleurs,
                               prefixIcon: Icon(icones.user)),
@@ -146,7 +147,7 @@ class _RegisterState extends State<Register> {
                               controller: email,
                               onSubmit: (g) {},
                               keyboardType: TextInputType.emailAddress,
-                              hintText: "Adresse Email",
+                              hintText: "email",
                               textes: textes,
                               couleurs: couleurs,
                               prefixIcon: Icon(icones.user)),
@@ -154,7 +155,7 @@ class _RegisterState extends State<Register> {
                               controller: num,
                               onSubmit: (g) {},
                               keyboardType: TextInputType.phone,
-                              hintText: "Numéro de téléphone",
+                              hintText: "phone",
                               textes: textes,
                               couleurs: couleurs,
                               prefixIcon: Icon(icones.user)),
@@ -162,7 +163,7 @@ class _RegisterState extends State<Register> {
                               controller: ville,
                               onSubmit: (g) {},
                               keyboardType: TextInputType.text,
-                              hintText: "Ville de résidence",
+                              hintText: "city",
                               textes: textes,
                               couleurs: couleurs,
                               prefixIcon: Icon(icones.city)),
@@ -219,7 +220,7 @@ class _RegisterState extends State<Register> {
                                 }
                               },
                               keyboardType: TextInputType.datetime,
-                              hintText: "Date de naissance",
+                              hintText: "bd",
                               textes: textes,
                               couleurs: couleurs,
                               prefixIcon: Icon(icones.calendar)),
@@ -242,7 +243,7 @@ class _RegisterState extends State<Register> {
                                   icones: icones.boy,
                                   textes: textes,
                                   condition: 0,
-                                  gender: "HOMME",
+                                  gender: "male",
                                   width: 145,
                                   height: 80,
                                 ),
@@ -263,7 +264,7 @@ class _RegisterState extends State<Register> {
                                   icones: icones.girl,
                                   textes: textes,
                                   condition: 1,
-                                  gender: "FEMME",
+                                  gender: "female",
                                   width: 145,
                                   height: 80,
                                 ),
@@ -278,7 +279,7 @@ class _RegisterState extends State<Register> {
                               controller: password,
                               onSubmit: (g) {},
                               keyboardType: TextInputType.visiblePassword,
-                              hintText: "Mot de passe",
+                              hintText: "password",
                               textes: textes,
                               couleurs: couleurs,
                               prefixIcon: Icon(icones.lock)),
@@ -287,7 +288,7 @@ class _RegisterState extends State<Register> {
                               controller: passwordConfirm,
                               onSubmit: (g) {},
                               keyboardType: TextInputType.visiblePassword,
-                              hintText: "Confirmation du mot de passe",
+                              hintText: "password-conf",
                               textes: textes,
                               couleurs: couleurs,
                               prefixIcon: Icon(icones.lock)),
@@ -307,7 +308,7 @@ class _RegisterState extends State<Register> {
                               Row(
                                 children: [
                                   Text(
-                                    "J’ai lu et j’accepte",
+                                    "tos1".tr,
                                     style: textes.h4l,
                                   ),
                                   GestureDetector(
@@ -317,7 +318,7 @@ class _RegisterState extends State<Register> {
                                         return Term();
                                       }));
                                     },
-                                    child: Text(" les Termes et conditions",
+                                    child: Text("tos2".tr,
                                         style: textes.h4l
                                             .copyWith(color: couleurs.green)),
                                   )
@@ -329,7 +330,7 @@ class _RegisterState extends State<Register> {
                             textes: textes,
                             couleurs: couleurs,
                             icones: icones,
-                            text: "S'ENGREGISTRER",
+                            text: "signup",
                             function: () {
                               if (noms.text.isEmpty) {
                                 EasyLoading.showError("Nom Requis");
@@ -370,7 +371,7 @@ class _RegisterState extends State<Register> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Déjà inscrit ? ",
+                                "already-reg".tr,
                                 style: textes.h4l,
                               ),
                               GestureDetector(
@@ -381,7 +382,7 @@ class _RegisterState extends State<Register> {
                                   }));
                                 },
                                 child: Text(
-                                  "Se connecter",
+                                  "connect-min".tr,
                                   style: textes.h4l
                                       .copyWith(color: couleurs.green),
                                 ),

@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'package:myskul/screens/auth/domain.dart';
+
 import 'test.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,7 +37,8 @@ void main() async {
 
   if (locale != null) {
     Get.updateLocale(Locale(locale!));
-  }
+  } 
+
   runApp(Home1());
 }
 
@@ -96,7 +99,7 @@ class _Home1State extends State<Home1> {
       // ],
       // supportedLocales: L10n.all,
       translations: Messages(),
-      locale: Get.locale,
+      locale: Get.locale ?? Get.deviceLocale,
       fallbackLocale: Locale('fr', 'FR'),
       theme: ThemeData(
         primarySwatch: colorCustom,

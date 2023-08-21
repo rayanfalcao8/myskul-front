@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/drawer.dart';
 import 'package:myskul/utilities/colors.dart';
@@ -163,7 +164,7 @@ class _HomeState extends State<Home> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "TABLEAU DE BORD",
+                              "dash".tr,
                               style: textes.h3l.copyWith(color: couleurs.grey),
                             ),
                             SizedBox(
@@ -242,7 +243,7 @@ class _HomeState extends State<Home> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "ABONNEMENT ACTUEL",
+                              "current-plan".tr,
                               style: textes.h3l.copyWith(color: couleurs.grey),
                             ),
                             SizedBox(
@@ -352,7 +353,7 @@ class _HomeState extends State<Home> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "INFORMATIONS PERSONNELLES",
+                              "user-info".tr,
                               style: textes.h3l.copyWith(color: couleurs.grey),
                             ),
                             SizedBox(
@@ -385,7 +386,7 @@ class _HomeState extends State<Home> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text("15", style: textes.h3b),
-                                      Text("Total quiz", style: textes.h3l),
+                                      Text("t-quiz".tr, style: textes.h3l),
                                     ],
                                   ),
                                   SizedBox(
@@ -398,7 +399,7 @@ class _HomeState extends State<Home> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text("15", style: textes.h3b),
-                                      Text("Correctes", style: textes.h3l),
+                                      Text("r".tr, style: textes.h3l),
                                     ],
                                   ),
                                 ],
@@ -415,7 +416,7 @@ class _HomeState extends State<Home> {
                                     height: 30,
                                   ),
                                   Text(
-                                    "MON SCORE",
+                                    "score".tr,
                                     style: textes.h3r
                                         .copyWith(color: couleurs.green),
                                   ),
@@ -440,7 +441,7 @@ class _HomeState extends State<Home> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text("200", style: textes.h3b),
-                                      Text("Total questions",
+                                      Text("t-question".tr,
                                           style: textes.h3l),
                                     ],
                                   ),
@@ -452,7 +453,7 @@ class _HomeState extends State<Home> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text("15", style: textes.h3b),
-                                      Text("Incorrectes", style: textes.h3l),
+                                      Text("t".tr, style: textes.h3l),
                                     ],
                                   ),
                                 ],

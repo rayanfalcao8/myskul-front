@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/controllers/auth/password_controller.dart';
 import 'package:myskul/screens/auth/register.dart';
@@ -17,7 +18,7 @@ class Password extends StatelessWidget {
   var controller = TextEditingController();
   var onSubmit = (String a) {};
   var keyboardType = TextInputType.emailAddress;
-  var hintText = "Adresse Email";
+  var hintText = "email";
   var prefixIcon = Icon(Icons.person);
 
   @override
@@ -93,7 +94,7 @@ class Password extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "RECUPERATION DE",
+                                "password-recov-title".tr,
                                 style: GoogleFonts.getFont('Lato',
                                     textStyle: textes.h1l),
                               ),
@@ -101,7 +102,7 @@ class Password extends StatelessWidget {
                                 height: 10,
                               ),
                               Text(
-                                "MOT DE PASSE",
+                                "password-recov-title2".tr,
                                 style: GoogleFonts.getFont('Lato',
                                     textStyle: textes.h1l),
                               ),
@@ -113,7 +114,7 @@ class Password extends StatelessWidget {
                           SizedBox(
                               width: 300,
                               child: Text(
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis varius urna arcu, sodales cursus magna porttitor et.",
+                                "password-recov-text".tr,
                                 style: textes.h4l,
                                 textAlign: TextAlign.center,
                               )),
@@ -135,7 +136,7 @@ class Password extends StatelessWidget {
                             textes: textes,
                             couleurs: couleurs,
                             icones: icones,
-                            text: "ENVOYER",
+                            text: "send",
                             function: (){
                               PasswordController().password(controller);
                             },
@@ -147,7 +148,7 @@ class Password extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Nouveau ?",
+                                "new-here1".tr,
                                 style: textes.h4l,
                               ),
                               GestureDetector(
@@ -158,7 +159,7 @@ class Password extends StatelessWidget {
                                   }));
                                 },
                                 child: Text(
-                                  " Créer un compte",
+                                  "new-here2".tr,
                                   style: textes.h4l
                                       .copyWith(color: couleurs.green),
                                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/controllers/auth/password_controller.dart';
 import 'package:myskul/screens/auth/register.dart';
@@ -19,13 +20,13 @@ class Reset extends StatelessWidget {
   var controller = TextEditingController();
   var onSubmit = (String a) {};
   var keyboardType = TextInputType.visiblePassword;
-  var hintText = "Mot de passe";
+  var hintText = "new-password";
   var prefixIcon = Icon(Icons.lock);
 
   var controller2 = TextEditingController();
   var onSubmit2 = (String a) {};
   var keyboardType2 = TextInputType.visiblePassword;
-  var hintText2 = "Confirmation du mot de passe";
+  var hintText2 = "password-conf";
   var prefixIcon2 = Icon(Icons.lock);
 
   var email;
@@ -104,7 +105,7 @@ class Reset extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "REINITIALISATION DE",
+                                "password-reset-title".tr,
                                 style: GoogleFonts.getFont('Lato',
                                     textStyle: textes.h1l),
                               ),
@@ -112,7 +113,7 @@ class Reset extends StatelessWidget {
                                 height: 10,
                               ),
                               Text(
-                                "MOT DE PASSE",
+                                "password-reset-title2".tr,
                                 style: GoogleFonts.getFont('Lato',
                                     textStyle: textes.h1l),
                               ),
@@ -124,7 +125,7 @@ class Reset extends StatelessWidget {
                           SizedBox(
                               width: 300,
                               child: Text(
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis varius urna arcu, sodales cursus magna porttitor et.",
+                                "password-reset-title".tr,
                                 style: textes.h4l,
                                 textAlign: TextAlign.center,
                               )),
@@ -156,7 +157,7 @@ class Reset extends StatelessWidget {
                             textes: textes,
                             couleurs: couleurs,
                             icones: icones,
-                            text: "REINITIALISER",
+                            text: "reset",
                             function: () {
                               if (controller.text.isEmpty) {
                                 EasyLoading.showError("Mot de passe Requis");

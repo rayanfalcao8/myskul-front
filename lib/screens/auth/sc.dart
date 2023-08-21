@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/components/genderBox.dart';
 import 'package:myskul/components/newButtonD.dart';
@@ -94,7 +95,7 @@ class _SCState extends State<SC> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "CHOISIS TON ECOLE !",
+                                "SC".tr,
                                 style: GoogleFonts.getFont('Lato',
                                     textStyle: textes.h1l),
                               )
@@ -118,7 +119,7 @@ class _SCState extends State<SC> {
                                   gradients: gradients,
                                   textes: textes,
                                   condition: 0,
-                                  gender: "FMSP DOUALA",
+                                  gender: "SC1",
                                   width: 305,
                                   height: 70,
                                 ),
@@ -138,7 +139,7 @@ class _SCState extends State<SC> {
                                   gradients: gradients,
                                   textes: textes,
                                   condition: 1,
-                                  gender: "FMSB YAOUNDE",
+                                  gender:"SC2",
                                   width: 305,
                                   height: 70,
                                 ),
@@ -158,7 +159,7 @@ class _SCState extends State<SC> {
                                   gradients: gradients,
                                   textes: textes,
                                   condition: 2,
-                                  gender: "FMSP DSCHANG",
+                                  gender: "SC3",
                                   width: 305,
                                   height: 70,
                                 ),
@@ -175,7 +176,7 @@ class _SCState extends State<SC> {
                               textes: textes,
                               couleurs: couleurs,
                               icones: icones,
-                              text: "PRECEDENT",
+                              text: "previous",
                               function: () {
                                 Navigator.pop(context);
                               }),
@@ -186,7 +187,7 @@ class _SCState extends State<SC> {
                               textes: textes,
                               couleurs: couleurs,
                               icones: icones,
-                              text: "SUIVANT",
+                              text: "next",
                               function: () {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {

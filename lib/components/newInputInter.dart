@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/texts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -37,7 +38,7 @@ class NewInputInter extends StatelessWidget {
             // ignore: deprecated_member_use
             searchText: "Recherche",
             decoration: InputDecoration(
-              hintText: hintText,
+              hintText: hintText.tr,
                 hintStyle: textes.h4l.copyWith(
                     color: MaterialStateColor.resolveWith((states) =>
                         states.contains(MaterialState.focused)

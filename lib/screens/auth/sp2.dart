@@ -196,7 +196,7 @@ class _SP2State extends State<SP2> {
                               textes: textes,
                               couleurs: couleurs,
                               icones: icones,
-                              text: "PRECEDENT",
+                              text: "previous",
                               function: () {
                                 Navigator.pop(context);
                               }),
@@ -207,7 +207,7 @@ class _SP2State extends State<SP2> {
                               textes: textes,
                               couleurs: couleurs,
                               icones: icones,
-                              text: "VALIDER",
+                              text: "validate",
                               function: () {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {

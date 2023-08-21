@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/components/genderBox.dart';
 import 'package:myskul/components/newButtonD.dart';
@@ -95,7 +96,7 @@ class _SP1State extends State<SP1> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "CHOISIS TA SPECIALITE !",
+                                "SP".tr,
                                 style: GoogleFonts.getFont('Lato',
                                     textStyle: textes.h1l),
                               )
@@ -124,7 +125,7 @@ class _SP1State extends State<SP1> {
                                       icones: icones.medical,
                                       textes: textes,
                                       condition: 0,
-                                      gender: "MEDECINE \n DENTAIRE",
+                                      gender: "SP1",
                                       width: 140,
                                       height: 140,
                                     ),
@@ -145,7 +146,7 @@ class _SP1State extends State<SP1> {
                                       icones: icones.medical,
                                       textes: textes,
                                       condition: 1,
-                                      gender: "PHARMACIE",
+                                      gender: "SP2",
                                       width: 140,
                                       height: 140,
                                     ),
@@ -168,7 +169,7 @@ class _SP1State extends State<SP1> {
                                   icones: icones.medical,
                                   textes: textes,
                                   condition: 2,
-                                  gender: "MEDECINE \n GENERALE",
+                                  gender: "SP3",
                                   width: 140,
                                   height: 300,
                                 ),
@@ -182,7 +183,7 @@ class _SP1State extends State<SP1> {
                               textes: textes,
                               couleurs: couleurs,
                               icones: icones,
-                              text: "PRECEDENT",
+                              text: "previous",
                               function: () {
                                 Navigator.pop(context);
                               }),
@@ -193,7 +194,7 @@ class _SP1State extends State<SP1> {
                               textes: textes,
                               couleurs: couleurs,
                               icones: icones,
-                              text: "SUIVANT",
+                              text: "next",
                               function: () {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {

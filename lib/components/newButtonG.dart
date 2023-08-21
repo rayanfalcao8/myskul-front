@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
@@ -39,7 +40,7 @@ class NewButtonG extends StatelessWidget {
               children: [
                 SizedBox(),
                  SizedBox(),
-                Text(text,
+                Text(text.tr,
                     style: GoogleFonts.getFont('Lato',
                         textStyle: textes.h4b
                             .copyWith(color: couleurs.white))),

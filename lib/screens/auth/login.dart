@@ -33,7 +33,7 @@ class _LoginState extends State<Login> {
 
   var keyboardType = TextInputType.emailAddress;
 
-  var hintText = "Adresse Email";
+  var hintText = "email";
 
   var prefixIcon = Icon(Icons.person);
 
@@ -43,7 +43,7 @@ class _LoginState extends State<Login> {
 
   var keyboardType2 = TextInputType.visiblePassword;
 
-  var hintText2 = "Mot de passe";
+  var hintText2 = "password";
 
   var prefixIcon2 = Icon(Icons.lock);
 
@@ -59,7 +59,6 @@ class _LoginState extends State<Login> {
     final SharedPreferences prefs2 = await _prefs2;
     bool? seen = await prefs2.getBool('first');
 String? token = await prefs.getString('token');
-    print(" first $seen  token $token ");
   }
 
   @override
@@ -141,7 +140,7 @@ String? token = await prefs.getString('token');
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "BIENVENUE",
+                                "welcome".tr,
                                 style: GoogleFonts.getFont('Lato',
                                     textStyle: textes.h1l),
                               ),
@@ -149,7 +148,7 @@ String? token = await prefs.getString('token');
                                 height: 10,
                               ),
                               Text(
-                                "SUR MySkul",
+                                "welcome2".tr,
                                 style: GoogleFonts.getFont('Lato',
                                     textStyle: textes.h1l),
                               ),
@@ -179,8 +178,9 @@ String? token = await prefs.getString('token');
                             textes: textes,
                             couleurs: couleurs,
                             icones: icones,
-                            text: "SE CONNECTER",
+                            text: "connect",
                             function: () async {
+                              print(Get.locale);
                               if (controller.text.isEmpty) {
                                 EasyLoading.showError("Email Requis");
                                 validEmail = false;
@@ -200,7 +200,7 @@ String? token = await prefs.getString('token');
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Nouveau ?",
+                                "new-here1".tr,
                                 style: textes.h4l,
                               ),
                               GestureDetector(
@@ -211,7 +211,7 @@ String? token = await prefs.getString('token');
                                   }));
                                 },
                                 child: Text(
-                                  " Creer un compte",
+                                  "new-here2".tr,
                                   style: textes.h4l
                                       .copyWith(color: couleurs.green),
                                 ),
@@ -225,7 +225,7 @@ String? token = await prefs.getString('token');
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Mot de passe oublié ?",
+                                "forgot-password1".tr,
                                 style: textes.h4l,
                               ),
                               GestureDetector(
@@ -233,7 +233,7 @@ String? token = await prefs.getString('token');
                                   Get.to(Password());
                                 },
                                 child: Text(
-                                  " Récupérer mon mot de passe",
+                                  "forgot-password2".tr,
                                   style: textes.h4l
                                       .copyWith(color: couleurs.green),
                                 ),

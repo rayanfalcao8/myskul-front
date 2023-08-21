@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/texts.dart';
 import 'package:myskul/utilities/gradients.dart';
@@ -66,7 +67,7 @@ class _GenderBoxState extends State<GenderBox> {
             height: 10,
           ),
           Text(
-            widget.gender,
+            widget.gender.tr,
             style: widget.textes.h4b.copyWith(
                 color: widget.selectedGender == widget.condition
                     ? widget.couleurs.white
@@ -78,7 +79,7 @@ class _GenderBoxState extends State<GenderBox> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            widget.gender,
+            widget.gender.tr,
             style: widget.textes.h4b.copyWith(
                 color: widget.selectedGender == widget.condition
                     ? widget.couleurs.white

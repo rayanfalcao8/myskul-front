@@ -88,7 +88,7 @@ class _SplashState extends State<Splash> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Apprendre",
+                            "main-title1".tr,
                             style: GoogleFonts.getFont('Lato',
                                 textStyle: textes.xxlb
                                     .copyWith(color: couleurs.white)),
@@ -98,7 +98,7 @@ class _SplashState extends State<Splash> {
                             height: 10,
                           ),
                           Text(
-                            "devient plus facile !",
+                            "main-title2".tr,
                             style: GoogleFonts.getFont('Lato',
                                 textStyle: textes.xxlb
                                     .copyWith(color: couleurs.white)),
@@ -115,14 +115,14 @@ class _SplashState extends State<Splash> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Révisez et renforcez ",
+                            "main-subtitle1".tr,
                             style: GoogleFonts.getFont('Lato',
                                 textStyle:
                                     textes.h1r.copyWith(color: couleurs.white)),
                             textAlign: TextAlign.left,
                           ),
                           Text(
-                            "vos connaissances ou que vous soyez",
+                             "main-subtitle2".tr,
                             style: GoogleFonts.getFont('Lato',
                                 textStyle:
                                     textes.h1r.copyWith(color: couleurs.white)),
@@ -152,7 +152,7 @@ class _SplashState extends State<Splash> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   SizedBox(),
-                                  Text("COMMENCER",
+                                  Text("start".tr,
                                       style: GoogleFonts.getFont('Lato',
                                           textStyle: textes.h3b.copyWith(
                                               color: couleurs.green))),

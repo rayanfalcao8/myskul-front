@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/components/genderBox.dart';
 import 'package:myskul/components/newButtonD.dart';
@@ -95,7 +96,7 @@ class _LVState extends State<LV> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "CHOISIS TON NIVEAU !",
+              "CHOISIS TON NIVEAU !".tr,
               style: GoogleFonts.getFont('Lato',
                   textStyle: textes.h1l),
             )
