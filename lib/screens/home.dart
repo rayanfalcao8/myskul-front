@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
     print("${widget.user.email}");
     return Scaffold(
       key: scaffoldKey,
-      drawer: MainDrawer(user:widget.user),
+      drawer: MainDrawer(user: widget.user),
       body: SafeArea(
         child: SingleChildScrollView(
           child: AnimationLimiter(
@@ -124,32 +124,95 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                         options: CarouselOptions(
-                          height: 300.0,
-                          enlargeCenterPage: true,
-                          autoPlay: true,
-                          aspectRatio: 10,
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          enableInfiniteScroll: true,
-                          autoPlayAnimationDuration: Duration(seconds: 2),
-                          viewportFraction: 1.2,
-                        ),
+                            height: 300.0,
+                            enlargeCenterPage: true,
+                            autoPlay: false,
+                            aspectRatio: 10,
+                            enableInfiniteScroll: true,
+                            viewportFraction: 1.2,),
                       ),
                     ]),
                   ),
+                  // Container(
+                  //   height: 50,
+                  //   width: MediaQuery.of(context).size.width,
+                  //   decoration:
+                  //       BoxDecoration(gradient: gradients.greenGradient),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: [
+                  //       Text(
+                  //         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nEtiam semper lacinia nunc . ",
+                  //         style: textes.h4l.copyWith(color: couleurs.white),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+
                   Container(
-                    height: 50,
                     width: MediaQuery.of(context).size.width,
+                    height: 50,
                     decoration:
                         BoxDecoration(gradient: gradients.greenGradient),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nEtiam semper lacinia nunc . ",
-                          style: textes.h4l.copyWith(color: couleurs.white),
-                        ),
-                      ],
-                    ),
+                    child: ListView(children: [
+                      CarouselSlider(
+                        items: [
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                gradient: gradients.greenGradient),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nEtiam semper lacinia nunc . ",
+                                  style: textes.h4l
+                                      .copyWith(color: couleurs.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                gradient: gradients.greenGradient),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nEtiam semper lacinia nunc . ",
+                                  style: textes.h4l
+                                      .copyWith(color: couleurs.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                gradient: gradients.greenGradient),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nEtiam semper lacinia nunc . ",
+                                  style: textes.h4l
+                                      .copyWith(color: couleurs.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                        options: CarouselOptions(
+                            height: 50.0,
+                            pageSnapping: false,
+                            enlargeCenterPage: true,
+                            autoPlay: true,
+                            aspectRatio: 10,
+                            enableInfiniteScroll: true,
+                            viewportFraction: 1.2,),
+                      ),
+                    ]),
                   ),
                   SizedBox(
                     height: 30,
@@ -182,7 +245,7 @@ class _HomeState extends State<Home> {
                           height: 10,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             DashBox(
                               couleurs: couleurs,
@@ -205,13 +268,14 @@ class _HomeState extends State<Home> {
                               texte: "Chat",
                               couleur: Colors.pink,
                             ),
+                            SizedBox()
                           ],
                         ),
                         SizedBox(
                           height: 20,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             DashBox(
                               couleurs: couleurs,
@@ -234,6 +298,7 @@ class _HomeState extends State<Home> {
                               texte: "Fitness",
                               couleur: Colors.red,
                             ),
+                            SizedBox()
                           ],
                         ),
                         SizedBox(
@@ -386,7 +451,7 @@ class _HomeState extends State<Home> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text("15", style: textes.h3b),
-                                      Text("t-quiz".tr, style: textes.h3l),
+                                      Text("t-quiz".tr, style: textes.h4l),
                                     ],
                                   ),
                                   SizedBox(
@@ -399,7 +464,7 @@ class _HomeState extends State<Home> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text("15", style: textes.h3b),
-                                      Text("r".tr, style: textes.h3l),
+                                      Text("r".tr, style: textes.h4l),
                                     ],
                                   ),
                                 ],
@@ -441,8 +506,7 @@ class _HomeState extends State<Home> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text("200", style: textes.h3b),
-                                      Text("t-question".tr,
-                                          style: textes.h3l),
+                                      Text("t-question".tr, style: textes.h4l),
                                     ],
                                   ),
                                   SizedBox(
@@ -453,7 +517,7 @@ class _HomeState extends State<Home> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text("15", style: textes.h3b),
-                                      Text("t".tr, style: textes.h3l),
+                                      Text("t".tr, style: textes.h4l),
                                     ],
                                   ),
                                 ],
@@ -495,7 +559,7 @@ class DashBox extends StatelessWidget {
     return Bounceable(
       onTap: () {},
       child: SizedBox(
-        width: 120,
+        width: 110,
         height: 100,
         child: Material(
           elevation: 1,

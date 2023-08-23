@@ -7,6 +7,9 @@ class User {
   var birthdate;
   var phone_number;
   var profile_image;
+  var address;
+
+
 
   User(
       {first_name,
@@ -15,7 +18,7 @@ class User {
       password,
       gender,
       birthdate,
-      phone_number,profile_image});
+      phone_number,profile_image,address});
 
   User.fromJson(Map<String, dynamic> json) {
     first_name = json['first_name'];
@@ -26,5 +29,6 @@ class User {
     birthdate = json['birthdate'];
     phone_number = json['phone_number'];
     profile_image = json['profile_image'];
+    address = json['address'];
   }
 }

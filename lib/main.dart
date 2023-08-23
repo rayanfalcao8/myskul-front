@@ -1,5 +1,7 @@
 import 'dart:math';
+import 'package:myskul/screens/account/account.dart';
 import 'package:myskul/screens/auth/domain.dart';
+import 'package:myskul/screens/chat/chat_group_list.dart';
 
 import 'test.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:myskul/translations/translation.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 bool? seen;
 String? token;
@@ -23,6 +26,7 @@ void main() async {
   // HttpOverrides.global = MyHttpOverrides();
 
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
 
@@ -112,6 +116,9 @@ class _Home1State extends State<Home1> {
             : token == null
                 ? Login()
                 : Home(user: user),
+
+        // body: GroupChat(),
+
       ),
     );
   }

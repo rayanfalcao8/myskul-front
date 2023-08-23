@@ -3,6 +3,7 @@ import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
 import 'package:myskul/controllers/auth/login_controller.dart';
 import 'package:myskul/models/user.dart';
+import 'package:myskul/screens/account/account.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
@@ -35,7 +36,7 @@ class MainDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width / 2,
+        width: MediaQuery.of(context).size.width / 1.5,
         child: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
@@ -82,8 +83,16 @@ class MainDrawer extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CircleAvatar(
-                              backgroundImage: NetworkImage(user.profile_image),
+                              backgroundColor: couleurs.grey,
                               radius: 30,
+                              backgroundImage:
+                                  AssetImage('assets/images/loading.gif'),
+                              child: CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.transparent,
+                                backgroundImage:
+                                    NetworkImage(user.profile_image),
+                              ),
                             ),
                             SizedBox()
                           ],
@@ -94,7 +103,7 @@ class MainDrawer extends StatelessWidget {
                             SizedBox(),
                             Bounceable(
                               onTap: () {
-                                LoginController().logout();
+                                showAlertDialog(context);
                               },
                               child: Icon(
                                 icones.logout,
@@ -125,7 +134,7 @@ class MainDrawer extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: gradients.greenGradient,
                   borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(20)),
+                      BorderRadius.only(bottomLeft: Radius.circular(10)),
                 ),
               ),
               ListTile(
@@ -141,9 +150,9 @@ class MainDrawer extends StatelessWidget {
                     Text("my-account".tr),
                   ],
                 ),
-                tileColor:
-                    Get.currentRoute == '/home' ? Colors.grey[300] : null,
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => Account(user: user));
+                },
               ),
               ListTile(
                 title: Row(
@@ -251,11 +260,12 @@ class MainDrawer extends StatelessWidget {
                           height: 2,
                         ),
                         Container(
-                                width: 20,
-                                height: 5,
-                                color:  Get.locale.toString() == "fr"
-                            ?couleurs.green : couleurs.white ,
-                              ),
+                          width: 20,
+                          height: 5,
+                          color: Get.locale.toString().contains("fr")
+                              ? couleurs.green
+                              : couleurs.white,
+                        ),
                       ],
                     ),
                   ),
@@ -266,7 +276,6 @@ class MainDrawer extends StatelessWidget {
                   ),
                   Bounceable(
                     onTap: () async {
-                      
                       Get.updateLocale(Locale("en"));
                       final SharedPreferences prefs = await _prefs2;
                       await prefs.setString('locale', "en");
@@ -281,12 +290,13 @@ class MainDrawer extends StatelessWidget {
                         SizedBox(
                           height: 2,
                         ),
-                         Container(
-                                width: 20,
-                                height: 5,
-                                color:  Get.locale.toString() == "en"
-                            ?couleurs.green : couleurs.white ,
-                              ),
+                        Container(
+                          width: 20,
+                          height: 5,
+                          color: Get.locale.toString().contains("en")
+                              ? couleurs.green
+                              : couleurs.white,
+                        ),
                       ],
                     ),
                   ),
@@ -298,4 +308,42 @@ class MainDrawer extends StatelessWidget {
       ),
     );
   }
+}
+
+showAlertDialog(BuildContext context) {
+  // set up the buttons
+  Widget cancelButton = TextButton(
+    child: Text(
+      "Cancel",
+      style: TextHelper().h4b.copyWith(fontWeight: FontWeight.w400),
+    ),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+  Widget continueButton = TextButton(
+    child: Text("Yes",
+        style: TextHelper().h4b.copyWith(fontWeight: FontWeight.w400)),
+    onPressed: () {
+      LoginController().logout();
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Warning"),
+    content: Text("Do you really want to log out ?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

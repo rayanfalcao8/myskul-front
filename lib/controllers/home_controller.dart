@@ -13,18 +13,18 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 class HomeController extends GetxController {
   User user = new User();
   Future<User> currentUser(token) async {
-      var headers = {
-        "Authorization": "Bearer"+" "+token.toString(),
-        "Content-Type": "application/json; charset=UTF-8",
-        "Accept": "application/json",
-      };
-      var url = Uri.parse(
-          ApiEndponits().baseUrl + ApiEndponits().endpoints.currentUser);
+    var headers = {
+      "Authorization": "Bearer" + " " + token.toString(),
+      "Content-Type": "application/json; charset=UTF-8",
+      "Accept": "application/json",
+    };
 
-      http.Response res = await http.get(url, headers: headers);
-        final json = jsonDecode(res.body);
-        user = User.fromJson(json['data']['user']);
-        return user;
-    
+    var url = Uri.parse(
+        ApiEndponits().baseUrl + ApiEndponits().endpoints.currentUser);
+
+    http.Response res = await http.get(url, headers: headers);
+    final json = jsonDecode(res.body);
+    user = User.fromJson(json['data']['user']);
+    return user;
   }
 }

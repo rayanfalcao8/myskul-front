@@ -126,7 +126,7 @@ class _RegisterState extends State<Register> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "new-account",
+                                "new-account".tr,
                                 style: GoogleFonts.getFont('Lato',
                                     textStyle: textes.h1l),
                               )

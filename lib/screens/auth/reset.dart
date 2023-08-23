@@ -125,7 +125,7 @@ class Reset extends StatelessWidget {
                           SizedBox(
                               width: 300,
                               child: Text(
-                                "password-reset-title".tr,
+                                "password-reset-text".tr,
                                 style: textes.h4l,
                                 textAlign: TextAlign.center,
                               )),
