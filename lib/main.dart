@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:myskul/screens/account/account.dart';
 import 'package:myskul/screens/auth/domain.dart';
-import 'package:myskul/screens/chat/chat_group_list.dart';
+//import 'package:myskul/screens/chat/chat_group_list.dart';
 
 import 'test.dart';
 import 'package:flutter/material.dart';
