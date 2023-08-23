@@ -16,7 +16,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:myskul/translations/translation.dart';
-import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_core/firebase_core.dart';
 
 bool? seen;
 String? token;
@@ -26,7 +26,7 @@ void main() async {
   // HttpOverrides.global = MyHttpOverrides();
 
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+ // await Firebase.initializeApp();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
 
