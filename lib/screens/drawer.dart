@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:myskul/controllers/auth/login_controller.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/account/account.dart';
+import 'package:myskul/screens/partner.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
@@ -218,9 +219,8 @@ class MainDrawer extends StatelessWidget {
                     Text('our-part'.tr),
                   ],
                 ),
-                tileColor:
-                    Get.currentRoute == '/home' ? Colors.grey[300] : null,
-                onTap: () {},
+            
+                onTap: () { Get.to(()=>Partner());},
               ),
               ListTile(
                 title: Row(
@@ -314,7 +314,7 @@ showAlertDialog(BuildContext context) {
   // set up the buttons
   Widget cancelButton = TextButton(
     child: Text(
-      "Cancel",
+      "cancel".tr,
       style: TextHelper().h4b.copyWith(fontWeight: FontWeight.w400),
     ),
     onPressed: () {
@@ -322,7 +322,7 @@ showAlertDialog(BuildContext context) {
     },
   );
   Widget continueButton = TextButton(
-    child: Text("Yes",
+    child: Text("yes".tr,
         style: TextHelper().h4b.copyWith(fontWeight: FontWeight.w400)),
     onPressed: () {
       LoginController().logout();
@@ -331,8 +331,8 @@ showAlertDialog(BuildContext context) {
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: Text("Warning"),
-    content: Text("Do you really want to log out ?"),
+    title: Text("warning".tr,style: TextHelper().h1r),
+    content: Text("warning-text".tr,style: TextHelper().h4l,),
     actions: [
       cancelButton,
       continueButton,

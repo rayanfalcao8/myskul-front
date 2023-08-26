@@ -1,4 +1,5 @@
 class User {
+  var id;
   var first_name;
   var last_name;
   var email;
@@ -9,18 +10,20 @@ class User {
   var profile_image;
   var address;
 
-
-
   User(
-      {first_name,
+      {id,
+      first_name,
       last_name,
       email,
       password,
       gender,
       birthdate,
-      phone_number,profile_image,address});
+      phone_number,
+      profile_image,
+      address});
 
   User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     first_name = json['first_name'];
     last_name = json['last_name'];
     email = json['email'];

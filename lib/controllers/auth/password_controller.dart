@@ -39,7 +39,7 @@ class PasswordController extends GetxController {
         emailController.clear();
         Get.to(Reset(token:json["data"]["token"],email:json["data"]["user"]["email"]));
       } else {
-        throw jsonDecode(res.body)['message'] ?? "Erreur inconnue";
+        throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }
     } catch (e) {
       EasyLoading.showError(e.toString());
@@ -71,7 +71,7 @@ class PasswordController extends GetxController {
         "token": token,
       };
 
-      EasyLoading.show(status: 'Réinitialisation...');
+      EasyLoading.show();
 
       http.Response res = await http.post(url,
           body: utf8.encode(jsonEncode(body)), headers: headers);
@@ -85,7 +85,7 @@ class PasswordController extends GetxController {
         passwordConfController.clear();
         Get.off(Login());
       } else {
-        throw jsonDecode(res.body)['message'] ?? "Erreur inconnue";
+        throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }
     } catch (e) {
       EasyLoading.showError(e.toString());

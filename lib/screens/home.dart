@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/models/user.dart';
+import 'package:myskul/screens/chat/chat_group_list.dart';
 import 'package:myskul/screens/drawer.dart';
 import 'package:myskul/utilities/colors.dart';
+import 'package:myskul/utilities/constants.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
 import 'package:myskul/utilities/gradients.dart';
@@ -126,7 +129,7 @@ class _HomeState extends State<Home> {
                         options: CarouselOptions(
                             height: 300.0,
                             enlargeCenterPage: true,
-                            autoPlay: false,
+                            autoPlay: true,
                             aspectRatio: 10,
                             enableInfiniteScroll: true,
                             viewportFraction: 1.2,),
@@ -205,7 +208,6 @@ class _HomeState extends State<Home> {
                         ],
                         options: CarouselOptions(
                             height: 50.0,
-                            pageSnapping: false,
                             enlargeCenterPage: true,
                             autoPlay: true,
                             aspectRatio: 10,
@@ -267,6 +269,9 @@ class _HomeState extends State<Home> {
                               textes: textes,
                               texte: "Chat",
                               couleur: Colors.pink,
+                              function: () {
+                                Get.to(()=>GroupChat(user: widget.user));
+                              },
                             ),
                             SizedBox()
                           ],
@@ -539,13 +544,14 @@ class _HomeState extends State<Home> {
 }
 
 class DashBox extends StatelessWidget {
-  const DashBox({
+  DashBox({
     super.key,
     required this.couleurs,
     required this.icone,
     required this.texte,
     required this.couleur,
     required this.textes,
+    this.function,
   });
 
   final ColorHelper couleurs;
@@ -553,11 +559,12 @@ class DashBox extends StatelessWidget {
   final TextHelper textes;
   final String texte;
   final Color couleur;
+  void Function()? function;
 
   @override
   Widget build(BuildContext context) {
     return Bounceable(
-      onTap: () {},
+      onTap: function,
       child: SizedBox(
         width: 110,
         height: 100,

@@ -186,7 +186,7 @@ class _AccountState extends State<Account> {
                             ],
                           ),
                           Text(
-                            "MON COMPTE",
+                            "my-account".tr,
                             style: textes.h2l.copyWith(color: couleurs.white),
                           ),
                           SizedBox(

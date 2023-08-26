@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,7 +39,7 @@ class RegisterationController extends GetxController {
 
       Map body = {
          "first_name": str[0] ?? " ",
-        "last_name": str.length > 2 ? str[1] : " ",
+        "last_name": str.length >= 2 ? str[1] : " ${str[0]}",
         "email": emailController.text.trim(),
         "password": passwordController.text,
         "gender": genderController.toString(),
@@ -47,7 +48,7 @@ class RegisterationController extends GetxController {
         "address": cityController.text.trim(),
       };
 
-      EasyLoading.show(status: 'Inscription...');
+      EasyLoading.show();
 
       http.Response res = await http.post(url,
           body: utf8.encode(jsonEncode(body)), headers: headers);
@@ -60,7 +61,7 @@ class RegisterationController extends GetxController {
         EasyLoading.showSuccess(json['message']);
         Get.off(Login());
       } else {
-        throw jsonDecode(res.body)['message'] ?? "Erreur inconnue";
+        throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }
     } catch (e) {
       // showDialog(
@@ -96,17 +97,19 @@ class RegisterationController extends GetxController {
 
       List str = userController.text.split(" ");
 
+
       Map body = {
         "first_name": str[0] ?? " ",
-        "last_name": str.length >= 2 ? str[1] : " ",
+        "last_name": str.length >= 2 ? str[1] : " ${str[0]}",
         "email": emailController.text.trim(),
         "gender": genderController.toString(),
         "birthdate": bdController.text.trim(),
         "phone_number": numController.text.trim(),
         "address": cityController.text.trim(),
       };
-
-      EasyLoading.show(status: 'Chargement...');
+      
+     
+      EasyLoading.show();
 
       http.Response res = await http.post(url,
           body: utf8.encode(jsonEncode(body)), headers: headers);
@@ -119,7 +122,7 @@ class RegisterationController extends GetxController {
         EasyLoading.showSuccess(json['message']);
         Get.back();
       } else {
-        throw jsonDecode(res.body)['message'] ?? "Erreur inconnue";
+        throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }
     } catch (e) {
       // showDialog(

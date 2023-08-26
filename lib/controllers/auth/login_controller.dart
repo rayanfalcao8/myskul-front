@@ -27,7 +27,7 @@ class LoginController extends GetxController {
         "password": passwordController.text
       };
 
-      EasyLoading.show(status: 'Connexion...');
+      EasyLoading.show();
 
       http.Response res = await http.post(url,
           body: utf8.encode(jsonEncode(body)), headers: headers);
@@ -35,7 +35,9 @@ class LoginController extends GetxController {
       EasyLoading.dismiss();
 
       if (res.statusCode == 200) {
+
         EasyLoading.showSuccess('Success!');
+
         final json = jsonDecode(res.body);
         if (json['message'].contains('uccess')) {
           var tmp = json['data'];
@@ -50,10 +52,10 @@ class LoginController extends GetxController {
           emailController.clear();
           passwordController.clear();
         } else {
-          throw jsonDecode(res.body)['message'] ?? "Erreur inconnue";
+          throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
         }
       } else {
-        throw jsonDecode(res.body)['message'] ?? "Erreur inconnue";
+        throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }
     } catch (e) {
       EasyLoading.showError(e.toString());
@@ -70,7 +72,7 @@ class LoginController extends GetxController {
   }
 
   void logout() async {
-    EasyLoading.show(status: 'Déconnexion...');
+    EasyLoading.show();
     await Future.delayed(Duration(seconds: 5));
     EasyLoading.dismiss();
     final SharedPreferences? prefs = await _prefs;
