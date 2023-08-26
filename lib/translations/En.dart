@@ -80,5 +80,6 @@ class EN {
     'warning-text': 'Do you really want to log out ?',
     'yes': 'Yes',
     'cancel': 'Cancel',
+    'terms': 'TERMS AND CONDITIONS OF USE',
   };
 }

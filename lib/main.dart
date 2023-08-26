@@ -66,16 +66,16 @@ class Home1 extends StatefulWidget {
 
 class _Home1State extends State<Home1> {
   Map<int, Color> color = {
-    50: ColorHelper().green,
-    100: ColorHelper().green,
-    200: ColorHelper().green,
-    300: ColorHelper().green,
-    400: ColorHelper().green,
-    500: ColorHelper().green,
-    600: ColorHelper().green,
-    700: ColorHelper().green,
-    800: ColorHelper().green,
-    900: ColorHelper().green,
+    50: ColorHelper().white.withOpacity(0),
+    100: ColorHelper().white.withOpacity(0),
+    200: ColorHelper().white.withOpacity(0),
+    300: ColorHelper().white.withOpacity(0),
+    400: ColorHelper().white.withOpacity(0),
+    500: ColorHelper().white.withOpacity(0),
+    600: ColorHelper().white.withOpacity(0),
+    700: ColorHelper().white.withOpacity(0),
+    800: ColorHelper().white.withOpacity(0),
+    900: ColorHelper().white.withOpacity(0),
   };
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -99,13 +99,7 @@ class _Home1State extends State<Home1> {
       ..userInteractions = false
       ..dismissOnTap = false;
     return GetMaterialApp(
-      // localizationsDelegates: [
-      //   AppLocalizations.delegate,
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate
-      // ],
-      // supportedLocales: L10n.all,
+
       translations: Messages(),
       locale: Get.locale ?? Get.deviceLocale,
       fallbackLocale: Locale('fr', 'FR'),

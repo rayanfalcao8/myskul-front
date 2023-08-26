@@ -28,7 +28,7 @@ class HomeController extends GetxController {
     final json = jsonDecode(res.body);
     user = User.fromJson(json['data']['user']);
 
-    ChatController().addUser(user, Constant().PH);
+    ChatController().addUser(user, Constant().PTCL);
     return user;
   }
 }

@@ -81,5 +81,6 @@ class FR {
     'warning-text': 'Voulez-vous vraiment vous déconnecter ?',
     'yes': 'Oui',
     'cancel': 'Annuler',
+    'terms': 'TERMES ET CONDITIONS D\' UTILISATION',
   };
 }

@@ -110,9 +110,9 @@ class _ChatState extends State<Chat> {
             Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
+                padding: EdgeInsets.only(bottom: 100),
                 margin: EdgeInsets.only(
-                    top: (MediaQuery.of(context).size.height / 10),
-                    bottom: (MediaQuery.of(context).size.height / 9)),
+                    top: (MediaQuery.of(context).size.height / 12),),
                 decoration: BoxDecoration(
                   color: couleurs.white.withOpacity(0.5),
                   image: DecorationImage(

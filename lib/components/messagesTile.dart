@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
@@ -187,7 +189,9 @@ class SentImage extends StatelessWidget {
             alignment:  Alignment.centerRight,
             constraints: BoxConstraints(
                 maxWidth: 150, minWidth: 100, minHeight: 100, maxHeight: 150),
-            child: Image.network(tmp['message']),
+            child: InkWell( onTap: () {
+              Get.to(()=>ShowImage(image: tmp['message']));
+            },child: FadeInImage(placeholder: AssetImage('assets/images/loading.gif'), image: NetworkImage(tmp['message']))),
           ),
           CircleAvatar(
             radius: 10,
@@ -229,7 +233,11 @@ class ReceivedImage extends StatelessWidget {
             alignment:  Alignment.centerLeft,
             constraints: BoxConstraints(
                 maxWidth: 150, minWidth: 100, minHeight: 100, maxHeight: 150),
-            child: tmp['message']!=''? Image.network(tmp['message']): CircularProgressIndicator(color: ColorHelper().green,),
+            child: InkWell(
+              onTap: (){
+                Get.to(()=>ShowImage(image: tmp['message']));
+              },
+              child: FadeInImage(placeholder: AssetImage('assets/images/loading.gif'), image: NetworkImage(tmp['message']))), 
           ),
           
         ],

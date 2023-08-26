@@ -43,8 +43,9 @@ class _GroupChatState extends State<GroupChat> {
 
   List<Widget> displayGroups(List<QueryDocumentSnapshot<Object?>> snap) {
     List<Widget> w = [];
+    var tmp ;
     for (var i = 0; i < snap.length; i++) {
-      var tmp = snap[i].data() as Map;
+      tmp = snap[i].data() as Map;
       w.add(GroupWidget(
         couleurs: couleurs,
         textes: textes,
@@ -102,7 +103,7 @@ class _GroupChatState extends State<GroupChat> {
               child: ListView(
                 children: [
                   SizedBox(
-                    height: (MediaQuery.of(context).size.height / 10) + 10,
+                    height: (MediaQuery.of(context).size.height / 11),
                   ),
                   FutureBuilder(
                       future: myGroups,
@@ -282,6 +283,9 @@ class GroupWidget extends StatelessWidget {
           color: couleurs.white,
             border: Border(
           bottom: BorderSide(color: couleurs.green.withOpacity(0.2)),
+          top: BorderSide(color: couleurs.green.withOpacity(0.2)),
+          left: BorderSide(color: couleurs.green.withOpacity(0.2)),
+          right: BorderSide(color: couleurs.green.withOpacity(0.2))
         )),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -300,7 +304,7 @@ class GroupWidget extends StatelessWidget {
             Row(
               children: [
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
@@ -308,7 +312,7 @@ class GroupWidget extends StatelessWidget {
                     ),
                     Text(
                       group['groupName'],
-                      style: textes.h1r
+                      style: textes.h2l
                           .copyWith(color: couleurs.black.withOpacity(0.8)),
                     ),
                     SizedBox(
