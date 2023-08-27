@@ -169,9 +169,7 @@ class _AccountState extends State<Account> {
                                     onTap: () {
                                       Get.to(
                                           () => AccountPassword(
-                                              user: widget.user),
-                                          transition:
-                                              Transition.circularReveal);
+                                              user: widget.user),);
                                     },
                                     child: Icon(
                                       icones.lock,
@@ -280,6 +278,7 @@ class _AccountState extends State<Account> {
                                 onSubmit: (g) {},
                                 onTap: () async {
                                   DateTime? pickedDate = await showDatePicker(
+                                    locale: Get.locale,
                                       builder: (context, child) {
                                         return Theme(
                                           data: Theme.of(context).copyWith(

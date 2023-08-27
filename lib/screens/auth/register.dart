@@ -173,6 +173,7 @@ class _RegisterState extends State<Register> {
                               onSubmit: (g) {},
                               onTap: () async {
                                 DateTime? pickedDate = await showDatePicker(
+                                  locale: Get.locale,
                                     builder: (context, child) {
                                       return Theme(
                                         data: Theme.of(context).copyWith(
