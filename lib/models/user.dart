@@ -34,4 +34,19 @@ class User {
     profile_image = json['profile_image'];
     address = json['address'];
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'first_name': first_name,
+      'last_name': last_name,
+      'email': email,
+      'password': password,
+      'gender': gender,
+      'birthdate': birthdate,
+      'phone_number': phone_number,
+      'profile_image': profile_image,
+      'address': address,
+    };
+  }
 }

@@ -14,5 +14,5 @@ class AuthEndpoints {
 
 class Endpoints {
   final String currentUser = "/user/me";
-  final String updateUser = "/user/profile/2";
+  final String updateUser = "/user/profile/";
 }

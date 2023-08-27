@@ -37,7 +37,7 @@ void main() async {
   token = await prefs.getString('token');
   locale = await prefs.getString('locale');
   if (token != null) {
-    user = await HomeController().currentUser(token);
+    user = await HomeController().currentUser();
   }
 
   if (locale != null) {
@@ -99,7 +99,6 @@ class _Home1State extends State<Home1> {
       ..userInteractions = false
       ..dismissOnTap = false;
     return GetMaterialApp(
-
       translations: Messages(),
       locale: Get.locale ?? Get.deviceLocale,
       fallbackLocale: Locale('fr', 'FR'),
