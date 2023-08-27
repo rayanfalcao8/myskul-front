@@ -31,8 +31,7 @@ class FR {
         'Veuillez entrer votre email de connexion. Nous vous enverrons un e-mail avec un lien pour réinitialiser votre mot de passe.',
     'password-reset-title': 'REINITIALISATION DE',
     'password-reset-title2': 'MOT DE PASSE',
-    'password-reset-text':
-        'Veuillez enregistrer ici votre nouveau mot de passe de connexion.',
+    'password-reset-text': 'Veuillez enregistrer ici votre nouveau mot de passe de connexion.',
     'forgot-password1': 'Mot de passe oublié ?',
     'forgot-password2': ' Récupérer mon mot de passe',
     'old-password': 'Ancien mot de passe',

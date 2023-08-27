@@ -14,7 +14,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class HomeController extends GetxController {
   User user = new User();
-  Future<User> currentUser(token) async {
+  Future<User> currentUser() async {
+    token = await (await SharedPreferences.getInstance()).getString('token');
     var headers = {
       "Authorization": "Bearer" + " " + token.toString(),
       "Content-Type": "application/json; charset=UTF-8",

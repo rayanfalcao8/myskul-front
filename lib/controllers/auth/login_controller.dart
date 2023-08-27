@@ -45,7 +45,8 @@ class LoginController extends GetxController {
           print("token $token");
           final SharedPreferences prefs = await _prefs;
           await prefs.setString('token', token);
-         var user = await HomeController().currentUser(token);
+         var user = await HomeController().currentUser();
+          await prefs.setString('user', user.toJson().toString());
           Get.off(Home(
             user: user,
           ));

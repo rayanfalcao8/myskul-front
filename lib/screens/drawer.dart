@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
@@ -152,7 +154,8 @@ class MainDrawer extends StatelessWidget {
                   ],
                 ),
                 onTap: () {
-                  Get.to(() => Account(user: user));
+                  print(user.toJson());
+                  Get.to(() => Account());
                 },
               ),
               ListTile(
@@ -219,8 +222,9 @@ class MainDrawer extends StatelessWidget {
                     Text('our-part'.tr),
                   ],
                 ),
-            
-                onTap: () { Get.to(()=>Partner());},
+                onTap: () {
+                  Get.to(() => Partner());
+                },
               ),
               ListTile(
                 title: Row(
@@ -331,8 +335,11 @@ showAlertDialog(BuildContext context) {
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: Text("warning".tr,style: TextHelper().h1r),
-    content: Text("warning-text".tr,style: TextHelper().h4l,),
+    title: Text("warning".tr, style: TextHelper().h1r),
+    content: Text(
+      "warning-text".tr,
+      style: TextHelper().h4l,
+    ),
     actions: [
       cancelButton,
       continueButton,

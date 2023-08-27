@@ -50,11 +50,15 @@
 		<key>UIStatusBarHidden</key>
 		<false/>
 		<key>NSCameraUsageDescription</key>
-<string>Example usage description</string>
-<key>NSMicrophoneUsageDescription</key>
-<string>Example usage description</string>
-<key>NSPhotoLibraryUsageDescription</key>
-<string>Example usage description</string>
-		
+        <string>Example usage description</string>
+        <key>NSMicrophoneUsageDescription</key>
+        <string>Example usage description</string>
+        <key>NSPhotoLibraryUsageDescription</key>
+        <string>Example usage description</string>
+        <key>NSAppTransportSecurity</key>
+        <dict>
+            <key>NSAllowsLocalNetworking</key>
+            <true/>
+        </dict>
 	</dict>
 </plist>
