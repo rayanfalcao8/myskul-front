@@ -173,7 +173,6 @@ class _RegisterState extends State<Register> {
                               onSubmit: (g) {},
                               onTap: () async {
                                 DateTime? pickedDate = await showDatePicker(
-                                  locale: Get.locale,
                                     builder: (context, child) {
                                       return Theme(
                                         data: Theme.of(context).copyWith(
@@ -355,12 +354,12 @@ class _RegisterState extends State<Register> {
                                     "Veuillez accepter les conditions d'utlisation");
                               } else {
                                 RegisterationController().register(
-                                    userController: noms,
-                                    numController: num,
-                                    emailController: email,
-                                    cityController: ville,
-                                    bdController: datenaiss,
-                                    passwordController: password,
+                                    userController: noms.text,
+                                    numController: num.text,
+                                    emailController: email.text,
+                                    cityController: ville.text,
+                                    bdController: datenaiss.text,
+                                    passwordController: password.text,
                                     genderController: selectedGender);
                               }
                             },

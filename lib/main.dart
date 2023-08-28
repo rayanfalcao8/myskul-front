@@ -18,24 +18,28 @@ import 'package:myskul/translations/translation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 
-bool? seen;
-String? token;
-String? locale;
-late User user;
+bool?
+    seen; // Cette variable va permettre d'afficher le splash screen une seule fois
+String? token; // Token d'authentification de l'utlisateur
+String? locale; // Cette variable nous permettra de gérer la langue utilisée
+late User user; // Ici sera stocké l'utilisateur principal
+
 void main() async {
-  // HttpOverrides.global = MyHttpOverrides();
-
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Initialisation de firebase
 
-  await Firebase.initializeApp();
+  // Initialisation de deux instances su package SharedPreferences
+  // (02) instances pour ne perdre des informations importantes, une fois l'utilisateur déconnecté
+
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
-
   final SharedPreferences prefs = await _prefs;
   final SharedPreferences prefs2 = await _prefs2;
+
   seen = await prefs2.getBool('first');
   token = await prefs.getString('token');
   locale = await prefs.getString('locale');
+
   if (token != null) {
     user = await HomeController().currentUser();
   }
@@ -49,15 +53,6 @@ void main() async {
     (_) => runApp(Home1()),
   );
 }
-
-// class MyHttpOverrides extends HttpOverrides {
-//   @override
-//   HttpClient createHttpClient(SecurityContext? context) {
-//     return super.createHttpClient(context)
-//       ..badCertificateCallback =
-//           (X509Certificate cert, String host, int port) => true;
-//   }
-// }
 
 class Home1 extends StatefulWidget {
   @override

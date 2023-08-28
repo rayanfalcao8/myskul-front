@@ -23,8 +23,8 @@ class LoginController extends GetxController {
       var url = Uri.parse(
           ApiEndponits().baseUrl + ApiEndponits().authEndpoints.loginEmail);
       Map body = {
-        "email": emailController.text.trim(),
-        "password": passwordController.text
+        "email": emailController,
+        "password": passwordController
       };
 
       EasyLoading.show();
@@ -49,9 +49,7 @@ class LoginController extends GetxController {
           await prefs.setString('user', user.toJson().toString());
           Get.off(Home(
             user: user,
-          ));
-          emailController.clear();
-          passwordController.clear();
+          )); 
         } else {
           throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
         }
@@ -60,15 +58,6 @@ class LoginController extends GetxController {
       }
     } catch (e) {
       EasyLoading.showError(e.toString());
-      // showDialog(
-      //     context: Get.context!,
-      //     builder: (context) {
-      //       return SimpleDialog(
-      //         title: Text('Erreur'),
-      //         contentPadding: EdgeInsets.all(20),
-      //         children: [Text(e.toString())],
-      //       );
-      //     });
     }
   }
 

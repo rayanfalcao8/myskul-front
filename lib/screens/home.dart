@@ -127,12 +127,13 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                         options: CarouselOptions(
-                            height: 300.0,
-                            enlargeCenterPage: true,
-                            autoPlay: true,
-                            aspectRatio: 10,
-                            enableInfiniteScroll: true,
-                            viewportFraction: 1.2,),
+                          height: 300.0,
+                          enlargeCenterPage: true,
+                          autoPlay: true,
+                          aspectRatio: 10,
+                          enableInfiniteScroll: true,
+                          viewportFraction: 1.2,
+                        ),
                       ),
                     ]),
                   ),
@@ -207,12 +208,13 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                         options: CarouselOptions(
-                            height: 50.0,
-                            enlargeCenterPage: true,
-                            autoPlay: true,
-                            aspectRatio: 10,
-                            enableInfiniteScroll: true,
-                            viewportFraction: 1.2,),
+                          height: 50.0,
+                          enlargeCenterPage: true,
+                          autoPlay: true,
+                          aspectRatio: 10,
+                          enableInfiniteScroll: true,
+                          viewportFraction: 1.2,
+                        ),
                       ),
                     ]),
                   ),
@@ -270,7 +272,7 @@ class _HomeState extends State<Home> {
                               texte: "Chat",
                               couleur: Colors.pink,
                               function: () {
-                                Get.to(()=>GroupChat(user: widget.user));
+                                Get.to(() => GroupChat(user: widget.user));
                               },
                             ),
                             SizedBox()
@@ -492,10 +494,9 @@ class _HomeState extends State<Home> {
                                   ),
                                   SizedBox(
                                     height: 10,
-                                  ),
-                                  Text("150",
-                                      style: textes.xxlb
-                                          .copyWith(color: couleurs.green)),
+                                  ),Text("150",
+                                        style: textes.xxlb
+                                            .copyWith(color: couleurs.green)),
                                 ],
                               ),
                               Container(
@@ -563,7 +564,7 @@ class DashBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Bounceable(
+    return InkWell(
       onTap: function,
       child: SizedBox(
         width: 110,
@@ -604,3 +605,4 @@ class DashBox extends StatelessWidget {
     );
   }
 }
+

@@ -35,13 +35,19 @@ class _SentMessageState extends State<SentMessage> {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        margin: EdgeInsets.only(right: 10),
+        margin: EdgeInsets.only(right: 10, bottom: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            // Text(
+            //         widget.nom,
+            //         style: widget.textes.h4r,
+            //         overflow: TextOverflow.clip,
+            //       ),
             Container(
-              constraints: BoxConstraints(maxWidth: 150),
+              constraints: BoxConstraints(
+                maxWidth: 250,),
               padding: EdgeInsets.all(10),
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -105,7 +111,8 @@ class _ReceivedMessageState extends State<ReceivedMessage> {
               backgroundImage: NetworkImage(widget.image),
             ),
             Container(
-              constraints: BoxConstraints(maxWidth: 150),
+              constraints: BoxConstraints(
+                maxWidth: 250,),
               padding: EdgeInsets.all(10),
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -188,7 +195,7 @@ class SentImage extends StatelessWidget {
             margin: EdgeInsets.all(10),
             alignment:  Alignment.centerRight,
             constraints: BoxConstraints(
-                maxWidth: 150, minWidth: 100, minHeight: 100, maxHeight: 150),
+                maxWidth: 250, minWidth: 150, minHeight: 150, maxHeight: 250),
             child: InkWell( onTap: () {
               Get.to(()=>ShowImage(image: tmp['message']));
             },child: FadeInImage(placeholder: AssetImage('assets/images/loading.gif'), image: NetworkImage(tmp['message']))),
@@ -232,7 +239,7 @@ class ReceivedImage extends StatelessWidget {
             margin: EdgeInsets.all(10),
             alignment:  Alignment.centerLeft,
             constraints: BoxConstraints(
-                maxWidth: 150, minWidth: 100, minHeight: 100, maxHeight: 150),
+                maxWidth: 250, minWidth: 150, minHeight: 150, maxHeight: 250),
             child: InkWell(
               onTap: (){
                 Get.to(()=>ShowImage(image: tmp['message']));

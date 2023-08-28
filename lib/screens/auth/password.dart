@@ -138,7 +138,7 @@ class Password extends StatelessWidget {
                             icones: icones,
                             text: "send",
                             function: (){
-                              PasswordController().password(controller);
+                              PasswordController().password(controller.text);
                             },
                           ),
                           SizedBox(

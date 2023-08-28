@@ -189,7 +189,7 @@ String? token = await prefs.getString('token');
                                 validPassword = false;
                               } else {
                                 LoginController()
-                                    .login(controller, controller2);
+                                    .login(controller.text, controller2.text);
                               }
                             },
                           ),

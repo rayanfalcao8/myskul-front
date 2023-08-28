@@ -168,7 +168,7 @@ class Reset extends StatelessWidget {
                                     "Les deux Mots de passe ne correspondent pas");
                               } else {
                                 PasswordController().reset(
-                                    email, controller, controller2, token);
+                                    email, controller.text, controller2.text, token);
                               }
                             },
                           ),

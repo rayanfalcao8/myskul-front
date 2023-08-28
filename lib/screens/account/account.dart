@@ -57,7 +57,8 @@ class _AccountState extends State<Account> {
     token = await prefs.getString('token');
   }
 
-  void init() {
+  void init() async {
+    widget.user = await HomeController().currentUser();
     noms.text = widget.user.first_name + " " + widget.user.last_name;
     email.text = widget.user.email;
     num.text = widget.user.phone_number;
@@ -69,7 +70,8 @@ class _AccountState extends State<Account> {
   @override
   void initState() {
     // TODO: implement initState
-    // init();
+
+    init();
   }
 
   @override
@@ -80,10 +82,20 @@ class _AccountState extends State<Account> {
             future: HomeController().currentUser(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                return Center(child: CircularProgressIndicator());
+                return Container(
+                  decoration: BoxDecoration(
+                        color: couleurs.white.withOpacity(0.5),
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/math.png"),
+                            opacity: 0.04,
+                            fit: BoxFit.cover)),
+                  child: Center(
+                      child: CircularProgressIndicator(
+                    color: couleurs.green,
+                  )),
+                );
               } else {
                 widget.user = snapshot.data!;
-                init();
                 return SingleChildScrollView(
                   child: Container(
                     decoration: BoxDecoration(
@@ -95,7 +107,11 @@ class _AccountState extends State<Account> {
                     child: Column(
                       children: [
                         Container(
-                          height: MediaQuery.of(context).size.height / 2.4,
+                          constraints: BoxConstraints(
+                              maxHeight:
+                                  MediaQuery.of(context).size.height / 2.6,
+                              minHeight:
+                                  MediaQuery.of(context).size.height / 3),
                           decoration: BoxDecoration(
                               gradient: gradients.greenGradient,
                               borderRadius: BorderRadius.only(
@@ -208,10 +224,9 @@ class _AccountState extends State<Account> {
                                     height: 40,
                                   ),
                                   CircleAvatar(
-                                    backgroundColor: couleurs.grey,
                                     radius: 50,
-                                    backgroundImage:
-                                        AssetImage('assets/images/loading.gif'),
+                                    backgroundImage: AssetImage(
+                                        'assets/images/loading1.gif'),
                                     child: CircleAvatar(
                                       radius: 50,
                                       backgroundColor: Colors.transparent,
@@ -222,18 +237,23 @@ class _AccountState extends State<Account> {
                                   SizedBox(
                                     height: 40,
                                   ),
-                                  SizedBox(
-                                      width: 170,
-                                      child: Center(
+                                  Container(
+                                    constraints: BoxConstraints(
+                                        maxWidth:
+                                            MediaQuery.of(context).size.width /
+                                                3.6,
+                                        minWidth: MediaQuery.of(context).size.width /
+                                                4),
+                                    child: FittedBox(
+                                        fit: BoxFit.fitWidth,
                                         child: Text(
                                           widget.user.first_name +
                                               " " +
                                               widget.user.last_name,
                                           style: textes.h2l
                                               .copyWith(color: couleurs.white),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ))
+                                        )),
+                                  )
                                 ],
                               ),
                             ],
@@ -432,11 +452,11 @@ class _AccountState extends State<Account> {
                                           RegisterationController().updateUser(
                                               idController:
                                                   widget.user.id.toString(),
-                                              userController: noms,
-                                              numController: num,
-                                              emailController: email,
-                                              cityController: ville,
-                                              bdController: datenaiss,
+                                              userController: noms.text,
+                                              numController: num.text,
+                                              emailController: email.text,
+                                              cityController: ville.text,
+                                              bdController: datenaiss.text,
                                               genderController: selectedGender,
                                               token: token);
                                         }

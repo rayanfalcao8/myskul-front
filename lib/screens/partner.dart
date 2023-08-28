@@ -65,19 +65,32 @@ class _PartnerState extends State<Partner> {
                     opacity: 0.04,
                     fit: BoxFit.cover),
               ),
-              child: ListView.builder(
+              child: AnimationLimiter(
+                child: ListView.builder(
                   itemCount: partners.length,
-                  itemBuilder: (context, index) {
-                    return Bounceable(
-                      onTap: () {},
-                      child: Container(
-                        height: 150,
-                        margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                        decoration: BoxDecoration(color: couleurs.grey),
-                        child: Center(child: Text(partners[index])),
+                  itemBuilder: (BuildContext context, int index) {
+                    return AnimationConfiguration.staggeredList(
+                      position: index,
+                      duration: const Duration(milliseconds: 375),
+                      child: SlideAnimation(
+                        horizontalOffset: 50.0,
+                        child: FadeInAnimation(
+                          child: Bounceable(
+                            onTap: () {},
+                            child: Container(
+                              height: 150,
+                              margin:
+                                  EdgeInsets.only(top: 10, left: 10, right: 10),
+                              decoration: BoxDecoration(color: couleurs.grey),
+                              child: Center(child: Text(partners[index])),
+                            ),
+                          ),
+                        ),
                       ),
                     );
-                  }),
+                  },
+                ),
+              ),
             ),
             Align(
               alignment: Alignment.topCenter,

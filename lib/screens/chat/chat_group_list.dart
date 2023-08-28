@@ -43,7 +43,7 @@ class _GroupChatState extends State<GroupChat> {
 
   List<Widget> displayGroups(List<QueryDocumentSnapshot<Object?>> snap) {
     List<Widget> w = [];
-    var tmp ;
+    var tmp;
     for (var i = 0; i < snap.length; i++) {
       tmp = snap[i].data() as Map;
       w.add(GroupWidget(
@@ -127,9 +127,21 @@ class _GroupChatState extends State<GroupChat> {
                                   couleurs: couleurs,
                                   texte: 'Not Found');
                             } else {
-                              return Column(
-                                children: displayGroups(snapshot.data!),
-                              );
+                              return AnimationLimiter(
+                                  child: Column(
+                                children:
+                                    AnimationConfiguration.toStaggeredList(
+                                  duration: const Duration(milliseconds: 375),
+                                  childAnimationBuilder: (widget) =>
+                                      SlideAnimation(
+                                    horizontalOffset: 50.0,
+                                    child: FadeInAnimation(
+                                      child: widget,
+                                    ),
+                                  ),
+                                  children: displayGroups(snapshot.data!),
+                                ),
+                              ));
                             }
                           }
                         }
@@ -250,8 +262,6 @@ class _GroupChatState extends State<GroupChat> {
   }
 }
 
-
-
 class GroupWidget extends StatelessWidget {
   const GroupWidget({
     super.key,
@@ -280,13 +290,12 @@ class GroupWidget extends StatelessWidget {
         height: 100,
         margin: EdgeInsets.all(05),
         decoration: BoxDecoration(
-          color: couleurs.white,
+            color: couleurs.white,
             border: Border(
-          bottom: BorderSide(color: couleurs.green.withOpacity(0.2)),
-          top: BorderSide(color: couleurs.green.withOpacity(0.2)),
-          left: BorderSide(color: couleurs.green.withOpacity(0.2)),
-          right: BorderSide(color: couleurs.green.withOpacity(0.2))
-        )),
+                bottom: BorderSide(color: couleurs.green.withOpacity(0.2)),
+                top: BorderSide(color: couleurs.green.withOpacity(0.2)),
+                left: BorderSide(color: couleurs.green.withOpacity(0.2)),
+                right: BorderSide(color: couleurs.green.withOpacity(0.2)))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -295,7 +304,8 @@ class GroupWidget extends StatelessWidget {
               height: 100,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(group['groupPic'] ?? 'https://placehold.co/600x400/png'),
+                      image: NetworkImage(group['groupPic'] ??
+                          'https://placehold.co/600x400/png'),
                       fit: BoxFit.cover)),
             ),
             SizedBox(

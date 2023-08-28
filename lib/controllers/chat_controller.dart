@@ -144,7 +144,7 @@ class ChatController {
         .onError((e, stackTrace) => print("Error updating document $e"));
   }
 
-  chatMessages({chats, user, couleurs, textes}) {
+  chatMessages({chats, user, couleurs, textes, controller}) {
     return StreamBuilder(
       stream: chats,
       builder: (context, AsyncSnapshot snapshot) {
@@ -171,6 +171,7 @@ class ChatController {
 
         return snapshot.data.docs.length > 0
             ? ListView.builder(
+                controller: controller,
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
                   if (index == 0) {
@@ -214,11 +215,11 @@ class ChatController {
                 },
               )
             : SingleChildScrollView(
-              child: NotFoundWidget(
-                  textes: textes,
-                  couleurs: couleurs,
-                  texte: 'Pas de message pour le moment'),
-            );
+                child: NotFoundWidget(
+                    textes: textes,
+                    couleurs: couleurs,
+                    texte: 'Pas de message pour le moment'),
+              );
       },
     );
   }
@@ -236,7 +237,6 @@ class ChatController {
   }
 }
 
-
 class ShowImage extends StatelessWidget {
   ShowImage({
     required this.image,
@@ -247,11 +247,11 @@ class ShowImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: ColorHelper().black,
-       child: Image.network(image),
+        body: Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      color: ColorHelper().black,
+      child: Image.network(image),
     ));
   }
 }

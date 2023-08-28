@@ -86,10 +86,9 @@ class MainDrawer extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CircleAvatar(
-                              backgroundColor: couleurs.grey,
                               radius: 30,
                               backgroundImage:
-                                  AssetImage('assets/images/loading.gif'),
+                                  AssetImage('assets/images/loading1.gif'),
                               child: CircleAvatar(
                                 radius: 30,
                                 backgroundColor: Colors.transparent,
@@ -118,14 +117,22 @@ class MainDrawer extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
-                              width: 170,
-                              child: Text(
-                                user.first_name + " " + user.last_name,
-                                style:
-                                    textes.h3b.copyWith(color: couleurs.white),
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                            Container(
+                              constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width / 4.6,
+                                  minWidth:
+                                      MediaQuery.of(context).size.width / 5),
+                              child: 
+                              FittedBox(
+                                        fit: BoxFit.fitWidth,
+                                        child: Text(
+                                          user.first_name +
+                                              " " +
+                                          user.last_name,
+                                          style: textes.h4r
+                                              .copyWith(color: couleurs.white),
+                                        )),
                             ),
                             SizedBox()
                           ],

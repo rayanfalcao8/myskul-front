@@ -23,10 +23,10 @@ class PasswordController extends GetxController {
       var url = Uri.parse(
           ApiEndponits().baseUrl + ApiEndponits().authEndpoints.password);
       Map body = {
-        "email": emailController.text.trim(),
+        "email": emailController,
       };
 
-      EasyLoading.show(status: 'Envoi...');
+      EasyLoading.show();
 
       http.Response res = await http.post(url,
           body: utf8.encode(jsonEncode(body)), headers: headers);
@@ -36,27 +36,17 @@ class PasswordController extends GetxController {
       if (res.statusCode == 200) {
         var json = jsonDecode(res.body);
         EasyLoading.showSuccess(json["message"]);
-        emailController.clear();
         Get.to(Reset(token:json["data"]["token"],email:json["data"]["user"]["email"]));
       } else {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }
     } catch (e) {
       EasyLoading.showError(e.toString());
-      // showDialog(
-      //     context: Get.context!,
-      //     builder: (context) {
-      //       return SimpleDialog(
-      //         title: Text('Erreur'),
-      //         contentPadding: EdgeInsets.all(20),
-      //         children: [Text(e.toString())],
-      //       );
-      //     });
     }
   }
 
-  void reset(emailController, passwordController, passwordConfController,
-      token) async {
+  void reset( String email,  String password, String passwordConfirm,
+       String token) async {
     try {
       var headers = {
         "Content-Type": "application/json; charset=UTF-8",
@@ -65,9 +55,9 @@ class PasswordController extends GetxController {
       var url = Uri.parse(
           ApiEndponits().baseUrl + ApiEndponits().authEndpoints.resetPassword);
       Map body = {
-        "password": passwordController.text,
-        "password_confirmation": passwordConfController.text,
-        "email": emailController,
+        "password": password,
+        "password_confirmation": passwordConfirm,
+        "email": email,
         "token": token,
       };
 
@@ -81,23 +71,12 @@ class PasswordController extends GetxController {
       if (res.statusCode == 200) {
         final json = jsonDecode(res.body);
         EasyLoading.showSuccess(json['message']);
-        passwordController.clear();
-        passwordConfController.clear();
         Get.off(Login());
       } else {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }
     } catch (e) {
       EasyLoading.showError(e.toString());
-      // showDialog(
-      //     context: Get.context!,
-      //     builder: (context) {
-      //       return SimpleDialog(
-      //         title: Text('Erreur'),
-      //         contentPadding: EdgeInsets.all(20),
-      //         children: [Text(e.toString())],
-      //       );
-      //     });
     }
   }
 }

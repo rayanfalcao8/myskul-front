@@ -1,24 +1,13 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/screens/auth/login.dart';
-import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterationController extends GetxController {
-  var userController = TextEditingController();
-  var emailController = TextEditingController();
-  var numController = TextEditingController();
-  var bdController = TextEditingController();
-  var cityController = TextEditingController();
-  var genderController;
-  var idController;
-  var passwordController = TextEditingController();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   void register(
@@ -42,12 +31,12 @@ class RegisterationController extends GetxController {
       Map body = {
         "first_name": str[0] ?? " ",
         "last_name": str.length >= 2 ? str[1] : " ${str[0]}",
-        "email": emailController.text.trim(),
-        "password": passwordController.text,
+        "email": emailController,
+        "password": passwordController,
         "gender": genderController.toString(),
-        "birthdate": bdController.text.trim(),
-        "phone_number": numController.text.trim(),
-        "address": cityController.text.trim(),
+        "birthdate": bdController,
+        "phone_number": numController,
+        "address": cityController,
       };
 
       EasyLoading.show();
@@ -87,6 +76,7 @@ class RegisterationController extends GetxController {
       cityController,
       genderController,
       token}) async {
+    // TODO : Mettre aussi l'utilisateur à jour sur firestore
     try {
       var headers = {
         "Authorization": "Bearer" + " " + token.toString(),
@@ -97,17 +87,27 @@ class RegisterationController extends GetxController {
           ApiEndponits().endpoints.updateUser +
           idController);
 
-      List str = userController.text.split(" ");
+      List str = userController.split(" ");
 
       Map body = {
         "first_name": str[0] ?? " ",
         "last_name": str.length >= 2 ? str[1] : " ${str[0]}",
-        "email": emailController.text.trim(),
+        "email": emailController,
         "gender": genderController.toString(),
-        "birthdate": bdController.text.trim(),
-        "phone_number": numController.text.trim(),
-        "address": cityController.text.trim(),
+        "birthdate": bdController,
+        "phone_number": numController,
+        "address": cityController,
       };
+
+      // Map userTmp = {
+      //   'userId': idController,
+      //   'userName': str.length >= 2
+      //       ? str[0] + ' ' + str[1]
+      //       : " ${str[0] + ' ' + str[0]}",
+      //   'userPic':
+      //       'https://ui-avatars.com/api/?name=${str[0]}+${str[1]}&color=226520&background=E3FFE3',
+      //   'userEmail': emailController,
+      // };
 
       EasyLoading.show();
 
@@ -117,9 +117,58 @@ class RegisterationController extends GetxController {
       EasyLoading.dismiss();
 
       if (res.statusCode == 200) {
+        // FirebaseFirestore.instance
+        //     .collection('groupes')
+        //     .where("members", arrayContains: userTmp)
+        //     .orderBy("time")
+        //     .snapshots();
         var json = jsonDecode(res.body);
         EasyLoading.showSuccess(json['message']);
-        
+
+        Get.back();
+      } else {
+        throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
+      }
+    } catch (e) {
+      // showDialog(
+      //     context: Get.context!,
+      //     builder: (context) {
+      //       return SimpleDialog(
+      //         title: Text('Erreur'),
+      //         contentPadding: EdgeInsets.all(20),
+      //         children: [Text(e.toString())],
+      //       );
+      //     });
+      EasyLoading.showError(e.toString());
+    }
+  }
+
+  void updatePassword({oldPassword, newPassword, token}) async {
+    try {
+      var headers = {
+        "Authorization": "Bearer" + " " + token.toString(),
+        "Content-Type": "application/json; charset=UTF-8",
+        "Accept": "application/json",
+      };
+      var url = Uri.parse(ApiEndponits().baseUrl +
+          ApiEndponits().endpoints.updatePassword);
+
+      Map body = {
+        "password": oldPassword,
+        "new_password": newPassword,
+      };
+
+      EasyLoading.show();
+
+      http.Response res = await http.put(url,
+          body: utf8.encode(jsonEncode(body)), headers: headers);
+
+      EasyLoading.dismiss();
+
+      if (res.statusCode == 200) {
+        var json = jsonDecode(res.body);
+        EasyLoading.showSuccess(json['message']);
+
         Get.back();
       } else {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;

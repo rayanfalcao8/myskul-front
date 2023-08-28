@@ -6,7 +6,7 @@ import 'package:myskul/components/newInputInter.dart';
 import 'package:myskul/controllers/auth/registration_controller.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/auth/login.dart';
-import 'package:myskul/screens/auth/terms.dart';
+import 'package:myskul/controllers/auth/password_controller.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
@@ -38,7 +38,7 @@ class _AccountPasswordState extends State<AccountPassword> {
 
   var oldPassword = TextEditingController();
 
-  var newPassword= TextEditingController();
+  var newPassword = TextEditingController();
 
   var confPassword = TextEditingController();
 
@@ -50,8 +50,6 @@ class _AccountPasswordState extends State<AccountPassword> {
     final SharedPreferences prefs = await _prefs;
     token = await prefs.getString('token');
   }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +66,9 @@ class _AccountPasswordState extends State<AccountPassword> {
             child: Column(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height / 2.4,
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height / 2.6,
+                      minHeight: MediaQuery.of(context).size.height / 3),
                   decoration: BoxDecoration(
                       gradient: gradients.greenGradient,
                       borderRadius: BorderRadius.only(
@@ -129,7 +129,7 @@ class _AccountPasswordState extends State<AccountPassword> {
                             children: [
                               Row(
                                 children: [
-                                   SizedBox(
+                                  SizedBox(
                                     width: 10,
                                   ),
                                   GestureDetector(
@@ -163,11 +163,10 @@ class _AccountPasswordState extends State<AccountPassword> {
                           SizedBox(
                             height: 40,
                           ),
-                            CircleAvatar(
-                            backgroundColor: couleurs.grey,
+                          CircleAvatar(
                             radius: 50,
                             backgroundImage:
-                                AssetImage('assets/images/loading.gif'),
+                                AssetImage('assets/images/loading1.gif'),
                             child: CircleAvatar(
                               radius: 50,
                               backgroundColor: Colors.transparent,
@@ -178,18 +177,20 @@ class _AccountPasswordState extends State<AccountPassword> {
                           SizedBox(
                             height: 40,
                           ),
-                          SizedBox(
-                              width: 170,
-                              child: Center(
-                                child: Text(
-                                  widget.user.first_name +
-                                      " " +
-                                      widget.user.last_name,
-                                  style: textes.h2l
-                                      .copyWith(color: couleurs.white),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ))
+                          Container(
+                              constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width / 3.6,
+                                  minWidth:  MediaQuery.of(context).size.width / 4),
+                              child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: Text(
+                                    widget.user.first_name +
+                                        " " +
+                                        widget.user.last_name,
+                                    style: textes.h2l
+                                        .copyWith(color: couleurs.white),
+                                  )))
                         ],
                       ),
                     ],
@@ -214,13 +215,13 @@ class _AccountPasswordState extends State<AccountPassword> {
                               height: 30,
                             ),
                             SizedBox(
-                              width: 300,
-                              child: Text(
-                                "password-reset-text".tr,
-                                style: textes.h4l,
-                                textAlign: TextAlign.center,
-                              )),
-                              SizedBox(
+                                width: 300,
+                                child: Text(
+                                  "password-reset-text".tr,
+                                  style: textes.h4l,
+                                  textAlign: TextAlign.center,
+                                )),
+                            SizedBox(
                               height: 30,
                             ),
                             NewInput(
@@ -241,8 +242,7 @@ class _AccountPasswordState extends State<AccountPassword> {
                                 textes: textes,
                                 couleurs: couleurs,
                                 prefixIcon: Icon(icones.lock)),
-
-                                NewInput(
+                            NewInput(
                                 controller: confPassword,
                                 obscureText: true,
                                 onSubmit: (g) {},
@@ -264,13 +264,21 @@ class _AccountPasswordState extends State<AccountPassword> {
                               text: "save",
                               function: () async {
                                 if (oldPassword.text.isEmpty) {
-                                  EasyLoading.showError("Nom Requis");
+                                  EasyLoading.showError(
+                                      "Ancien mot de passe Requis");
                                 } else if (newPassword.text.isEmpty) {
-                                  EasyLoading.showError("Mot de passe Requis");
-                                } else if (confPassword.text.isEmpty) {
-                                  EasyLoading.showError("Numéro Requis");
-                                }  else {
+                                  EasyLoading.showError(
+                                      "Nouveau mot de passe Requis");
+                                } else if (confPassword.text !=
+                                    newPassword.text) {
+                                  EasyLoading.showError(
+                                      "Confirmation du mot de passe différente du mot de passe");
+                                } else {
                                   await getToken();
+                                  RegisterationController().updatePassword(
+                                      oldPassword: oldPassword.text,
+                                      newPassword: newPassword.text,
+                                      token: token);
                                 }
                               },
                             ),
