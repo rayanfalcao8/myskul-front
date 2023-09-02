@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myskul/components/genderBox.dart';
-import 'package:myskul/components/newButtonD.dart';
+import 'package:myskul/components/gender_box.dart';
+import 'package:myskul/components/button_d.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:myskul/components/newButtonG.dart';
+import 'package:myskul/components/button_g.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -118,10 +118,7 @@ class _LVState extends State<LV> {
                     });
                   },
                   child: GenderBox(
-                    couleurs: couleurs,
                     selectedGender: selectedSP,
-                    gradients: gradients,
-                    textes: textes,
                     condition: 0,
                     gender: "1",
                     width: 90,
@@ -138,10 +135,7 @@ class _LVState extends State<LV> {
                     });
                   },
                   child: GenderBox(
-                    couleurs: couleurs,
                     selectedGender: selectedSP,
-                    gradients: gradients,
-                    textes: textes,
                     condition: 1,
                     gender: "2",
                     width: 90,
@@ -158,10 +152,7 @@ class _LVState extends State<LV> {
                     });
                   },
                   child: GenderBox(
-                    couleurs: couleurs,
                     selectedGender: selectedSP,
-                    gradients: gradients,
-                    textes: textes,
                     condition: 2,
                     gender: "3",
                     width: 90,
@@ -186,10 +177,7 @@ class _LVState extends State<LV> {
                     });
                   },
                   child: GenderBox(
-                    couleurs: couleurs,
                     selectedGender: selectedSP,
-                    gradients: gradients,
-                    textes: textes,
                     condition: 3,
                     gender: "4",
                     width: 90,
@@ -206,10 +194,7 @@ class _LVState extends State<LV> {
                     });
                   },
                   child: GenderBox(
-                    couleurs: couleurs,
                     selectedGender: selectedSP,
-                    gradients: gradients,
-                    textes: textes,
                     condition: 4,
                     gender: "5",
                     width: 90,
@@ -226,10 +211,7 @@ class _LVState extends State<LV> {
                     });
                   },
                   child: GenderBox(
-                    couleurs: couleurs,
                     selectedGender: selectedSP,
-                    gradients: gradients,
-                    textes: textes,
                     condition: 5,
                     gender: "6",
                     width: 90,
@@ -251,10 +233,7 @@ class _LVState extends State<LV> {
                 });
               },
               child: GenderBox(
-                couleurs: couleurs,
                 selectedGender: selectedSP,
-                gradients: gradients,
-                textes: textes,
                 condition: 6,
                 gender: "7",
                 width: 290,
@@ -270,9 +249,6 @@ class _LVState extends State<LV> {
           height: 20,
         ),
         NewButtonD(
-            textes: textes,
-            couleurs: couleurs,
-            icones: icones,
             text: "PRECEDENT",
             function: () {
               Navigator.pop(context);
@@ -281,9 +257,6 @@ class _LVState extends State<LV> {
           height: 10,
         ),
         NewButtonG(
-            textes: textes,
-            couleurs: couleurs,
-            icones: icones,
             text: "VALIDER",
             function: () {
               Navigator.push(context,

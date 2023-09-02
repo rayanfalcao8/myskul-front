@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myskul/components/genderBox.dart';
-import 'package:myskul/components/newButtonD.dart';
+import 'package:myskul/components/gender_box.dart';
+import 'package:myskul/components/button_d.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/auth/lv.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:myskul/components/newButtonG.dart';
+import 'package:myskul/components/button_g.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -119,11 +119,8 @@ class _SP1State extends State<SP1> {
                                       });
                                     },
                                     child: GenderBox(
-                                      couleurs: couleurs,
                                       selectedGender: selectedSP,
-                                      gradients: gradients,
                                       icones: icones.medical,
-                                      textes: textes,
                                       condition: 0,
                                       gender: "SP1",
                                       width: 140,
@@ -140,11 +137,8 @@ class _SP1State extends State<SP1> {
                                       });
                                     },
                                     child: GenderBox(
-                                      couleurs: couleurs,
                                       selectedGender: selectedSP,
-                                      gradients: gradients,
                                       icones: icones.medical,
-                                      textes: textes,
                                       condition: 1,
                                       gender: "SP2",
                                       width: 140,
@@ -163,11 +157,8 @@ class _SP1State extends State<SP1> {
                                   });
                                 },
                                 child: GenderBox(
-                                  couleurs: couleurs,
                                   selectedGender: selectedSP,
-                                  gradients: gradients,
                                   icones: icones.medical,
-                                  textes: textes,
                                   condition: 2,
                                   gender: "SP3",
                                   width: 140,
@@ -180,9 +171,6 @@ class _SP1State extends State<SP1> {
                             height: 20,
                           ),
                           NewButtonD(
-                              textes: textes,
-                              couleurs: couleurs,
-                              icones: icones,
                               text: "previous",
                               function: () {
                                 Navigator.pop(context);
@@ -191,9 +179,6 @@ class _SP1State extends State<SP1> {
                             height: 10,
                           ),
                           NewButtonG(
-                              textes: textes,
-                              couleurs: couleurs,
-                              icones: icones,
                               text: "next",
                               function: () {
                                 Navigator.push(context,

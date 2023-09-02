@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myskul/components/messagesTile.dart';
+import 'package:myskul/components/messages_tiles.dart';
 import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/screens/chat/chat.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:myskul/components/newButtonG.dart';
-import 'package:myskul/components/newInput.dart';
+import 'package:myskul/components/button_g.dart';
+import 'package:myskul/components/input.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -39,8 +39,6 @@ class _GroupChatState extends State<GroupChat> {
 
   late CollectionReference groups;
 
-  late var myGroups;
-
   List<Widget> displayGroups(List<QueryDocumentSnapshot<Object?>> snap) {
     List<Widget> w = [];
     var tmp;
@@ -57,16 +55,23 @@ class _GroupChatState extends State<GroupChat> {
     return w;
   }
 
-  void getUserGroup() {
+  Future<List<QueryDocumentSnapshot<Object?>>> getUserGroup() async {
+    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+
+    final fmToken = await prefs.getString('fmToken');
+
     Map userTmp = {
       'userId': widget.user.id,
-      'userName': widget.user.first_name + '' + widget.user.last_name,
+      'userName': widget.user.username ,
       'userPic': widget.user.profile_image,
       'userEmail': widget.user.email,
+      'userPushToken': fmToken,
     };
 
     groups = db.collection("groupes");
-    myGroups =
+
+    return
         groups.where("members", arrayContains: userTmp).get().then((value) {
       if (value.docs.isNotEmpty) {
         print('Not Empty');
@@ -78,11 +83,6 @@ class _GroupChatState extends State<GroupChat> {
     });
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    getUserGroup();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +106,7 @@ class _GroupChatState extends State<GroupChat> {
                     height: (MediaQuery.of(context).size.height / 11),
                   ),
                   FutureBuilder(
-                      future: myGroups,
+                      future: getUserGroup(),
                       builder: (ctx,
                           AsyncSnapshot<List<QueryDocumentSnapshot<Object?>>>
                               snapshot) {
@@ -115,17 +115,13 @@ class _GroupChatState extends State<GroupChat> {
                           // If we got an error
                           if (snapshot.hasError) {
                             return NotFoundWidget(
-                                textes: textes,
-                                couleurs: couleurs,
                                 texte: snapshot.error.toString());
                             // if we got our data
                           } else if (snapshot.hasData) {
                             // Extracting data from snapshot object
                             if (snapshot.data!.isEmpty) {
                               return NotFoundWidget(
-                                  textes: textes,
-                                  couleurs: couleurs,
-                                  texte: 'Not Found');
+                                  texte: 'not-found-group'.tr);
                             } else {
                               return AnimationLimiter(
                                   child: Column(

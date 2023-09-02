@@ -127,9 +127,7 @@ class MainDrawer extends StatelessWidget {
                               FittedBox(
                                         fit: BoxFit.fitWidth,
                                         child: Text(
-                                          user.first_name +
-                                              " " +
-                                          user.last_name,
+                                          user.name,
                                           style: textes.h4r
                                               .copyWith(color: couleurs.white),
                                         )),

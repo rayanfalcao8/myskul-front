@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myskul/components/genderBox.dart';
-import 'package:myskul/components/newButtonD.dart';
+import 'package:myskul/components/gender_box.dart';
+import 'package:myskul/components/button_d.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:myskul/components/newButtonG.dart';
+import 'package:myskul/components/button_g.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -114,10 +114,7 @@ class _SP2State extends State<SP2> {
                                   });
                                 },
                                 child: GenderBox(
-                                  couleurs: couleurs,
                                   selectedGender: selectedSP,
-                                  gradients: gradients,
-                                  textes: textes,
                                   condition: 0,
                                   gender: "PREPA MEDECINE",
                                   width: 305,
@@ -134,10 +131,7 @@ class _SP2State extends State<SP2> {
                                   });
                                 },
                                 child: GenderBox(
-                                  couleurs: couleurs,
                                   selectedGender: selectedSP,
-                                  gradients: gradients,
-                                  textes: textes,
                                   condition: 1,
                                   gender: "PREPA CONCOURS IDE",
                                   width: 305,
@@ -154,10 +148,7 @@ class _SP2State extends State<SP2> {
                                   });
                                 },
                                 child: GenderBox(
-                                  couleurs: couleurs,
                                   selectedGender: selectedSP,
-                                  gradients: gradients,
-                                  textes: textes,
                                   condition: 2,
                                   gender: "PREPA TCF",
                                   width: 305,
@@ -174,10 +165,7 @@ class _SP2State extends State<SP2> {
                                   });
                                 },
                                 child: GenderBox(
-                                  couleurs: couleurs,
                                   selectedGender: selectedSP,
-                                  gradients: gradients,
-                                  textes: textes,
                                   condition: 3,
                                   gender: "PREPA TOEIC/TOEFL",
                                   width: 305,
@@ -193,9 +181,6 @@ class _SP2State extends State<SP2> {
                             height: 20,
                           ),
                           NewButtonD(
-                              textes: textes,
-                              couleurs: couleurs,
-                              icones: icones,
                               text: "previous",
                               function: () {
                                 Navigator.pop(context);
@@ -204,9 +189,6 @@ class _SP2State extends State<SP2> {
                             height: 10,
                           ),
                           NewButtonG(
-                              textes: textes,
-                              couleurs: couleurs,
-                              icones: icones,
                               text: "validate",
                               function: () {
                                 Navigator.push(context,

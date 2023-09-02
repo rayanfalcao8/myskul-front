@@ -80,6 +80,15 @@ class EN {
     'warning-text': 'Do you really want to log out ?',
     'yes': 'Yes',
     'cancel': 'Cancel',
+    'close': 'Fermer',
     'terms': 'TERMS AND CONDITIONS OF USE',
+    'edit-photo': 'Edit Photo',
+    'as-read': 'MARK AS READ',
+     'search': 'Search',
+     'success': 'Success',
+     'error': 'Error',
+     'ynca': 'You are now connected as @email',
+     'not-found-group': 'You are not associated to any group',
+     'not-found-message': 'Pas de message pour le moment ',
   };
 }

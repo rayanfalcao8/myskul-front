@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:myskul/components/genderBox.dart';
-import 'package:myskul/components/newInputInter.dart';
+import 'package:myskul/components/gender_box.dart';
+import 'package:myskul/components/input_number.dart';
 import 'package:myskul/controllers/auth/registration_controller.dart';
 import 'package:myskul/controllers/home_controller.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/account/account_password.dart';
-import 'package:myskul/screens/auth/login.dart';
-import 'package:myskul/screens/auth/terms.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:myskul/components/newButtonG.dart';
-import 'package:myskul/components/newInput.dart';
+import 'package:myskul/components/button_g.dart';
+import 'package:myskul/components/input.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -59,7 +56,7 @@ class _AccountState extends State<Account> {
 
   void init() async {
     widget.user = await HomeController().currentUser();
-    noms.text = widget.user.first_name + " " + widget.user.last_name;
+    noms.text = widget.user.name;
     email.text = widget.user.email;
     num.text = widget.user.phone_number;
     datenaiss.text = widget.user.birthdate;
@@ -247,9 +244,7 @@ class _AccountState extends State<Account> {
                                     child: FittedBox(
                                         fit: BoxFit.fitWidth,
                                         child: Text(
-                                          widget.user.first_name +
-                                              " " +
-                                              widget.user.last_name,
+                                          widget.user.name ,
                                           style: textes.h2l
                                               .copyWith(color: couleurs.white),
                                         )),
@@ -284,8 +279,6 @@ class _AccountState extends State<Account> {
                                         onSubmit: (g) {},
                                         keyboardType: TextInputType.text,
                                         hintText: "firstname-lastname",
-                                        textes: textes,
-                                        couleurs: couleurs,
                                         prefixIcon: Icon(icones.user)),
                                     NewInput(
                                         controller: email,
@@ -293,24 +286,18 @@ class _AccountState extends State<Account> {
                                         keyboardType:
                                             TextInputType.emailAddress,
                                         hintText: "email",
-                                        textes: textes,
-                                        couleurs: couleurs,
                                         prefixIcon: Icon(icones.user)),
                                     NewInputInter(
                                         controller: num,
                                         onSubmit: (g) {},
                                         keyboardType: TextInputType.phone,
                                         hintText: "phone",
-                                        textes: textes,
-                                        couleurs: couleurs,
                                         prefixIcon: Icon(icones.user)),
                                     NewInput(
                                         controller: ville,
                                         onSubmit: (g) {},
                                         keyboardType: TextInputType.text,
                                         hintText: "city",
-                                        textes: textes,
-                                        couleurs: couleurs,
                                         prefixIcon: Icon(icones.city)),
                                     NewInput(
                                         controller: datenaiss,
@@ -369,8 +356,6 @@ class _AccountState extends State<Account> {
                                         },
                                         keyboardType: TextInputType.datetime,
                                         hintText: "bd",
-                                        textes: textes,
-                                        couleurs: couleurs,
                                         prefixIcon: Icon(icones.calendar)),
                                     SizedBox(
                                       height: 10,
@@ -387,11 +372,8 @@ class _AccountState extends State<Account> {
                                             });
                                           },
                                           child: GenderBox(
-                                            couleurs: couleurs,
                                             selectedGender: selectedGender,
-                                            gradients: gradients,
                                             icones: icones.boy,
-                                            textes: textes,
                                             condition: 0,
                                             gender: "male",
                                             width: 145,
@@ -409,11 +391,8 @@ class _AccountState extends State<Account> {
                                             });
                                           },
                                           child: GenderBox(
-                                            couleurs: couleurs,
                                             selectedGender: selectedGender,
-                                            gradients: gradients,
                                             icones: icones.girl,
-                                            textes: textes,
                                             condition: 1,
                                             gender: "female",
                                             width: 145,
@@ -429,9 +408,6 @@ class _AccountState extends State<Account> {
                                       height: 30,
                                     ),
                                     NewButtonG(
-                                      textes: textes,
-                                      couleurs: couleurs,
-                                      icones: icones,
                                       text: "save",
                                       function: () async {
                                         if (noms.text.isEmpty) {
