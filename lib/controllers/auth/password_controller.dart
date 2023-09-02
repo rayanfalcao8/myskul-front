@@ -1,12 +1,8 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:myskul/main.dart';
-import 'package:myskul/screens/auth/Password.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/auth/reset.dart';
-import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -29,8 +25,8 @@ class PasswordController extends GetxController {
       EasyLoading.show();
 
       http.Response res = await http.post(url,
-          body: utf8.encode(jsonEncode(body)), headers: headers);
-      print("${jsonDecode(res.body)}");
+          body: jsonEncode(body), headers: headers);
+
       EasyLoading.dismiss();
 
       if (res.statusCode == 200) {
@@ -64,7 +60,7 @@ class PasswordController extends GetxController {
       EasyLoading.show();
 
       http.Response res = await http.post(url,
-          body: utf8.encode(jsonEncode(body)), headers: headers);
+          body: jsonEncode(body), headers: headers);
 
       EasyLoading.dismiss();
 

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myskul/components/genderBox.dart';
-import 'package:myskul/components/newButtonD.dart';
+import 'package:myskul/components/gender_box.dart';
+import 'package:myskul/components/button_d.dart';
 import 'package:myskul/screens/auth/sp1.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:myskul/components/newButtonG.dart';
+import 'package:myskul/components/button_g.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -114,10 +114,7 @@ class _SCState extends State<SC> {
                                   });
                                 },
                                 child: GenderBox(
-                                  couleurs: couleurs,
                                   selectedGender: selectedSP,
-                                  gradients: gradients,
-                                  textes: textes,
                                   condition: 0,
                                   gender: "SC1",
                                   width: 305,
@@ -134,10 +131,7 @@ class _SCState extends State<SC> {
                                   });
                                 },
                                 child: GenderBox(
-                                  couleurs: couleurs,
                                   selectedGender: selectedSP,
-                                  gradients: gradients,
-                                  textes: textes,
                                   condition: 1,
                                   gender:"SC2",
                                   width: 305,
@@ -154,10 +148,7 @@ class _SCState extends State<SC> {
                                   });
                                 },
                                 child: GenderBox(
-                                  couleurs: couleurs,
                                   selectedGender: selectedSP,
-                                  gradients: gradients,
-                                  textes: textes,
                                   condition: 2,
                                   gender: "SC3",
                                   width: 305,
@@ -173,9 +164,6 @@ class _SCState extends State<SC> {
                             height: 20,
                           ),
                           NewButtonD(
-                              textes: textes,
-                              couleurs: couleurs,
-                              icones: icones,
                               text: "previous",
                               function: () {
                                 Navigator.pop(context);
@@ -184,9 +172,6 @@ class _SCState extends State<SC> {
                             height: 10,
                           ),
                           NewButtonG(
-                              textes: textes,
-                              couleurs: couleurs,
-                              icones: icones,
                               text: "next",
                               function: () {
                                 Navigator.push(context,

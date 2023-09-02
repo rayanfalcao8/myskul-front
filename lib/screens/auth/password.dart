@@ -6,8 +6,8 @@ import 'package:myskul/screens/auth/register.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:myskul/components/newButtonG.dart';
-import 'package:myskul/components/newInput.dart';
+import 'package:myskul/components/button_g.dart';
+import 'package:myskul/components/input.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -126,16 +126,11 @@ class Password extends StatelessWidget {
                               onSubmit: onSubmit,
                               keyboardType: keyboardType,
                               hintText: hintText,
-                              textes: textes,
-                              couleurs: couleurs,
                               prefixIcon: prefixIcon),
                           SizedBox(
                             height: 30,
                           ),
                           NewButtonG(
-                            textes: textes,
-                            couleurs: couleurs,
-                            icones: icones,
                             text: "send",
                             function: (){
                               PasswordController().password(controller.text);

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myskul/components/genderBox.dart';
+import 'package:myskul/components/gender_box.dart';
 import 'package:myskul/screens/auth/sc.dart';
 import 'package:myskul/screens/auth/sp2.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:myskul/components/newButtonG.dart';
+import 'package:myskul/components/button_g.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -114,11 +114,8 @@ class _DomainState extends State<Domain> {
                                   });
                                 },
                                 child: GenderBox(
-                                  couleurs: couleurs,
                                   selectedGender: selectedSP,
-                                  gradients: gradients,
                                   icones: icones.school,
-                                  textes: textes,
                                   condition: 0,
                                   gender: "domain1",
                                   width: 140,
@@ -135,11 +132,8 @@ class _DomainState extends State<Domain> {
                                   });
                                 },
                                 child: GenderBox(
-                                  couleurs: couleurs,
                                   selectedGender: selectedSP,
-                                  gradients: gradients,
                                   icones: icones.school,
-                                  textes: textes,
                                   condition: 1,
                                   gender: "domain2",
                                   width: 140,
@@ -152,9 +146,6 @@ class _DomainState extends State<Domain> {
                             height: 20,
                           ),
                           NewButtonG(
-                            textes: textes,
-                            couleurs: couleurs,
-                            icones: icones,
                             text: "next",
                             function: () {
                               if (selectedSP == 0) {

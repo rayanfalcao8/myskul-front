@@ -7,11 +7,10 @@ import 'package:myskul/screens/auth/register.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:myskul/components/newButtonG.dart';
-import 'package:myskul/components/newInput.dart';
+import 'package:myskul/components/button_g.dart';
+import 'package:myskul/components/input.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:http/http.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -162,8 +161,6 @@ String? token = await prefs.getString('token');
                               onSubmit: onSubmit,
                               keyboardType: keyboardType,
                               hintText: hintText,
-                              textes: textes,
-                              couleurs: couleurs,
                               prefixIcon: prefixIcon),
                           NewInput(
                               obscureText: true,
@@ -171,13 +168,8 @@ String? token = await prefs.getString('token');
                               onSubmit: onSubmit2,
                               keyboardType: keyboardType2,
                               hintText: hintText2,
-                              textes: textes,
-                              couleurs: couleurs,
                               prefixIcon: prefixIcon2),
                           NewButtonG(
-                            textes: textes,
-                            couleurs: couleurs,
-                            icones: icones,
                             text: "connect",
                             function: () async {
                               print(Get.locale);

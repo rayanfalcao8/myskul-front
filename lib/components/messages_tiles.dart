@@ -3,24 +3,16 @@ import 'package:get/get.dart';
 import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/utilities/colors.dart';
-import 'package:myskul/utilities/gradients.dart';
-import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class SentMessage extends StatefulWidget {
   SentMessage({
-    super.key,
-    required this.couleurs,
-    required this.textes,
     required this.texte,
     required this.image,
     required this.nom,
   });
 
-  final ColorHelper couleurs;
-  final TextHelper textes;
   final String texte;
   final String image;
   final String nom;
@@ -47,18 +39,19 @@ class _SentMessageState extends State<SentMessage> {
             //       ),
             Container(
               constraints: BoxConstraints(
-                maxWidth: 250,),
+                maxWidth: 250,
+              ),
               padding: EdgeInsets.all(10),
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: widget.couleurs.green.withOpacity(0.5),
+                  color: ColorHelper().green.withOpacity(0.5),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
                       bottomLeft: Radius.circular(10))),
               child: Text(
                 widget.texte,
-                style: widget.textes.h4r,
+                style: TextHelper().h4r,
                 overflow: TextOverflow.clip,
               ),
             ),
@@ -76,16 +69,12 @@ class _SentMessageState extends State<SentMessage> {
 
 class ReceivedMessage extends StatefulWidget {
   const ReceivedMessage({
-    super.key,
-    required this.couleurs,
-    required this.textes,
     required this.texte,
     required this.image,
     required this.nom,
   });
 
-  final ColorHelper couleurs;
-  final TextHelper textes;
+
   final String texte;
   final String image;
   final String nom;
@@ -95,6 +84,8 @@ class ReceivedMessage extends StatefulWidget {
 }
 
 class _ReceivedMessageState extends State<ReceivedMessage> {
+
+
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -112,18 +103,19 @@ class _ReceivedMessageState extends State<ReceivedMessage> {
             ),
             Container(
               constraints: BoxConstraints(
-                maxWidth: 250,),
+                maxWidth: 250,
+              ),
               padding: EdgeInsets.all(10),
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: widget.couleurs.grey.withOpacity(0.2),
+                  color: ColorHelper().grey.withOpacity(0.2),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
                       bottomRight: Radius.circular(10))),
               child: Text(
                 widget.texte,
-                style: widget.textes.h4r,
+                style: TextHelper().h4r,
               ),
             ),
           ],
@@ -135,15 +127,11 @@ class _ReceivedMessageState extends State<ReceivedMessage> {
 
 class NotFoundWidget extends StatelessWidget {
   const NotFoundWidget({
-    super.key,
-    required this.textes,
-    required this.couleurs,
     required this.texte,
   });
 
-  final TextHelper textes;
+
   final String texte;
-  final ColorHelper couleurs;
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +151,7 @@ class NotFoundWidget extends StatelessWidget {
             Text(
               texte,
               style:
-                  textes.h3b.copyWith(color: couleurs.black.withOpacity(0.5)),
+                  TextHelper().h3b.copyWith(color: ColorHelper().black.withOpacity(0.5)),
             )
           ],
         )),
@@ -174,7 +162,6 @@ class NotFoundWidget extends StatelessWidget {
 
 class SentImage extends StatelessWidget {
   const SentImage({
-    super.key,
     required this.tmp,
     required this.user,
   });
@@ -191,14 +178,24 @@ class SentImage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
+            constraints: BoxConstraints(
+              maxWidth: 150,
+            ),
             padding: EdgeInsets.all(10),
             margin: EdgeInsets.all(10),
-            alignment:  Alignment.centerRight,
-            constraints: BoxConstraints(
-                maxWidth: 250, minWidth: 150, minHeight: 150, maxHeight: 250),
-            child: InkWell( onTap: () {
-              Get.to(()=>ShowImage(image: tmp['message']));
-            },child: FadeInImage(placeholder: AssetImage('assets/images/loading.gif'), image: NetworkImage(tmp['message']))),
+            decoration: BoxDecoration(
+                color: ColorHelper().green.withOpacity(0.5),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10))),
+            child: InkWell(
+                onTap: () {
+                  Get.to(() => ShowImage(image: tmp['message']));
+                },
+                child: FadeInImage(
+                    placeholder: AssetImage('assets/images/loading1.gif'),
+                    image: NetworkImage(tmp['message']))),
           ),
           CircleAvatar(
             radius: 10,
@@ -213,7 +210,6 @@ class SentImage extends StatelessWidget {
 
 class ReceivedImage extends StatelessWidget {
   const ReceivedImage({
-    super.key,
     required this.tmp,
     required this.user,
   });
@@ -235,21 +231,27 @@ class ReceivedImage extends StatelessWidget {
             backgroundImage: NetworkImage(tmp['senderImage']),
           ),
           Container(
+            constraints: BoxConstraints(
+              maxWidth: 150,
+            ),
             padding: EdgeInsets.all(10),
             margin: EdgeInsets.all(10),
-            alignment:  Alignment.centerLeft,
-            constraints: BoxConstraints(
-                maxWidth: 250, minWidth: 150, minHeight: 150, maxHeight: 250),
+            decoration: BoxDecoration(
+                color: ColorHelper().grey.withOpacity(0.2),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10))),
             child: InkWell(
-              onTap: (){
-                Get.to(()=>ShowImage(image: tmp['message']));
-              },
-              child: FadeInImage(placeholder: AssetImage('assets/images/loading.gif'), image: NetworkImage(tmp['message']))), 
+                onTap: () {
+                  Get.to(() => ShowImage(image: tmp['message']));
+                },
+                child: FadeInImage(
+                    placeholder: AssetImage('assets/images/loading1.gif'),
+                    image: NetworkImage(tmp['message']))),
           ),
-          
         ],
       ),
     );
   }
 }
-

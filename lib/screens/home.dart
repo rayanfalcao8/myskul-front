@@ -1,36 +1,36 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/chat/chat_group_list.dart';
 import 'package:myskul/screens/drawer.dart';
 import 'package:myskul/utilities/colors.dart';
-import 'package:myskul/utilities/constants.dart';
+import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:myskul/utilities/gradients.dart';
-import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
-  Home({required this.user});
-  User user;
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  late User user;
+
+  Future<User> getUser() async {
+    final prefs = await _prefs;
+    var userString = await prefs.getString('user');
+    var userJson = jsonDecode(userString!);
+    user = User.fromJson(userJson);
+    return user;
+  }
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  var couleurs = ColorHelper();
-
-  var textes = TextHelper();
-
-  var icones = IconHelper();
-
-  var gradients = GradientHelper();
 
   List<String> images = [
     "phone.jpg",
@@ -39,10 +39,50 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    print("${widget.user.email}");
+    return FutureBuilder(
+      builder: (ctx, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(
+                  color: ColorHelper().green,
+                ),
+              ),
+            );
+          } else if (snapshot.hasData) {
+            return HomepageScaffold(
+                scaffoldKey: scaffoldKey, user: snapshot.data!);
+          }
+        }
+
+        return Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(
+              color: ColorHelper().green,
+            ),
+          ),
+        );
+      },
+      future: getUser(),
+    );
+  }
+}
+
+class HomepageScaffold extends StatelessWidget {
+  HomepageScaffold({
+    required this.scaffoldKey,
+    required this.user,
+  });
+
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  final User user;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      drawer: MainDrawer(user: widget.user),
+      drawer: MainDrawer(user: user),
       body: SafeArea(
         child: SingleChildScrollView(
           child: AnimationLimiter(
@@ -75,8 +115,8 @@ class _HomeState extends State<Home> {
                             }
                           },
                           child: Icon(
-                            icones.menu,
-                            color: couleurs.green,
+                            IconHelper().menu,
+                            color: ColorHelper().green,
                             size: 30,
                           ),
                         ),
@@ -85,8 +125,8 @@ class _HomeState extends State<Home> {
                           width: 35,
                         ),
                         Icon(
-                          icones.notif,
-                          color: couleurs.green,
+                          IconHelper().notif,
+                          color: ColorHelper().green,
                           size: 30,
                         ),
                       ],
@@ -141,13 +181,13 @@ class _HomeState extends State<Home> {
                   //   height: 50,
                   //   width: MediaQuery.of(context).size.width,
                   //   decoration:
-                  //       BoxDecoration(gradient: gradients.greenGradient),
+                  //       BoxDecoration(gradient: GradientHelper().greenGradient),
                   //   child: Row(
                   //     mainAxisAlignment: MainAxisAlignment.center,
                   //     children: [
                   //       Text(
                   //         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nEtiam semper lacinia nunc . ",
-                  //         style: textes.h4l.copyWith(color: couleurs.white),
+                  //         style: TextHelper().h4l.copyWith(color: ColorHelper().white),
                   //       ),
                   //     ],
                   //   ),
@@ -157,21 +197,22 @@ class _HomeState extends State<Home> {
                     width: MediaQuery.of(context).size.width,
                     height: 50,
                     decoration:
-                        BoxDecoration(gradient: gradients.greenGradient),
+                        BoxDecoration(gradient: GradientHelper().greenGradient),
                     child: ListView(children: [
                       CarouselSlider(
                         items: [
                           Container(
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
-                                gradient: gradients.greenGradient),
+                                gradient: GradientHelper().greenGradient),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nEtiam semper lacinia nunc . ",
-                                  style: textes.h4l
-                                      .copyWith(color: couleurs.white),
+                                  style: TextHelper()
+                                      .h4l
+                                      .copyWith(color: ColorHelper().white),
                                 ),
                               ],
                             ),
@@ -179,14 +220,15 @@ class _HomeState extends State<Home> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
-                                gradient: gradients.greenGradient),
+                                gradient: GradientHelper().greenGradient),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nEtiam semper lacinia nunc . ",
-                                  style: textes.h4l
-                                      .copyWith(color: couleurs.white),
+                                  style: TextHelper()
+                                      .h4l
+                                      .copyWith(color: ColorHelper().white),
                                 ),
                               ],
                             ),
@@ -194,14 +236,15 @@ class _HomeState extends State<Home> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
-                                gradient: gradients.greenGradient),
+                                gradient: GradientHelper().greenGradient),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nEtiam semper lacinia nunc . ",
-                                  style: textes.h4l
-                                      .copyWith(color: couleurs.white),
+                                  style: TextHelper()
+                                      .h4l
+                                      .copyWith(color: ColorHelper().white),
                                 ),
                               ],
                             ),
@@ -232,7 +275,9 @@ class _HomeState extends State<Home> {
                           children: [
                             Text(
                               "dash".tr,
-                              style: textes.h3l.copyWith(color: couleurs.grey),
+                              style: TextHelper()
+                                  .h3l
+                                  .copyWith(color: ColorHelper().grey),
                             ),
                             SizedBox(
                               height: 05,
@@ -241,7 +286,7 @@ class _HomeState extends State<Home> {
                               height: 1,
                               width: 100,
                               margin: EdgeInsets.only(left: 4),
-                              color: couleurs.grey,
+                              color: ColorHelper().grey,
                             ),
                           ],
                         ),
@@ -252,27 +297,21 @@ class _HomeState extends State<Home> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             DashBox(
-                              couleurs: couleurs,
-                              icone: icones.quiz,
-                              textes: textes,
+                              icone: IconHelper().quiz,
                               texte: "Quiz",
                               couleur: Colors.blue,
                             ),
                             DashBox(
-                              couleurs: couleurs,
-                              icone: icones.shop,
-                              textes: textes,
+                              icone: IconHelper().shop,
                               texte: "Shop",
                               couleur: Colors.black26,
                             ),
                             DashBox(
-                              couleurs: couleurs,
-                              icone: icones.chat,
-                              textes: textes,
+                              icone: IconHelper().chat,
                               texte: "Chat",
                               couleur: Colors.pink,
                               function: () {
-                                Get.to(() => GroupChat(user: widget.user));
+                                Get.to(() => GroupChat(user: user));
                               },
                             ),
                             SizedBox()
@@ -285,23 +324,17 @@ class _HomeState extends State<Home> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             DashBox(
-                              couleurs: couleurs,
-                              icone: icones.leader,
-                              textes: textes,
+                              icone: IconHelper().leader,
                               texte: "Leaderboard",
-                              couleur: couleurs.lemon,
+                              couleur: ColorHelper().lemon,
                             ),
                             DashBox(
-                              couleurs: couleurs,
-                              icone: icones.shop,
-                              textes: textes,
+                              icone: IconHelper().shop,
                               texte: "ChatGPT",
-                              couleur: couleurs.lightGreen,
+                              couleur: ColorHelper().lightGreen,
                             ),
                             DashBox(
-                              couleurs: couleurs,
-                              icone: icones.fitness,
-                              textes: textes,
+                              icone: IconHelper().fitness,
                               texte: "Fitness",
                               couleur: Colors.red,
                             ),
@@ -316,7 +349,9 @@ class _HomeState extends State<Home> {
                           children: [
                             Text(
                               "current-plan".tr,
-                              style: textes.h3l.copyWith(color: couleurs.grey),
+                              style: TextHelper()
+                                  .h3l
+                                  .copyWith(color: ColorHelper().grey),
                             ),
                             SizedBox(
                               height: 05,
@@ -325,7 +360,7 @@ class _HomeState extends State<Home> {
                               height: 1,
                               width: 100,
                               margin: EdgeInsets.only(left: 4),
-                              color: couleurs.grey,
+                              color: ColorHelper().grey,
                             ),
                           ],
                         ),
@@ -341,7 +376,8 @@ class _HomeState extends State<Home> {
                                 height: 200,
                                 decoration: BoxDecoration(
                                   // borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(color: couleurs.green),
+                                  border:
+                                      Border.all(color: ColorHelper().green),
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
@@ -377,8 +413,8 @@ class _HomeState extends State<Home> {
                                           children: [
                                             Text(
                                               "BORDS NUMERIQUES",
-                                              style: textes.h4l.copyWith(
-                                                  color: couleurs.green),
+                                              style: TextHelper().h4l.copyWith(
+                                                  color: ColorHelper().green),
                                             ),
                                             SizedBox(
                                               height: 05,
@@ -387,7 +423,7 @@ class _HomeState extends State<Home> {
                                               height: 1,
                                               width: 70,
                                               margin: EdgeInsets.only(left: 4),
-                                              color: couleurs.green,
+                                              color: ColorHelper().green,
                                             ),
                                           ],
                                         ),
@@ -396,16 +432,16 @@ class _HomeState extends State<Home> {
                                         ),
                                         Text(
                                           "FMSB YAOUNDE",
-                                          style: textes.h4b
-                                              .copyWith(color: couleurs.green),
+                                          style: TextHelper().h4b.copyWith(
+                                              color: ColorHelper().green),
                                         ),
                                         SizedBox(
                                           height: 10,
                                         ),
                                         Text(
                                           "NIVEAU 1",
-                                          style: textes.h4l
-                                              .copyWith(color: couleurs.green),
+                                          style: TextHelper().h4l.copyWith(
+                                              color: ColorHelper().green),
                                         ),
                                       ],
                                     ),
@@ -426,7 +462,9 @@ class _HomeState extends State<Home> {
                           children: [
                             Text(
                               "user-info".tr,
-                              style: textes.h3l.copyWith(color: couleurs.grey),
+                              style: TextHelper()
+                                  .h3l
+                                  .copyWith(color: ColorHelper().grey),
                             ),
                             SizedBox(
                               height: 05,
@@ -435,7 +473,7 @@ class _HomeState extends State<Home> {
                               height: 1,
                               width: 110,
                               margin: EdgeInsets.only(left: 4),
-                              color: couleurs.grey,
+                              color: ColorHelper().grey,
                             ),
                           ],
                         ),
@@ -457,8 +495,9 @@ class _HomeState extends State<Home> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("15", style: textes.h3b),
-                                      Text("t-quiz".tr, style: textes.h4l),
+                                      Text("15", style: TextHelper().h3b),
+                                      Text("t-quiz".tr,
+                                          style: TextHelper().h4l),
                                     ],
                                   ),
                                   SizedBox(
@@ -470,8 +509,8 @@ class _HomeState extends State<Home> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("15", style: textes.h3b),
-                                      Text("r".tr, style: textes.h4l),
+                                      Text("15", style: TextHelper().h3b),
+                                      Text("r".tr, style: TextHelper().h4l),
                                     ],
                                   ),
                                 ],
@@ -479,7 +518,7 @@ class _HomeState extends State<Home> {
                               Container(
                                 height: 110,
                                 width: 1,
-                                color: couleurs.grey.withOpacity(0.1),
+                                color: ColorHelper().grey.withOpacity(0.1),
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -489,20 +528,22 @@ class _HomeState extends State<Home> {
                                   ),
                                   Text(
                                     "score".tr,
-                                    style: textes.h3r
-                                        .copyWith(color: couleurs.green),
+                                    style: TextHelper()
+                                        .h3r
+                                        .copyWith(color: ColorHelper().green),
                                   ),
                                   SizedBox(
                                     height: 10,
-                                  ),Text("150",
-                                        style: textes.xxlb
-                                            .copyWith(color: couleurs.green)),
+                                  ),
+                                  Text("150",
+                                      style: TextHelper().xxlb.copyWith(
+                                          color: ColorHelper().green)),
                                 ],
                               ),
                               Container(
                                 height: 110,
                                 width: 1,
-                                color: couleurs.grey.withOpacity(0.1),
+                                color: ColorHelper().grey.withOpacity(0.1),
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -511,8 +552,9 @@ class _HomeState extends State<Home> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text("200", style: textes.h3b),
-                                      Text("t-question".tr, style: textes.h4l),
+                                      Text("200", style: TextHelper().h3b),
+                                      Text("t-question".tr,
+                                          style: TextHelper().h4l),
                                     ],
                                   ),
                                   SizedBox(
@@ -522,8 +564,8 @@ class _HomeState extends State<Home> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text("15", style: textes.h3b),
-                                      Text("t".tr, style: textes.h4l),
+                                      Text("15", style: TextHelper().h3b),
+                                      Text("t".tr, style: TextHelper().h4l),
                                     ],
                                   ),
                                 ],
@@ -546,18 +588,13 @@ class _HomeState extends State<Home> {
 
 class DashBox extends StatelessWidget {
   DashBox({
-    super.key,
-    required this.couleurs,
     required this.icone,
     required this.texte,
     required this.couleur,
-    required this.textes,
     this.function,
   });
 
-  final ColorHelper couleurs;
   final IconData icone;
-  final TextHelper textes;
   final String texte;
   final Color couleur;
   void Function()? function;
@@ -584,18 +621,19 @@ class DashBox extends StatelessWidget {
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    color: couleurs.white.withOpacity(0.5),
+                    color: ColorHelper().white.withOpacity(0.5),
                   ),
                   child: Icon(
                     icone,
-                    color: couleurs.white,
+                    color: ColorHelper().white,
                     size: 20,
                   ),
                 ),
                 Text(
                   texte,
-                  style: textes.h4b
-                      .copyWith(color: couleurs.white.withOpacity(0.8)),
+                  style: TextHelper()
+                      .h4b
+                      .copyWith(color: ColorHelper().white.withOpacity(0.8)),
                 )
               ],
             ),
@@ -605,4 +643,3 @@ class DashBox extends StatelessWidget {
     );
   }
 }
-

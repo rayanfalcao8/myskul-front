@@ -5,7 +5,6 @@ import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterationController extends GetxController {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -26,11 +25,8 @@ class RegisterationController extends GetxController {
       var url = Uri.parse(
           ApiEndponits().baseUrl + ApiEndponits().authEndpoints.registerEmail);
 
-      var str = userController.text.split(" ");
-
       Map body = {
-        "first_name": str[0] ?? " ",
-        "last_name": str.length >= 2 ? str[1] : " ${str[0]}",
+        "name": userController,
         "email": emailController,
         "password": passwordController,
         "gender": genderController.toString(),
@@ -54,15 +50,6 @@ class RegisterationController extends GetxController {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }
     } catch (e) {
-      // showDialog(
-      //     context: Get.context!,
-      //     builder: (context) {
-      //       return SimpleDialog(
-      //         title: Text('Erreur'),
-      //         contentPadding: EdgeInsets.all(20),
-      //         children: [Text(e.toString())],
-      //       );
-      //     });
       EasyLoading.showError(e.toString());
     }
   }
@@ -76,7 +63,7 @@ class RegisterationController extends GetxController {
       cityController,
       genderController,
       token}) async {
-    // TODO : Mettre aussi l'utilisateur à jour sur firestore
+
     try {
       var headers = {
         "Authorization": "Bearer" + " " + token.toString(),
@@ -87,11 +74,8 @@ class RegisterationController extends GetxController {
           ApiEndponits().endpoints.updateUser +
           idController);
 
-      List str = userController.split(" ");
-
       Map body = {
-        "first_name": str[0] ?? " ",
-        "last_name": str.length >= 2 ? str[1] : " ${str[0]}",
+        "name": userController,
         "email": emailController,
         "gender": genderController.toString(),
         "birthdate": bdController,
@@ -99,15 +83,6 @@ class RegisterationController extends GetxController {
         "address": cityController,
       };
 
-      // Map userTmp = {
-      //   'userId': idController,
-      //   'userName': str.length >= 2
-      //       ? str[0] + ' ' + str[1]
-      //       : " ${str[0] + ' ' + str[0]}",
-      //   'userPic':
-      //       'https://ui-avatars.com/api/?name=${str[0]}+${str[1]}&color=226520&background=E3FFE3',
-      //   'userEmail': emailController,
-      // };
 
       EasyLoading.show();
 
@@ -117,11 +92,7 @@ class RegisterationController extends GetxController {
       EasyLoading.dismiss();
 
       if (res.statusCode == 200) {
-        // FirebaseFirestore.instance
-        //     .collection('groupes')
-        //     .where("members", arrayContains: userTmp)
-        //     .orderBy("time")
-        //     .snapshots();
+
         var json = jsonDecode(res.body);
         EasyLoading.showSuccess(json['message']);
 
@@ -130,15 +101,7 @@ class RegisterationController extends GetxController {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }
     } catch (e) {
-      // showDialog(
-      //     context: Get.context!,
-      //     builder: (context) {
-      //       return SimpleDialog(
-      //         title: Text('Erreur'),
-      //         contentPadding: EdgeInsets.all(20),
-      //         children: [Text(e.toString())],
-      //       );
-      //     });
+
       EasyLoading.showError(e.toString());
     }
   }
@@ -150,8 +113,8 @@ class RegisterationController extends GetxController {
         "Content-Type": "application/json; charset=UTF-8",
         "Accept": "application/json",
       };
-      var url = Uri.parse(ApiEndponits().baseUrl +
-          ApiEndponits().endpoints.updatePassword);
+      var url = Uri.parse(
+          ApiEndponits().baseUrl + ApiEndponits().endpoints.updatePassword);
 
       Map body = {
         "password": oldPassword,
@@ -174,15 +137,7 @@ class RegisterationController extends GetxController {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }
     } catch (e) {
-      // showDialog(
-      //     context: Get.context!,
-      //     builder: (context) {
-      //       return SimpleDialog(
-      //         title: Text('Erreur'),
-      //         contentPadding: EdgeInsets.all(20),
-      //         children: [Text(e.toString())],
-      //       );
-      //     });
+
       EasyLoading.showError(e.toString());
     }
   }

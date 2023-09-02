@@ -1,5 +1,6 @@
 class ApiEndponits {
   final String baseUrl = "https://api.digihealthsarl.com/api";
+   final String sendPushNotificationUrl = "https://fcm.googleapis.com/fcm/send";
   // final String baseUrl = "http://restapi.adequateshop.com/api/AuthAccount";
   final authEndpoints = AuthEndpoints();
   final endpoints = Endpoints();

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myskul/components/genderBox.dart';
-import 'package:myskul/components/newInputInter.dart';
+import 'package:myskul/components/gender_box.dart';
+import 'package:myskul/components/input_number.dart';
 import 'package:myskul/controllers/auth/registration_controller.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/auth/terms.dart';
@@ -11,8 +11,8 @@ import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:myskul/components/newButtonG.dart';
-import 'package:myskul/components/newInput.dart';
+import 'package:myskul/components/button_g.dart';
+import 'package:myskul/components/input.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -140,32 +140,24 @@ class _RegisterState extends State<Register> {
                               onSubmit: (g) {},
                               keyboardType: TextInputType.text,
                               hintText: "firstname-lastname",
-                              textes: textes,
-                              couleurs: couleurs,
                               prefixIcon: Icon(icones.user)),
                           NewInput(
                               controller: email,
                               onSubmit: (g) {},
                               keyboardType: TextInputType.emailAddress,
                               hintText: "email",
-                              textes: textes,
-                              couleurs: couleurs,
                               prefixIcon: Icon(icones.user)),
                           NewInputInter(
                               controller: num,
                               onSubmit: (g) {},
                               keyboardType: TextInputType.phone,
                               hintText: "phone",
-                              textes: textes,
-                              couleurs: couleurs,
                               prefixIcon: Icon(icones.user)),
                           NewInput(
                               controller: ville,
                               onSubmit: (g) {},
                               keyboardType: TextInputType.text,
                               hintText: "city",
-                              textes: textes,
-                              couleurs: couleurs,
                               prefixIcon: Icon(icones.city)),
                           NewInput(
                               controller: datenaiss,
@@ -221,8 +213,6 @@ class _RegisterState extends State<Register> {
                               },
                               keyboardType: TextInputType.datetime,
                               hintText: "bd",
-                              textes: textes,
-                              couleurs: couleurs,
                               prefixIcon: Icon(icones.calendar)),
                           SizedBox(
                             height: 10,
@@ -237,11 +227,8 @@ class _RegisterState extends State<Register> {
                                   });
                                 },
                                 child: GenderBox(
-                                  couleurs: couleurs,
                                   selectedGender: selectedGender,
-                                  gradients: gradients,
                                   icones: icones.boy,
-                                  textes: textes,
                                   condition: 0,
                                   gender: "male",
                                   width: 145,
@@ -258,11 +245,8 @@ class _RegisterState extends State<Register> {
                                   });
                                 },
                                 child: GenderBox(
-                                  couleurs: couleurs,
                                   selectedGender: selectedGender,
-                                  gradients: gradients,
                                   icones: icones.girl,
-                                  textes: textes,
                                   condition: 1,
                                   gender: "female",
                                   width: 145,
@@ -280,8 +264,6 @@ class _RegisterState extends State<Register> {
                               onSubmit: (g) {},
                               keyboardType: TextInputType.visiblePassword,
                               hintText: "password",
-                              textes: textes,
-                              couleurs: couleurs,
                               prefixIcon: Icon(icones.lock)),
                           NewInput(
                               obscureText: true,
@@ -289,8 +271,6 @@ class _RegisterState extends State<Register> {
                               onSubmit: (g) {},
                               keyboardType: TextInputType.visiblePassword,
                               hintText: "password-conf",
-                              textes: textes,
-                              couleurs: couleurs,
                               prefixIcon: Icon(icones.lock)),
                           SizedBox(
                             height: 30,
@@ -327,9 +307,6 @@ class _RegisterState extends State<Register> {
                             ],
                           ),
                           NewButtonG(
-                            textes: textes,
-                            couleurs: couleurs,
-                            icones: icones,
                             text: "signup",
                             function: () {
                               if (noms.text.isEmpty) {

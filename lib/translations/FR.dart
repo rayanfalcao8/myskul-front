@@ -31,7 +31,8 @@ class FR {
         'Veuillez entrer votre email de connexion. Nous vous enverrons un e-mail avec un lien pour réinitialiser votre mot de passe.',
     'password-reset-title': 'REINITIALISATION DE',
     'password-reset-title2': 'MOT DE PASSE',
-    'password-reset-text': 'Veuillez enregistrer ici votre nouveau mot de passe de connexion.',
+    'password-reset-text':
+        'Veuillez enregistrer ici votre nouveau mot de passe de connexion.',
     'forgot-password1': 'Mot de passe oublié ?',
     'forgot-password2': ' Récupérer mon mot de passe',
     'old-password': 'Ancien mot de passe',
@@ -80,6 +81,15 @@ class FR {
     'warning-text': 'Voulez-vous vraiment vous déconnecter ?',
     'yes': 'Oui',
     'cancel': 'Annuler',
+    'close': 'Fermer',
     'terms': 'TERMES ET CONDITIONS D\' UTILISATION',
+    'edit-photo': 'Modifier l\' image',
+    'as-read': 'MARQUER COMME LU',
+    'search': 'Rechercher',
+    'success': 'Succès',
+    'error': 'Erreur',
+    'ynca': 'Vous êtes désormais connecté en tant @email',
+    'not-found-group': 'Vous n\' etes associé à aucun groupe ',
+    'not-found-message': 'Pas de message pour le moment ',
   };
 }
