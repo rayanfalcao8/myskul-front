@@ -1,4 +1,4 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
+//import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
@@ -23,21 +23,21 @@ class _TestState extends State<Test> {
 
   final ScrollController _controller = ScrollController();
 
-  notif() {
-    AwesomeNotifications().createNotification(
-        content: NotificationContent(
-            id: 13,
-            channelKey: 'basic_channel',
-            title:
-                'Emojis are awesome too! ${Emojis.activites_fireworks}  ${Emojis.activites_balloon}  ${Emojis.emotion_red_heart}',
-            body:
-                'Simple body with a bunch of Emojis! ${Emojis.transport_police_car} ${Emojis.animals_dog} ${Emojis.flag_UnitedStates} ${Emojis.person_baby}',
-            color: ColorHelper().green,
-            badge: 1,
-            largeIcon: 'asset//assets/images/logo2.png',
-            notificationLayout: NotificationLayout.Default
-            ));
-  }
+  // notif() {
+  //   AwesomeNotifications().createNotification(
+  //       content: NotificationContent(
+  //           id: 13,
+  //           channelKey: 'basic_channel',
+  //           title:
+  //               'Emojis are awesome too! ${Emojis.activites_fireworks}  ${Emojis.activites_balloon}  ${Emojis.emotion_red_heart}',
+  //           body:
+  //               'Simple body with a bunch of Emojis! ${Emojis.transport_police_car} ${Emojis.animals_dog} ${Emojis.flag_UnitedStates} ${Emojis.person_baby}',
+  //           color: ColorHelper().green,
+  //           badge: 1,
+  //           largeIcon: 'asset//assets/images/logo2.png',
+  //           notificationLayout: NotificationLayout.Default
+  //           ));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _TestState extends State<Test> {
           height: MediaQuery.of(context).size.height,
           child: Center(
             child: ElevatedButton(
-                onPressed: notif, child: Text('Lancer une notification')),
+                onPressed: (){}, child: Text('Lancer une notification')),
           ),
         ),
       ),
