@@ -63,7 +63,7 @@ class _GroupChatState extends State<GroupChat> {
 
     Map userTmp = {
       'userId': widget.user.id,
-      'userName': widget.user.username ,
+      'userName': widget.user.username,
       'userPic': widget.user.profile_image,
       'userEmail': widget.user.email,
       'userPushToken': fmToken,

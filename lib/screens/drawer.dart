@@ -117,20 +117,14 @@ class MainDrawer extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              constraints: BoxConstraints(
-                                  maxWidth:
-                                      MediaQuery.of(context).size.width / 4.6,
-                                  minWidth:
-                                      MediaQuery.of(context).size.width / 5),
-                              child: 
-                              FittedBox(
-                                        fit: BoxFit.fitWidth,
-                                        child: Text(
-                                          user.name,
-                                          style: textes.h4r
-                                              .copyWith(color: couleurs.white),
-                                        )),
+                            SizedBox(
+                              width: 170,
+                              child: Text(
+                                user.name,
+                                style:
+                                    textes.h3b.copyWith(color: couleurs.white),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                             SizedBox()
                           ],

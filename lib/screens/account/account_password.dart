@@ -170,18 +170,16 @@ class _AccountPasswordState extends State<AccountPassword> {
                           SizedBox(
                             height: 40,
                           ),
-                          Container(
-                              constraints: BoxConstraints(
-                                  maxWidth:
-                                      MediaQuery.of(context).size.width / 3.6,
-                                  minWidth:  MediaQuery.of(context).size.width / 4),
-                              child: FittedBox(
-                                  fit: BoxFit.fitWidth,
-                                  child: Text(
-                                    widget.user.name,
-                                    style: textes.h2l
-                                        .copyWith(color: couleurs.white),
-                                  )))
+                          SizedBox(
+                              width: 170,
+                              child: Center(
+                                child: Text(
+                                  widget.user.name,
+                                  style: textes.h2l
+                                      .copyWith(color: couleurs.white),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ))
                         ],
                       ),
                     ],

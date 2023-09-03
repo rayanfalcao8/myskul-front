@@ -25,7 +25,6 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  
   var couleurs = ColorHelper();
 
   var textes = TextHelper();
@@ -55,14 +54,13 @@ class _AccountState extends State<Account> {
     token = await prefs.getString('token');
   }
 
-  void init() async {
-    widget.user = await HomeController().currentUser();
+  void init() {
     noms.text = widget.user.name;
     email.text = widget.user.email;
-    num.text = widget.user.phone_number;
-    datenaiss.text = widget.user.birthdate;
+    num.text = widget.user.phoneNumber ?? "";
+    datenaiss.text = widget.user.birthdate ?? "";
     ville.text = widget.user.town ?? "";
-    selectedGender = int.parse(widget.user.gender);
+    selectedGender = widget.user.gender == "Male" ? 0 : 1;
   }
 
   @override
@@ -82,11 +80,11 @@ class _AccountState extends State<Account> {
               if (!snapshot.hasData) {
                 return Container(
                   decoration: BoxDecoration(
-                        color: couleurs.white.withOpacity(0.5),
-                        image: DecorationImage(
-                            image: AssetImage("assets/images/math.png"),
-                            opacity: 0.04,
-                            fit: BoxFit.cover)),
+                      color: couleurs.white.withOpacity(0.5),
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/math.png"),
+                          opacity: 0.04,
+                          fit: BoxFit.cover)),
                   child: Center(
                       child: CircularProgressIndicator(
                     color: couleurs.green,
@@ -240,12 +238,13 @@ class _AccountState extends State<Account> {
                                         maxWidth:
                                             MediaQuery.of(context).size.width /
                                                 3.6,
-                                        minWidth: MediaQuery.of(context).size.width /
+                                        minWidth:
+                                            MediaQuery.of(context).size.width /
                                                 4),
                                     child: FittedBox(
                                         fit: BoxFit.fitWidth,
                                         child: Text(
-                                          widget.user.name ,
+                                          widget.user.name,
                                           style: textes.h2l
                                               .copyWith(color: couleurs.white),
                                         )),
