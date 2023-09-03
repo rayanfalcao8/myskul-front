@@ -4,7 +4,6 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   audioplayers_windows
-  awesome_notifications
   file_selector_windows
   firebase_core
   url_launcher_windows
