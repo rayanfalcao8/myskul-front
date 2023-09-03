@@ -160,9 +160,9 @@ class ChatController {
 
 // Scroll automatique
 
-  void scrollDown(controller) {
-    if (controller.positions.isNotEmpty) {
-      controller.animateTo(controller.position.maxScrollExtent,
+  void scrollDown(ScrollController ctrl) {
+    if (ctrl.positions.isNotEmpty) {
+      ctrl.animateTo(ctrl.position.maxScrollExtent,
           duration: Duration(milliseconds: 300), curve: Curves.ease);
     }
   }
@@ -173,8 +173,7 @@ class ChatController {
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
           print("error found");
-          return NotFoundWidget(
-              texte: "Something went wrong");
+          return NotFoundWidget(texte: "Something went wrong");
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -236,8 +235,7 @@ class ChatController {
                 },
               )
             : SingleChildScrollView(
-                child: NotFoundWidget(
-                    texte: 'Pas de message pour le moment'),
+                child: NotFoundWidget(texte: 'Pas de message pour le moment'),
               );
       },
     );

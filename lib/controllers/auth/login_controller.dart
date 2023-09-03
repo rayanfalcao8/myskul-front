@@ -6,6 +6,8 @@ import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:myskul/utilities/colors.dart';
+import 'package:myskul/controllers/chat_controller.dart';
+import 'package:myskul/utilities/constants.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -28,7 +30,7 @@ class LoginController extends GetxController {
       final res =
           await http.post(url, body: jsonEncode(body), headers: headers);
 
-          print('${res.request}');
+      print('${res.request}');
 
       EasyLoading.dismiss();
 
@@ -46,7 +48,7 @@ class LoginController extends GetxController {
           await prefs.setString('user', jsonEncode(user.toJson()).toString());
 
           EasyLoading.dismiss();
-
+          ChatController().addUser(user, Constant().PTCL);
           EasyLoading.showSuccess("ynca".trParams({'email': emailController}));
 
           Get.off(() => Home());
@@ -57,8 +59,7 @@ class LoginController extends GetxController {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }
     } catch (e) {
-
-         EasyLoading.showError(e.toString());
+      EasyLoading.showError(e.toString());
     }
   }
 
