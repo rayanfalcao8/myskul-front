@@ -42,7 +42,7 @@ class ChatController {
   void addUser(User user, String document) async {
     Map userTmp = {
       'userId': user.id,
-      'userName': user.first_name + '' + user.last_name,
+      'userName': user.username,
       'userPic': user.profile_image,
       'userEmail': user.email,
     };
@@ -131,7 +131,7 @@ class ChatController {
   void removeUser(User user, String document) async {
     Map userTmp = {
       'userId': user.id,
-      'userName': user.first_name + '' + user.last_name,
+      'userName': user.username,
       'userPic': user.profile_image,
       'userEmail': user.email,
     };
@@ -182,7 +182,7 @@ class ChatController {
                   var tmp = snapshot.data.docs[index].data() as Map;
                   if (tmp['type'] == 'texte') {
                     if (tmp['sender'] ==
-                        (user.first_name + ' ' + user.last_name)) {
+                        (user.username)) {
                       return SentMessage(
                         couleurs: couleurs,
                         textes: textes,
@@ -200,7 +200,7 @@ class ChatController {
                     );
                   } else {
                     if (tmp['sender'] ==
-                        (user.first_name + ' ' + user.last_name)) {
+                        (user.username)) {
                       return SentImage(
                         tmp: tmp,
                         user: user,

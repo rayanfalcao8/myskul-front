@@ -182,9 +182,7 @@ class _AccountPasswordState extends State<AccountPassword> {
                               width: 170,
                               child: Center(
                                 child: Text(
-                                  widget.user.first_name +
-                                      " " +
-                                      widget.user.last_name,
+                                  widget.user.name,
                                   style: textes.h2l
                                       .copyWith(color: couleurs.white),
                                   overflow: TextOverflow.ellipsis,

@@ -1,52 +1,52 @@
 class User {
   var id;
-  var first_name;
-  var last_name;
+  var name;
+  var username;
   var email;
   var password;
   var gender;
   var birthdate;
-  var phone_number;
+  var phoneNumber;
   var profile_image;
-  var address;
+  var town;
 
   User(
       {id,
-      first_name,
-      last_name,
+      name,
+      username,
       email,
       password,
       gender,
       birthdate,
-      phone_number,
+      phoneNumber,
       profile_image,
-      address});
+      town});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    first_name = json['first_name'];
-    last_name = json['last_name'];
+    name = json['name'];
+    username = json['username'];
     email = json['email'];
     password = json['password'];
     gender = json['gender'];
     birthdate = json['birthdate'];
-    phone_number = json['phone_number'];
+    phoneNumber = json['phoneNumber'];
     profile_image = json['profile_image'];
-    address = json['address'];
+    town = json['town'];
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'first_name': first_name,
-      'last_name': last_name,
+      'name': name,
+      'username': username,
       'email': email,
       'password': password,
       'gender': gender,
       'birthdate': birthdate,
-      'phone_number': phone_number,
+      'phoneNumber': phoneNumber,
       'profile_image': profile_image,
-      'address': address,
+      'town': town,
     };
   }
 }

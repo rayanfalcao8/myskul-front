@@ -40,14 +40,13 @@ class RegisterationController extends GetxController {
       var str = userController.text.split(" ");
 
       Map body = {
-        "first_name": str[0] ?? " ",
-        "last_name": str.length >= 2 ? str[1] : " ${str[0]}",
+        "name": userController.text,
         "email": emailController.text.trim(),
         "password": passwordController.text,
         "gender": genderController.toString(),
         "birthdate": bdController.text.trim(),
-        "phone_number": numController.text.trim(),
-        "address": cityController.text.trim(),
+        "phoneNumber": numController.text.trim(),
+        "town": cityController.text.trim(),
       };
 
       EasyLoading.show();
@@ -100,13 +99,13 @@ class RegisterationController extends GetxController {
       List str = userController.text.split(" ");
 
       Map body = {
-        "first_name": str[0] ?? " ",
-        "last_name": str.length >= 2 ? str[1] : " ${str[0]}",
+        "name": userController.text,
         "email": emailController.text.trim(),
+        "password": passwordController.text,
         "gender": genderController.toString(),
         "birthdate": bdController.text.trim(),
-        "phone_number": numController.text.trim(),
-        "address": cityController.text.trim(),
+        "phoneNumber": numController.text.trim(),
+        "town": cityController.text.trim(),
       };
 
       EasyLoading.show();

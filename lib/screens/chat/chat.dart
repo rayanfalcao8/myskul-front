@@ -83,7 +83,7 @@ class _ChatState extends State<Chat> {
 
     var tmp = {
       'message': imageUrl,
-      'sender': widget.user.first_name + ' ' + widget.user.last_name,
+      'sender': widget.user.username,
       'senderImage': widget.user.profile_image,
       'type': 'image',
       'time': DateTime.now().microsecondsSinceEpoch.toString(),
@@ -250,9 +250,7 @@ class _ChatState extends State<Chat> {
                     onTap: () {
                       var tmp = {
                         'message': messageController.text,
-                        'sender': widget.user.first_name +
-                            ' ' +
-                            widget.user.last_name,
+                        'sender': widget.user.name,
                         'senderImage': widget.user.profile_image,
                         'type': 'texte',
                         'time':

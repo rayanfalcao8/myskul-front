@@ -58,12 +58,12 @@ class _AccountState extends State<Account> {
   }
 
   void init() {
-    noms.text = widget.user.first_name + " " + widget.user.last_name;
+    noms.text = widget.user.name;
     email.text = widget.user.email;
-    num.text = widget.user.phone_number;
-    datenaiss.text = widget.user.birthdate;
-    ville.text = widget.user.address ?? "";
-    selectedGender = int.parse(widget.user.gender);
+    num.text = widget.user.phoneNumber ?? "";
+    datenaiss.text = widget.user.birthdate ?? "";
+    ville.text = widget.user.town ?? "";
+    selectedGender = widget.user.gender == "Male" ? 0 : 1;
   }
 
   @override
@@ -226,9 +226,7 @@ class _AccountState extends State<Account> {
                                       width: 170,
                                       child: Center(
                                         child: Text(
-                                          widget.user.first_name +
-                                              " " +
-                                              widget.user.last_name,
+                                          widget.user.name,
                                           style: textes.h2l
                                               .copyWith(color: couleurs.white),
                                           overflow: TextOverflow.ellipsis,

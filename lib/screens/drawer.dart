@@ -121,7 +121,7 @@ class MainDrawer extends StatelessWidget {
                             SizedBox(
                               width: 170,
                               child: Text(
-                                user.first_name + " " + user.last_name,
+                                user.name,
                                 style:
                                     textes.h3b.copyWith(color: couleurs.white),
                                 overflow: TextOverflow.ellipsis,
