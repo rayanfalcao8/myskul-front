@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:awesome_notifications/awesome_notifications.dart';
+//import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/screens/chat/chat_group_list.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:myskul/translations/translation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 
 bool?
     seen; // Cette variable va permettre d'afficher le splash screen une seule fois
@@ -26,22 +25,22 @@ String?
 late User user; // Ici sera stocké l'utilisateur principal
 
 // fonction pour capture les notification et faire des actions lorsqu'on les reçoit
-@pragma("vm:entry-point")
-Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-    final prefs = await _prefs;
-    var userString = await prefs.getString('user');
-    var userJson = jsonDecode(userString!);
-    user = User.fromJson(userJson);
-  Get.to(() => GroupChat(user: user));
-}
+// @pragma("vm:entry-point")
+// Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
+//   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+//     final prefs = await _prefs;
+//     var userString = await prefs.getString('user');
+//     var userJson = jsonDecode(userString!);
+//     user = User.fromJson(userJson);
+//   Get.to(() => GroupChat(user: user));
+// }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // Initialisation de firebase
 
   // Initialisation de firebase messaging et awesome notifications
-  await messagingInit();
+  //await messagingInit();
 
   // Initialisation du package SharedPreferences
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -72,43 +71,43 @@ Future<void> shMethods(SharedPreferences prefs) async {
   }
 }
 
-Future<void> messagingInit() async {
-  FirebaseMessaging.onBackgroundMessage(notify);
-  await AwesomeNotifications().setListeners(
-    onActionReceivedMethod: onActionReceivedMethod,
-  );
+// Future<void> messagingInit() async {
+//   FirebaseMessaging.onBackgroundMessage(notify);
+//   await AwesomeNotifications().setListeners(
+//     onActionReceivedMethod: onActionReceivedMethod,
+//   );
 
-  FirebaseMessaging.instance
-      .setForegroundNotificationPresentationOptions(alert: true, sound: true);
-  FirebaseMessaging.onMessage.listen(
-    (m) {
-    //  notify(m);
-    },
-  );
+//   FirebaseMessaging.instance
+//       .setForegroundNotificationPresentationOptions(alert: true, sound: true);
+//   FirebaseMessaging.onMessage.listen(
+//     (m) {
+//     //  notify(m);
+//     },
+//   );
 
-  FirebaseMessaging.onMessageOpenedApp.listen(
-    (m) {
-      print("OnMessageOpenedAp : ${m.data}");
-    },
-  );
+//   FirebaseMessaging.onMessageOpenedApp.listen(
+//     (m) {
+//       print("OnMessageOpenedAp : ${m.data}");
+//     },
+//   );
 
-  AwesomeNotifications().initialize(
-    'resource://drawable/res_app_ico',
-    [
-      NotificationChannel(
-        channelKey: 'MySkul',
-        channelName: 'MySkul',
-        channelDescription: 'MySkul Notification',
-        playSound: true,
-        importance: NotificationImportance.Max,
-        defaultColor: ColorHelper().green,
-        ledColor: Colors.white,
-        icon: 'resource://drawable/res_app_ico',
-      ),
-    ],
-    debug: true,
-  );
-}
+//   AwesomeNotifications().initialize(
+//     'resource://drawable/res_app_ico',
+//     [
+//       NotificationChannel(
+//         channelKey: 'MySkul',
+//         channelName: 'MySkul',
+//         channelDescription: 'MySkul Notification',
+//         playSound: true,
+//         importance: NotificationImportance.Max,
+//         defaultColor: ColorHelper().green,
+//         ledColor: Colors.white,
+//         icon: 'resource://drawable/res_app_ico',
+//       ),
+//     ],
+//     debug: true,
+//   );
+// }
 
 class Home1 extends StatefulWidget {
   @override
@@ -129,14 +128,14 @@ class _Home1State extends State<Home1> {
     900: ColorHelper().white.withOpacity(0),
   };
 
-  @override
-  void initState() {
-    AwesomeNotifications().isNotificationAllowed().then((value) {
-      if (!value) {
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
-  }
+  // @override
+  // void initState() {
+  //   AwesomeNotifications().isNotificationAllowed().then((value) {
+  //     if (!value) {
+  //       AwesomeNotifications().requestPermissionToSendNotifications();
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -182,24 +181,24 @@ int createUniqueId() {
   return DateTime.now().millisecondsSinceEpoch.remainder(100000);
 }
 
-Future notify(RemoteMessage m) async {
-  var tmp = m.data as Map;
-  var local = Get.locale;
+// Future notify(RemoteMessage m) async {
+//   var tmp = m.data as Map;
+//   var local = Get.locale;
 
-  AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: createUniqueId(),
-        channelKey: 'MySkul',
-        title: tmp['nom'],
-        body: tmp['message'],
-        summary: tmp['groupe'],
-        largeIcon: tmp['image'],
-        roundedLargeIcon: true,
-        notificationLayout: NotificationLayout.Messaging,
-      ),
-      actionButtons: [
-        NotificationActionButton(
-            key: 'key',
-            label: Get.locale.toString().contains('en') ? 'ANSWER' : 'REPONDRE')
-      ]);
-}
+//   AwesomeNotifications().createNotification(
+//       content: NotificationContent(
+//         id: createUniqueId(),
+//         channelKey: 'MySkul',
+//         title: tmp['nom'],
+//         body: tmp['message'],
+//         summary: tmp['groupe'],
+//         largeIcon: tmp['image'],
+//         roundedLargeIcon: true,
+//         notificationLayout: NotificationLayout.Messaging,
+//       ),
+//       actionButtons: [
+//         NotificationActionButton(
+//             key: 'key',
+//             label: Get.locale.toString().contains('en') ? 'ANSWER' : 'REPONDRE')
+//       ]);
+// }
