@@ -60,7 +60,7 @@ class _AccountState extends State<Account> {
     email.text = widget.user.email;
     num.text = widget.user.phone_number;
     datenaiss.text = widget.user.birthdate;
-    ville.text = widget.user.address ?? "";
+    ville.text = widget.user.town ?? "";
     selectedGender = int.parse(widget.user.gender);
   }
 
@@ -106,7 +106,7 @@ class _AccountState extends State<Account> {
                         Container(
                           constraints: BoxConstraints(
                               maxHeight:
-                                  MediaQuery.of(context).size.height / 2.6,
+                                  MediaQuery.of(context).size.height / 2.4,
                               minHeight:
                                   MediaQuery.of(context).size.height / 3),
                           decoration: BoxDecoration(

@@ -5,6 +5,7 @@ import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:myskul/controllers/home_controller.dart';
 
 class RegisterationController extends GetxController {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -63,7 +64,6 @@ class RegisterationController extends GetxController {
       cityController,
       genderController,
       token}) async {
-
     try {
       var headers = {
         "Authorization": "Bearer" + " " + token.toString(),
@@ -79,10 +79,9 @@ class RegisterationController extends GetxController {
         "email": emailController,
         "gender": genderController.toString(),
         "birthdate": bdController,
-        "phone_number": numController,
-        "address": cityController,
+        "phoneNumber": numController,
+        "town": cityController,
       };
-
 
       EasyLoading.show();
 
@@ -92,7 +91,9 @@ class RegisterationController extends GetxController {
       EasyLoading.dismiss();
 
       if (res.statusCode == 200) {
-
+        final SharedPreferences prefs = await _prefs;
+        var user = await HomeController().currentUser();
+        await prefs.setString('user', jsonEncode(user.toJson()).toString());
         var json = jsonDecode(res.body);
         EasyLoading.showSuccess(json['message']);
 
@@ -101,7 +102,6 @@ class RegisterationController extends GetxController {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }
     } catch (e) {
-
       EasyLoading.showError(e.toString());
     }
   }
@@ -137,7 +137,6 @@ class RegisterationController extends GetxController {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }
     } catch (e) {
-
       EasyLoading.showError(e.toString());
     }
   }

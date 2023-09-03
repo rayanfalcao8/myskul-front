@@ -5,10 +5,8 @@ import 'package:myskul/controllers/home_controller.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
-import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/utilities/constants.dart';
-import 'package:myskul/utilities/gradients.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 

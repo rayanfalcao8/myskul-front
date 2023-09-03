@@ -60,7 +60,7 @@ class _AccountPasswordState extends State<AccountPassword> {
               children: [
                 Container(
                   constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height / 2.6,
+                      maxHeight: MediaQuery.of(context).size.height / 2.4,
                       minHeight: MediaQuery.of(context).size.height / 3),
                   decoration: BoxDecoration(
                       gradient: gradients.greenGradient,

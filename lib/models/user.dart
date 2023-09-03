@@ -9,7 +9,7 @@ class User {
   var birthdate;
   var phone_number;
   var profile_image;
-  var address;
+  var town;
 
   User(
       {id,
@@ -21,7 +21,7 @@ class User {
       birthdate,
       phone_number,
       profile_image,
-      address,});
+      town,});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -33,7 +33,7 @@ class User {
     birthdate = json['birthdate'];
     phone_number = json['phoneNumber'];
     profile_image = json['profile_image'];
-    address = json['town'];
+    town = json['town'];
   }
 
   Map<String, dynamic> toJson() {
@@ -47,7 +47,7 @@ class User {
       'birthdate': birthdate,
       'phone_number': phone_number,
       'profile_image': profile_image,
-      'town': address,
+      'town': town,
     };
   }
 }

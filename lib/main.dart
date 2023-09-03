@@ -59,16 +59,16 @@ void main() async {
 Future<void> shMethods(SharedPreferences prefs) async {
   seen = await prefs.getBool('first');
   token = await prefs.getString('token');
-  fmToken = await prefs.getString('fmToken');
+ // fmToken = await prefs.getString('fmToken');
   locale = await prefs.getString('locale');
 
   if (locale != null) {
     Get.updateLocale(Locale(locale!));
   }
-  if (fmToken == null) {
-    var tmp = await ChatController().getFmToken();
-    await prefs.setString('fmToken', tmp);
-  }
+  // if (fmToken == null) {
+  //   var tmp = await ChatController().getFmToken();
+  //   await prefs.setString('fmToken', tmp);
+  // }
 }
 
 // Future<void> messagingInit() async {

@@ -263,16 +263,16 @@ class ChatController {
     });
     var u = users.docs[0].data() as Map;
 
-    for (var i in u['members']) {
-      sendPushNotification(
-          i['userPushToken'],
-          u['groupName'],
-          u['groupPic'],
-          chatMessageData['sender'],
-          chatMessageData['type'] == 'texte'
-              ? chatMessageData['message']
-              : '📷');
-    }
+    // for (var i in u['members']) {
+    //   sendPushNotification(
+    //       i['userPushToken'],
+    //       u['groupName'],
+    //       u['groupPic'],
+    //       chatMessageData['sender'],
+    //       chatMessageData['type'] == 'texte'
+    //           ? chatMessageData['message']
+    //           : '📷');
+    // }
   }
 
 // pour avoir le Token Firebase messagessi,g d'un device
