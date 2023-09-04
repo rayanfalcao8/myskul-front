@@ -303,7 +303,7 @@ class HomepageScaffold extends StatelessWidget {
                               texte: "Quiz",
                               couleur: Colors.blue,
                               function: () {
-                                Get.to(()=>QuizList(user: widget.user));
+                                Get.to(()=>QuizList(user: user));
                               },
                             ),
                             DashBox(

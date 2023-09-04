@@ -3,9 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:myskul/components/messages_tiles.dart';
 import 'package:myskul/controllers/quiz_controller.dart';
-
-import '../../components/messagesTile.dart';
 import '../../models/quiz.dart';
 import '../../models/user.dart';
 import '../../utilities/colors.dart';
@@ -157,8 +156,6 @@ class _QuizListState extends State<QuizList> {
                             if (snapshot.hasError) {
                               print(snapshot.error);
                               return NotFoundWidget(
-                                  textes: textes,
-                                  couleurs: couleurs,
                                   texte: 'Not Found');
                             } else {
                               return Column(
