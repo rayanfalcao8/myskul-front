@@ -34,11 +34,9 @@ class _QuizListState extends State<QuizList> {
 
   List<Widget> displayQuizzes(List<QuizModel> quizList) {
     List<QuizWidget> w = [];
-    for (var i = 0; i < quizList.length; i++) {
-      print(quizList[i].toJson());
-      w.add(QuizWidget(quiz: quizList[i]));
-    }
-    
+    quizList.forEach((element) {
+      w.add(QuizWidget(quiz: element));
+    });
     return w;
   }
 
@@ -155,17 +153,21 @@ class _QuizListState extends State<QuizList> {
                         FutureBuilder(
                           future: QuizController().getQuizzes(),
                           builder: (context, snapshot) {
-                            if (snapshot.hasError) {
+                            if (snapshot.connectionState == ConnectionState.done) {
+                               return Column(
+                                children: displayQuizzes(
+                                    snapshot.data as List<QuizModel>),
+                              );
+                            } else if (snapshot.hasError) {
                               print(snapshot.error);
                               return NotFoundWidget(
                                   textes: textes,
                                   couleurs: couleurs,
                                   texte: 'Not Found');
                             } else {
-                              return Column(
-                                children: displayQuizzes(
-                                    snapshot.data! as List<QuizModel>),
-                              );
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              ); // Display the fetched data
                             }
                           },
                         ),
