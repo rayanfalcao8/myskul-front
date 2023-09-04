@@ -6,8 +6,9 @@ class QuizModel {
   var free;
   var category;
   var level;
+  var nb_questions;
 
-  QuizModel({id, score, name, free, category, level, done});
+  QuizModel({id, score, name, free, category, level, done, nb_questions});
 
   Map<String, dynamic> toJson() {
     return {
@@ -17,7 +18,8 @@ class QuizModel {
       'done': done,
       'free': free,
       'level': level,
-      'category': category
+      'category': category,
+      'nb_questions': nb_questions
     };
   }
 
@@ -30,5 +32,6 @@ class QuizModel {
     free= json['free'];
     level= json['level_id'];
     category= json['category_id'];
+    nb_questions = json['questions'];
   }
 }
