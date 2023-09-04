@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:myskul/models/category.dart';
 import 'package:myskul/models/quiz.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,8 +11,7 @@ import '../models/user.dart';
 import '../utilities/api_endpoints.dart';
 
 class QuizController extends GetxController {
-
-  Future<List<QuizModel>?> getQuizzes() async {
+  getQuizzesByCategory(int categoryId) async {
     var token;
     var quizList;
 
@@ -26,7 +26,7 @@ class QuizController extends GetxController {
         "Accept": "application/json",
       };
       var url =
-          Uri.parse(ApiEndponits().baseUrl + ApiEndponits().endpoints.quizList);
+          Uri.parse(ApiEndponits().baseUrl + ApiEndponits().endpoints.quizList + categoryId.toString());
 
       EasyLoading.show();
 
@@ -35,9 +35,7 @@ class QuizController extends GetxController {
       if (res.statusCode == 200) {
         Map<String, dynamic> json = jsonDecode(res.body);
         List<QuizModel> quizList = [];
-
         json['data']['quizzes'].forEach((elt) {
-      
           quizList.add(QuizModel.fromJson(elt));
         });
 
@@ -66,4 +64,44 @@ class QuizController extends GetxController {
       EasyLoading.showError(e.toString());
     }
   }
+  getCategories() async 
+  {
+    var token;
+    var categories;
+
+    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+
+    token = await prefs.getString('token');
+    try {
+      var headers = {
+        "Authorization": "Bearer" + " " + token.toString(),
+        "Content-Type": "application/json; charset=UTF-8",
+        "Accept": "application/json",
+      };
+      var url =
+          Uri.parse(ApiEndponits().baseUrl + ApiEndponits().endpoints.categories);
+
+      EasyLoading.show();
+
+      http.Response res = await http.get(url, headers: headers);
+
+      if (res.statusCode == 200) {
+        Map<String, dynamic> json = jsonDecode(res.body);
+        List<Category> categories = [];
+        json['data']['categories'].forEach((elt) {
+          categories.add(Category.fromJson(elt));
+        });
+
+        EasyLoading.dismiss();
+        EasyLoading.showSuccess(json['message']);
+        return categories;
+      } else {
+        throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
+      }
+    } catch (e) {
+      EasyLoading.showError(e.toString());
+    }
+  }
+
 }

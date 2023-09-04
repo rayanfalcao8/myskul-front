@@ -16,6 +16,8 @@ class AuthEndpoints {
 class Endpoints {
   final String currentUser = "/user/me";
   final String updateUser = "/user/profile/";
+  final String quizList = "/quiz/category/";
+  final String categories = "/categories";
   final String updatePassword = "/user/password";
   final String domain = "/domains";
   final String school = "/schools";

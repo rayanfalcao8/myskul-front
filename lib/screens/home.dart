@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/chat/chat_group_list.dart';
 import 'package:myskul/screens/drawer.dart';
-import 'package:myskul/screens/quiz/quiz.dart';
+import 'package:myskul/screens/quiz/category.dart';
+import 'package:myskul/screens/quiz/category_list.dart';
 import 'package:myskul/screens/quiz/quiz_list.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
@@ -303,7 +304,7 @@ class HomepageScaffold extends StatelessWidget {
                               texte: "Quiz",
                               couleur: Colors.blue,
                               function: () {
-                                Get.to(()=>QuizList(user: user));
+                                Get.to(()=>CategorList(user: user));
                               },
                             ),
                             DashBox(

@@ -53,7 +53,6 @@ class ChatController {
     Map userTmp = {
       'userId': user.id,
       'userName': user.username,
-      'userName': user.username,
       'userPic': user.profile_image,
       'userEmail': user.email,
       'userPushToken': fmToken,

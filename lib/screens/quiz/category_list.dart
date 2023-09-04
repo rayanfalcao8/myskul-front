@@ -4,25 +4,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:myskul/controllers/quiz_controller.dart';
-import 'package:myskul/screens/quiz/quiz.dart';
 
 import '../../components/messages_tiles.dart';
 import '../../models/category.dart';
 import '../../models/quiz.dart';
+import '../../models/user.dart';
 import '../../utilities/colors.dart';
 import '../../utilities/gradients.dart';
 import '../../utilities/icons.dart';
 import '../../utilities/texts.dart';
 import 'category.dart';
 
-class QuizList extends StatefulWidget {
-  QuizList({required this.category});
-  Category category;
+class CategorList extends StatefulWidget {
+  CategorList({required this.user});
+  User user;
   @override
-  State<QuizList> createState() => _QuizListState();
+  State<CategorList> createState() => _CategorListState();
 }
 
-class _QuizListState extends State<QuizList> {
+class _CategorListState extends State<CategorList> {
   var couleurs = ColorHelper();
 
   var textes = TextHelper();
@@ -31,12 +31,12 @@ class _QuizListState extends State<QuizList> {
 
   var gradients = GradientHelper();
 
-  var quizzes;
+  var categories;
 
-  List<Widget> displayQuizzes(List<QuizModel> quizList) {
-    List<QuizWidget> w = [];
-    quizList.forEach((element) {
-      w.add(QuizWidget(quiz: element));
+  List<Widget> displaycategories(List<Category> CategorList) {
+    List<CategoryWidget> w = [];
+    CategorList.forEach((element) {
+      w.add(CategoryWidget(category: element));
     });
     return w;
   }
@@ -61,8 +61,8 @@ class _QuizListState extends State<QuizList> {
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               title: Padding(
-                padding: EdgeInsets.only(top: 20.0),
-                child: Text(widget.category.displayText),
+                padding: EdgeInsets.only(top: 32.0),
+                child: Text("Quiz"),
               ),
               background: Stack(
                 children: [
@@ -152,12 +152,12 @@ class _QuizListState extends State<QuizList> {
                       physics: const BouncingScrollPhysics(),
                       children: [
                         FutureBuilder(
-                          future: QuizController().getQuizzesByCategory(widget.category.id),
+                          future: QuizController().getCategories(),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.done) {
                                return Column(
-                                children: displayQuizzes(
-                                    snapshot.data as List<QuizModel>),
+                                children: displaycategories(
+                                    snapshot.data as List<Category>),
                               );
                             } else if (snapshot.hasError) {
                               print(snapshot.error);
