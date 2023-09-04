@@ -151,12 +151,12 @@ class _DomainState extends State<Domain> {
                               if (selectedSP == 0) {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return SP2();
+                                  return SP2(domain:selectedSP );
                                 }));
                               } else {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return SC();
+                                  return SC(domain:selectedSP);
                                 }));
                               }
                             },

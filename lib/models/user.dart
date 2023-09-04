@@ -1,4 +1,3 @@
-
 class User {
   var id;
   var name;
@@ -10,18 +9,23 @@ class User {
   var phone_number;
   var profile_image;
   var town;
+  var level;
+  var speciality;
+  var school;
+  var domain;
 
-  User(
-      {id,
-      name,
-      username,
-      email,
-      password,
-      gender,
-      birthdate,
-      phone_number,
-      profile_image,
-      town,});
+  User({
+    id,
+    name,
+    username,
+    email,
+    password,
+    gender,
+    birthdate,
+    phone_number,
+    profile_image,
+    town,
+  });
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -34,6 +38,10 @@ class User {
     phone_number = json['phoneNumber'];
     profile_image = json['profile_image'];
     town = json['town'];
+    level = json['level'];
+    speciality = json['speciality'];
+    school = json['school'];
+    domain = json['domain'];
   }
 
   Map<String, dynamic> toJson() {
@@ -48,7 +56,10 @@ class User {
       'phone_number': phone_number,
       'profile_image': profile_image,
       'town': town,
+      'level': level,
+      'speciality': speciality,
+      'school': school,
+      'domain': domain,
     };
   }
 }
-

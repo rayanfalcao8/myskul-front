@@ -13,6 +13,10 @@ import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class SC extends StatefulWidget {
+  SC({this.domain});
+
+  var domain;
+
   @override
   State<SC> createState() => _SCState();
 }
@@ -50,20 +54,20 @@ class _SCState extends State<SC> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Image.asset(
-                      "assets/images/wave-t.png",
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Image.asset(
+                        "assets/images/wave-t.png",
+                      ),
                     ),
-                  ),
-                  Container(),
-                  Align(
-                     alignment: Alignment.bottomRight,
-                    child: Image.asset(
-                      "assets/images/wave-b.png",
+                    Container(),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Image.asset(
+                        "assets/images/wave-b.png",
+                      ),
                     ),
-                  ),
-                ],
+                  ],
                 ),
               ),
               Center(
@@ -133,7 +137,7 @@ class _SCState extends State<SC> {
                                 child: GenderBox(
                                   selectedGender: selectedSP,
                                   condition: 1,
-                                  gender:"SC2",
+                                  gender: "SC2",
                                   width: 305,
                                   height: 70,
                                 ),
@@ -176,7 +180,7 @@ class _SCState extends State<SC> {
                               function: () {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return SP1();
+                                  return SP1(domain:widget.domain,school:selectedSP,);
                                 }));
                               }),
                           SizedBox(

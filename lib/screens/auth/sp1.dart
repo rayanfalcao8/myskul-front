@@ -14,6 +14,12 @@ import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class SP1 extends StatefulWidget {
+  SP1({this.domain, this.school});
+
+  var domain;
+
+  var school;
+
   @override
   State<SP1> createState() => _SP1State();
 }
@@ -27,7 +33,7 @@ class _SP1State extends State<SP1> {
 
   var gradients = GradientHelper();
 
-  var selectedSP = 2;
+  var selectedSP = 0;
 
   bool? checkbox = false;
 
@@ -51,20 +57,20 @@ class _SP1State extends State<SP1> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Image.asset(
-                      "assets/images/wave-t.png",
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Image.asset(
+                        "assets/images/wave-t.png",
+                      ),
                     ),
-                  ),
-                  Container(),
-                  Align(
-                     alignment: Alignment.bottomRight,
-                    child: Image.asset(
-                      "assets/images/wave-b.png",
+                    Container(),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Image.asset(
+                        "assets/images/wave-b.png",
+                      ),
                     ),
-                  ),
-                ],
+                  ],
                 ),
               ),
               Center(
@@ -183,7 +189,7 @@ class _SP1State extends State<SP1> {
                               function: () {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return LV();
+                                  return LV(domain:widget.domain,school:widget.school,speciality:selectedSP);
                                 }));
                               }),
                           SizedBox(

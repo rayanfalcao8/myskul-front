@@ -1,6 +1,7 @@
 import 'dart:convert';
 //import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:myskul/controllers/chat_controller.dart';
+import 'package:myskul/screens/auth/domain.dart';
 import 'package:myskul/screens/chat/chat_group_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -50,6 +51,8 @@ void main() async {
 
   await shMethods(prefs);
 
+  await getUser(prefs);
+
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then(
     (_) => runApp(Home1()),
@@ -59,7 +62,7 @@ void main() async {
 Future<void> shMethods(SharedPreferences prefs) async {
   seen = await prefs.getBool('first');
   token = await prefs.getString('token');
- // fmToken = await prefs.getString('fmToken');
+  // fmToken = await prefs.getString('fmToken');
   locale = await prefs.getString('locale');
 
   if (locale != null) {
@@ -69,6 +72,13 @@ Future<void> shMethods(SharedPreferences prefs) async {
   //   var tmp = await ChatController().getFmToken();
   //   await prefs.setString('fmToken', tmp);
   // }
+}
+
+Future<User> getUser(SharedPreferences prefs) async {
+  var userString = await prefs.getString('user');
+  var userJson = jsonDecode(userString!);
+  user = User.fromJson(userJson);
+  return user;
 }
 
 // Future<void> messagingInit() async {
@@ -154,7 +164,7 @@ class _Home1State extends State<Home1> {
       ..maskColor = Color.fromARGB(255, 24, 25, 26).withOpacity(0.1)
       ..userInteractions = false
       ..dismissOnTap = false;
-
+print(" user spec ${user.speciality}");
     return GetMaterialApp(
       translations: Messages(),
       locale: Get.locale ?? Get.deviceLocale,
@@ -169,7 +179,9 @@ class _Home1State extends State<Home1> {
             ? Splash()
             : token == null
                 ? Login()
-                : Home(),
+                : user.speciality == null
+                    ? Domain()
+                    : Home(),
 
         // body: Test(),
       ),

@@ -56,14 +56,14 @@ class RegisterationController extends GetxController {
   }
 
   void updateUser(
-      {idController,
+      {required idController,
       userController,
       emailController,
       numController,
       bdController,
       cityController,
       genderController,
-      token}) async {
+      required token}) async {
     try {
       var headers = {
         "Authorization": "Bearer" + " " + token.toString(),
@@ -129,6 +129,53 @@ class RegisterationController extends GetxController {
       EasyLoading.dismiss();
 
       if (res.statusCode == 200) {
+        var json = jsonDecode(res.body);
+        EasyLoading.showSuccess(json['message']);
+
+        Get.back();
+      } else {
+        throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
+      }
+    } catch (e) {
+      EasyLoading.showError(e.toString());
+    }
+  }
+
+  void updatePlan(
+      {required idController,
+      domainController,
+      speController,
+      schoolController,
+      lvController,
+      required token}) async {
+    try {
+      var headers = {
+        "Authorization": "Bearer" + " " + token.toString(),
+        "Content-Type": "application/json; charset=UTF-8",
+        "Accept": "application/json",
+      };
+      var url = Uri.parse(ApiEndponits().baseUrl +
+          ApiEndponits().endpoints.updateUser +
+          idController);
+
+      Map body = {
+        "level": lvController,
+        "domain": domainController,
+        "speciality": speController,
+        "school": schoolController,
+      };
+
+      EasyLoading.show();
+
+      http.Response res = await http.post(url,
+          body: utf8.encode(jsonEncode(body)), headers: headers);
+
+      EasyLoading.dismiss();
+
+      if (res.statusCode == 200) {
+        final SharedPreferences prefs = await _prefs;
+        var user = await HomeController().currentUser();
+        await prefs.setString('user', jsonEncode(user.toJson()).toString());
         var json = jsonDecode(res.body);
         EasyLoading.showSuccess(json['message']);
 

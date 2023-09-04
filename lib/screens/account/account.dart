@@ -25,6 +25,7 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  
   var couleurs = ColorHelper();
 
   var textes = TextHelper();

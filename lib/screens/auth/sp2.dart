@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/components/gender_box.dart';
 import 'package:myskul/components/button_d.dart';
+import 'package:myskul/controllers/auth/registration_controller.dart';
+import 'package:myskul/controllers/home_controller.dart';
+import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/colors.dart';
@@ -11,8 +14,14 @@ import 'package:myskul/utilities/texts.dart';
 import 'package:myskul/components/button_g.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SP2 extends StatefulWidget {
+  SP2({this.domain});
+
+  var domain;
+  late User user;
+
   @override
   State<SP2> createState() => _SP2State();
 }
@@ -26,9 +35,22 @@ class _SP2State extends State<SP2> {
 
   var gradients = GradientHelper();
 
-  var selectedSP = 1;
+  var selectedSP = 3;
 
   bool? checkbox = false;
+
+  var token;
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  Future<void> getToken() async {
+    final SharedPreferences prefs = await _prefs;
+    token = await prefs.getString('token');
+  }
+
+  Future<void> init() async {
+    widget.user = await HomeController().currentUser();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,12 +132,12 @@ class _SP2State extends State<SP2> {
                               Bounceable(
                                 onTap: () {
                                   setState(() {
-                                    selectedSP = 0;
+                                    selectedSP = 3;
                                   });
                                 },
                                 child: GenderBox(
                                   selectedGender: selectedSP,
-                                  condition: 0,
+                                  condition: 3,
                                   gender: "PREPA MEDECINE",
                                   width: 305,
                                   height: 70,
@@ -127,12 +149,12 @@ class _SP2State extends State<SP2> {
                               Bounceable(
                                 onTap: () {
                                   setState(() {
-                                    selectedSP = 1;
+                                    selectedSP = 4;
                                   });
                                 },
                                 child: GenderBox(
                                   selectedGender: selectedSP,
-                                  condition: 1,
+                                  condition: 4,
                                   gender: "PREPA CONCOURS IDE",
                                   width: 305,
                                   height: 70,
@@ -144,12 +166,12 @@ class _SP2State extends State<SP2> {
                               Bounceable(
                                 onTap: () {
                                   setState(() {
-                                    selectedSP = 2;
+                                    selectedSP = 5;
                                   });
                                 },
                                 child: GenderBox(
                                   selectedGender: selectedSP,
-                                  condition: 2,
+                                  condition: 5,
                                   gender: "PREPA TCF",
                                   width: 305,
                                   height: 70,
@@ -161,12 +183,12 @@ class _SP2State extends State<SP2> {
                               Bounceable(
                                 onTap: () {
                                   setState(() {
-                                    selectedSP = 3;
+                                    selectedSP = 6;
                                   });
                                 },
                                 child: GenderBox(
                                   selectedGender: selectedSP,
-                                  condition: 3,
+                                  condition: 6,
                                   gender: "PREPA TOEIC/TOEFL",
                                   width: 305,
                                   height: 70,
@@ -190,10 +212,17 @@ class _SP2State extends State<SP2> {
                           ),
                           NewButtonG(
                               text: "validate",
-                              function: () {
+                              function: () async {
+                                await getToken();
+                                await init();
+                                RegisterationController().updatePlan(
+                                    idController: widget.user.id,
+                                    domainController: widget.domain,
+                                    lvController: selectedSP,
+                                    token: token);
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return Login();
+                                  return Home();
                                 }));
                               }),
                           SizedBox(
