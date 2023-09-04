@@ -406,17 +406,17 @@ class HomepageScaffold extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          user.domain[0]['display_name'],
+                                        user.domain.length > 0 ?  user.domain[0]['display_name'] : ' ',
                                           style: TextHelper().h2l.copyWith(
                                               color: ColorHelper().green),
                                         ),
                                       
                                         SizedBox(
-                                          height: 20,
+                                          height: 10,
                                         ),
 
                                         Text(
-                                          user.speciality['sigle'],
+                                          user.speciality!=null ? user.speciality['sigle']:' ',
                                           style: TextHelper().h4b.copyWith(
                                               color: ColorHelper().green),
                                         ),
@@ -424,7 +424,7 @@ class HomepageScaffold extends StatelessWidget {
                                           height: 10,
                                         ),
                                         Text(
-                                          user.school['name'],
+                                         user.school!=null ? user.school['display_name'] : ' ',
                                           style: TextHelper().h4b.copyWith(
                                               color: ColorHelper().green),
                                         ),
@@ -432,7 +432,7 @@ class HomepageScaffold extends StatelessWidget {
                                           height: 10,
                                         ),
                                         Text(
-                                          user.level['level'],
+                                         user.level!=null ? user.level['level'] : ' ',
                                           style: TextHelper().h4l.copyWith(
                                               color: ColorHelper().green),
                                         ),

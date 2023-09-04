@@ -39,7 +39,7 @@ class _LVState extends State<LV> {
 
   var gradients = GradientHelper();
 
-  var selectedSP = 6;
+  var selectedSP = 1;
 
   bool? checkbox = false;
 
@@ -121,7 +121,7 @@ class _LVState extends State<LV> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "CHOISIS TON NIVEAU !".tr,
+                                "LV".tr,
                                 style: GoogleFonts.getFont('Lato',
                                     textStyle: textes.h1l),
                               )
@@ -139,30 +139,13 @@ class _LVState extends State<LV> {
                                   Bounceable(
                                     onTap: () {
                                       setState(() {
-                                        selectedSP = 0;
-                                      });
-                                    },
-                                    child: GenderBox(
-                                      selectedGender: selectedSP,
-                                      condition: 0,
-                                      gender: "1",
-                                      width: 90,
-                                      height: 80,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Bounceable(
-                                    onTap: () {
-                                      setState(() {
                                         selectedSP = 1;
                                       });
                                     },
                                     child: GenderBox(
                                       selectedGender: selectedSP,
                                       condition: 1,
-                                      gender: "2",
+                                      gender: "1",
                                       width: 90,
                                       height: 80,
                                     ),
@@ -179,6 +162,23 @@ class _LVState extends State<LV> {
                                     child: GenderBox(
                                       selectedGender: selectedSP,
                                       condition: 2,
+                                      gender: "2",
+                                      width: 90,
+                                      height: 80,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Bounceable(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedSP = 3;
+                                      });
+                                    },
+                                    child: GenderBox(
+                                      selectedGender: selectedSP,
+                                      condition: 3,
                                       gender: "3",
                                       width: 90,
                                       height: 80,
@@ -198,30 +198,13 @@ class _LVState extends State<LV> {
                                   Bounceable(
                                     onTap: () {
                                       setState(() {
-                                        selectedSP = 3;
-                                      });
-                                    },
-                                    child: GenderBox(
-                                      selectedGender: selectedSP,
-                                      condition: 3,
-                                      gender: "4",
-                                      width: 90,
-                                      height: 80,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Bounceable(
-                                    onTap: () {
-                                      setState(() {
                                         selectedSP = 4;
                                       });
                                     },
                                     child: GenderBox(
                                       selectedGender: selectedSP,
                                       condition: 4,
-                                      gender: "5",
+                                      gender: "4",
                                       width: 90,
                                       height: 80,
                                     ),
@@ -238,6 +221,23 @@ class _LVState extends State<LV> {
                                     child: GenderBox(
                                       selectedGender: selectedSP,
                                       condition: 5,
+                                      gender: "5",
+                                      width: 90,
+                                      height: 80,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Bounceable(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedSP = 6;
+                                      });
+                                    },
+                                    child: GenderBox(
+                                      selectedGender: selectedSP,
+                                      condition: 6,
                                       gender: "6",
                                       width: 90,
                                       height: 80,
@@ -274,7 +274,7 @@ class _LVState extends State<LV> {
                             height: 20,
                           ),
                           NewButtonD(
-                              text: "PRECEDENT",
+                              text: "previous".tr,
                               function: () {
                                 Navigator.pop(context);
                               }),
@@ -282,7 +282,7 @@ class _LVState extends State<LV> {
                             height: 10,
                           ),
                           NewButtonG(
-                              text: "VALIDER",
+                              text: "validate".tr,
                               function: () async {
                                 await getToken();
                                 await init();

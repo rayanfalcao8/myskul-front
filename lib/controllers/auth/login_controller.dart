@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:myskul/controllers/home_controller.dart';
+import 'package:myskul/screens/auth/domain.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
@@ -49,7 +50,11 @@ class LoginController extends GetxController {
           ChatController().addUser(user, Constant().PTCL);
           EasyLoading.showSuccess("ynca".trParams({'email': emailController}));
 
-          Get.off(() => Home());
+          if (user.speciality == null) {
+            Get.off(() => Domain());
+          } else {
+            Get.off(() => Home());
+          }
         } else {
           throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
         }

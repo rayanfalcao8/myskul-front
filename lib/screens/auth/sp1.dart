@@ -33,7 +33,7 @@ class _SP1State extends State<SP1> {
 
   var gradients = GradientHelper();
 
-  var selectedSP = 0;
+  var selectedSP = 8;
 
   bool? checkbox = false;
 
@@ -121,13 +121,13 @@ class _SP1State extends State<SP1> {
                                   Bounceable(
                                     onTap: () {
                                       setState(() {
-                                        selectedSP = 0;
+                                        selectedSP = 9;
                                       });
                                     },
                                     child: GenderBox(
                                       selectedGender: selectedSP,
                                       icones: icones.medical,
-                                      condition: 0,
+                                      condition: 9,
                                       gender: "SP1",
                                       width: 140,
                                       height: 140,
@@ -139,13 +139,13 @@ class _SP1State extends State<SP1> {
                                   Bounceable(
                                     onTap: () {
                                       setState(() {
-                                        selectedSP = 1;
+                                        selectedSP = 8;
                                       });
                                     },
                                     child: GenderBox(
                                       selectedGender: selectedSP,
                                       icones: icones.medical,
-                                      condition: 1,
+                                      condition: 8,
                                       gender: "SP2",
                                       width: 140,
                                       height: 140,
@@ -159,13 +159,13 @@ class _SP1State extends State<SP1> {
                               Bounceable(
                                 onTap: () {
                                   setState(() {
-                                    selectedSP = 2;
+                                    selectedSP = 10;
                                   });
                                 },
                                 child: GenderBox(
                                   selectedGender: selectedSP,
                                   icones: icones.medical,
-                                  condition: 2,
+                                  condition: 10,
                                   gender: "SP3",
                                   width: 140,
                                   height: 300,

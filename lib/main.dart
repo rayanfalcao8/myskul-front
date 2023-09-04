@@ -23,7 +23,7 @@ String? token; // Token d'authentification de l'utlisateur
 String? locale; // Cette variable nous permettra de gérer la langue utilisée
 String?
     fmToken; // Cette variable nous permettra d'envoyer des notifications sur chaque appareil
-late User user; // Ici sera stocké l'utilisateur principal
+User ? user; // Ici sera stocké l'utilisateur principal
 
 // fonction pour capture les notification et faire des actions lorsqu'on les reçoit
 // @pragma("vm:entry-point")
@@ -74,11 +74,13 @@ Future<void> shMethods(SharedPreferences prefs) async {
   // }
 }
 
-Future<User> getUser(SharedPreferences prefs) async {
+Future<User?> getUser(SharedPreferences prefs) async {
   var userString = await prefs.getString('user');
-  var userJson = jsonDecode(userString!);
-  user = User.fromJson(userJson);
-  return user;
+  if (userString != null) {
+    var userJson = jsonDecode(userString!);
+    user = User.fromJson(userJson);
+    return user;
+  }
 }
 
 // Future<void> messagingInit() async {
@@ -164,7 +166,7 @@ class _Home1State extends State<Home1> {
       ..maskColor = Color.fromARGB(255, 24, 25, 26).withOpacity(0.1)
       ..userInteractions = false
       ..dismissOnTap = false;
-print(" user spec ${user.speciality}");
+      
     return GetMaterialApp(
       translations: Messages(),
       locale: Get.locale ?? Get.deviceLocale,
@@ -179,7 +181,7 @@ print(" user spec ${user.speciality}");
             ? Splash()
             : token == null
                 ? Login()
-                : user.speciality == null
+                : user!.speciality == null
                     ? Domain()
                     : Home(),
 

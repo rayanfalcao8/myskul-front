@@ -114,12 +114,12 @@ class _SCState extends State<SC> {
                               Bounceable(
                                 onTap: () {
                                   setState(() {
-                                    selectedSP = 0;
+                                    selectedSP = 2;
                                   });
                                 },
                                 child: GenderBox(
                                   selectedGender: selectedSP,
-                                  condition: 0,
+                                  condition: 2,
                                   gender: "SC1",
                                   width: 305,
                                   height: 70,
@@ -148,12 +148,12 @@ class _SCState extends State<SC> {
                               Bounceable(
                                 onTap: () {
                                   setState(() {
-                                    selectedSP = 2;
+                                    selectedSP = 3;
                                   });
                                 },
                                 child: GenderBox(
                                   selectedGender: selectedSP,
-                                  condition: 2,
+                                  condition: 3,
                                   gender: "SC3",
                                   width: 305,
                                   height: 70,

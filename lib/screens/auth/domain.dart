@@ -27,7 +27,7 @@ class _DomainState extends State<Domain> {
 
   var gradients = GradientHelper();
 
-  var selectedSP = 0;
+  var selectedSP = 1;
 
   bool? checkbox = false;
 
@@ -140,13 +140,13 @@ class _DomainState extends State<Domain> {
                               Bounceable(
                                 onTap: () {
                                   setState(() {
-                                    selectedSP = 0;
+                                    selectedSP = 1;
                                   });
                                 },
                                 child: GenderBox(
                                   selectedGender: selectedSP,
                                   icones: icones.school,
-                                  condition: 0,
+                                  condition: 1,
                                   gender: "domain1",
                                   width: 140,
                                   height: 300,
@@ -158,13 +158,13 @@ class _DomainState extends State<Domain> {
                               Bounceable(
                                 onTap: () {
                                   setState(() {
-                                    selectedSP = 1;
+                                    selectedSP = 2;
                                   });
                                 },
                                 child: GenderBox(
                                   selectedGender: selectedSP,
                                   icones: icones.school,
-                                  condition: 1,
+                                  condition: 2,
                                   gender: "domain2",
                                   width: 140,
                                   height: 300,
@@ -178,7 +178,7 @@ class _DomainState extends State<Domain> {
                           NewButtonG(
                             text: "next",
                             function: () {
-                              if (selectedSP == 0) {
+                              if (selectedSP == 1) {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
                                   return SP2(domain: selectedSP);

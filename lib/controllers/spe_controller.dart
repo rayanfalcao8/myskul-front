@@ -22,6 +22,8 @@ class SpeController extends GetxController {
 
     final json = jsonDecode(res.body);
 
+    print(json);
+
     List<String> list = [];
 
     for (var element in json['data']['domains']) {

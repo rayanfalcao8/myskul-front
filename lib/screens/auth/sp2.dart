@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/components/gender_box.dart';
 import 'package:myskul/components/button_d.dart';
@@ -35,7 +36,7 @@ class _SP2State extends State<SP2> {
 
   var gradients = GradientHelper();
 
-  var selectedSP = 3;
+  var selectedSP = 11;
 
   bool? checkbox = false;
 
@@ -117,7 +118,7 @@ class _SP2State extends State<SP2> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "CHOISIS TA SPECIALITE !",
+                                "SP".tr,
                                 style: GoogleFonts.getFont('Lato',
                                     textStyle: textes.h1l),
                               )
@@ -132,12 +133,12 @@ class _SP2State extends State<SP2> {
                               Bounceable(
                                 onTap: () {
                                   setState(() {
-                                    selectedSP = 3;
+                                    selectedSP = 11;
                                   });
                                 },
                                 child: GenderBox(
                                   selectedGender: selectedSP,
-                                  condition: 3,
+                                  condition: 11,
                                   gender: "PREPA MEDECINE",
                                   width: 305,
                                   height: 70,
@@ -149,12 +150,12 @@ class _SP2State extends State<SP2> {
                               Bounceable(
                                 onTap: () {
                                   setState(() {
-                                    selectedSP = 4;
+                                    selectedSP = 12;
                                   });
                                 },
                                 child: GenderBox(
                                   selectedGender: selectedSP,
-                                  condition: 4,
+                                  condition: 12,
                                   gender: "PREPA CONCOURS IDE",
                                   width: 305,
                                   height: 70,
@@ -166,12 +167,12 @@ class _SP2State extends State<SP2> {
                               Bounceable(
                                 onTap: () {
                                   setState(() {
-                                    selectedSP = 5;
+                                    selectedSP = 13;
                                   });
                                 },
                                 child: GenderBox(
                                   selectedGender: selectedSP,
-                                  condition: 5,
+                                  condition: 13,
                                   gender: "PREPA TCF",
                                   width: 305,
                                   height: 70,
@@ -183,12 +184,12 @@ class _SP2State extends State<SP2> {
                               Bounceable(
                                 onTap: () {
                                   setState(() {
-                                    selectedSP = 6;
+                                    selectedSP = 14;
                                   });
                                 },
                                 child: GenderBox(
                                   selectedGender: selectedSP,
-                                  condition: 6,
+                                  condition: 14,
                                   gender: "PREPA TOEIC/TOEFL",
                                   width: 305,
                                   height: 70,
