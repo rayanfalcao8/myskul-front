@@ -31,20 +31,20 @@ class QuizController extends GetxController {
 
       http.Response res = await http.get(url, headers: headers);
 
-      final json = jsonDecode(res.body);
-
-      var tmp1 = json as Map;
-      var tmp2 = tmp1['data']['quizzes'];
-
-      List quizList =
-          List.generate(tmp2.length, (index) => QuizModel.fromJson(tmp2[index]));
-
-      // List quizList =  (json as List).map((data) => QuizModel.fromJson(data)).toList();
-
-      EasyLoading.dismiss();
-
       if (res.statusCode == 200) {
-        var json = jsonDecode(res.body);
+        Map<String, dynamic> json = jsonDecode(res.body);
+        List<QuizModel> quizList = [];
+        json['data']['quizzes'].forEach((elt) {
+          quizList.add(QuizModel.fromJson(elt));
+        });
+
+        // var tmp1 = json as Map<String, dynamic>;
+        // var tmp2 = tmp1['data']['quizzes'];
+
+        // List quizList = List.generate(
+        //     tmp2.length, (index) => QuizModel.fromJson(tmp2[index]));
+
+        EasyLoading.dismiss();
         EasyLoading.showSuccess(json['message']);
         return quizList;
       } else {

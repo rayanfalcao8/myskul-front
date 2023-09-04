@@ -9,38 +9,28 @@ class QuizModel {
 
   QuizModel({id, score, name, free, category, level, questions});
 
-  // QuizModel.fromJson(Map<String, dynamic> json) {
-  //   id = json['id'];
-  //   name = json['theme']['name'];
-  //   score = json['score'];
-  //   questions = json['questions'];
-  //   free = json['theme']['free'];
-  //   level = json['theme']['level_id'];
-  //   category = json['theme']['category_id'];
-  // }
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'score': score,
+      'free': free,
+      'level': level,
+      'category': category,
+      'questions': questions
+    };
+  }
 
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     'id': id,
-  //     'name': name,
-  //     'score': score,
-  //     'free': free,
-  //     'level': level,
-  //     'category': category,
-  //     'questions': questions
-  //   };
-  // }
-  factory QuizModel.fromJson(Map<String, dynamic> json) {
-    return new QuizModel(
+  QuizModel.fromJson(Map<String, dynamic> json)
+    : this(
       id: json['id'],
-      name:json['theme']['name'],
+      name:json['name'],
       score: json['score'],
       questions:json['questions'].toString(),
-      free: json['theme']['free'],
-      level: json['theme']['level_id'],
-      category: json['theme']['category_id'],
+      free: json['free'],
+      level: json['level_id'],
+      category: json['category_id'],
     );
-  }
 }
 
 class QuizList {
