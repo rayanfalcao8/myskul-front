@@ -96,7 +96,7 @@ class QuizDetail extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white,
                         ),
-                        child: const Column(
+                        child: Column(
                           children: [
                             SizedBox(
                               height: 50,
@@ -110,45 +110,45 @@ class QuizDetail extends StatelessWidget {
                                 ),
                               ),
                               trailing: Text(
-                                "10",
+                                quiz.nb_questions,
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w200,
                                 ),
                               ),
                             ),
-                            ListTile(
-                              title: Text(
-                                "DUREE DU QUIZ",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w200,
-                                ),
-                              ),
-                              trailing: Text(
-                                "24 MIN",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w200,
-                                ),
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(
-                                "DUREE DU QUIZ",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w200,
-                                ),
-                              ),
-                              trailing: Text(
-                                "90 sec",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w200,
-                                ),
-                              ),
-                            ),
+                            // ListTile(
+                            //   title: Text(
+                            //     "DUREE DU QUIZ",
+                            //     style: TextStyle(
+                            //       fontSize: 14,
+                            //       fontWeight: FontWeight.w200,
+                            //     ),
+                            //   ),
+                            //   trailing: Text(
+                            //     "24 MIN",
+                            //     style: TextStyle(
+                            //       fontSize: 14,
+                            //       fontWeight: FontWeight.w200,
+                            //     ),
+                            //   ),
+                            // ),
+                            // ListTile(
+                            //   title: Text(
+                            //     "DUREE DU QUIZ",
+                            //     style: TextStyle(
+                            //       fontSize: 14,
+                            //       fontWeight: FontWeight.w200,
+                            //     ),
+                            //   ),
+                            //   trailing: Text(
+                            //     "90 sec",
+                            //     style: TextStyle(
+                            //       fontSize: 14,
+                            //       fontWeight: FontWeight.w200,
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
