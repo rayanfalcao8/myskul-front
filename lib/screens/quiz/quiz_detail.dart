@@ -1,25 +1,82 @@
 import 'package:flutter/material.dart';
 
-class Quiz3 extends StatelessWidget {
+import '../../utilities/colors.dart';
+
+class QuizDetail extends StatelessWidget {
+  QuizDetail({required this.quiz});
+  var quiz;
+  var couleurs = ColorHelper();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          const SliverAppBar(
+          SliverAppBar(
             pinned: true,
             leading: BackButton(),
             backgroundColor: Color(0xff22987f),
             expandedHeight: 80,
-            title: Padding(
-              padding: EdgeInsets.only(top: 32.0),
-              child: Text("INTITULE DU QUIZ"),
-            ),
             centerTitle: true,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(35),
                 bottomRight: Radius.circular(35),
+              ),
+            ),
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
+              title: Padding(
+                padding: EdgeInsets.only(top: 20.0),
+                child: Text(
+                  quiz.name,
+                ),
+              ),
+              background: Stack(
+                children: [
+                  Positioned(
+                      bottom: 0,
+                      left: 0,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 20,
+                      )),
+                  Positioned(
+                      top: 50,
+                      right: 40,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 08,
+                      )),
+                  Positioned(
+                      top: MediaQuery.of(context).size.height / 5,
+                      right: 40,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 15,
+                      )),
+                  Positioned(
+                      top: MediaQuery.of(context).size.height / 5,
+                      left: 40,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 25,
+                      )),
+                  Positioned(
+                      top: 0,
+                      left: MediaQuery.of(context).size.width / 1.5,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 28,
+                      )),
+                  Positioned(
+                      top: 40,
+                      left: 40,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 08,
+                      )),
+                ],
               ),
             ),
           ),

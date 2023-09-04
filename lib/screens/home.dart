@@ -4,7 +4,8 @@ import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/chat/chat_group_list.dart';
 import 'package:myskul/screens/drawer.dart';
-import 'package:myskul/screens/quiz/quiz.dart';
+import 'package:myskul/screens/quiz/category.dart';
+import 'package:myskul/screens/quiz/category_list.dart';
 import 'package:myskul/screens/quiz/quiz_list.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/constants.dart';
@@ -258,7 +259,7 @@ class _HomeState extends State<Home> {
                               texte: "Quiz",
                               couleur: Colors.blue,
                               function: () {
-                                Get.to(()=>QuizList(user: widget.user));
+                                Get.to(()=>CategorList(user: widget.user));
                               },
                             ),
                             DashBox(

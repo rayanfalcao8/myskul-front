@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
-import 'package:myskul/screens/quiz/quiz_2.dart';
-
-import '../../models/quiz.dart';
-import '../chat/chat.dart';
+import 'package:myskul/screens/quiz/quiz_detail.dart';
 
 class QuizWidget extends StatelessWidget {
   QuizWidget({required this.quiz});
@@ -15,34 +12,92 @@ class QuizWidget extends StatelessWidget {
     return Bounceable(
       onTap: () {
         print(quiz);
-        Get.to(() => Quiz2());
+        Get.to(() => QuizDetail(quiz: this.quiz));
       },
       child: Container(
         width: double.infinity,
-        height: 81,
+        height: 90,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: const Color(0x72000000),
+          color: const Color(0x72ffffff),
+          border: Border.all(
+            color: const Color(0xFF2BB799),
+          ),
         ),
-        margin: EdgeInsets.only(bottom: 17),
-        child: Center(
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.white.withOpacity(.28),
-              radius: 32,
-              child: const Icon(
-                Icons.toc_outlined,
-                color: Colors.white,
+        child: Row(
+          children: [
+            Expanded(
+              flex: 5,
+              child: Padding(
+                padding:
+                    EdgeInsets.fromLTRB(12, 14, 0, 0),
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      quiz.name,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF2BB799),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      quiz.done == 1 ? "Deja fait" : "Allons y !!!",
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            title: Text(
-              quiz.name ?? "Default",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white),
+            Expanded(
+              child: Container(
+                width: 63.859649658203125,
+                height: 90,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: const Color(0xff2bb799),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 6,
+                    ),
+                    Text(
+                      quiz.score,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 30,
+                      child: Divider(
+                        thickness: 2,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "10",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
