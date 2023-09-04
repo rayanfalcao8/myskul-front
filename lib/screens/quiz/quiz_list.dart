@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -31,24 +33,12 @@ class _QuizListState extends State<QuizList> {
   var quizzes;
 
   List<Widget> displayQuizzes(List<QuizModel> quizList) {
-    print("ICI");
-    List<Widget> w = [];
-    var tmp;
+    List<QuizWidget> w = [];
     for (var i = 0; i < quizList.length; i++) {
-      tmp = quizList[i] as Map;
-      w.add(QuizWidget(quiz: tmp));
+      print(quizList[i].toJson());
+      w.add(QuizWidget(quiz: quizList[i]));
     }
-
     return w;
-  }
-
-  Future<void> getQuiz() async {
-    quizzes = await QuizController().getQuizzes();
-  }
-
-  @override
-  void initState() {
-    getQuiz();
   }
 
   @override
@@ -162,21 +152,20 @@ class _QuizListState extends State<QuizList> {
                       physics: const BouncingScrollPhysics(),
                       children: [
                         FutureBuilder(
-                            future: quizzes,
-                            builder: (context, snapshot) {
-                              if (!snapshot.hasData) {
-                                return NotFoundWidget(
-                                    textes: textes,
-                                    couleurs: couleurs,
-                                    texte: 'Not Found');
-                              } else {
-                                return Column(
-                                  children: displayQuizzes(quizzes),
-                                );
-                              }
-                            }),
-                        const SizedBox(
-                          height: 17,
+                          future: QuizController().getQuizzes(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              print(snapshot.error);
+                              return NotFoundWidget(
+                                  textes: textes,
+                                  couleurs: couleurs,
+                                  texte: 'Not Found');
+                            } else {
+                              return Column(
+                                children: displayQuizzes(snapshot.data as List<QuizModel>),
+                              );
+                            }
+                          },
                         ),
                       ],
                     ),

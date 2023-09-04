@@ -8,13 +8,13 @@ import '../chat/chat.dart';
 
 class QuizWidget extends StatelessWidget {
   QuizWidget({required this.quiz});
-
-  QuizModel quiz;
+  var quiz;
 
   @override
   Widget build(BuildContext context) {
     return Bounceable(
       onTap: () {
+        print(quiz);
         Get.to(() => Quiz2());
       },
       child: Container(
@@ -24,6 +24,7 @@ class QuizWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
           color: const Color(0x72000000),
         ),
+        margin: EdgeInsets.only(bottom: 17),
         child: Center(
           child: ListTile(
             leading: CircleAvatar(
@@ -35,7 +36,7 @@ class QuizWidget extends StatelessWidget {
               ),
             ),
             title: Text(
-              quiz.name,
+              quiz.name ?? "Default",
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w400,
