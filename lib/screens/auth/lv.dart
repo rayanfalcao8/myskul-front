@@ -248,23 +248,23 @@ class _LVState extends State<LV> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Bounceable(
-                                onTap: () {
-                                  setState(() {
-                                    selectedSP = 6;
-                                  });
-                                },
-                                child: GenderBox(
-                                  selectedGender: selectedSP,
-                                  condition: 6,
-                                  gender: "7",
-                                  width: 290,
-                                  height: 80,
-                                ),
-                              ),
+                              // SizedBox(
+                              //   height: 10,
+                              // ),
+                              // Bounceable(
+                              //   onTap: () {
+                              //     setState(() {
+                              //       selectedSP = 6;
+                              //     });
+                              //   },
+                              //   child: GenderBox(
+                              //     selectedGender: selectedSP,
+                              //     condition: 6,
+                              //     gender: "7",
+                              //     width: 290,
+                              //     height: 80,
+                              //   ),
+                              // ),
                               SizedBox(
                                 height: 20,
                               ),
@@ -287,16 +287,12 @@ class _LVState extends State<LV> {
                                 await getToken();
                                 await init();
                                 RegisterationController().updatePlan(
-                                    idController: widget.user.id,
+                                    idController: widget.user.id.toString(),
                                     domainController: widget.domain.toString(),
                                     schoolController: widget.school.toString(),
                                     speController: widget.speciality.toString(),
                                     lvController: selectedSP.toString(),
-                                    token: token);
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return Home();
-                                }));
+                                    token: token.toString());
                               }),
                           SizedBox(
                             height: 30,

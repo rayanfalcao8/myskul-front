@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:myskul/screens/auth/login.dart';
+import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -159,10 +160,10 @@ class RegisterationController extends GetxController {
           idController);
 
       Map body = {
-        "level": lvController,
-        "domain": domainController,
-        "speciality": speController,
-        "school": schoolController,
+        "level_id": lvController ?? '1',
+        "domain_id": domainController ?? '1',
+        "speciality_id": speController ?? '1',
+        "school_id": schoolController ?? '1',
       };
 
       EasyLoading.show();
@@ -179,7 +180,7 @@ class RegisterationController extends GetxController {
         var json = jsonDecode(res.body);
         EasyLoading.showSuccess(json['message']);
 
-        Get.back();
+        Get.to(()=>Home());
       } else {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }

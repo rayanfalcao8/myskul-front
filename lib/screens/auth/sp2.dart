@@ -216,14 +216,10 @@ class _SP2State extends State<SP2> {
                                 await getToken();
                                 await init();
                                 RegisterationController().updatePlan(
-                                    idController: widget.user.id,
-                                    domainController: widget.domain,
-                                    lvController: selectedSP,
-                                    token: token);
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return Home();
-                                }));
+                                    idController: widget.user.id.toString(),
+                                    domainController: widget.domain.toString(),
+                                    lvController: selectedSP.toString(),
+                                    token: token.toString());
                               }),
                           SizedBox(
                             height: 30,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/components/gender_box.dart';
+import 'package:myskul/controllers/spe_controller.dart';
 import 'package:myskul/screens/auth/sc.dart';
 import 'package:myskul/screens/auth/sp2.dart';
 import 'package:myskul/utilities/colors.dart';
@@ -30,6 +31,35 @@ class _DomainState extends State<Domain> {
 
   bool? checkbox = false;
 
+  Future<List<Widget>> getDomain() async {
+    var domains = await SpeController().getDomains();
+    List<Widget> l = [];
+    for (var element in domains) {
+      Map tmp = element as Map;
+      l.add(Bounceable(
+        onTap: () {
+          setState(() {
+            selectedSP = tmp["name"];
+          });
+        },
+        child: GenderBox(
+          selectedGender: selectedSP,
+          icones: icones.school,
+          condition: tmp["id"],
+          gender: tmp["name"],
+          width: 140,
+          height: 300,
+        ),
+      ));
+
+      l.add(SizedBox(
+        width: 20,
+      ));
+    }
+
+    return l;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,20 +80,20 @@ class _DomainState extends State<Domain> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Image.asset(
-                      "assets/images/wave-t.png",
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Image.asset(
+                        "assets/images/wave-t.png",
+                      ),
                     ),
-                  ),
-                  Container(),
-                  Align(
-                     alignment: Alignment.bottomRight,
-                    child: Image.asset(
-                      "assets/images/wave-b.png",
+                    Container(),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Image.asset(
+                        "assets/images/wave-b.png",
+                      ),
                     ),
-                  ),
-                ],
+                  ],
                 ),
               ),
               Center(
@@ -151,12 +181,12 @@ class _DomainState extends State<Domain> {
                               if (selectedSP == 0) {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return SP2(domain:selectedSP );
+                                  return SP2(domain: selectedSP);
                                 }));
                               } else {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return SC(domain:selectedSP);
+                                  return SC(domain: selectedSP);
                                 }));
                               }
                             },

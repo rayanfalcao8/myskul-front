@@ -405,33 +405,18 @@ class HomepageScaffold extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "BORDS NUMERIQUES",
-                                              style: TextHelper().h4l.copyWith(
-                                                  color: ColorHelper().green),
-                                            ),
-                                            SizedBox(
-                                              height: 05,
-                                            ),
-                                            Container(
-                                              height: 1,
-                                              width: 70,
-                                              margin: EdgeInsets.only(left: 4),
-                                              color: ColorHelper().green,
-                                            ),
-                                          ],
+                                        Text(
+                                          user.domain[0]['display_name'],
+                                          style: TextHelper().h2l.copyWith(
+                                              color: ColorHelper().green),
                                         ),
+                                      
                                         SizedBox(
                                           height: 20,
                                         ),
+
                                         Text(
-                                          "FMSB YAOUNDE",
+                                          user.speciality['sigle'],
                                           style: TextHelper().h4b.copyWith(
                                               color: ColorHelper().green),
                                         ),
@@ -439,7 +424,15 @@ class HomepageScaffold extends StatelessWidget {
                                           height: 10,
                                         ),
                                         Text(
-                                          "NIVEAU 1",
+                                          user.school['name'],
+                                          style: TextHelper().h4b.copyWith(
+                                              color: ColorHelper().green),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          user.level['level'],
                                           style: TextHelper().h4l.copyWith(
                                               color: ColorHelper().green),
                                         ),
