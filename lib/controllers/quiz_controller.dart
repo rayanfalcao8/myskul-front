@@ -10,7 +10,8 @@ import '../models/user.dart';
 import '../utilities/api_endpoints.dart';
 
 class QuizController extends GetxController {
-  getQuizzes() async {
+
+  Future<List<QuizModel>?> getQuizzes() async {
     var token;
     var quizList;
 
@@ -34,7 +35,9 @@ class QuizController extends GetxController {
       if (res.statusCode == 200) {
         Map<String, dynamic> json = jsonDecode(res.body);
         List<QuizModel> quizList = [];
+
         json['data']['quizzes'].forEach((elt) {
+      
           quizList.add(QuizModel.fromJson(elt));
         });
 

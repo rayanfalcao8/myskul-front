@@ -34,7 +34,8 @@ class _QuizListState extends State<QuizList> {
   List<Widget> displayQuizzes(List<QuizModel> quizList) {
     List<QuizWidget> w = [];
     for (var i = 0; i < quizList.length; i++) {
-      print(quizList[i].toJson());
+      var tmp = quizList[i];
+      print(tmp.name);
       w.add(QuizWidget(quiz: quizList[i]));
     }
     return w;
@@ -153,15 +154,30 @@ class _QuizListState extends State<QuizList> {
                         FutureBuilder(
                           future: QuizController().getQuizzes(),
                           builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              print(snapshot.error);
-                              return NotFoundWidget(
-                                  texte: 'Not Found');
-                            } else {
-                              return Column(
-                                children: displayQuizzes(snapshot.data as List<QuizModel>),
-                              );
+                            // if (snapshot.hasError) {
+                            //   print(snapshot.error);
+                            //   return NotFoundWidget(
+                            //       texte: 'Not Found');
+                            // } else {
+                            //   return Column(
+                            //     children: displayQuizzes(snapshot.data!),
+                            //   );
+                            // }
+
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              if (snapshot.hasError) {
+                                return Center(
+                                    child: NotFoundWidget(texte: 'Not Found'));
+                              } else if (snapshot.hasData) {
+                                print(snapshot.data!);
+                                return Column(
+                                  children: displayQuizzes(snapshot.data!),
+                                );
+                              }
                             }
+
+                            return Center();
                           },
                         ),
                       ],

@@ -21,16 +21,15 @@ class QuizModel {
     };
   }
 
-  QuizModel.fromJson(Map<String, dynamic> json)
-    : this(
-      id: json['id'],
-      name:json['name'],
-      score: json['score'],
-      questions:json['questions'].toString(),
-      free: json['free'],
-      level: json['level_id'],
-      category: json['category_id'],
-    );
+  QuizModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name= json['name'];
+    score= json['score'];
+    questions= json['questions'].toString();
+    free= json['free'];
+    level= json['level_id'];
+    category= json['category_id'];
+  }
 }
 
 class QuizList {
@@ -38,11 +37,10 @@ class QuizList {
   QuizList({required this.quizzes});
 
   factory QuizList.fromJson(List<dynamic> parsedJson) {
-
     List<QuizModel> quizzes = <QuizModel>[];
-    quizzes = parsedJson.map((i)=>QuizModel.fromJson(i)).toList();
+    quizzes = parsedJson.map((i) => QuizModel.fromJson(i)).toList();
     return new QuizList(
-       quizzes: quizzes,
+      quizzes: quizzes,
     );
   }
 }
