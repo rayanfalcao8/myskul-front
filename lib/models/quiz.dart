@@ -32,6 +32,6 @@ class QuizModel {
     free= json['free'];
     level= json['level_id'];
     category= json['category_id'];
-    nb_questions = json['nb_questions'];
+    nb_questions = json['questions'];
   }
 }
