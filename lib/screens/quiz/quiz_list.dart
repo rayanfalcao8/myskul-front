@@ -34,14 +34,11 @@ class _QuizListState extends State<QuizList> {
 
   List<Widget> displayQuizzes(List<QuizModel> quizList) {
     List<QuizWidget> w = [];
-    // for (var i = 0; i < quizList.length; i++) {
-    //   print(quizList[i].toJson());
-    //   w.add(QuizWidget(quiz: quizList[i]));
-    // }
-    quizList.forEach((element) {
-      print(element.toJson());
-      w.add(QuizWidget(quiz: element));
-    });
+    for (var i = 0; i < quizList.length; i++) {
+      print(quizList[i].toJson());
+      w.add(QuizWidget(quiz: quizList[i]));
+    }
+    
     return w;
   }
 
@@ -167,7 +164,7 @@ class _QuizListState extends State<QuizList> {
                             } else {
                               return Column(
                                 children: displayQuizzes(
-                                    snapshot.data as List<QuizModel>),
+                                    snapshot.data! as List<QuizModel>),
                               );
                             }
                           },

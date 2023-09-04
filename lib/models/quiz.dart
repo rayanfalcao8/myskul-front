@@ -21,16 +21,16 @@ class QuizModel {
     };
   }
 
-  QuizModel.fromJson(Map<String, dynamic> json)
-    : this(
-      id: json['id'],
-      name:json['name'],
-      score: json['score'],
-      questions:json['questions'].toString(),
-      free: json['free'],
-      level: json['level_id'],
-      category: json['category_id'],
-    );
+
+  QuizModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name= json['name'];
+    score= json['score'];
+    questions= json['questions'].toString();
+    free= json['free'];
+    level= json['level_id'];
+    category= json['category_id'];
+  }
 }
 
 class QuizList {
