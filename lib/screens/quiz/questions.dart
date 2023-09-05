@@ -1,6 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:get/get.dart';
+import 'package:myskul/models/quiz.dart';
+import 'package:myskul/screens/quiz/question.dart';
+import 'package:myskul/screens/quiz/quiz_5.dart';
 
-class Questions extends StatelessWidget {
+import '../../components/messages_tiles.dart';
+import '../../controllers/quiz_controller.dart';
+import '../../models/question.dart';
+import '../../utilities/colors.dart';
+
+class Questions extends StatefulWidget {
+  Questions({required this.quiz});
+  QuizModel quiz;
+  @override
+  State<Questions> createState() => _QuestionsState();
+}
+
+class _QuestionsState extends State<Questions> {
+  var couleurs = ColorHelper();
+
+  var questions;
+
+  var index = 0;
+
+  // var textes = TextHelper();
+
+  // var icones = IconHelper();
+
+  // var gradients = GradientHelper();
+
+  Widget displayQuestion(List<QuestionModel> questionList, int id) {
+    List<Widget> w = [];
+    var c = 1;
+    questionList.forEach((element) {
+      if (c == questionList.length) {
+        Get.to(Quiz5());
+      }
+
+      if (element.id == id) {
+        w.add(Question(
+            question: element, position: c, total: questionList.length));
+      }
+    });
+    c += 1;
+    return w[0];
+  }
+
+  getQuestions() async {
+    questions = await QuizController().getQuestionsByTheme(widget.quiz.id);
+    index = (questions[0] as QuestionModel).id;
+    return questions;
+  }
+
+  onAnswer(questionList, id) {
+    displayQuestion(questionList, id + 1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,123 +80,70 @@ class Questions extends StatelessWidget {
                   ),
                 ),
               ),
+              Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: CircleAvatar(
+                    backgroundColor: couleurs.white.withOpacity(0.05),
+                    radius: 20,
+                  )),
+              Positioned(
+                  top: 50,
+                  right: 40,
+                  child: CircleAvatar(
+                    backgroundColor: couleurs.white.withOpacity(0.05),
+                    radius: 08,
+                  )),
+              Positioned(
+                  top: MediaQuery.of(context).size.height / 5,
+                  right: 40,
+                  child: CircleAvatar(
+                    backgroundColor: couleurs.white.withOpacity(0.05),
+                    radius: 15,
+                  )),
+              Positioned(
+                  top: MediaQuery.of(context).size.height / 5,
+                  left: 40,
+                  child: CircleAvatar(
+                    backgroundColor: couleurs.white.withOpacity(0.05),
+                    radius: 25,
+                  )),
+              Positioned(
+                  top: 0,
+                  left: MediaQuery.of(context).size.width / 1.5,
+                  child: CircleAvatar(
+                    backgroundColor: couleurs.white.withOpacity(0.05),
+                    radius: 28,
+                  )),
+              Positioned(
+                  top: 40,
+                  left: 40,
+                  child: CircleAvatar(
+                    backgroundColor: couleurs.white.withOpacity(0.05),
+                    radius: 08,
+                  )),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 14),
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 200),
-                      width: MediaQuery.of(context).size.width,
-                      height: 240,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 21,
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  "05",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.green,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Container(
-                                  width: 50,
-                                  height: 6,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: const Color(0xff17bf27),
-                                  ),
-                                ),
-                                const Spacer(),
-                                Container(
-                                  width: 50,
-                                  height: 6,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: Colors.red,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                const Text(
-                                  "04",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 60,
-                            ),
-                            const Text(
-                              "QUESTION :  10/10",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF2BB799),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            const Text(
-                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 14,
-                                height: 1.8,
-                                fontWeight: FontWeight.w200,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 150),
-                      height: 100,
-                      width: 100,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0xff22987F), Color(0xff2BB799)],
-                        ),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "01",
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                child: FutureBuilder(
+                  future: getQuestions(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasError) {
+                        print(snapshot.error);
+                        return NotFoundWidget(texte: 'Not Found');
+                      } else {
+                        return Center(
+                                  child: displayQuestion(
+                            snapshot.data as List<QuestionModel>, index)
+                                );
+                      }
+                    }
+                    return Center(
+                        child: CircularProgressIndicator(),
+                        ); // Display the fetched data
+                  },
                 ),
-              ),
+              )
             ],
           ),
           const SizedBox(

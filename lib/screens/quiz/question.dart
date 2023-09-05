@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:myskul/models/question.dart';
 
-class Quiz4 extends StatelessWidget {
+class Question extends StatelessWidget {
+  Question({
+    required this.question,
+    required int position,
+    required int total,
+  });
+  var question;
+  var total;
+  var position;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,26 +19,10 @@ class Quiz4 extends StatelessWidget {
           Stack(
             alignment: Alignment.topCenter,
             children: [
-              Container(
-                width: double.infinity,
-                height: 274,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(25),
-                    bottomRight: Radius.circular(25),
-                  ),
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xff22987f), Color(0xff2bb799)],
-                  ),
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 child: Stack(
                   alignment: Alignment.topCenter,
-                  // mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
                       margin: const EdgeInsets.only(top: 200),
@@ -91,8 +85,8 @@ class Quiz4 extends StatelessWidget {
                             const SizedBox(
                               height: 60,
                             ),
-                            const Text(
-                              "QUESTION :  10/10",
+                            Text(
+                              "QUESTION :  "+position.toString()+"/"+total.toString(),
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
@@ -102,8 +96,9 @@ class Quiz4 extends StatelessWidget {
                             const SizedBox(
                               height: 16,
                             ),
-                            const Text(
-                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
+                            Text(
+                              question.name,
+                              // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 14,
@@ -127,9 +122,9 @@ class Quiz4 extends StatelessWidget {
                           colors: [Color(0xff22987F), Color(0xff2BB799)],
                         ),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          "01",
+                          position.toString(),
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.w700,
@@ -146,6 +141,18 @@ class Quiz4 extends StatelessWidget {
           const SizedBox(
             height: 24,
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class Answer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14),
             child: SizedBox(

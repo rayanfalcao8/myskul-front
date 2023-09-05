@@ -110,11 +110,12 @@ class _AccountState extends State<Account> {
                               minHeight:
                                   MediaQuery.of(context).size.height / 3),
                           decoration: BoxDecoration(
-                              gradient: gradients.greenGradient,
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(15),
-                                bottomRight: Radius.circular(10),
-                              )),
+                            gradient: gradients.greenGradient,
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(15),
+                              bottomRight: Radius.circular(10),
+                            )
+                          ),
                           child: Stack(
                             children: [
                               Positioned(
