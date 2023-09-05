@@ -23,5 +23,5 @@ class Endpoints {
   final String school = "/schools";
   final String level = "/levels";
   final String specialities = "/specialities";
-  final String quizList = "/quiz";
+  final String quiz = "/quiz";
 }

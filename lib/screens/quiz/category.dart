@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
-import 'package:myskul/screens/quiz/quiz.dart';
-import 'package:myskul/screens/quiz/quiz_list.dart';
+import 'package:myskul/screens/quiz/quiz_list.dart' as q;
+import 'package:myskul/utilities/colors.dart';
+import 'package:myskul/utilities/texts.dart';
 
 import '../../models/quiz.dart';
 import '../chat/chat.dart';
@@ -16,7 +17,7 @@ class CategoryWidget extends StatelessWidget {
     return Bounceable(
       onTap: () {
         print(category);
-        Get.to(() => QuizList(category: this.category));
+        Get.to(() => q.QuizList(category: this.category));
       },
       child: Container(
         width: double.infinity,
@@ -38,10 +39,7 @@ class CategoryWidget extends StatelessWidget {
             ),
             title: Text(
               category.displayText ?? "Default",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white),
+              style: TextHelper().h4r.copyWith(color: ColorHelper().white),
             ),
           ),
         ),

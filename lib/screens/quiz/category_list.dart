@@ -62,7 +62,7 @@ class _CategorListState extends State<CategorList> {
               centerTitle: true,
               title: Padding(
                 padding: EdgeInsets.only(top: 32.0),
-                child: Text("Quiz"),
+                child: Text("Quiz", style: TextHelper().h4l.copyWith(color: ColorHelper().white),),
               ),
               background: Stack(
                 children: [
@@ -165,7 +165,7 @@ class _CategorListState extends State<CategorList> {
                                   texte: 'Not Found');
                             } else {
                               return Center(
-                                child: CircularProgressIndicator(),
+                                // child: CircularProgressIndicator(),
                               ); // Display the fetched data
                             }
                           },

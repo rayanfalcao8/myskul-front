@@ -182,7 +182,7 @@ class QuizDetail extends StatelessWidget {
                     height: 50,
                     child: TextButton(
                       onPressed: () {},
-                      child: const Padding(
+                      child:  Padding(
                         padding: EdgeInsets.all(0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -13,8 +13,7 @@ import '../utilities/api_endpoints.dart';
 class QuizController extends GetxController {
   getQuizzesByCategory(int categoryId) async {
     var token;
-    var quizList;
-
+    List<QuizModel> quizList = [];
     final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     final SharedPreferences prefs = await _prefs;
 
@@ -25,8 +24,9 @@ class QuizController extends GetxController {
         "Content-Type": "application/json; charset=UTF-8",
         "Accept": "application/json",
       };
-      var url =
-          Uri.parse(ApiEndponits().baseUrl + ApiEndponits().endpoints.quizList + categoryId.toString());
+      var url = Uri.parse(ApiEndponits().baseUrl +
+          ApiEndponits().endpoints.quizList +
+          categoryId.toString());
 
       EasyLoading.show();
 
@@ -34,8 +34,9 @@ class QuizController extends GetxController {
 
       if (res.statusCode == 200) {
         Map<String, dynamic> json = jsonDecode(res.body);
-        List<QuizModel> quizList = [];
+
         json['data']['quizzes'].forEach((elt) {
+         
           quizList.add(QuizModel.fromJson(elt));
         });
 
@@ -46,7 +47,7 @@ class QuizController extends GetxController {
         //     tmp2.length, (index) => QuizModel.fromJson(tmp2[index]));
 
         EasyLoading.dismiss();
-        EasyLoading.showSuccess(json['message']);
+
         return quizList;
       } else {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
@@ -64,8 +65,8 @@ class QuizController extends GetxController {
       EasyLoading.showError(e.toString());
     }
   }
-  getCategories() async 
-  {
+
+  getCategories() async {
     var token;
     var categories;
 
@@ -79,8 +80,8 @@ class QuizController extends GetxController {
         "Content-Type": "application/json; charset=UTF-8",
         "Accept": "application/json",
       };
-      var url =
-          Uri.parse(ApiEndponits().baseUrl + ApiEndponits().endpoints.categories);
+      var url = Uri.parse(
+          ApiEndponits().baseUrl + ApiEndponits().endpoints.categories);
 
       EasyLoading.show();
 
@@ -103,5 +104,4 @@ class QuizController extends GetxController {
       EasyLoading.showError(e.toString());
     }
   }
-
 }

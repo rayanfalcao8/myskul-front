@@ -54,7 +54,8 @@ class _AccountState extends State<Account> {
     token = await prefs.getString('token');
   }
 
-  void init() {
+  void init() async{
+    widget.user = await HomeController().currentUser();
     noms.text = widget.user.name;
     email.text = widget.user.email;
     num.text = widget.user.phoneNumber ?? "";

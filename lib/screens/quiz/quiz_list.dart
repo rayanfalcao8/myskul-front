@@ -62,7 +62,7 @@ class _QuizListState extends State<QuizList> {
               centerTitle: true,
               title: Padding(
                 padding: EdgeInsets.only(top: 20.0),
-                child: Text(widget.category.displayText),
+                child: Text(widget.category.displayText,style: TextHelper().h4l.copyWith(color: ColorHelper().white)),
               ),
               background: Stack(
                 children: [
@@ -152,22 +152,24 @@ class _QuizListState extends State<QuizList> {
                       physics: const BouncingScrollPhysics(),
                       children: [
                         FutureBuilder(
-                          future: QuizController().getQuizzesByCategory(widget.category.id),
+                          future: QuizController()
+                              .getQuizzesByCategory(widget.category.id),
                           builder: (context, snapshot) {
-                            if (snapshot.connectionState == ConnectionState.done) {
-                               return Column(
-                                children: displayQuizzes(
-                                    snapshot.data as List<QuizModel>),
-                              );
-                            } else if (snapshot.hasError) {
-                              print(snapshot.error);
-                              return NotFoundWidget(
-                                  texte: 'Not Found');
-                            } else {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              ); // Display the fetched data
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              if (snapshot.hasError) {
+                                print(snapshot.error);
+                                return NotFoundWidget(texte: 'Not Found');
+                              } else {
+                                return Column(
+                                  children: displayQuizzes(
+                                      snapshot.data as List<QuizModel>),
+                                );
+                              }
                             }
+                            return Center(
+                                // child: CircularProgressIndicator(),
+                                ); // Display the fetched data
                           },
                         ),
                       ],

@@ -236,6 +236,7 @@ class _GroupChatState extends State<GroupChat> {
                                     color: couleurs.white,
                                   ),
                                 ),
+                                
                               ],
                             ),
                             Text(
