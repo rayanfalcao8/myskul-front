@@ -30,21 +30,34 @@ class _QuestionsState extends State<Questions> {
 
   // var gradients = GradientHelper();
 
-  Widget displayQuestion(List<QuestionModel> questionList, int id) {
-    List<Widget> w = [];
+  Question? displayQuestion(List<QuestionModel> questionList, int id) {
+    // List<Widget> w = [];
+    Question? w;
     var c = 1;
     questionList.forEach((element) {
-      if (c == questionList.length) {
-        Get.to(Quiz5());
-      }
+      // if (c == questionList.length) {
+      //   Get.to(Quiz5());
+      // }
 
       if (element.id == id) {
-        w.add(Question(
-            question: element, position: c, total: questionList.length));
+        w = Question(
+            question: element, position: c, total: questionList.length);
+      }
+      c += 1;
+    });
+    return w;
+  }
+
+  List<Answer>? displayAnswers(List<QuestionModel> questionList, int id) {
+    List<Answer> w = [];
+    questionList.forEach((element) {
+      if (element.id == id) {
+        element.answers.forEach((answer) {
+          w.add(Answer(answer: answer));
+        });
       }
     });
-    c += 1;
-    return w[0];
+    return w;
   }
 
   getQuestions() async {
@@ -132,14 +145,17 @@ class _QuestionsState extends State<Questions> {
                         print(snapshot.error);
                         return NotFoundWidget(texte: 'Not Found');
                       } else {
-                        return Center(
-                                  child: displayQuestion(
-                            snapshot.data as List<QuestionModel>, index)
-                                );
+                        Question? quest = displayQuestion(
+                            snapshot.data as List<QuestionModel>, index);
+                        if (quest == null) {
+                          Get.to(Quiz5());
+                        } else {
+                          return quest;
+                        }
                       }
                     }
                     return Center(
-                        child: CircularProgressIndicator(),
+                        // child: CircularProgressIndicator(),
                         ); // Display the fetched data
                   },
                 ),
@@ -151,106 +167,30 @@ class _QuestionsState extends State<Questions> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.4,
-              child: ListView(
-                physics: const BouncingScrollPhysics(),
-                children: [
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                      border: Border.all(
-                        color: Colors.red,
-                        width: 2,
-                      ),
-                    ),
-                    child: const Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w200,
-                        height: 1.7,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 11,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                      border: Border.all(
-                        color: Colors.black.withOpacity(.24),
-                        width: 2,
-                      ),
-                    ),
-                    child: const Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w200,
-                        height: 1.7,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 11,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                      border: Border.all(
-                        color: Colors.black.withOpacity(.24),
-                        width: 2,
-                      ),
-                    ),
-                    child: const Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w200,
-                        height: 1.7,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 11,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                      border: Border.all(
-                        color: Colors.green,
-                        width: 2,
-                      ),
-                    ),
-                    child: const Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w200,
-                        height: 1.7,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            child: FutureBuilder(
+              future: getQuestions(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    print(snapshot.error);
+                    return NotFoundWidget(texte: 'Not Found');
+                  } else {
+                    List<Answer>? answers = displayAnswers(
+                        snapshot.data as List<QuestionModel>, index);
+                    if (answers == null) {
+                      // Get.to(Quiz5());
+                      print("Pas de reponses");
+                    } else {
+                      return Column(
+                        children: answers,
+                      );
+                    }
+                  }
+                }
+                return Center(
+                    // child: CircularProgressIndicator(),
+                    ); // Display the fetched data
+              },
             ),
           ),
         ],

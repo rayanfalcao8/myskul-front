@@ -12,10 +12,10 @@ class QuestionModel {
     return {
       'id': id,
       'name': name,
-      'done': points,
-      'score': justification,
-      'free': next_id,
-      'level': answers,
+      'points': points,
+      'justification': justification,
+      'next_id': next_id,
+      'answers': answers,
     };
   }
 
@@ -25,6 +25,18 @@ class QuestionModel {
     points = json['points'];
     justification = json['justification'];
     next_id = json['next_id'];
-    answers = json['answers'].toString();
+    answers = (json['answers'] as List).map((e) => AnswerModel.fromJson(e)).toList();
+  }
+}
+
+class AnswerModel {
+  var id;
+  var name;
+  var isCorrect;
+
+  AnswerModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    isCorrect = json['isCorrect'];
   }
 }
