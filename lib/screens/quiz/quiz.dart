@@ -11,7 +11,6 @@ class QuizWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Bounceable(
       onTap: () {
-        print(quiz);
         Get.to(() => QuizDetail(quiz: this.quiz));
       },
       child: Container(
@@ -47,7 +46,7 @@ class QuizWidget extends StatelessWidget {
                       height: 12,
                     ),
                     Text(
-                      quiz.done == 1 ? "Deja fait" : "Allons y !!!",
+                      quiz.done ? "Deja fait" : "Allons y !!!",
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
@@ -86,7 +85,7 @@ class QuizWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "10",
+                      quiz.nb_questions.toString(),
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w800,
