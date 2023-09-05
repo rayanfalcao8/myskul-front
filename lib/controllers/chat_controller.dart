@@ -18,6 +18,7 @@ class ChatController {
 
   final CollectionReference groups = db.collection("groupes");
   final CollectionReference messages = db.collection("messages");
+  final CollectionReference tokens = db.collection("tokens");
 
 // Une fonction pour recuprer les données des groupes sur firestore
   Future<List<Map<String, dynamic>>> getGroups() async {
@@ -55,12 +56,32 @@ class ChatController {
       'userName': user.username,
       'userPic': user.profile_image,
       'userEmail': user.email,
-      'userPushToken': fmToken,
     };
     groups
         .doc(document)
         .update({
           'members': FieldValue.arrayUnion([userTmp])
+        })
+        .then((value) => print("DocumentSnapshot successfully updated!"))
+        .onError((e, stackTrace) =>
+            print("Error updating document ${user.email} $e"));
+  }
+
+  // Une fonction pour ajouter le fcm token d'un  utilisateur dans un groupe
+
+  void addUserPushToken(User user, String document) async {
+    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+    final fmToken = await prefs.getString('fmToken');
+
+    Map<Object, Object?> userTmp = {
+      'userId': user.id,
+      'userPushToken': fmToken,
+    };
+    tokens
+        .doc(document)
+        .update({
+          'users': FieldValue.arrayUnion([userTmp])
         })
         .then((value) => print("DocumentSnapshot successfully updated!"))
         .onError((e, stackTrace) =>
@@ -158,6 +179,23 @@ class ChatController {
         .onError((e, stackTrace) => print("Error updating document $e"));
   }
 
+  // Une fonction pour enlever le token d' un utilisateur d'un groupe
+
+  void removeUserPushNotification(User user, String document) async {
+    Map<Object, Object?> userTmp = {
+      'userId': user.id,
+      'userPushToken': '',
+    };
+
+    tokens
+        .doc(document)
+        .update({
+          'users': FieldValue.arrayRemove([userTmp])
+        })
+        .then((value) => print("DocumentSnapshot successfully updated!"))
+        .onError((e, stackTrace) => print("Error updating document $e"));
+  }
+
 // Scroll automatique
 
   void scrollDown(ScrollController ctrl) {
@@ -244,7 +282,9 @@ class ChatController {
 // envoyer un message
 
   sendMessage(String groupId, Map<String, dynamic> chatMessageData) async {
-    var users;
+    var groupUsers;
+    var tokenUsers;
+
     messages.add(chatMessageData);
     groups.doc(groupId).update({
       "recentMessage": chatMessageData['type'] == 'texte'
@@ -254,28 +294,35 @@ class ChatController {
       "recentMessageTime": chatMessageData['time'].toString(),
     });
 
-    await FirebaseFirestore.instance
-        .collection('groupes')
-        .where("groupId", isEqualTo: groupId)
-        .get()
-        .then((value) {
-      users = value;
+    await groups.where("groupId", isEqualTo: groupId).get().then((value) {
+      groupUsers = value;
     });
-    var u = users.docs[0].data() as Map;
 
-    // for (var i in u['members']) {
-    //   sendPushNotification(
-    //       i['userPushToken'],
-    //       u['groupName'],
-    //       u['groupPic'],
-    //       chatMessageData['sender'],
-    //       chatMessageData['type'] == 'texte'
-    //           ? chatMessageData['message']
-    //           : '📷');
-    // }
+    var u = groupUsers.docs[0].data() as Map;
+
+    await tokens.get().then((value) {
+      tokenUsers = value;
+    });
+
+    var v = tokenUsers.docs[0].data() as Map;
+
+    for (var i in u['members']) {
+      for (var element in v['users']) {
+        if (element['userId'] == i['userId']) {
+          sendPushNotification(
+              element['userPushToken'],
+              u['groupName'],
+              u['groupPic'],
+              chatMessageData['sender'],
+              chatMessageData['type'] == 'texte'
+                  ? chatMessageData['message']
+                  : '📷');
+        }
+      }
+    }
   }
 
-// pour avoir le Token Firebase messagessi,g d'un device
+// pour avoir le Token Firebase messagessing d'un device
 
   Future<String> getFmToken() async {
     String? tmp;

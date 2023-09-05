@@ -48,6 +48,7 @@ class LoginController extends GetxController {
 
           EasyLoading.dismiss();
           ChatController().addUser(user, Constant().PTCL);
+           ChatController().addUser(user, Constant().TOKEN);
           EasyLoading.showSuccess("ynca".trParams({'email': emailController}));
 
           if (user.speciality == null) {
