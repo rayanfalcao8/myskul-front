@@ -89,6 +89,7 @@ class HomepageScaffold extends StatelessWidget {
       drawer: MainDrawer(user: user),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: AnimationLimiter(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -305,7 +306,7 @@ class HomepageScaffold extends StatelessWidget {
                               texte: "Quiz",
                               couleur: Colors.blue,
                               function: () {
-                                Get.to(()=>CategorList(user: user));
+                                Get.to(() => CategorList(user: user));
                               },
                             ),
                             DashBox(
@@ -334,7 +335,9 @@ class HomepageScaffold extends StatelessWidget {
                               icone: IconHelper().leader,
                               texte: "Leaderboard",
                               couleur: ColorHelper().lemon,
-                              function: (){Get.to(()=>LeaderBoard());},
+                              function: () {
+                                Get.to(() => LeaderBoard());
+                              },
                             ),
                             DashBox(
                               icone: IconHelper().shop,
@@ -414,17 +417,19 @@ class HomepageScaffold extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                        user.domain.length > 0 ?  user.domain[0]['display_name'] : ' ',
+                                          user.domain.length > 0
+                                              ? user.domain[0]['display_name']
+                                              : ' ',
                                           style: TextHelper().h2l.copyWith(
                                               color: ColorHelper().green),
                                         ),
-                                      
                                         SizedBox(
                                           height: 10,
                                         ),
-
                                         Text(
-                                          user.speciality!=null ? user.speciality['sigle']:' ',
+                                          user.speciality != null
+                                              ? user.speciality['sigle']
+                                              : ' ',
                                           style: TextHelper().h4b.copyWith(
                                               color: ColorHelper().green),
                                         ),
@@ -432,7 +437,9 @@ class HomepageScaffold extends StatelessWidget {
                                           height: 10,
                                         ),
                                         Text(
-                                         user.school!=null ? user.school['display_name'] : ' ',
+                                          user.school != null
+                                              ? user.school['display_name']
+                                              : ' ',
                                           style: TextHelper().h4b.copyWith(
                                               color: ColorHelper().green),
                                         ),
@@ -440,7 +447,9 @@ class HomepageScaffold extends StatelessWidget {
                                           height: 10,
                                         ),
                                         Text(
-                                         user.level!=null ? user.level['level'] : ' ',
+                                          user.level != null
+                                              ? user.level['level']
+                                              : ' ',
                                           style: TextHelper().h4l.copyWith(
                                               color: ColorHelper().green),
                                         ),

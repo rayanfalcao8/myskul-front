@@ -153,8 +153,7 @@ class MainDrawer extends StatelessWidget {
                   ],
                 ),
                 onTap: () {
-                  print(user.toJson());
-                  Get.to(() => Account());
+                  Get.to(() => Account(user:user));
                 },
               ),
               ListTile(

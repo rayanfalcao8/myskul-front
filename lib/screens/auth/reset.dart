@@ -153,12 +153,12 @@ class Reset extends StatelessWidget {
                             text: "reset",
                             function: () {
                               if (controller.text.isEmpty) {
-                                EasyLoading.showError("Mot de passe Requis");
+                                EasyLoading.showError("no-input".tr);
                               } else if (controller2.text.isEmpty ||
                                   controller2.text.isEmpty !=
                                       controller.text.isEmpty) {
                                 EasyLoading.showError(
-                                    "Les deux Mots de passe ne correspondent pas");
+                                    "pwd-egal".tr);
                               } else {
                                 PasswordController().reset(
                                     email, controller.text, controller2.text, token);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/controllers/auth/password_controller.dart';
@@ -132,8 +133,12 @@ class Password extends StatelessWidget {
                           ),
                           NewButtonG(
                             text: "send",
-                            function: (){
-                              PasswordController().password(controller.text);
+                            function: () {
+                              if (controller.text.isEmpty) {
+                                EasyLoading.showError("no-input".tr);
+                              } else {
+                                PasswordController().password(controller.text);
+                              }
                             },
                           ),
                           SizedBox(

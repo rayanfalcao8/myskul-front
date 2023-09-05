@@ -309,7 +309,9 @@ class ChatController {
     for (var i in u['members']) {
       for (var element in v['users']) {
         if (element['userId'] == i['userId']) {
-          sendPushNotification(
+
+          if (element['userPushToken']!=null && element['userPushToken']!="") {
+             sendPushNotification(
               element['userPushToken'],
               u['groupName'],
               u['groupPic'],
@@ -317,6 +319,8 @@ class ChatController {
               chatMessageData['type'] == 'texte'
                   ? chatMessageData['message']
                   : '📷');
+          }
+         
         }
       }
     }

@@ -172,13 +172,10 @@ String? token = await prefs.getString('token');
                           NewButtonG(
                             text: "connect",
                             function: () async {
-                              print(Get.locale);
                               if (controller.text.isEmpty) {
-                                EasyLoading.showError("Email Requis");
-                                validEmail = false;
+                                EasyLoading.showError("no-input".tr);
                               } else if (controller2.text.isEmpty) {
-                                EasyLoading.showError("Mot de passe Requis");
-                                validPassword = false;
+                                EasyLoading.showError("no-input".tr);
                               } else {
                                 LoginController()
                                     .login(controller.text, controller2.text);

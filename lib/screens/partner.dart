@@ -49,14 +49,15 @@ class _PartnerState extends State<Partner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: Container(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         child: Stack(
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 2,
               margin: EdgeInsets.only(
-                top: (MediaQuery.of(context).size.height / 12),
+                top: 20,
               ),
               decoration: BoxDecoration(
                 color: couleurs.white.withOpacity(0.5),
@@ -67,6 +68,7 @@ class _PartnerState extends State<Partner> {
               ),
               child: AnimationLimiter(
                 child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
                   itemCount: partners.length,
                   itemBuilder: (BuildContext context, int index) {
                     return AnimationConfiguration.staggeredList(

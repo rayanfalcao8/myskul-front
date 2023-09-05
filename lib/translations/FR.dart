@@ -87,5 +87,7 @@ class FR {
     'ynca': 'Vous êtes désormais connecté en tant @email',
     'not-found-group': 'Vous n\' etes associé à aucun groupe ',
     'not-found-message': 'Pas de message pour le moment ',
+    'no-input': 'Veuillez remplir tous les champs requis',
+    'pwd-egal': 'Les deux Mots de passe ne correspondent pas',
   };
 }

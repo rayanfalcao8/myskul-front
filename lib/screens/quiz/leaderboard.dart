@@ -25,6 +25,7 @@ class LeaderBoard extends StatelessWidget {
         child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
+            padding: MediaQuery.of(context).padding,
             decoration: BoxDecoration(
               gradient: gradients.greenGradient,
             ),
@@ -32,7 +33,7 @@ class LeaderBoard extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 Positioned(
-                  top: 50,
+                  top: 30,
                   left: 0,
                   child: Container(
                     width: size.width,
@@ -56,7 +57,7 @@ class LeaderBoard extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 90,
+                  top: 30,
                   left: 0,
                   right: 0,
                   child: Center(
@@ -65,7 +66,7 @@ class LeaderBoard extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 130,
+                  top: 100,
                   left: 0,
                   right: 0,
                   child: Row(
@@ -178,7 +179,7 @@ class LeaderBoard extends StatelessWidget {
                               ),
                               Container(
                                 width: size.width / 5,
-                                height: 180,
+                                height: size.height/6,
                                 decoration: BoxDecoration(
                                     color: couleurs.white.withOpacity(0.6),
                                     border: Border(
@@ -232,7 +233,7 @@ class LeaderBoard extends StatelessWidget {
                               ),
                               Container(
                                 width: size.width / 5,
-                                height: 220,
+                                height: size.height/4,
                                 decoration: BoxDecoration(
                                   color: couleurs.white.withOpacity(0.6),
                                   border: Border(
@@ -297,7 +298,7 @@ class LeaderBoard extends StatelessWidget {
                               ),
                               Container(
                                 width: size.width / 5,
-                                height: 150,
+                                height: size.height/8,
                                 decoration: BoxDecoration(
                                     color: couleurs.white.withOpacity(0.6),
                                     border: Border(
@@ -332,7 +333,7 @@ class LeaderBoard extends StatelessWidget {
                         ],
                       ),
                       Container(
-                        height: size.height / 3,
+                        height: size.height / 3.5,
                         width: size.width,
                         decoration: BoxDecoration(
                           color: couleurs.white,
@@ -366,7 +367,7 @@ class LeaderBoard extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        height: 80,
+                        height: 60,
                         width: size.width,
                         color: couleurs.white,
                         child: ListTile(

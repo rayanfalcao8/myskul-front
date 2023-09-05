@@ -310,25 +310,22 @@ class _RegisterState extends State<Register> {
                             text: "signup",
                             function: () {
                               if (noms.text.isEmpty) {
-                                EasyLoading.showError("Nom Requis");
+                                EasyLoading.showError("no-input".tr);
                               } else if (email.text.isEmpty) {
-                                EasyLoading.showError("Mot de passe Requis");
+                                EasyLoading.showError("no-input".tr);
                               } else if (num.text.isEmpty) {
-                                EasyLoading.showError("Numéro Requis");
+                                EasyLoading.showError("no-input".tr);
                               } else if (ville.text.isEmpty) {
-                                EasyLoading.showError("Ville Requis");
+                                EasyLoading.showError("no-input".tr);
                               } else if (datenaiss.text.isEmpty) {
-                                EasyLoading.showError(
-                                    "Date de naissance Requis");
+                                EasyLoading.showError("no-input".tr);
                               } else if (password.text.isEmpty) {
-                                EasyLoading.showError("Mot de passe Requis");
+                                EasyLoading.showError("no-input".tr);
                               } else if (passwordConfirm.text.isEmpty ||
                                   passwordConfirm.text != password.text) {
-                                EasyLoading.showError(
-                                    "Mot de passe ne correspond pas");
+                                EasyLoading.showError("pwd-egal".tr);
                               } else if (checkbox == false) {
-                                EasyLoading.showError(
-                                    "Veuillez accepter les conditions d'utlisation");
+                                EasyLoading.showError("no-input".tr);
                               } else {
                                 RegisterationController().register(
                                     userController: noms.text,
