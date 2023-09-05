@@ -31,8 +31,6 @@ class _QuizListState extends State<QuizList> {
 
   var gradients = GradientHelper();
 
-  var quizzes;
-
   List<Widget> displayQuizzes(List<QuizModel> quizList) {
     List<QuizWidget> w = [];
     quizList.forEach((element) {

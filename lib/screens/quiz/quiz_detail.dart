@@ -32,7 +32,7 @@ class QuizDetail extends StatelessWidget {
               title: Padding(
                 padding: EdgeInsets.only(top: 20.0, left: 30.0),
                 child: Text(
-                  quiz.name,style: TextHelper().bodyTextr.copyWith(color: ColorHelper().white)
+                  quiz.name, style: TextHelper().bodyTextr.copyWith(color: ColorHelper().white)
                 ),
               ),
               background: Stack(
@@ -190,7 +190,7 @@ class QuizDetail extends StatelessWidget {
                     height: 50,
                     child: TextButton(
                       onPressed: () {
-                         Get.to(() => Questions());
+                         Get.to(() => Questions(quiz: quiz));
                       },
                       child:  Padding(
                         padding: EdgeInsets.all(0),
