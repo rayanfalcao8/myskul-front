@@ -30,21 +30,22 @@ class _QuestionsState extends State<Questions> {
 
   // var gradients = GradientHelper();
 
-  Widget displayQuestion(List<QuestionModel> questionList, int id) {
-    List<Widget> w = [];
+  Question? displayQuestion(List<QuestionModel> questionList, int id) {
+    // List<Widget> w = [];
+    Question? w;
     var c = 1;
     questionList.forEach((element) {
-      if (c == questionList.length) {
-        Get.to(Quiz5());
-      }
+      // if (c == questionList.length) {
+      //   Get.to(Quiz5());
+      // }
 
       if (element.id == id) {
-        w.add(Question(
-            question: element, position: c, total: questionList.length));
+        w = Question(
+            question: element, position: c, total: questionList.length);
       }
+      c += 1;
     });
-    c += 1;
-    return w[0];
+    return w;
   }
 
   getQuestions() async {
@@ -132,15 +133,18 @@ class _QuestionsState extends State<Questions> {
                         print(snapshot.error);
                         return NotFoundWidget(texte: 'Not Found');
                       } else {
-                        return Center(
-                                  child: displayQuestion(
-                            snapshot.data as List<QuestionModel>, index)
-                                );
+                        Question? quest = displayQuestion(
+                            snapshot.data as List<QuestionModel>, index);
+                        if (quest == null) {
+                          Get.to(Quiz5());
+                        } else {
+                          return Center(child: quest);
+                        }
                       }
                     }
                     return Center(
-                        child: CircularProgressIndicator(),
-                        ); // Display the fetched data
+                      child: CircularProgressIndicator(),
+                    ); // Display the fetched data
                   },
                 ),
               )
