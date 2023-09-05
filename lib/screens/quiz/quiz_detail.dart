@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:myskul/screens/quiz/questions.dart';
 
 import '../../utilities/colors.dart';
+import '../../utilities/texts.dart';
 
 class QuizDetail extends StatelessWidget {
   QuizDetail({required this.quiz});
@@ -29,9 +30,9 @@ class QuizDetail extends StatelessWidget {
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               title: Padding(
-                padding: EdgeInsets.only(top: 20.0),
+                padding: EdgeInsets.only(top: 20.0, left: 30.0),
                 child: Text(
-                  quiz.name,
+                  quiz.name,style: TextHelper().bodyTextr.copyWith(color: ColorHelper().white)
                 ),
               ),
               background: Stack(
