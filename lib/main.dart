@@ -50,7 +50,7 @@ void main() async {
 
   // lignes de codes afférentes aux SharedPreferences
 
-  await shMethods(prefs);
+  // await shMethods(prefs);
 
   await getUser(prefs);
 
@@ -60,20 +60,20 @@ void main() async {
   );
 }
 
-Future<void> shMethods(SharedPreferences prefs) async {
-  seen = await prefs.getBool('first');
-  token = await prefs.getString('token');
-  fmToken = await prefs.getString('fmToken');
-  locale = await prefs.getString('locale');
+// Future<void> shMethods(SharedPreferences prefs) async {
+//   seen = await prefs.getBool('first');
+//   token = await prefs.getString('token');
+//   fmToken = await prefs.getString('fmToken');
+//   locale = await prefs.getString('locale');
 
-  if (locale != null) {
-    Get.updateLocale(Locale(locale!));
-  }
-  if (fmToken == null) {
-    var tmp = await ChatController().getFmToken();
-    await prefs.setString('fmToken', tmp);
-  }
-}
+//   if (locale != null) {
+//     Get.updateLocale(Locale(locale!));
+//   }
+//   if (fmToken == null) {
+   // var tmp = await ChatController().getFmToken();
+//     await prefs.setString('fmToken', tmp);
+//   }
+// }
 
 Future<User?> getUser(SharedPreferences prefs) async {
   var userString = await prefs.getString('user');
@@ -85,13 +85,13 @@ Future<User?> getUser(SharedPreferences prefs) async {
 }
 
 Future<void> messagingInit() async {
-  FirebaseMessaging.onBackgroundMessage(notify);
-  await AwesomeNotifications().setListeners(
-    onActionReceivedMethod: onActionReceivedMethod,
-  );
+  // FirebaseMessaging.onBackgroundMessage(notify);
+  // await AwesomeNotifications().setListeners(
+  //   onActionReceivedMethod: onActionReceivedMethod,
+  // );
 
-  FirebaseMessaging.instance
-      .setForegroundNotificationPresentationOptions(alert: true, sound: true);
+  // FirebaseMessaging.instance
+  //     .setForegroundNotificationPresentationOptions(alert: true, sound: true);
   FirebaseMessaging.onMessage.listen(
     (m) {
     //  notify(m);
@@ -104,22 +104,22 @@ Future<void> messagingInit() async {
     },
   );
 
-  AwesomeNotifications().initialize(
-    'resource://drawable/res_app_ico',
-    [
-      NotificationChannel(
-        channelKey: 'MySkul',
-        channelName: 'MySkul',
-        channelDescription: 'MySkul Notification',
-        playSound: true,
-        importance: NotificationImportance.Max,
-        defaultColor: ColorHelper().green,
-        ledColor: Colors.white,
-        icon: 'resource://drawable/res_app_ico',
-      ),
-    ],
-    debug: true,
-  );
+  // AwesomeNotifications().initialize(
+  //   'resource://drawable/res_app_ico',
+  //   [
+  //     NotificationChannel(
+  //       channelKey: 'MySkul',
+  //       channelName: 'MySkul',
+  //       channelDescription: 'MySkul Notification',
+  //       playSound: true,
+  //       importance: NotificationImportance.Max,
+  //       defaultColor: ColorHelper().green,
+  //       ledColor: Colors.white,
+  //       icon: 'resource://drawable/res_app_ico',
+  //     ),
+  //   ],
+  //   debug: true,
+  // );
 }
 
 class Home1 extends StatefulWidget {
@@ -196,24 +196,24 @@ int createUniqueId() {
   return DateTime.now().millisecondsSinceEpoch.remainder(100000);
 }
 
-Future notify(RemoteMessage m) async {
-  var tmp = m.data as Map;
-  var local = Get.locale;
+// Future notify(RemoteMessage m) async {
+//   var tmp = m.data as Map;
+//   var local = Get.locale;
 
-  AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: createUniqueId(),
-        channelKey: 'MySkul',
-        title: tmp['nom'],
-        body: tmp['message'],
-        summary: tmp['groupe'],
-        largeIcon: tmp['image'],
-        roundedLargeIcon: true,
-        notificationLayout: NotificationLayout.Messaging,
-      ),
-      actionButtons: [
-        NotificationActionButton(
-            key: 'key',
-            label: Get.locale.toString().contains('en') ? 'ANSWER' : 'REPONDRE')
-      ]);
-}
+//   AwesomeNotifications().createNotification(
+//       content: NotificationContent(
+//         id: createUniqueId(),
+//         channelKey: 'MySkul',
+//         title: tmp['nom'],
+//         body: tmp['message'],
+//         summary: tmp['groupe'],
+//         largeIcon: tmp['image'],
+//         roundedLargeIcon: true,
+//         notificationLayout: NotificationLayout.Messaging,
+//       ),
+//       actionButtons: [
+//         NotificationActionButton(
+//             key: 'key',
+//             label: Get.locale.toString().contains('en') ? 'ANSWER' : 'REPONDRE')
+//       ]);
+// }
