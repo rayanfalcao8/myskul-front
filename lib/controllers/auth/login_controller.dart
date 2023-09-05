@@ -29,8 +29,6 @@ class LoginController extends GetxController {
       final res =
           await http.post(url, body: jsonEncode(body), headers: headers);
 
-      print('${res.request}');
-
       EasyLoading.dismiss();
 
       if (res.statusCode == 200) {
@@ -48,7 +46,7 @@ class LoginController extends GetxController {
 
           EasyLoading.dismiss();
           ChatController().addUser(user, Constant().PTCL);
-           ChatController().addUser(user, Constant().TOKEN);
+           ChatController().addUserPushToken(user, Constant().TOKEN);
           EasyLoading.showSuccess("ynca".trParams({'email': emailController}));
 
           if (user.speciality == null) {

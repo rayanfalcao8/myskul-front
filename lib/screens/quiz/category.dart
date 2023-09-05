@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
 import 'package:myskul/screens/quiz/quiz_list.dart' as q;
+import 'package:myskul/screens/quiz/quiz_list.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/texts.dart';
 
@@ -16,8 +17,7 @@ class CategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Bounceable(
       onTap: () {
-        print(category);
-        Get.to(() => q.QuizList(category: this.category));
+        Get.to(() => QuizList(category: this.category));
       },
       child: Container(
         width: double.infinity,

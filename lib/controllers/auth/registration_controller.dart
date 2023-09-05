@@ -160,10 +160,10 @@ class RegisterationController extends GetxController {
           idController);
 
       Map body = {
-        "level_id": lvController ?? '1',
-        "domain_id": domainController ?? '1',
-        "speciality_id": speController ?? '1',
-        "school_id": schoolController ?? '1',
+        "level_id": lvController ,
+        "domain_id": domainController ,
+        "speciality_id": speController ,
+        "school_id": schoolController ,
       };
 
       EasyLoading.show();

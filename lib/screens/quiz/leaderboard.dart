@@ -7,7 +7,7 @@ import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
 
-class Test extends StatelessWidget {
+class LeaderBoard extends StatelessWidget {
   var couleurs = ColorHelper();
 
   var textes = TextHelper();
