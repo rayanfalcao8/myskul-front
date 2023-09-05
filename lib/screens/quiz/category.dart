@@ -15,7 +15,6 @@ class CategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Bounceable(
       onTap: () {
-        print(category);
         Get.to(() => QuizList(category: this.category));
       },
       child: Container(

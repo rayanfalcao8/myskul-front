@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:myskul/screens/quiz/questions.dart';
 
 import '../../utilities/colors.dart';
 
@@ -92,8 +94,13 @@ class QuizDetail extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 150),
                         width: MediaQuery.of(context).size.width,
                         height: 240,
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
+                          // border: Border.all(color: Color.fromARGB(0, 0, 0, 0), width: 2.0),
+                          border: Border.all(
+                            color: const Color(0xFF2BB799),
+                          ),
                           color: Colors.white,
                         ),
                         child: Column(
@@ -110,29 +117,29 @@ class QuizDetail extends StatelessWidget {
                                 ),
                               ),
                               trailing: Text(
-                                quiz.nb_questions,
+                                quiz.nb_questions.toString(),
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w200,
                                 ),
                               ),
                             ),
-                          //   ListTile(
-                          //     title: Text(
-                          //       "DUREE DU QUIZ",
-                          //       style: TextStyle(
-                          //         fontSize: 14,
-                          //         fontWeight: FontWeight.w200,
-                          //       ),
-                          //     ),
-                          //     trailing: Text(
-                          //       "24 MIN",
-                          //       style: TextStyle(
-                          //         fontSize: 14,
-                          //         fontWeight: FontWeight.w200,
-                          //       ),
-                          //     ),
-                          //   ),
+                            ListTile(
+                              title: Text(
+                                quiz.done ? "SCORE PRECEDENT" : "JAMAIS ESSAYÉ",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w200,
+                                ),
+                              ),
+                              trailing: Text(
+                                quiz.done ? quiz.score.toString() : "",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w200,
+                                ),
+                              ),
+                            ),
                           //   ListTile(
                           //     title: Text(
                           //       "DUREE DU QUIZ",
@@ -181,7 +188,9 @@ class QuizDetail extends StatelessWidget {
                     width: 270,
                     height: 50,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                         Get.to(() => Questions());
+                      },
                       child: const Padding(
                         padding: EdgeInsets.all(0),
                         child: Row(
