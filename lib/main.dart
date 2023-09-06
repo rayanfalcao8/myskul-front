@@ -42,7 +42,7 @@ void main() async {
   await Firebase.initializeApp(); // Initialisation de firebase
 
   // Initialisation de firebase messaging et awesome notifications
-  await messagingInit();
+  //await messagingInit();
 
   // Initialisation du package SharedPreferences
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -50,7 +50,7 @@ void main() async {
 
   // lignes de codes afférentes aux SharedPreferences
 
-  // await shMethods(prefs);
+  await shMethods(prefs);
 
   await getUser(prefs);
 
@@ -60,20 +60,20 @@ void main() async {
   );
 }
 
-// Future<void> shMethods(SharedPreferences prefs) async {
-//   seen = await prefs.getBool('first');
-//   token = await prefs.getString('token');
-//   fmToken = await prefs.getString('fmToken');
-//   locale = await prefs.getString('locale');
+Future<void> shMethods(SharedPreferences prefs) async {
+  seen = await prefs.getBool('first');
+  token = await prefs.getString('token');
+  fmToken = await prefs.getString('fmToken');
+  locale = await prefs.getString('locale');
 
-//   if (locale != null) {
-//     Get.updateLocale(Locale(locale!));
-//   }
-//   if (fmToken == null) {
-   // var tmp = await ChatController().getFmToken();
-//     await prefs.setString('fmToken', tmp);
-//   }
-// }
+  if (locale != null) {
+    Get.updateLocale(Locale(locale!));
+  }
+  if (fmToken == null) {
+   var tmp = await ChatController().getFmToken();
+    await prefs.setString('fmToken', tmp);
+  }
+}
 
 Future<User?> getUser(SharedPreferences prefs) async {
   var userString = await prefs.getString('user');

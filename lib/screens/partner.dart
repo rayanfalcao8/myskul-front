@@ -148,7 +148,7 @@ class _PartnerState extends State<Partner> {
                           radius: 08,
                         )),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         SizedBox(
                           height: 30,

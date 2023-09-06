@@ -66,6 +66,7 @@ class EN {
     'my-sub': 'SUBSCRIPTION',
     'history': 'HISTORY',
     'our-part': 'OURS PARTNERS',
+    'quiz': 'QUIZZES',
     'sav': 'CUSTOMER SERVICE',
     'save': 'SAVE',
     'password-upper': 'MY PASSWORD',

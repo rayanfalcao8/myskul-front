@@ -67,6 +67,7 @@ class FR {
     'my-sub': 'MON ABONNEMENT',
     'history': 'HISTORIQUE',
     'our-part': 'NOS PARTENAIRES',
+    'quiz': 'QUIZ',
     'sav': 'SERVICE CLIENT',
     'save': 'ENREGISTRER',
     'password-upper': 'MOT DE PASSE',

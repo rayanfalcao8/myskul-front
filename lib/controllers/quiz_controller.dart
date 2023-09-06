@@ -81,7 +81,6 @@ class QuizController extends GetxController {
         });
 
         EasyLoading.dismiss();
-        EasyLoading.showSuccess(json['message']);
         return categories;
       } else {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
