@@ -70,7 +70,7 @@ class QuizWidget extends StatelessWidget {
                       height: 6,
                     ),
                     Text(
-                      quiz.score,
+                      quiz.score.toString(),
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w800,

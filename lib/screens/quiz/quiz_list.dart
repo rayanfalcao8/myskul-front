@@ -34,7 +34,6 @@ class _QuizListState extends State<QuizList> {
   List<Widget> displayQuizzes(List<QuizModel> quizList) {
     List<QuizWidget> w = [];
     quizList.forEach((element) {
-      print(element.toJson());
       w.add(QuizWidget(quiz: element));
     });
     return w;
