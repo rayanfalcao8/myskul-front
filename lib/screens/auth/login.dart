@@ -69,174 +69,172 @@ String? token = await prefs.getString('token');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 1.1,
-                decoration: BoxDecoration(
-                    color: couleurs.white.withOpacity(0.5),
-                    image: DecorationImage(
-                        image: AssetImage("assets/images/math.png"),
-                        opacity: 0.04,
-                        fit: BoxFit.cover)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    WidgetAnimator(
-                      incomingEffect:
-                          WidgetTransitionEffects.incomingSlideInFromTop(
-                              duration: Duration(milliseconds: 500)),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Image.asset(
-                          "assets/images/wave-t.png",
-                        ),
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 1.1,
+              decoration: BoxDecoration(
+                  color: couleurs.white.withOpacity(0.5),
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/math.png"),
+                      opacity: 0.04,
+                      fit: BoxFit.cover)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  WidgetAnimator(
+                    incomingEffect:
+                        WidgetTransitionEffects.incomingSlideInFromTop(
+                            duration: Duration(milliseconds: 500)),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Image.asset(
+                        "assets/images/wave-t.png",
                       ),
                     ),
-                    Container(),
-                    WidgetAnimator(
-                      incomingEffect:
-                          WidgetTransitionEffects.incomingSlideInFromBottom(
-                              duration: Duration(milliseconds: 500)),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Image.asset(
-                          "assets/images/wave-b.png",
-                        ),
+                  ),
+                  Container(),
+                  WidgetAnimator(
+                    incomingEffect:
+                        WidgetTransitionEffects.incomingSlideInFromBottom(
+                            duration: Duration(milliseconds: 500)),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Image.asset(
+                        "assets/images/wave-b.png",
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Center(
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  child: AnimationLimiter(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: AnimationConfiguration.toStaggeredList(
-                        duration: const Duration(milliseconds: 500),
-                        childAnimationBuilder: (widget) => SlideAnimation(
-                          verticalOffset: 50.0,
-                          child: FadeInAnimation(
-                            child: widget,
-                          ),
+            ),
+            Center(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                child: AnimationLimiter(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: AnimationConfiguration.toStaggeredList(
+                      duration: const Duration(milliseconds: 500),
+                      childAnimationBuilder: (widget) => SlideAnimation(
+                        verticalOffset: 50.0,
+                        child: FadeInAnimation(
+                          child: widget,
                         ),
-                        children: [
-                          Image.asset(
-                            "assets/images/logo2.png",
-                            width: 100,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "welcome".tr,
-                                style: GoogleFonts.getFont('Lato',
-                                    textStyle: textes.h1l),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "welcome2".tr,
-                                style: GoogleFonts.getFont('Lato',
-                                    textStyle: textes.h1l),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          NewInput(
-                              controller: controller,
-                              onSubmit: onSubmit,
-                              keyboardType: keyboardType,
-                              hintText: hintText,
-                              prefixIcon: prefixIcon),
-                          NewInput(
-                              obscureText: true,
-                              controller: controller2,
-                              onSubmit: onSubmit2,
-                              keyboardType: keyboardType2,
-                              hintText: hintText2,
-                              prefixIcon: prefixIcon2),
-                          NewButtonG(
-                            text: "connect",
-                            function: () async {
-                              if (controller.text.isEmpty) {
-                                EasyLoading.showError("no-input".tr);
-                              } else if (controller2.text.isEmpty) {
-                                EasyLoading.showError("no-input".tr);
-                              } else {
-                                LoginController()
-                                    .login(controller.text, controller2.text);
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "new-here1".tr,
-                                style: textes.h4l,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return Register();
-                                  }));
-                                },
-                                child: Text(
-                                  "new-here2".tr,
-                                  style: textes.h4l
-                                      .copyWith(color: couleurs.green),
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "forgot-password1".tr,
-                                style: textes.h4l,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(Password());
-                                },
-                                child: Text(
-                                  "forgot-password2".tr,
-                                  style: textes.h4l
-                                      .copyWith(color: couleurs.green),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
                       ),
+                      children: [
+                        Image.asset(
+                          "assets/images/logo2.png",
+                          width: 100,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "welcome".tr,
+                              style: GoogleFonts.getFont('Lato',
+                                  textStyle: textes.h1l),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "welcome2".tr,
+                              style: GoogleFonts.getFont('Lato',
+                                  textStyle: textes.h1l),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        NewInput(
+                            controller: controller,
+                            onSubmit: onSubmit,
+                            keyboardType: keyboardType,
+                            hintText: hintText,
+                            prefixIcon: prefixIcon),
+                        NewInput(
+                            obscureText: true,
+                            controller: controller2,
+                            onSubmit: onSubmit2,
+                            keyboardType: keyboardType2,
+                            hintText: hintText2,
+                            prefixIcon: prefixIcon2),
+                        NewButtonG(
+                          text: "connect",
+                          function: () async {
+                            if (controller.text.isEmpty) {
+                              EasyLoading.showError("no-input".tr);
+                            } else if (controller2.text.isEmpty) {
+                              EasyLoading.showError("no-input".tr);
+                            } else {
+                              LoginController()
+                                  .login(controller.text, controller2.text);
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "new-here1".tr,
+                              style: textes.h4l,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return Register();
+                                }));
+                              },
+                              child: Text(
+                                "new-here2".tr,
+                                style: textes.h4l
+                                    .copyWith(color: couleurs.green),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "forgot-password1".tr,
+                              style: textes.h4l,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(Password());
+                              },
+                              child: Text(
+                                "forgot-password2".tr,
+                                style: textes.h4l
+                                    .copyWith(color: couleurs.green),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

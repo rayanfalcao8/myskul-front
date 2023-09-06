@@ -141,10 +141,8 @@ class NotFoundWidget extends StatelessWidget {
         Center(
             child: Column(
           children: [
-            Image.asset(
-              "assets/images/404.png",
-              width: 200,
-            ),
+
+            FadeInImage(placeholder: AssetImage('assets/images/loading.gif'), image: AssetImage('assets/images/404.png'), width: 200,),
             SizedBox(
               height: 05,
             ),

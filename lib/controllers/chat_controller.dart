@@ -55,7 +55,6 @@ class ChatController {
       'userId': user.id,
       'userName': user.username,
       'userPic': user.profile_image,
-      'userEmail': user.email,
     };
     groups
         .doc(document)
@@ -168,7 +167,6 @@ class ChatController {
       'userId': user.id,
       'userName': user.username,
       'userPic': user.profile_image,
-      'userEmail': user.email,
     };
     groups
         .doc(document)

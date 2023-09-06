@@ -50,12 +50,11 @@ class _PartnerState extends State<Partner> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         child: Stack(
           children: [
             Container(
+              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 2,
               margin: EdgeInsets.only(
                 top: 20,
               ),
@@ -97,7 +96,7 @@ class _PartnerState extends State<Partner> {
             Align(
               alignment: Alignment.topCenter,
               child: Container(
-                height: MediaQuery.of(context).size.height / 12,
+                height: MediaQuery.of(context).padding.top + MediaQuery.of(context).size.height/12,
                 decoration: BoxDecoration(
                     gradient: gradients.greenGradient,
                     borderRadius: BorderRadius.only(
@@ -152,7 +151,7 @@ class _PartnerState extends State<Partner> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: 10,
+                          height: 30,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

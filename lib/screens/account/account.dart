@@ -77,7 +77,6 @@ class _AccountState extends State<Account> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       decoration: BoxDecoration(
           color: couleurs.white.withOpacity(0.5),
           image: DecorationImage(
@@ -87,6 +86,8 @@ class _AccountState extends State<Account> {
       child: Column(
         children: [
           Container(
+            
+          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
             constraints: BoxConstraints(
                 maxHeight: MediaQuery.of(context).size.height / 2.4,
                 minHeight: MediaQuery.of(context).size.height / 3),

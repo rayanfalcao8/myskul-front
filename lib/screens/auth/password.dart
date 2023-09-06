@@ -25,155 +25,153 @@ class Password extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(
-                    color: couleurs.white.withOpacity(0.5),
-                    image: DecorationImage(
-                        image: AssetImage("assets/images/math.png"),
-                        opacity: 0.04,
-                        fit: BoxFit.cover)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    WidgetAnimator(
-                      incomingEffect:
-                          WidgetTransitionEffects.incomingSlideInFromTop(
-                              duration: Duration(milliseconds: 500)),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Image.asset(
-                          "assets/images/wave-t.png",
-                        ),
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                  color: couleurs.white.withOpacity(0.5),
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/math.png"),
+                      opacity: 0.04,
+                      fit: BoxFit.cover)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  WidgetAnimator(
+                    incomingEffect:
+                        WidgetTransitionEffects.incomingSlideInFromTop(
+                            duration: Duration(milliseconds: 500)),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Image.asset(
+                        "assets/images/wave-t.png",
                       ),
                     ),
-                    Container(),
-                    WidgetAnimator(
-                      incomingEffect:
-                          WidgetTransitionEffects.incomingSlideInFromBottom(
-                              duration: Duration(milliseconds: 500)),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Image.asset(
-                          "assets/images/wave-b.png",
-                        ),
+                  ),
+                  Container(),
+                  WidgetAnimator(
+                    incomingEffect:
+                        WidgetTransitionEffects.incomingSlideInFromBottom(
+                            duration: Duration(milliseconds: 500)),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Image.asset(
+                        "assets/images/wave-b.png",
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Center(
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  child: AnimationLimiter(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: AnimationConfiguration.toStaggeredList(
-                        duration: const Duration(milliseconds: 500),
-                        childAnimationBuilder: (widget) => SlideAnimation(
-                          verticalOffset: 50.0,
-                          child: FadeInAnimation(
-                            child: widget,
-                          ),
+            ),
+            Center(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                child: AnimationLimiter(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: AnimationConfiguration.toStaggeredList(
+                      duration: const Duration(milliseconds: 500),
+                      childAnimationBuilder: (widget) => SlideAnimation(
+                        verticalOffset: 50.0,
+                        child: FadeInAnimation(
+                          child: widget,
                         ),
-                        children: [
-                          Image.asset(
-                            "assets/images/logo2.png",
-                            width: 100,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "password-recov-title".tr,
-                                style: GoogleFonts.getFont('Lato',
-                                    textStyle: textes.h1l),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "password-recov-title2".tr,
-                                style: GoogleFonts.getFont('Lato',
-                                    textStyle: textes.h1l),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                              width: 300,
-                              child: Text(
-                                "password-recov-text".tr,
-                                style: textes.h4l,
-                                textAlign: TextAlign.center,
-                              )),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          NewInput(
-                              controller: controller,
-                              onSubmit: onSubmit,
-                              keyboardType: keyboardType,
-                              hintText: hintText,
-                              prefixIcon: prefixIcon),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          NewButtonG(
-                            text: "send",
-                            function: () {
-                              if (controller.text.isEmpty) {
-                                EasyLoading.showError("no-input".tr);
-                              } else {
-                                PasswordController().password(controller.text);
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "new-here1".tr,
-                                style: textes.h4l,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return Register();
-                                  }));
-                                },
-                                child: Text(
-                                  "new-here2".tr,
-                                  style: textes.h4l
-                                      .copyWith(color: couleurs.green),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
                       ),
+                      children: [
+                        Image.asset(
+                          "assets/images/logo2.png",
+                          width: 100,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "password-recov-title".tr,
+                              style: GoogleFonts.getFont('Lato',
+                                  textStyle: textes.h1l),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "password-recov-title2".tr,
+                              style: GoogleFonts.getFont('Lato',
+                                  textStyle: textes.h1l),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                            width: 300,
+                            child: Text(
+                              "password-recov-text".tr,
+                              style: textes.h4l,
+                              textAlign: TextAlign.center,
+                            )),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        NewInput(
+                            controller: controller,
+                            onSubmit: onSubmit,
+                            keyboardType: keyboardType,
+                            hintText: hintText,
+                            prefixIcon: prefixIcon),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        NewButtonG(
+                          text: "send",
+                          function: () {
+                            if (controller.text.isEmpty) {
+                              EasyLoading.showError("no-input".tr);
+                            } else {
+                              PasswordController().password(controller.text);
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "new-here1".tr,
+                              style: textes.h4l,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return Register();
+                                }));
+                              },
+                              child: Text(
+                                "new-here2".tr,
+                                style: textes.h4l
+                                    .copyWith(color: couleurs.green),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

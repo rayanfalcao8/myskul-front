@@ -34,7 +34,6 @@ class Term extends StatefulWidget {
 }
 
 class _TermState extends State<Term> {
-
   var couleurs = ColorHelper();
 
   var textes = TextHelper();
@@ -46,7 +45,8 @@ class _TermState extends State<Term> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: Container(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         child: Stack(
           children: [
             Container(
@@ -62,7 +62,51 @@ class _TermState extends State<Term> {
                     opacity: 0.04,
                     fit: BoxFit.cover),
               ),
-              child: Container(),
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Container(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Image.asset(
+                        'assets/images/logo.png',
+                        width: 100,
+                        height: 100,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'What is Lorem Ipsum?',
+                        style: textes.h2b,
+                      ),
+                      Container(
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+                            textAlign: TextAlign.justify,
+                            style: textes.h4l.copyWith(height: 2),
+                          )),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'What is Lorem Ipsum?',
+                        style: textes.h2b,
+                      ),
+                      Container(
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+                            textAlign: TextAlign.justify,
+                            style: textes.h4l.copyWith(height: 2),
+                          )),
+                    ],
+                  ),
+                ),
+              ),
             ),
             Align(
               alignment: Alignment.topCenter,
@@ -145,7 +189,7 @@ class _TermState extends State<Term> {
                             ),
                             Text(
                               'terms'.tr,
-                              style: textes.h2l.copyWith(color: couleurs.white),
+                              style: textes.h3l.copyWith(color: couleurs.white),
                             ),
                             SizedBox(),
                           ],

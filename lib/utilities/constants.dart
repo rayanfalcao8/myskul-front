@@ -6,5 +6,6 @@ class Constant {
   final PIDE = 'bNrNBOcDfUAeDMstXtpj';
   final PTCL = '1CGkhY5MVoRvuLkJ7BFT';
   final PTOE = 'C7gRWxsrT29HmzMzH99G';
-   final TOKEN = '82Cw4E4IJ6LtT9ElSBgc';
+  final TOKEN = '82Cw4E4IJ6LtT9ElSBgc';
+  final DEF = 'e1C0MtjKykQUPwqnmth4';
 }

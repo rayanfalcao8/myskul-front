@@ -86,6 +86,8 @@ class RegisterationController extends GetxController {
 
       EasyLoading.show();
 
+      print(body);
+
       http.Response res = await http.post(url,
           body: utf8.encode(jsonEncode(body)), headers: headers);
 
@@ -160,7 +162,7 @@ class RegisterationController extends GetxController {
           idController);
 
       Map body = {
-        "level_id": lvController ,
+        "level_id": lvController ?? '1' ,
         "domain_id": domainController ,
         "speciality_id": speController ,
         "school_id": schoolController ,

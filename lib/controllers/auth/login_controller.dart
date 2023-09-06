@@ -45,7 +45,7 @@ class LoginController extends GetxController {
           await prefs.setString('user', jsonEncode(user.toJson()).toString());
 
           EasyLoading.dismiss();
-          ChatController().addUser(user, Constant().PTCL);
+          ChatController().addUser(user, Constant().DEF);
            ChatController().addUserPushToken(user, Constant().TOKEN);
           EasyLoading.showSuccess("ynca".trParams({'email': emailController}));
 

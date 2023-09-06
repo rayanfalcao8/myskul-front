@@ -65,7 +65,6 @@ class _GroupChatState extends State<GroupChat> {
       'userId': widget.user.id,
       'userName': widget.user.username,
       'userPic': widget.user.profile_image,
-      'userEmail': widget.user.email,
     };
 
     groups = db.collection("groupes");
