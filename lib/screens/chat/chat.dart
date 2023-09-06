@@ -145,190 +145,189 @@ class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                padding: EdgeInsets.only(bottom: 80),
-                margin: EdgeInsets.only(
-                  top: (MediaQuery.of(context).size.height / 12),
-                ),
-                decoration: BoxDecoration(
-                  color: couleurs.white.withOpacity(0.5),
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/math.png"),
-                      opacity: 0.04,
-                      fit: BoxFit.cover),
-                ),
-                child: ChatController().chatMessages(
-                    controller: controller,
-                    chats: messageStream,
-                    user: widget.user,
-                    couleurs: couleurs,
-                    textes: textes)),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                height: MediaQuery.of(context).size.height / 12,
-                decoration: BoxDecoration(
-                    gradient: gradients.greenGradient,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                    )),
-                child: Stack(
-                  children: [
-                    Positioned(
-                        bottom: 0,
-                        left: 0,
-                        child: CircleAvatar(
-                          backgroundColor: couleurs.white.withOpacity(0.05),
-                          radius: 20,
-                        )),
-                    Positioned(
-                        top: 50,
-                        right: 40,
-                        child: CircleAvatar(
-                          backgroundColor: couleurs.white.withOpacity(0.05),
-                          radius: 08,
-                        )),
-                    Positioned(
-                        top: MediaQuery.of(context).size.height / 5,
-                        right: 40,
-                        child: CircleAvatar(
-                          backgroundColor: couleurs.white.withOpacity(0.05),
-                          radius: 15,
-                        )),
-                    Positioned(
-                        top: MediaQuery.of(context).size.height / 5,
-                        left: 40,
-                        child: CircleAvatar(
-                          backgroundColor: couleurs.white.withOpacity(0.05),
-                          radius: 25,
-                        )),
-                    Positioned(
-                        top: 0,
-                        left: MediaQuery.of(context).size.width / 1.5,
-                        child: CircleAvatar(
-                          backgroundColor: couleurs.white.withOpacity(0.05),
-                          radius: 28,
-                        )),
-                    Positioned(
-                        top: 40,
-                        left: 40,
-                        child: CircleAvatar(
-                          backgroundColor: couleurs.white.withOpacity(0.05),
-                          radius: 08,
-                        )),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Icon(
-                                    icones.back2,
-                                    color: couleurs.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              widget.group['groupName'],
-                              style: textes.h2l.copyWith(color: couleurs.white),
-                            ),
-                            SizedBox(),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+      body: Stack(
+        children: [
+          Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              padding: EdgeInsets.only(bottom: 80),
+              margin: EdgeInsets.only(
+                top: (MediaQuery.of(context).size.height / 12),
               ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-                width: MediaQuery.of(context).size.width,
-                height: 80,
-                decoration: BoxDecoration(
-                    color: couleurs.green,
-                    borderRadius:
-                        BorderRadius.only(topLeft: Radius.circular(20))),
-                child: Row(children: [
-                  Expanded(
-                      child: TextFormField(
-                    controller: messageController,
-                    style: const TextStyle(color: Colors.white),
-                    cursorColor: couleurs.white,
-                    decoration: InputDecoration(
-                      suffixIcon: Bounceable(
-                        onTap: getImage,
-                        child: Icon(
-                          Icons.camera_alt,
-                          color: Colors.white,
-                        ),
-                      ),
-                      hintText: "write-message".tr,
-                      hintStyle: TextStyle(color: Colors.white, fontSize: 16),
-                      border: InputBorder.none,
-                    ),
+              decoration: BoxDecoration(
+                color: couleurs.white.withOpacity(0.5),
+                image: DecorationImage(
+                    image: AssetImage("assets/images/math.png"),
+                    opacity: 0.04,
+                    fit: BoxFit.cover),
+              ),
+              child: ChatController().chatMessages(
+                  controller: controller,
+                  chats: messageStream,
+                  user: widget.user,
+                  couleurs: couleurs,
+                  textes: textes)),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              height: MediaQuery.of(context).padding.top +
+                (MediaQuery.of(context).size.height / 12),
+              decoration: BoxDecoration(
+                  gradient: gradients.greenGradient,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
                   )),
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      var tmp = {
-                        'message': messageController.text,
-                        'sender': widget.user.username,
-                        'senderImage': widget.user.profile_image,
-                        'type': 'texte',
-                        'time':
-                            DateTime.now().microsecondsSinceEpoch.toString(),
-                        'groupId': widget.group['groupId']
-                      };
-                      messageController.text != ''
-                          ? ChatController()
-                              .sendMessage(widget.group['groupId'], tmp)
-                          : scrollDown(controller);
-                      messageController.clear();
-                    },
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        color: couleurs.green,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: const Center(
-                          child: Icon(
-                        Icons.send,
-                        color: Colors.white,
+              child: Stack(
+                children: [
+                  Positioned(
+                      bottom: 0,
+                      left: 0,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 20,
                       )),
-                    ),
-                  )
-                ]),
+                  Positioned(
+                      top: 50,
+                      right: 40,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 08,
+                      )),
+                  Positioned(
+                      top: MediaQuery.of(context).size.height / 5,
+                      right: 40,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 15,
+                      )),
+                  Positioned(
+                      top: MediaQuery.of(context).size.height / 5,
+                      left: 40,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 25,
+                      )),
+                  Positioned(
+                      top: 0,
+                      left: MediaQuery.of(context).size.width / 1.5,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 28,
+                      )),
+                  Positioned(
+                      top: 40,
+                      left: 40,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 08,
+                      )),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                     SizedBox(
+                          height: 30,
+                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                child: Icon(
+                                  icones.back2,
+                                  color: couleurs.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            widget.group['groupName'],
+                            style: textes.h2l.copyWith(color: couleurs.white),
+                          ),
+                          SizedBox(),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+              width: MediaQuery.of(context).size.width,
+              height: 80,
+              decoration: BoxDecoration(
+                  color: couleurs.green,
+                  borderRadius:
+                      BorderRadius.only(topLeft: Radius.circular(20))),
+              child: Row(children: [
+                Expanded(
+                    child: TextFormField(
+                  controller: messageController,
+                  style: const TextStyle(color: Colors.white),
+                  cursorColor: couleurs.white,
+                  decoration: InputDecoration(
+                    suffixIcon: Bounceable(
+                      onTap: getImage,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                      ),
+                    ),
+                    hintText: "write-message".tr,
+                    hintStyle: TextStyle(color: Colors.white, fontSize: 16),
+                    border: InputBorder.none,
+                  ),
+                )),
+                const SizedBox(
+                  width: 12,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    var tmp = {
+                      'message': messageController.text,
+                      'sender': widget.user.username,
+                      'senderImage': widget.user.profile_image,
+                      'type': 'texte',
+                      'time':
+                          DateTime.now().microsecondsSinceEpoch.toString(),
+                      'groupId': widget.group['groupId']
+                    };
+                    messageController.text != ''
+                        ? ChatController()
+                            .sendMessage(widget.group['groupId'], tmp)
+                        : scrollDown(controller);
+                    messageController.clear();
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: couleurs.green,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: const Center(
+                        child: Icon(
+                      Icons.send,
+                      color: Colors.white,
+                    )),
+                  ),
+                )
+              ]),
+            ),
+          ),
+        ],
       ),
     );
   }

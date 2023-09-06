@@ -333,7 +333,7 @@ class _RegisterState extends State<Register> {
                                   cityController: ville.text,
                                   bdController: datenaiss.text,
                                   passwordController: password.text,
-                                  genderController: selectedGender);
+                                  genderController: selectedGender==0 ? "Male":"Female");
                             }
                           },
                         ),

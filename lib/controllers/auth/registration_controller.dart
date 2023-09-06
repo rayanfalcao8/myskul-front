@@ -28,13 +28,13 @@ class RegisterationController extends GetxController {
           ApiEndponits().baseUrl + ApiEndponits().authEndpoints.registerEmail);
 
       Map body = {
-        "name": userController.toString(),
-        "email": emailController.toString().trim(),
-        "password": passwordController.toString(),
-        "gender": genderController.toString(),
-        "birthdate": bdController.toString().trim(),
-        "phoneNumber": numController.toString().trim(),
-        "town": cityController.toString().trim(),
+        "name": userController,
+        "email": emailController,
+        "password": passwordController,
+        "gender": genderController,
+        "birthdate": bdController,
+        "phoneNumber": numController,
+        "town": cityController,
       };
 
       EasyLoading.show();
@@ -76,12 +76,12 @@ class RegisterationController extends GetxController {
           idController);
 
       Map body = {
-        "name": userController.toString(),
-        "email": emailController.toString().trim(),
-        "gender": genderController.toString(),
-        "birthdate": bdController.toString().trim(),
-        "phoneNumber": numController.toString().trim(),
-        "town": cityController.toString().trim(),
+        "name": userController,
+        "email": emailController,
+        "gender": genderController,
+        "birthdate": bdController,
+        "phoneNumber": numController,
+        "town": cityController,
       };
 
       EasyLoading.show();

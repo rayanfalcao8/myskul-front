@@ -196,9 +196,9 @@ class ChatController {
 
 // Scroll automatique
 
-  void scrollDown(ScrollController ctrl) {
-    if (ctrl.positions.isNotEmpty) {
-      ctrl.animateTo(ctrl.position.maxScrollExtent,
+  void scrollDown(ScrollController ctrl) async{
+    if (ctrl.positions.isNotEmpty && ctrl.position.hasContentDimensions) {
+    await ctrl.animateTo(ctrl.position.maxScrollExtent,
           duration: Duration(milliseconds: 300), curve: Curves.ease);
     }
   }
@@ -227,6 +227,7 @@ class ChatController {
 
         return snapshot.data.docs.length > 0
             ? ListView.builder(
+              physics: BouncingScrollPhysics(),
                 controller: controller,
                 itemCount: snapshot.data.docs.length + 1,
                 itemBuilder: (context, index) {
@@ -237,7 +238,6 @@ class ChatController {
                     );
                   }
                   if (index == 0) {
-                    print('first');
                     SizedBox(
                       height: (MediaQuery.of(context).size.height / 10) + 10,
                     );
@@ -271,7 +271,7 @@ class ChatController {
                 },
               )
             : SingleChildScrollView(
-                child: NotFoundWidget(texte: 'Pas de message pour le moment'),
+                child: NotFoundWidget(texte: 'not-found-group'.tr),
               );
       },
     );

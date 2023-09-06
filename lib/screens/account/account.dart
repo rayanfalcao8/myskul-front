@@ -371,16 +371,16 @@ class _AccountState extends State<Account> {
                         text: "save",
                         function: () async {
                           if (noms.text.isEmpty) {
-                            EasyLoading.showError("Nom Requis");
+                            EasyLoading.showError("no-input".tr);
                           } else if (email.text.isEmpty) {
-                            EasyLoading.showError("Mot de passe Requis");
+                            EasyLoading.showError("no-input".tr);
                           } else if (num.text.isEmpty) {
-                            EasyLoading.showError("Numéro Requis");
+                            EasyLoading.showError("no-input".tr);
                           } else if (ville.text.isEmpty) {
-                            EasyLoading.showError("Ville Requis");
+                            EasyLoading.showError("no-input".tr);
                           } else if (datenaiss.text.isEmpty) {
                             EasyLoading.showError(
-                                "Date de naissance Requis");
+                                "no-input".tr);
                           } else {
                             await getToken();
                             RegisterationController().updateUser(
@@ -390,7 +390,7 @@ class _AccountState extends State<Account> {
                                 emailController: email.text,
                                 cityController: ville.text,
                                 bdController: datenaiss.text,
-                                genderController: selectedGender,
+                                genderController: selectedGender == 0 ? 'Male':'Female',
                                 token: token);
                           }
                         },

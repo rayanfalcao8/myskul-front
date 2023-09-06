@@ -69,8 +69,7 @@ class _GroupChatState extends State<GroupChat> {
 
     groups = db.collection("groupes");
 
-    return
-        groups.where("members", arrayContains: userTmp).get().then((value) {
+    return groups.where("members", arrayContains: userTmp).get().then((value) {
       if (value.docs.isNotEmpty) {
         print('Not Empty');
         return value.docs;
@@ -81,177 +80,173 @@ class _GroupChatState extends State<GroupChat> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
-                color: couleurs.white.withOpacity(0.5),
-                image: DecorationImage(
-                    image: AssetImage("assets/images/math.png"),
-                    opacity: 0.04,
-                    fit: BoxFit.cover),
-              ),
-              child: ListView(
-                children: [
-                  SizedBox(
-                    height: (MediaQuery.of(context).size.height / 11),
-                  ),
-                  FutureBuilder(
-                      future: getUserGroup(),
-                      builder: (ctx,
-                          AsyncSnapshot<List<QueryDocumentSnapshot<Object?>>>
-                              snapshot) {
-                        // Checking if future is resolved or not
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          // If we got an error
-                          if (snapshot.hasError) {
-                            return NotFoundWidget(
-                                texte: snapshot.error.toString());
-                            // if we got our data
-                          } else if (snapshot.hasData) {
-                            // Extracting data from snapshot object
-                            if (snapshot.data!.isEmpty) {
-                              return NotFoundWidget(
-                                  texte: 'not-found-group'.tr);
-                            } else {
-                              return AnimationLimiter(
-                                  child: Column(
-                                children:
-                                    AnimationConfiguration.toStaggeredList(
-                                  duration: const Duration(milliseconds: 375),
-                                  childAnimationBuilder: (widget) =>
-                                      SlideAnimation(
-                                    horizontalOffset: 50.0,
-                                    child: FadeInAnimation(
-                                      child: widget,
-                                    ),
+      body: Stack(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              color: couleurs.white.withOpacity(0.5),
+              image: DecorationImage(
+                  image: AssetImage("assets/images/math.png"),
+                  opacity: 0.04,
+                  fit: BoxFit.cover),
+            ),
+            child: ListView(
+              physics: BouncingScrollPhysics(),
+              children: [
+                SizedBox(
+                  height: (MediaQuery.of(context).size.height / 11),
+                ),
+                FutureBuilder(
+                    future: getUserGroup(),
+                    builder: (ctx,
+                        AsyncSnapshot<List<QueryDocumentSnapshot<Object?>>>
+                            snapshot) {
+                      // Checking if future is resolved or not
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        // If we got an error
+                        if (snapshot.hasError) {
+                          return NotFoundWidget(
+                              texte: snapshot.error.toString());
+                          // if we got our data
+                        } else if (snapshot.hasData) {
+                          // Extracting data from snapshot object
+                          if (snapshot.data!.isEmpty) {
+                            return NotFoundWidget(texte: 'not-found-group'.tr);
+                          } else {
+                            return AnimationLimiter(
+                                child: Column(
+                              children: AnimationConfiguration.toStaggeredList(
+                                duration: const Duration(milliseconds: 375),
+                                childAnimationBuilder: (widget) =>
+                                    SlideAnimation(
+                                  horizontalOffset: 50.0,
+                                  child: FadeInAnimation(
+                                    child: widget,
                                   ),
-                                  children: displayGroups(snapshot.data!),
                                 ),
-                              ));
-                            }
+                                children: displayGroups(snapshot.data!),
+                              ),
+                            ));
                           }
                         }
+                      }
 
-                        // Displaying LoadingSpinner to indicate waiting state
-                        return Column(
-                          children: [
-                            SizedBox(
-                                height:
-                                    (MediaQuery.of(context).size.height / 2.5)),
-                            Center(
-                              child: CircularProgressIndicator(
-                                color: couleurs.green,
-                              ),
+                      // Displaying LoadingSpinner to indicate waiting state
+                      return Column(
+                        children: [
+                          SizedBox(
+                              height:
+                                  (MediaQuery.of(context).size.height / 2.5)),
+                          Center(
+                            child: CircularProgressIndicator(
+                              color: couleurs.green,
                             ),
-                          ],
-                        );
-                      }),
+                          ),
+                        ],
+                      );
+                    }),
+              ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              height: MediaQuery.of(context).padding.top +
+                  (MediaQuery.of(context).size.height / 11),
+              decoration: BoxDecoration(
+                  gradient: gradients.greenGradient,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  )),
+              child: Stack(
+                children: [
+                  Positioned(
+                      bottom: 0,
+                      left: 0,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 20,
+                      )),
+                  Positioned(
+                      top: 50,
+                      right: 40,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 08,
+                      )),
+                  Positioned(
+                      top: MediaQuery.of(context).size.height / 5,
+                      right: 40,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 15,
+                      )),
+                  Positioned(
+                      top: MediaQuery.of(context).size.height / 5,
+                      left: 40,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 25,
+                      )),
+                  Positioned(
+                      top: 0,
+                      left: MediaQuery.of(context).size.width / 1.5,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 28,
+                      )),
+                  Positioned(
+                      top: 40,
+                      left: 40,
+                      child: CircleAvatar(
+                        backgroundColor: couleurs.white.withOpacity(0.05),
+                        radius: 08,
+                      )),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                child: Icon(
+                                  icones.back2,
+                                  color: couleurs.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "discuss-group".tr,
+                            style: textes.h2l.copyWith(color: couleurs.white),
+                          ),
+                          SizedBox(),
+                        ],
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                height: MediaQuery.of(context).size.height / 11,
-                decoration: BoxDecoration(
-                    gradient: gradients.greenGradient,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                    )),
-                child: Stack(
-                  children: [
-                    Positioned(
-                        bottom: 0,
-                        left: 0,
-                        child: CircleAvatar(
-                          backgroundColor: couleurs.white.withOpacity(0.05),
-                          radius: 20,
-                        )),
-                    Positioned(
-                        top: 50,
-                        right: 40,
-                        child: CircleAvatar(
-                          backgroundColor: couleurs.white.withOpacity(0.05),
-                          radius: 08,
-                        )),
-                    Positioned(
-                        top: MediaQuery.of(context).size.height / 5,
-                        right: 40,
-                        child: CircleAvatar(
-                          backgroundColor: couleurs.white.withOpacity(0.05),
-                          radius: 15,
-                        )),
-                    Positioned(
-                        top: MediaQuery.of(context).size.height / 5,
-                        left: 40,
-                        child: CircleAvatar(
-                          backgroundColor: couleurs.white.withOpacity(0.05),
-                          radius: 25,
-                        )),
-                    Positioned(
-                        top: 0,
-                        left: MediaQuery.of(context).size.width / 1.5,
-                        child: CircleAvatar(
-                          backgroundColor: couleurs.white.withOpacity(0.05),
-                          radius: 28,
-                        )),
-                    Positioned(
-                        top: 40,
-                        left: 40,
-                        child: CircleAvatar(
-                          backgroundColor: couleurs.white.withOpacity(0.05),
-                          radius: 08,
-                        )),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Icon(
-                                    icones.back2,
-                                    color: couleurs.white,
-                                  ),
-                                ),
-                                
-                              ],
-                            ),
-                            Text(
-                              "discuss-group".tr,
-                              style: textes.h2l.copyWith(color: couleurs.white),
-                            ),
-                            SizedBox(),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
