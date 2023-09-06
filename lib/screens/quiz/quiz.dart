@@ -15,7 +15,8 @@ class QuizWidget extends StatelessWidget {
       },
       child: Container(
         width: double.infinity,
-        height: 90,
+        height: 80,
+        margin: EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: const Color(0x72ffffff),
@@ -59,7 +60,7 @@ class QuizWidget extends StatelessWidget {
             Expanded(
               child: Container(
                 width: 63.859649658203125,
-                height: 90,
+                height: 80,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: const Color(0xff2bb799),
@@ -70,7 +71,7 @@ class QuizWidget extends StatelessWidget {
                       height: 6,
                     ),
                     Text(
-                      quiz.score,
+                      quiz.score.toString(),
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w800,
