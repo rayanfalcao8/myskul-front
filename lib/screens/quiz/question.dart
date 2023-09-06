@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myskul/models/question.dart';
+
+import 'quiz_5.dart';
 
 class Question extends StatelessWidget {
   Question({
@@ -144,27 +147,32 @@ class Answer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      // height: MediaQuery.of(context).size.height * 0.4,
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      margin: EdgeInsets.only(bottom: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        border: Border.all(
-          color: Colors.black.withOpacity(.24),
-          width: 2,
+    return InkWell(
+      onTap: (){
+        Get.to(Quiz5());
+      },
+      child: Container(
+        width: double.infinity,
+        // height: MediaQuery.of(context).size.height * 0.4,
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        margin: EdgeInsets.only(bottom: 15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.black.withOpacity(.24),
+            width: 2,
+          ),
         ),
-      ),
-      child: Text(
-        // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
-        answer.name,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w200,
-          height: 1.7,
+        child: Text(
+          // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
+          answer.name,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w200,
+            height: 1.7,
+          ),
         ),
       ),
     );

@@ -34,6 +34,7 @@ class _QuizListState extends State<QuizList> {
   List<Widget> displayQuizzes(List<QuizModel> quizList) {
     List<QuizWidget> w = [];
     quizList.forEach((element) {
+      print(element.toJson());
       w.add(QuizWidget(quiz: element));
     });
     return w;
@@ -60,7 +61,9 @@ class _QuizListState extends State<QuizList> {
               centerTitle: true,
               title: Padding(
                 padding: EdgeInsets.only(top: 20.0),
-                child: Text(widget.category.displayText,style: TextHelper().h4l.copyWith(color: ColorHelper().white)),
+                child: Text(widget.category.displayText,
+                    style:
+                        TextHelper().h4l.copyWith(color: ColorHelper().white)),
               ),
               background: Stack(
                 children: [
