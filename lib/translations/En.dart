@@ -67,6 +67,7 @@ class EN {
     'history': 'HISTORY',
     'our-part': 'OURS PARTNERS',
     'quiz': 'QUIZZES',
+    'category': 'CATEGORIES',
     'sav': 'CUSTOMER SERVICE',
     'save': 'SAVE',
     'password-upper': 'MY PASSWORD',
@@ -89,5 +90,14 @@ class EN {
     'not-found-message': 'Pas de message pour le moment ',
     'no-input': 'Please fill in all required fields',
     'pwd-egal': 'The two passwords do not match',
+    'quiz-text': 'Take quizzes and learn faster!',
+    'not-found': 'No content found, please try again !',
+    'd-f': 'This quiz has already been completed',
+    'q-number': 'NUMBER OF QUESTIONS',
+    'never-tried': 'NEVER TRIED',
+    'p-score': 'PREVIOUS SCORE',
+    'f-score': 'FINAL SCORE',
+    'c-answer': 'CORRECT ANSWERS',
+    'w-answer': 'WRONG ANSWERS',
   };
 }

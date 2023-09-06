@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
 import 'package:myskul/screens/quiz/quiz_detail.dart';
+import 'package:myskul/utilities/colors.dart';
 
 class QuizWidget extends StatelessWidget {
   QuizWidget({required this.quiz});
@@ -21,7 +22,7 @@ class QuizWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
           color: const Color(0x72ffffff),
           border: Border.all(
-            color: const Color(0xFF2BB799),
+            color: quiz.done ? ColorHelper().grey.withOpacity(0.3) :  ColorHelper().green,
           ),
         ),
         child: Row(
@@ -35,22 +36,27 @@ class QuizWidget extends StatelessWidget {
                   crossAxisAlignment:
                       CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      quiz.name,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xFF2BB799),
+                    FittedBox(
+                      child: Text(
+                        quiz.name,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: quiz.done ? ColorHelper().grey.withOpacity(0.3) :  ColorHelper().green,
+                        ),
                       ),
                     ),
                     SizedBox(
                       height: 12,
                     ),
-                    Text(
-                      quiz.done ? "Deja fait" : "Allons y !!!",
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
+                    FittedBox(
+                      child: Text(
+                        quiz.done ? "Ce quiz a déjà été passé" : " ",
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          color: ColorHelper().grey
+                        ),
                       ),
                     ),
                   ],
@@ -61,9 +67,10 @@ class QuizWidget extends StatelessWidget {
               child: Container(
                 width: 63.859649658203125,
                 height: 80,
+                margin: EdgeInsets.only(left: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  color: const Color(0xff2bb799),
+                  color: quiz.done ? ColorHelper().grey.withOpacity(0.3) :  ColorHelper().green,
                 ),
                 child: Column(
                   children: [

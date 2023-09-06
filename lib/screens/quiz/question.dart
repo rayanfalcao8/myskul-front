@@ -102,7 +102,7 @@ class Question extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 14,
-                          height: 1.8,
+                          height: 1.2,
                           fontWeight: FontWeight.w200,
                         ),
                       ),

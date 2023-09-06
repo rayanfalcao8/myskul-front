@@ -29,8 +29,6 @@ class QuizController extends GetxController {
           ApiEndponits().endpoints.quizList +
           categoryId.toString());
 
-      EasyLoading.show();
-
       http.Response res = await http.get(url, headers: headers);
 
       if (res.statusCode == 200) {
@@ -40,8 +38,6 @@ class QuizController extends GetxController {
          
           quizList.add(QuizModel.fromJson(elt));
         });
-
-        EasyLoading.dismiss();
 
         return quizList;
       } else {
@@ -69,8 +65,6 @@ class QuizController extends GetxController {
       var url = Uri.parse(
           ApiEndponits().baseUrl + ApiEndponits().endpoints.categories);
 
-      EasyLoading.show();
-
       http.Response res = await http.get(url, headers: headers);
 
       if (res.statusCode == 200) {
@@ -80,7 +74,6 @@ class QuizController extends GetxController {
           categories.add(Category.fromJson(elt));
         });
 
-        EasyLoading.dismiss();
         return categories;
       } else {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;

@@ -68,6 +68,7 @@ class FR {
     'history': 'HISTORIQUE',
     'our-part': 'NOS PARTENAIRES',
     'quiz': 'QUIZ',
+    'category': 'CATEGORIES',
     'sav': 'SERVICE CLIENT',
     'save': 'ENREGISTRER',
     'password-upper': 'MOT DE PASSE',
@@ -90,5 +91,14 @@ class FR {
     'not-found-message': 'Pas de message pour le moment ',
     'no-input': 'Veuillez remplir tous les champs requis',
     'pwd-egal': 'Les deux Mots de passe ne correspondent pas',
+    'quiz-text': 'Faites des quiz et apprenez plus rapidement !',
+    'not-found': 'Aucun contenu n \' a été trouvé, veuillez réessayer !',
+    'd-f': 'Ce quiz a déjà été passé',
+    'q-number': 'NOMBRE DE QUESTIONS',
+    'never-tried': 'JAMAIS ESSAYÉ',
+    'p-score': 'SCORE PRECEDENT',
+    'f-score': 'SCORE FINAL',
+    'c-answer': 'REPONSES CORRECTES',
+    'w-answer': 'REPONSES FAUSSES',
   };
 }
