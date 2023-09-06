@@ -8,6 +8,7 @@ import 'package:myskul/screens/quiz/category.dart';
 import 'package:myskul/screens/quiz/category_list.dart';
 import 'package:myskul/screens/quiz/leaderboard.dart';
 import 'package:myskul/screens/quiz/quiz_list.dart';
+import 'package:myskul/screens/shop/shop.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
@@ -16,6 +17,9 @@ import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'ChatGPT/chatgpt.dart';
+import 'fitness/fitness.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -313,6 +317,9 @@ class HomepageScaffold extends StatelessWidget {
                               icone: IconHelper().shop,
                               texte: "Shop",
                               couleur: Colors.black26,
+                              function: () {
+                                Get.to(() => Shop());
+                              },
                             ),
                             DashBox(
                               icone: IconHelper().chat,
@@ -343,11 +350,17 @@ class HomepageScaffold extends StatelessWidget {
                               icone: IconHelper().shop,
                               texte: "ChatGPT",
                               couleur: ColorHelper().lightGreen,
+                              function: () {
+                                Get.to(() => ChatGPT());
+                              },
                             ),
                             DashBox(
                               icone: IconHelper().fitness,
                               texte: "Fitness",
                               couleur: Colors.red,
+                              function: () {
+                                Get.to(() => Fitness());
+                              },
                             ),
                             SizedBox()
                           ],

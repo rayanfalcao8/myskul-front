@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class shop extends StatelessWidget {
+class Shop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +28,6 @@ class shop extends StatelessWidget {
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-
                 children: [
                   SizedBox(height: 300.0),
                   Icon(
@@ -38,7 +37,7 @@ class shop extends StatelessWidget {
                   ),
                   SizedBox(height: 15.0),
                   Text(
-                    'Functionality under development',
+                    'Fonctionnalité en cours de developpement',
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,

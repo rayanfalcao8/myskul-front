@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Fitness extends StatelessWidget {
+class Library extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +13,7 @@ class Fitness extends StatelessWidget {
             expandedHeight: 80,
             title: Padding(
               padding: EdgeInsets.only(top: 32.0),
-              child: Text("Fitness"),
+              child: Text("Bibliotheque"),
             ),
             centerTitle: true,
             shape: RoundedRectangleBorder(
