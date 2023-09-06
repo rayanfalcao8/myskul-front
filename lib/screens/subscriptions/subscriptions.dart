@@ -13,7 +13,7 @@ class Subscriptions extends StatelessWidget {
             expandedHeight: 80,
             title: Padding(
               padding: EdgeInsets.only(top: 32.0),
-              child: Text("ChatGPT"),
+              child: Text("Abonnements"),
             ),
             centerTitle: true,
             shape: RoundedRectangleBorder(
