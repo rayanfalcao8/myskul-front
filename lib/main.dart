@@ -50,9 +50,9 @@ void main() async {
 
   // lignes de codes afférentes aux SharedPreferences
 
-  await shMethods(prefs);
+  // await shMethods(prefs);
 
-  await getUser(prefs);
+  // await getUser(prefs);
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then(
