@@ -51,8 +51,8 @@ Future<void> shMethods(SharedPreferences prefs) async {
     Get.updateLocale(Locale(locale!));
   }
   if (fmToken == null) {
-    var tmp = await ChatController().getFmToken();
-    await prefs.setString('fmToken', tmp);
+    // var tmp = await ChatController().getFmToken();
+    // await prefs.setString('fmToken', tmp);
   }
 }
 

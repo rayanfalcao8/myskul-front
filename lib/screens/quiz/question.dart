@@ -9,10 +9,12 @@ class Question extends StatelessWidget {
     required this.question,
     required this.position,
     required this.total,
+    required this.duration,
   });
   var question;
   var total;
   var position;
+  var duration;
 
   @override
   Widget build(BuildContext context) {
