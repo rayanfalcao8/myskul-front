@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/home.dart';
-import 'package:myskul/test.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'screens/splash.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -157,15 +156,16 @@ class _Home1State extends State<Home1> {
               title: Text('no-internet'.tr),
               content: Text('internet-check'.tr),
               actions: [
-                CupertinoButton.filled(child: Text('retry'.tr), onPressed: (){
-                  Navigator.pop(context);
-                  checkConnection();
-                })
+                CupertinoButton.filled(
+                    child: Text('retry'.tr),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      checkConnection();
+                    })
               ],
             ));
-
   }
- 
+
   checkConnection() async {
     result = await Connectivity().checkConnectivity();
     if (result != ConnectivityResult.none) {

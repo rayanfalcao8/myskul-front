@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
 import 'package:myskul/models/quiz.dart';
 import 'package:myskul/screens/quiz/question.dart';
@@ -45,7 +44,11 @@ class _QuestionsState extends State<Questions> {
 
       if (element.id == id) {
         w = Question(
-            question: element, position: c, total: questionList.length, duration: questionDuration,);
+          question: element,
+          position: c,
+          total: questionList.length,
+          // duration: questionDuration,
+        );
       }
       c += 1;
     });
@@ -80,12 +83,12 @@ class _QuestionsState extends State<Questions> {
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
-                  color: couleurs.white.withOpacity(0.5),
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/math.png"),
-                      opacity: 0.04,
-                      fit: BoxFit.cover),
-                ),
+            color: couleurs.white.withOpacity(0.5),
+            image: DecorationImage(
+                image: AssetImage("assets/images/math.png"),
+                opacity: 0.04,
+                fit: BoxFit.cover),
+          ),
           child: Column(
             children: [
               Stack(
@@ -106,41 +109,40 @@ class _QuestionsState extends State<Questions> {
                       ),
                     ),
                   ),
-
                   Positioned(
-                      top: MediaQuery.of(context).padding.top,
-                      left: 0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 10,
+                    top: MediaQuery.of(context).padding.top,
+                    left: 0,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.back();
+                                  },
+                                  child: Icon(
+                                    icones.back2,
+                                    color: couleurs.white,
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.back();
-                                    },
-                                    child: Icon(
-                                      icones.back2,
-                                      color: couleurs.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(),
-                            ],
-                          ),
-                        ],
-                      ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(),
+                          ],
+                        ),
+                      ],
                     ),
+                  ),
                   Positioned(
                       bottom: 0,
                       left: 0,
