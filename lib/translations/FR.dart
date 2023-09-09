@@ -100,5 +100,11 @@ class FR {
     'f-score': 'SCORE FINAL',
     'c-answer': 'REPONSES CORRECTES',
     'w-answer': 'REPONSES FAUSSES',
+    'no-internet': 'Pas d\'accès à internet ',
+    'internet-check': 'Veuillez vérifier votre connexion internet !',
+    'connected': 'Connecté',
+    'internet-check2': 'Connexion rétablie !',
+    'retry': 'Rééssayer',
+    'quiz-d': 'DUREE DU QUIZ',
   };
 }

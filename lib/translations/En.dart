@@ -99,5 +99,11 @@ class EN {
     'f-score': 'FINAL SCORE',
     'c-answer': 'CORRECT ANSWERS',
     'w-answer': 'WRONG ANSWERS',
+    'no-internet': 'No internet access ',
+    'internet-check': 'Please check your internet connection !',
+    'connected': 'Connected',
+    'internet-check2': 'You are now connected !',
+    'retry': 'Retry',
+    'quiz-d': 'DURATION',
   };
 }

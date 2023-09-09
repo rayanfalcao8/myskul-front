@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/screens/auth/domain.dart';
 import 'package:myskul/screens/chat/chat_group_list.dart';
@@ -17,47 +19,26 @@ import 'package:myskul/translations/translation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 bool?
     seen; // Cette variable va permettre d'afficher le splash screen une seule fois
 String? token; // Token d'authentification de l'utlisateur
+
 String? locale; // Cette variable nous permettra de gérer la langue utilisée
 String?
     fmToken; // Cette variable nous permettra d'envoyer des notifications sur chaque appareil
-User ? user; // Ici sera stocké l'utilisateur principal
+User? user; // Ici sera stocké l'utilisateur principal
 
 //fonction pour capture les notification et faire des actions lorsqu'on les reçoit
 @pragma("vm:entry-point")
 Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-    final prefs = await _prefs;
-    var userString = await prefs.getString('user');
-    var userJson = jsonDecode(userString!);
-    user = User.fromJson(userJson);
+  final prefs = await _prefs;
+  var userString = await prefs.getString('user');
+  var userJson = jsonDecode(userString!);
+  user = User.fromJson(userJson);
   Get.to(() => GroupChat(user: user!));
-}
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); // Initialisation de firebase
-
-  // Initialisation de firebase messaging et awesome notifications
-  //await messagingInit();
-
-  // Initialisation du package SharedPreferences
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  final SharedPreferences prefs = await _prefs;
-
-  // lignes de codes afférentes aux SharedPreferences
-
-  await shMethods(prefs);
-
-  await getUser(prefs);
-
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then(
-    (_) => runApp(Home1()),
-  );
 }
 
 Future<void> shMethods(SharedPreferences prefs) async {
@@ -70,7 +51,7 @@ Future<void> shMethods(SharedPreferences prefs) async {
     Get.updateLocale(Locale(locale!));
   }
   if (fmToken == null) {
-   var tmp = await ChatController().getFmToken();
+    var tmp = await ChatController().getFmToken();
     await prefs.setString('fmToken', tmp);
   }
 }
@@ -94,7 +75,7 @@ Future<void> messagingInit() async {
   //     .setForegroundNotificationPresentationOptions(alert: true, sound: true);
   FirebaseMessaging.onMessage.listen(
     (m) {
-    //  notify(m);
+      //  notify(m);
     },
   );
 
@@ -122,6 +103,29 @@ Future<void> messagingInit() async {
   // );
 }
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Initialisation de firebase
+
+  // Initialisation de firebase messaging et awesome notifications
+  //await messagingInit();
+
+  // Initialisation du package SharedPreferences
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final SharedPreferences prefs = await _prefs;
+
+  // lignes de codes afférentes aux SharedPreferences
+
+  await shMethods(prefs);
+
+  await getUser(prefs);
+
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then(
+    (_) => runApp(Home1()),
+  );
+}
+
 class Home1 extends StatefulWidget {
   @override
   State<Home1> createState() => _Home1State();
@@ -129,30 +133,70 @@ class Home1 extends StatefulWidget {
 
 class _Home1State extends State<Home1> {
   Map<int, Color> color = {
-    50: ColorHelper().white.withOpacity(0),
-    100: ColorHelper().white.withOpacity(0),
-    200: ColorHelper().white.withOpacity(0),
-    300: ColorHelper().white.withOpacity(0),
-    400: ColorHelper().white.withOpacity(0),
-    500: ColorHelper().white.withOpacity(0),
-    600: ColorHelper().white.withOpacity(0),
-    700: ColorHelper().white.withOpacity(0),
-    800: ColorHelper().white.withOpacity(0),
-    900: ColorHelper().white.withOpacity(0),
+    50: ColorHelper().green.withOpacity(0),
+    100: ColorHelper().green.withOpacity(0),
+    200: ColorHelper().green.withOpacity(0),
+    300: ColorHelper().green.withOpacity(0),
+    400: ColorHelper().green.withOpacity(0),
+    500: ColorHelper().green.withOpacity(0),
+    600: ColorHelper().green.withOpacity(0),
+    700: ColorHelper().green.withOpacity(0),
+    800: ColorHelper().green.withOpacity(0),
+    900: ColorHelper().green.withOpacity(0),
   };
 
-  // @override
-  // void initState() {
-  //   AwesomeNotifications().isNotificationAllowed().then((value) {
-  //     if (!value) {
-  //       AwesomeNotifications().requestPermissionToSendNotifications();
-  //     }
-  //   });
-  // }
+  late ConnectivityResult result;
+  late StreamSubscription subscription;
+  bool isConnected = false;
+
+  showDialogBox() {
+    showDialog(
+        barrierDismissible: false,
+        context: Get.context as BuildContext,
+        builder: (context) => CupertinoAlertDialog(
+              title: Text('no-internet'.tr),
+              content: Text('internet-check'.tr),
+              actions: [
+                CupertinoButton.filled(child: Text('retry'.tr), onPressed: (){
+                  Navigator.pop(context);
+                  checkConnection();
+                })
+              ],
+            ));
+
+  }
+ 
+  checkConnection() async {
+    result = await Connectivity().checkConnectivity();
+    if (result != ConnectivityResult.none) {
+      isConnected = true;
+    } else {
+      isConnected = false;
+      showDialogBox();
+    }
+    setState(() {});
+  }
+
+  startStreaming() {
+    subscription = Connectivity().onConnectivityChanged.listen((event) async {
+      checkConnection();
+    });
+  }
+
+  @override
+  void initState() {
+    // AwesomeNotifications().isNotificationAllowed().then((value) {
+    //   if (!value) {
+    //     AwesomeNotifications().requestPermissionToSendNotifications();
+    //   }
+    // });
+
+    startStreaming();
+  }
 
   @override
   Widget build(BuildContext context) {
-    MaterialColor colorCustom = MaterialColor(0xFF880E4F, color);
+    MaterialColor colorCustom = MaterialColor(0xff22987F, color);
 
     EasyLoading.instance
       ..displayDuration = const Duration(milliseconds: 2000)
@@ -186,21 +230,21 @@ class _Home1State extends State<Home1> {
                     ? Domain()
                     : Home(),
 
-         //body: Test(),
+        // body: Test(),
       ),
     );
   }
 }
 
-int createUniqueId() {
-  return DateTime.now().millisecondsSinceEpoch.remainder(100000);
-}
+// int createUniqueId() {
+//   return DateTime.now().millisecondsSinceEpoch.remainder(100000);
+// }
 
 // Future notify(RemoteMessage m) async {
 //   var tmp = m.data as Map;
 //   var local = Get.locale;
 
-//   AwesomeNotifications().createNotification(
+// AwesomeNotifications().createNotification(
 //       content: NotificationContent(
 //         id: createUniqueId(),
 //         channelKey: 'MySkul',
@@ -217,3 +261,4 @@ int createUniqueId() {
 //             label: Get.locale.toString().contains('en') ? 'ANSWER' : 'REPONDRE')
 //       ]);
 // }
+

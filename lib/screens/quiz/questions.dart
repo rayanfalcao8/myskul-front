@@ -32,6 +32,8 @@ class _QuestionsState extends State<Questions> {
 
   var gradients = GradientHelper();
 
+  int questionDuration = 10;
+
   Question? displayQuestion(List<QuestionModel> questionList, int id) {
     // List<Widget> w = [];
     Question? w;
@@ -43,7 +45,7 @@ class _QuestionsState extends State<Questions> {
 
       if (element.id == id) {
         w = Question(
-            question: element, position: c, total: questionList.length);
+            question: element, position: c, total: questionList.length, duration: questionDuration,);
       }
       c += 1;
     });

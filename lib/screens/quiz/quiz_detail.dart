@@ -17,7 +17,7 @@ class QuizDetail extends StatelessWidget {
   var icones = IconHelper();
 
   var gradients = GradientHelper();
-
+  int questionDuration = 10;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,9 +176,7 @@ class QuizDetail extends StatelessWidget {
                                 ),
                                 ListTile(
                                   title: Text(
-                                    quiz.done
-                                        ? "p-score".tr
-                                        : "never-tried".tr,
+                                    quiz.done ? "p-score".tr : "never-tried".tr,
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w200,
@@ -192,22 +190,22 @@ class QuizDetail extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                //   ListTile(
-                                //     title: Text(
-                                //       "DUREE DU QUIZ",
-                                //       style: TextStyle(
-                                //         fontSize: 14,
-                                //         fontWeight: FontWeight.w200,
-                                //       ),
-                                //     ),
-                                //     trailing: Text(
-                                //       "90 sec",
-                                //       style: TextStyle(
-                                //         fontSize: 14,
-                                //         fontWeight: FontWeight.w200,
-                                //       ),
-                                //     ),
-                                //   ),
+                                ListTile(
+                                  title: Text(
+                                    "quiz-d".tr,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w200,
+                                    ),
+                                  ),
+                                  trailing: Text(
+                                    (quiz.nb_questions * questionDuration).toString()+" Sec",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w200,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -274,7 +272,8 @@ class QuizDetail extends StatelessWidget {
                                 const Color(0xFF22987F)),
                             shape: MaterialStateProperty.all(
                                 const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(25)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25)),
                             )),
                           ),
                         ),

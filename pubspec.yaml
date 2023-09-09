@@ -59,6 +59,8 @@ dependencies:
   image_cropper: any
   firebase_messaging: any
   awesome_notifications: ^0.7.4+1
+  awesome_dialog: any
+  connectivity_plus: ^4.0.2
 
 dev_dependencies:
   flutter_test:
