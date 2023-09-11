@@ -17,7 +17,7 @@ class NewButtonD extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 270,
+      width: MediaQuery.of(context).size.width/1.5,
       height: 50,
       child: TextButton(
         onPressed: function,
@@ -39,7 +39,6 @@ class NewButtonD extends StatelessWidget {
                       textStyle: TextHelper()
                           .h4b
                           .copyWith(color: ColorHelper().white))),
-              SizedBox(),
               SizedBox(),
             ],
           ),

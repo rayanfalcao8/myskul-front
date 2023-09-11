@@ -230,7 +230,7 @@ class _RegisterState extends State<Register> {
                                 icones: icones.boy,
                                 condition: 0,
                                 gender: "male",
-                                width: 145,
+                                width: (MediaQuery.of(context).size.width/1.2)/2.1 ,//145,
                                 height: 80,
                               ),
                             ),
@@ -248,7 +248,7 @@ class _RegisterState extends State<Register> {
                                 icones: icones.girl,
                                 condition: 1,
                                 gender: "female",
-                                width: 145,
+                                width: (MediaQuery.of(context).size.width/1.2)/2.1 ,//145,
                                 height: 80,
                               ),
                             )

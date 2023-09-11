@@ -24,7 +24,7 @@ class NewInputInter extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          width: 300,
+          width: MediaQuery.of(context).size.width/1.2,
           height: 51,
           child: IntlPhoneField(
             controller: controller,
@@ -33,6 +33,7 @@ class NewInputInter extends StatelessWidget {
             // ignore: deprecated_member_use
             searchText: "search".tr,
             decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(right: 5,),
                 hintText: hintText.tr,
                 hintStyle: TextHelper().h4l.copyWith(
                     color: MaterialStateColor.resolveWith((states) =>

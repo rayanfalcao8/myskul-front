@@ -17,7 +17,7 @@ class NewButtonG extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 270,
+      width: MediaQuery.of(context).size.width/1.5,
       height: 50,
       child: TextButton(
         onPressed: function,
@@ -26,7 +26,6 @@ class NewButtonG extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(),
               SizedBox(),
               Text(text.tr,
                   style: GoogleFonts.getFont('Lato',

@@ -74,7 +74,6 @@ class ReceivedMessage extends StatefulWidget {
     required this.nom,
   });
 
-
   final String texte;
   final String image;
   final String nom;
@@ -84,8 +83,6 @@ class ReceivedMessage extends StatefulWidget {
 }
 
 class _ReceivedMessageState extends State<ReceivedMessage> {
-
-
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -113,9 +110,26 @@ class _ReceivedMessageState extends State<ReceivedMessage> {
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
                       bottomRight: Radius.circular(10))),
-              child: Text(
-                widget.texte,
-                style: TextHelper().h4r,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 200),
+                    child: Text(
+                      '~' + widget.nom,
+                      style: TextHelper().bodyTextr.copyWith(fontSize: 10),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 05,
+                  ),
+                  Text(
+                    widget.texte,
+                    style: TextHelper().h4r,
+                  ),
+                ],
               ),
             ),
           ],
@@ -130,7 +144,6 @@ class NotFoundWidget extends StatelessWidget {
     required this.texte,
   });
 
-
   final String texte;
 
   @override
@@ -141,15 +154,19 @@ class NotFoundWidget extends StatelessWidget {
         Center(
             child: Column(
           children: [
-
-            FadeInImage(placeholder: AssetImage('assets/images/loading.gif'), image: AssetImage('assets/images/404.png'), width: 200,),
+            FadeInImage(
+              placeholder: AssetImage('assets/images/loading.gif'),
+              image: AssetImage('assets/images/404.png'),
+              width: 200,
+            ),
             SizedBox(
               height: 05,
             ),
             Text(
               texte,
-              style:
-                  TextHelper().h3b.copyWith(color: ColorHelper().black.withOpacity(0.5)),
+              style: TextHelper()
+                  .h3b
+                  .copyWith(color: ColorHelper().black.withOpacity(0.5)),
             )
           ],
         )),
@@ -207,13 +224,11 @@ class SentImage extends StatelessWidget {
 }
 
 class ReceivedImage extends StatelessWidget {
-  const ReceivedImage({
+   ReceivedImage({
     required this.tmp,
-    required this.user,
   });
 
   final Map tmp;
-  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -240,13 +255,30 @@ class ReceivedImage extends StatelessWidget {
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
                     bottomRight: Radius.circular(10))),
-            child: InkWell(
-                onTap: () {
-                  Get.to(() => ShowImage(image: tmp['message']));
-                },
-                child: FadeInImage(
-                    placeholder: AssetImage('assets/images/loading1.gif'),
-                    image: NetworkImage(tmp['message']))),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  constraints: BoxConstraints(maxWidth: 200),
+                  child: Text(
+                    '~' + tmp['sender'],
+                    style: TextHelper().bodyTextr.copyWith(fontSize: 10),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                SizedBox(
+                  height: 05,
+                ),
+                InkWell(
+                    onTap: () {
+                      Get.to(() => ShowImage(image: tmp['message']));
+                    },
+                    child: FadeInImage(
+                        placeholder: AssetImage('assets/images/loading1.gif'),
+                        image: NetworkImage(tmp['message']))),
+              ],
+            ),
           ),
         ],
       ),

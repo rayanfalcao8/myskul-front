@@ -61,8 +61,8 @@ class _AccountPasswordState extends State<AccountPassword> {
                 
           padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
                 constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height / 2.4,
-                    minHeight: MediaQuery.of(context).size.height / 3),
+                    maxHeight: MediaQuery.of(context).size.height / 2,
+                    minHeight: MediaQuery.of(context).size.height / 4),
                 decoration: BoxDecoration(
                     gradient: gradients.greenGradient,
                     borderRadius: BorderRadius.only(
@@ -167,16 +167,17 @@ class _AccountPasswordState extends State<AccountPassword> {
                         SizedBox(
                           height: 40,
                         ),
-                        SizedBox(
-                            width: 170,
-                            child: Center(
-                              child: Text(
-                                widget.user.name,
-                                style: textes.h2l
-                                    .copyWith(color: couleurs.white),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ))
+                       Container(
+                      constraints: BoxConstraints(
+                          maxWidth: 200,),
+                      child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Text(
+                            widget.user.name,
+                            style:
+                                textes.h2b.copyWith(color: couleurs.white),
+                          )),
+                    )
                       ],
                     ),
                   ],

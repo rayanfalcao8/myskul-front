@@ -41,7 +41,7 @@ Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
   Get.to(() => GroupChat(user: user!));
 }
 
-Future<void> shMethods(SharedPreferences prefs) async {
+ shMethods(SharedPreferences prefs) async {
   seen = await prefs.getBool('first');
   token = await prefs.getString('token');
   fmToken = await prefs.getString('fmToken');
@@ -56,7 +56,7 @@ Future<void> shMethods(SharedPreferences prefs) async {
   }
 }
 
-Future<User?> getUser(SharedPreferences prefs) async {
+ getUser(SharedPreferences prefs) async {
   var userString = await prefs.getString('user');
   if (userString != null) {
     var userJson = jsonDecode(userString);
@@ -65,43 +65,43 @@ Future<User?> getUser(SharedPreferences prefs) async {
   }
 }
 
-Future<void> messagingInit() async {
-  // FirebaseMessaging.onBackgroundMessage(notify);
-  // await AwesomeNotifications().setListeners(
-  //   onActionReceivedMethod: onActionReceivedMethod,
-  // );
+// Future<void> messagingInit() async {
+//   FirebaseMessaging.onBackgroundMessage(notify);
+//   await AwesomeNotifications().setListeners(
+//     onActionReceivedMethod: onActionReceivedMethod,
+//   );
 
-  // FirebaseMessaging.instance
-  //     .setForegroundNotificationPresentationOptions(alert: true, sound: true);
-  FirebaseMessaging.onMessage.listen(
-    (m) {
-      //  notify(m);
-    },
-  );
+//   FirebaseMessaging.instance
+//       .setForegroundNotificationPresentationOptions(alert: true, sound: true);
+//   FirebaseMessaging.onMessage.listen(
+//     (m) {
+//        notify(m);
+//     },
+//   );
 
-  FirebaseMessaging.onMessageOpenedApp.listen(
-    (m) {
-      print("OnMessageOpenedAp : ${m.data}");
-    },
-  );
+//   FirebaseMessaging.onMessageOpenedApp.listen(
+//     (m) {
+//       print("OnMessageOpenedAp : ${m.data}");
+//     },
+//   );
 
-  // AwesomeNotifications().initialize(
-  //   'resource://drawable/res_app_ico',
-  //   [
-  //     NotificationChannel(
-  //       channelKey: 'MySkul',
-  //       channelName: 'MySkul',
-  //       channelDescription: 'MySkul Notification',
-  //       playSound: true,
-  //       importance: NotificationImportance.Max,
-  //       defaultColor: ColorHelper().green,
-  //       ledColor: Colors.white,
-  //       icon: 'resource://drawable/res_app_ico',
-  //     ),
-  //   ],
-  //   debug: true,
-  // );
-}
+//   AwesomeNotifications().initialize(
+//     'resource://drawable/res_app_ico',
+//     [
+//       NotificationChannel(
+//         channelKey: 'MySkul',
+//         channelName: 'MySkul',
+//         channelDescription: 'MySkul Notification',
+//         playSound: true,
+//         importance: NotificationImportance.Max,
+//         defaultColor: ColorHelper().green,
+//         ledColor: Colors.white,
+//         icon: 'resource://drawable/res_app_ico',
+//       ),
+//     ],
+//     debug: true,
+//   );
+// }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -133,16 +133,16 @@ class Home1 extends StatefulWidget {
 
 class _Home1State extends State<Home1> {
   Map<int, Color> color = {
-    50: ColorHelper().green.withOpacity(0),
-    100: ColorHelper().green.withOpacity(0),
-    200: ColorHelper().green.withOpacity(0),
-    300: ColorHelper().green.withOpacity(0),
-    400: ColorHelper().green.withOpacity(0),
-    500: ColorHelper().green.withOpacity(0),
-    600: ColorHelper().green.withOpacity(0),
-    700: ColorHelper().green.withOpacity(0),
-    800: ColorHelper().green.withOpacity(0),
-    900: ColorHelper().green.withOpacity(0),
+    50: ColorHelper().green.withOpacity(0.5),
+    100: ColorHelper().green.withOpacity(0.5),
+    200: ColorHelper().green.withOpacity(0.5),
+    300: ColorHelper().green.withOpacity(0.5),
+    400: ColorHelper().green.withOpacity(0.5),
+    500: ColorHelper().green.withOpacity(0.5),
+    600: ColorHelper().green.withOpacity(0.5),
+    700: ColorHelper().green.withOpacity(0.5),
+    800: ColorHelper().green.withOpacity(0.5),
+    900: ColorHelper().green.withOpacity(0.5),
   };
 
   late ConnectivityResult result;

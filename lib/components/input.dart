@@ -31,17 +31,20 @@ class NewInput extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          width: 300,
+          width: MediaQuery.of(context).size.width/1.2,
           height: 51,
           child: TextField(
             obscureText: obscureText,
             controller: controller,
             onSubmitted: onSubmit,
+            maxLength: 25,
             onTap: onTap,
             readOnly: readOnly,
             keyboardType: keyboardType,
             decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(right: 5),
                 hintText: hintText.tr,
+                counterText: '',
                 hintStyle: TextHelper().h4l.copyWith(
                     color: MaterialStateColor.resolveWith((states) =>
                         states.contains(MaterialState.focused)

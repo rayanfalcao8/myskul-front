@@ -9,10 +9,12 @@ class Question extends StatelessWidget {
     required this.question,
     required this.position,
     required this.total,
+    required this.duration,
   });
   var question;
   var total;
   var position;
+  var duration;
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +150,7 @@ class Answer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Get.to(Quiz5());
       },
       child: Container(

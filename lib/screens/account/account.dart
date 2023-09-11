@@ -77,335 +77,335 @@ class _AccountState extends State<Account> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-      decoration: BoxDecoration(
-          color: couleurs.white.withOpacity(0.5),
-          image: DecorationImage(
-              image: AssetImage("assets/images/math.png"),
-              opacity: 0.04,
-              fit: BoxFit.cover)),
-      child: Column(
-        children: [
-          Container(
-            
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height / 2.4,
-                minHeight: MediaQuery.of(context).size.height / 3),
-            decoration: BoxDecoration(
-                gradient: gradients.greenGradient,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(10),
-                )),
-            child: Stack(
-              children: [
-                Positioned(
-                    bottom: 0,
-                    left: 0,
-                    child: CircleAvatar(
-                      backgroundColor: couleurs.white.withOpacity(0.05),
-                      radius: 20,
+          decoration: BoxDecoration(
+              color: couleurs.white.withOpacity(0.5),
+              image: DecorationImage(
+                  image: AssetImage("assets/images/math.png"),
+                  opacity: 0.04,
+                  fit: BoxFit.cover)),
+          child: Column(
+            children: [
+              Container(
+                padding:
+                    EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height / 2,
+                    minHeight: MediaQuery.of(context).size.height / 4),
+                decoration: BoxDecoration(
+                    gradient: gradients.greenGradient,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(10),
                     )),
-                Positioned(
-                    top: 50,
-                    right: 40,
-                    child: CircleAvatar(
-                      backgroundColor: couleurs.white.withOpacity(0.05),
-                      radius: 08,
-                    )),
-                Positioned(
-                    top: MediaQuery.of(context).size.height / 5,
-                    right: 40,
-                    child: CircleAvatar(
-                      backgroundColor: couleurs.white.withOpacity(0.05),
-                      radius: 15,
-                    )),
-                Positioned(
-                    top: MediaQuery.of(context).size.height / 5,
-                    left: 40,
-                    child: CircleAvatar(
-                      backgroundColor: couleurs.white.withOpacity(0.05),
-                      radius: 25,
-                    )),
-                Positioned(
-                    top: 0,
-                    left: MediaQuery.of(context).size.width / 1.5,
-                    child: CircleAvatar(
-                      backgroundColor: couleurs.white.withOpacity(0.05),
-                      radius: 28,
-                    )),
-                Positioned(
-                    top: 40,
-                    left: 40,
-                    child: CircleAvatar(
-                      backgroundColor: couleurs.white.withOpacity(0.05),
-                      radius: 08,
-                    )),
-                Column(
+                child: Stack(
                   children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Positioned(
+                        bottom: 0,
+                        left: 0,
+                        child: CircleAvatar(
+                          backgroundColor: couleurs.white.withOpacity(0.05),
+                          radius: 20,
+                        )),
+                    Positioned(
+                        top: 50,
+                        right: 40,
+                        child: CircleAvatar(
+                          backgroundColor: couleurs.white.withOpacity(0.05),
+                          radius: 08,
+                        )),
+                    Positioned(
+                        top: MediaQuery.of(context).size.height / 5,
+                        right: 40,
+                        child: CircleAvatar(
+                          backgroundColor: couleurs.white.withOpacity(0.05),
+                          radius: 15,
+                        )),
+                    Positioned(
+                        top: MediaQuery.of(context).size.height / 5,
+                        left: 40,
+                        child: CircleAvatar(
+                          backgroundColor: couleurs.white.withOpacity(0.05),
+                          radius: 25,
+                        )),
+                    Positioned(
+                        top: 0,
+                        left: MediaQuery.of(context).size.width / 1.5,
+                        child: CircleAvatar(
+                          backgroundColor: couleurs.white.withOpacity(0.05),
+                          radius: 28,
+                        )),
+                    Positioned(
+                        top: 40,
+                        left: 40,
+                        child: CircleAvatar(
+                          backgroundColor: couleurs.white.withOpacity(0.05),
+                          radius: 08,
+                        )),
+                    Column(
                       children: [
+                        SizedBox(
+                          height: 10,
+                        ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
-                              width: 10,
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.back();
+                                  },
+                                  child: Icon(
+                                    icones.back2,
+                                    color: couleurs.white,
+                                  ),
+                                ),
+                              ],
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                Get.back();
-                              },
-                              child: Icon(
-                                icones.back2,
-                                color: couleurs.white,
-                              ),
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.to(
+                                        () =>
+                                            AccountPassword(user: widget.user),
+                                        transition: Transition.circularReveal);
+                                  },
+                                  child: Icon(
+                                    icones.lock,
+                                    color: couleurs.white,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(
-                                    () =>
-                                        AccountPassword(user: widget.user),
-                                    transition: Transition.circularReveal);
-                              },
-                              child: Icon(
-                                icones.lock,
-                                color: couleurs.white,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                          ],
+                        Text(
+                          "my-account".tr,
+                          style: textes.h2l.copyWith(color: couleurs.white),
                         ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundImage:
+                              AssetImage('assets/images/loading1.gif'),
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage:
+                                NetworkImage(widget.user.profile_image),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Container(
+                          constraints: BoxConstraints(
+                            maxWidth: 200,
+                          ),
+                          child: FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                widget.user.name,
+                                style:
+                                    textes.h2b.copyWith(color: couleurs.white),
+                              )),
+                        )
                       ],
                     ),
-                    Text(
-                      "my-account".tr,
-                      style: textes.h2l.copyWith(color: couleurs.white),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage:
-                          AssetImage('assets/images/loading1.gif'),
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundColor: Colors.transparent,
-                        backgroundImage:
-                            NetworkImage(widget.user.profile_image),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    Container(
-                      constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width / 3.6,
-                          minWidth: MediaQuery.of(context).size.width / 4),
-                      child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            widget.user.name,
-                            style:
-                                textes.h2l.copyWith(color: couleurs.white),
-                          )),
-                    )
                   ],
                 ),
-              ],
-            ),
-          ),
-          Center(
-            child: Container(
-              child: AnimationLimiter(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: AnimationConfiguration.toStaggeredList(
-                    duration: const Duration(milliseconds: 500),
-                    childAnimationBuilder: (widget) => SlideAnimation(
-                      verticalOffset: 50.0,
-                      child: FadeInAnimation(
-                        child: widget,
-                      ),
-                    ),
-                    children: [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      NewInput(
-                          controller: noms,
-                          onSubmit: (g) {},
-                          keyboardType: TextInputType.text,
-                          hintText: "firstname-lastname",
-                          prefixIcon: Icon(icones.user)),
-                      NewInput(
-                          controller: email,
-                          onSubmit: (g) {},
-                          keyboardType: TextInputType.emailAddress,
-                          hintText: "email",
-                          prefixIcon: Icon(icones.user)),
-                      NewInputInter(
-                          controller: num,
-                          onSubmit: (g) {},
-                          keyboardType: TextInputType.phone,
-                          hintText: "phone",
-                          prefixIcon: Icon(icones.user)),
-                      NewInput(
-                          controller: ville,
-                          onSubmit: (g) {},
-                          keyboardType: TextInputType.text,
-                          hintText: "city",
-                          prefixIcon: Icon(icones.city)),
-                      NewInput(
-                          controller: datenaiss,
-                          readOnly: true,
-                          onSubmit: (g) {},
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                                builder: (context, child) {
-                                  return Theme(
-                                    data: Theme.of(context).copyWith(
-                                      colorScheme: ColorScheme.light(
-                                        primary: couleurs
-                                            .green, // header background color
-                                        onPrimary: couleurs
-                                            .white, // header text color
-                                        onSurface: couleurs
-                                            .black, // body text color
-                                      ),
-                                      textButtonTheme: TextButtonThemeData(
-                                        style: TextButton.styleFrom(
-                                          foregroundColor: couleurs
-                                              .black, // button text color
-                                        ),
-                                      ),
-                                    ),
-                                    child: child!,
-                                  );
-                                },
-                                context: context,
-                                initialDate:
-                                    DateTime.now(), //get today's date
-                                firstDate: DateTime(
-                                    1900), //DateTime.now() - not to allow to choose before today.
-                                lastDate: DateTime(2101));
-
-                            if (pickedDate != null) {
-                              print(
-                                  pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
-                              String formattedDate =
-                                  DateFormat('yyyy-MM-dd').format(
-                                      pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
-                              print(
-                                  formattedDate); //formatted date output using intl package =>  2022-07-04
-                              //You can format date as per your need
-
-                              datenaiss.text = formattedDate;
-                            } else {
-                              print("Date is not selected");
-                            }
-                          },
-                          keyboardType: TextInputType.datetime,
-                          hintText: "bd",
-                          prefixIcon: Icon(icones.calendar)),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+              ),
+              Center(
+                child: Container(
+                  child: AnimationLimiter(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: AnimationConfiguration.toStaggeredList(
+                        duration: const Duration(milliseconds: 500),
+                        childAnimationBuilder: (widget) => SlideAnimation(
+                          verticalOffset: 50.0,
+                          child: FadeInAnimation(
+                            child: widget,
+                          ),
+                        ),
                         children: [
-                          Bounceable(
-                            onTap: () {
-                              setState(() {
-                                selectedGender = 0;
-                                print(selectedGender);
-                              });
-                            },
-                            child: GenderBox(
-                              selectedGender: selectedGender,
-                              icones: icones.boy,
-                              condition: 0,
-                              gender: "male",
-                              width: 145,
-                              height: 80,
-                            ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          NewInput(
+                              controller: noms,
+                              onSubmit: (g) {},
+                              keyboardType: TextInputType.text,
+                              hintText: "firstname-lastname",
+                              prefixIcon: Icon(icones.user)),
+                          NewInput(
+                              controller: email,
+                              onSubmit: (g) {},
+                              keyboardType: TextInputType.emailAddress,
+                              hintText: "email",
+                              prefixIcon: Icon(icones.user)),
+                          NewInputInter(
+                              controller: num,
+                              onSubmit: (g) {},
+                              keyboardType: TextInputType.phone,
+                              hintText: "phone",
+                              prefixIcon: Icon(icones.user)),
+                          NewInput(
+                              controller: ville,
+                              onSubmit: (g) {},
+                              keyboardType: TextInputType.text,
+                              hintText: "city",
+                              prefixIcon: Icon(icones.city)),
+                          NewInput(
+                              controller: datenaiss,
+                              readOnly: true,
+                              onSubmit: (g) {},
+                              onTap: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                    builder: (context, child) {
+                                      return Theme(
+                                        data: Theme.of(context).copyWith(
+                                          colorScheme: ColorScheme.light(
+                                            primary: couleurs
+                                                .green, // header background color
+                                            onPrimary: couleurs
+                                                .white, // header text color
+                                            onSurface: couleurs
+                                                .black, // body text color
+                                          ),
+                                          textButtonTheme: TextButtonThemeData(
+                                            style: TextButton.styleFrom(
+                                              foregroundColor: couleurs
+                                                  .black, // button text color
+                                            ),
+                                          ),
+                                        ),
+                                        child: child!,
+                                      );
+                                    },
+                                    context: context,
+                                    initialDate:
+                                        DateTime.now(), //get today's date
+                                    firstDate: DateTime(
+                                        1900), //DateTime.now() - not to allow to choose before today.
+                                    lastDate: DateTime(2101));
+
+                                if (pickedDate != null) {
+                                  print(
+                                      pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
+                                  String formattedDate =
+                                      DateFormat('yyyy-MM-dd').format(
+                                          pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                                  print(
+                                      formattedDate); //formatted date output using intl package =>  2022-07-04
+                                  //You can format date as per your need
+
+                                  datenaiss.text = formattedDate;
+                                } else {
+                                  print("Date is not selected");
+                                }
+                              },
+                              keyboardType: TextInputType.datetime,
+                              hintText: "bd",
+                              prefixIcon: Icon(icones.calendar)),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Bounceable(
+                                onTap: () {
+                                  setState(() {
+                                    selectedGender = 0;
+                                    print(selectedGender);
+                                  });
+                                },
+                                child: GenderBox(
+                                  selectedGender: selectedGender,
+                                  icones: icones.boy,
+                                  condition: 0,
+                                  gender: "male",
+                                  width: (MediaQuery.of(context).size.width/1.2)/2.1,
+                                  height: 80,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Bounceable(
+                                onTap: () {
+                                  setState(() {
+                                    selectedGender = 1;
+                                    print(selectedGender);
+                                  });
+                                },
+                                child: GenderBox(
+                                  selectedGender: selectedGender,
+                                  icones: icones.girl,
+                                  condition: 1,
+                                  gender: "female",
+                                  width: (MediaQuery.of(context).size.width/1.2)/2.1,
+                                  height: 80,
+                                ),
+                              )
+                            ],
                           ),
                           SizedBox(
-                            width: 10,
+                            height: 10,
                           ),
-                          Bounceable(
-                            onTap: () {
-                              setState(() {
-                                selectedGender = 1;
-                                print(selectedGender);
-                              });
+                          SizedBox(
+                            height: 30,
+                          ),
+                          NewButtonG(
+                            text: "save",
+                            function: () async {
+                              if (noms.text.isEmpty) {
+                                EasyLoading.showError("no-input".tr);
+                              } else if (email.text.isEmpty) {
+                                EasyLoading.showError("no-input".tr);
+                              } else if (num.text.isEmpty) {
+                                EasyLoading.showError("no-input".tr);
+                              } else if (ville.text.isEmpty) {
+                                EasyLoading.showError("no-input".tr);
+                              } else if (datenaiss.text.isEmpty) {
+                                EasyLoading.showError("no-input".tr);
+                              } else {
+                                await getToken();
+                                RegisterationController().updateUser(
+                                    idController: widget.user.id.toString(),
+                                    userController: noms.text,
+                                    numController: num.text,
+                                    emailController: email.text,
+                                    cityController: ville.text,
+                                    bdController: datenaiss.text,
+                                    genderController:
+                                        selectedGender == 0 ? 'Male' : 'Female',
+                                    token: token);
+                              }
                             },
-                            child: GenderBox(
-                              selectedGender: selectedGender,
-                              icones: icones.girl,
-                              condition: 1,
-                              gender: "female",
-                              width: 145,
-                              height: 80,
-                            ),
-                          )
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
                         ],
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      NewButtonG(
-                        text: "save",
-                        function: () async {
-                          if (noms.text.isEmpty) {
-                            EasyLoading.showError("no-input".tr);
-                          } else if (email.text.isEmpty) {
-                            EasyLoading.showError("no-input".tr);
-                          } else if (num.text.isEmpty) {
-                            EasyLoading.showError("no-input".tr);
-                          } else if (ville.text.isEmpty) {
-                            EasyLoading.showError("no-input".tr);
-                          } else if (datenaiss.text.isEmpty) {
-                            EasyLoading.showError(
-                                "no-input".tr);
-                          } else {
-                            await getToken();
-                            RegisterationController().updateUser(
-                                idController: widget.user.id.toString(),
-                                userController: noms.text,
-                                numController: num.text,
-                                emailController: email.text,
-                                cityController: ville.text,
-                                bdController: datenaiss.text,
-                                genderController: selectedGender == 0 ? 'Male':'Female',
-                                token: token);
-                          }
-                        },
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-          )
-        ],
-      ),
+              )
+            ],
+          ),
         ),
       ),
     );

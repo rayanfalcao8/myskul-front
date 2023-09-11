@@ -310,7 +310,7 @@ class HomepageScaffold extends StatelessWidget {
                             height: 10,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               DashBox(
                                 icone: IconHelper().quiz,
@@ -336,14 +336,13 @@ class HomepageScaffold extends StatelessWidget {
                                   Get.to(() => GroupChat(user: user));
                                 },
                               ),
-                              SizedBox()
                             ],
                           ),
                           SizedBox(
                             height: 20,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               DashBox(
                                 icone: IconHelper().leader,
@@ -369,7 +368,6 @@ class HomepageScaffold extends StatelessWidget {
                                   Get.to(() => Fitness());
                                 },
                               ),
-                              SizedBox()
                             ],
                           ),
                           SizedBox(
@@ -636,7 +634,7 @@ class DashBox extends StatelessWidget {
     return InkWell(
       onTap: function,
       child: SizedBox(
-        width: 110,
+        width: MediaQuery.of(context).size.width/3.3,//110,
         height: 100,
         child: Material(
           elevation: 1,
