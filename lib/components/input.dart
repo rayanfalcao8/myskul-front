@@ -31,7 +31,7 @@ class NewInput extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          width: MediaQuery.of(context).size.width/1.2,
+          width: MediaQuery.of(context).size.width / 1.2,
           height: 51,
           child: TextField(
             obscureText: obscureText,
@@ -42,7 +42,7 @@ class NewInput extends StatelessWidget {
             readOnly: readOnly,
             keyboardType: keyboardType ?? TextInputType.text,
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(right: 5),
+                contentPadding: EdgeInsets.symmetric(horizontal: 10),
                 hintText: hintText.tr,
                 counterText: '',
                 hintStyle: TextHelper().h4l.copyWith(
