@@ -25,4 +25,5 @@ class Endpoints {
   final String specialities = "/specialities";
   final String quiz = "/quiz";
   final String questions = "/questions/theme/";
+  final String subscription = "/subscriptions/";
 }

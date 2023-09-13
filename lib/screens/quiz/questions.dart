@@ -47,7 +47,7 @@ class _QuestionsState extends State<Questions> {
           question: element,
           position: c,
           total: questionList.length,
-          // duration: questionDuration,
+          duration: questionDuration,
         );
       }
       c += 1;
