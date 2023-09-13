@@ -1,26 +1,20 @@
-class Speciality {
+class Level {
   int? id;
-  String? sigle;
-  String? speciality;
-  String? type;
+  String? level;
   DateTime? createdAt;
   DateTime? updatedAt;
 
-  Speciality({sigle, speciality, type});
+  Level({level});
 
   Map<String, dynamic> toJson() {
     return {
-      'sigle': sigle,
-      'speciality': speciality,
-      'type': type,
+      'level': level,
     };
   }
 
-  Speciality.fromJson(Map<String, dynamic> json) {
+  Level.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    sigle = json['sigle'];
-    speciality = json['speciality'];
-    type = json['type'];
+    level = json['level'];
     createdAt =
         json['created_at'] != null ? DateTime.parse(json['created_at']) : null;
     updatedAt =
