@@ -265,7 +265,6 @@ class ChatController {
                     }
                     return ReceivedImage(
                       tmp: tmp,
-                      user: user,
                     );
                   }
                 },

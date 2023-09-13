@@ -16,6 +16,7 @@ import 'package:myskul/utilities/texts.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/cupertino.dart';
 
 class MainDrawer extends StatelessWidget {
   MainDrawer({required this.user});
@@ -58,24 +59,21 @@ class MainDrawer extends StatelessWidget {
                             top: 0,
                             right: 0,
                             child: CircleAvatar(
-                              backgroundColor:
-                                  couleurs.white.withOpacity(0.1),
+                              backgroundColor: couleurs.white.withOpacity(0.1),
                               radius: 08,
                             )),
                         Positioned(
                             bottom: 0,
                             right: 0,
                             child: CircleAvatar(
-                              backgroundColor:
-                                  couleurs.white.withOpacity(0.1),
+                              backgroundColor: couleurs.white.withOpacity(0.1),
                               radius: 15,
                             )),
                         Positioned(
                             bottom: 0,
                             right: 0,
                             child: CircleAvatar(
-                              backgroundColor:
-                                  couleurs.white.withOpacity(0.1),
+                              backgroundColor: couleurs.white.withOpacity(0.1),
                               radius: 15,
                             )),
                       ],
@@ -94,8 +92,7 @@ class MainDrawer extends StatelessWidget {
                             child: CircleAvatar(
                               radius: 30,
                               backgroundColor: Colors.transparent,
-                              backgroundImage:
-                                  NetworkImage(user.profile_image),
+                              backgroundImage: NetworkImage(user.profile_image),
                             ),
                           ),
                           SizedBox()
@@ -123,8 +120,7 @@ class MainDrawer extends StatelessWidget {
                             width: 170,
                             child: Text(
                               user.name,
-                              style:
-                                  textes.h3b.copyWith(color: couleurs.white),
+                              style: textes.h3b.copyWith(color: couleurs.white),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -155,7 +151,7 @@ class MainDrawer extends StatelessWidget {
                 ],
               ),
               onTap: () {
-                Get.to(() => Account(user:user));
+                Get.to(() => Account(user: user));
               },
             ),
             ListTile(
@@ -171,8 +167,7 @@ class MainDrawer extends StatelessWidget {
                   Text('my-lib'.tr),
                 ],
               ),
-              tileColor:
-                  Get.currentRoute == '/home' ? Colors.grey[300] : null,
+              tileColor: Get.currentRoute == '/home' ? Colors.grey[300] : null,
               onTap: () {
                 Get.to(() => Library());
               },
@@ -190,8 +185,7 @@ class MainDrawer extends StatelessWidget {
                   Text('my-sub'.tr),
                 ],
               ),
-              tileColor:
-                  Get.currentRoute == '/home' ? Colors.grey[300] : null,
+              tileColor: Get.currentRoute == '/home' ? Colors.grey[300] : null,
               onTap: () {
                 Get.to(() => Subscriptions());
               },
@@ -209,8 +203,7 @@ class MainDrawer extends StatelessWidget {
                   Text('history'.tr),
                 ],
               ),
-              tileColor:
-                  Get.currentRoute == '/home' ? Colors.grey[300] : null,
+              tileColor: Get.currentRoute == '/home' ? Colors.grey[300] : null,
               onTap: () {
                 Get.to(() => History());
               },
@@ -320,42 +313,18 @@ class MainDrawer extends StatelessWidget {
 }
 
 showAlertDialog(BuildContext context) {
-  // set up the buttons
-  Widget cancelButton = TextButton(
-    child: Text(
-      "cancel".tr,
-      style: TextHelper().h4b.copyWith(fontWeight: FontWeight.w400),
-    ),
-    onPressed: () {
-      Navigator.of(context).pop();
-    },
-  );
-  Widget continueButton = TextButton(
-    child: Text("yes".tr,
-        style: TextHelper().h4b.copyWith(fontWeight: FontWeight.w400)),
-    onPressed: () {
-      LoginController().logout();
-    },
-  );
-
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text("warning".tr, style: TextHelper().h1r),
-    content: Text(
-      "warning-text".tr,
-      style: TextHelper().h4l,
-    ),
-    actions: [
-      cancelButton,
-      continueButton,
-    ],
-  );
-
   // show the dialog
   showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
+      context: Get.context as BuildContext,
+      builder: (context) => CupertinoAlertDialog(
+            title: Text("warning".tr, style: TextHelper().h1r),
+            content: Text("warning-text".tr, style: TextHelper().h4l),
+            actions: [
+              CupertinoButton.filled(
+                  child: Text("yes".tr),
+                  onPressed: () {
+                    LoginController().logout();
+                  }),
+            ],
+          ));
 }

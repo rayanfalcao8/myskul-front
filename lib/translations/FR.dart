@@ -106,5 +106,15 @@ class FR {
     'internet-check2': 'Connexion rétablie !',
     'retry': 'Rééssayer',
     'quiz-d': 'DUREE DU QUIZ',
+    'correct-a': 'C\' est juste !',
+    'wrong-a': 'C\' est faux !',
+    'ok': 'Compris !',
+    'null': 'Null',
+    'insuffisant': 'Insuffisant',
+    'mediocre': 'Médiocre',
+    'passable': 'Passable',
+    'assez-bien': 'Assez Bien',
+    'bien': 'Bien',
+    'excellent': 'Excellent',
   };
 }
