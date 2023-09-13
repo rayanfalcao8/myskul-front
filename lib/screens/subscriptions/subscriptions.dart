@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myskul/controllers/subscripiton_controller.dart';
+import 'package:myskul/models/subscription.dart';
 
 class Subscriptions extends StatelessWidget {
   @override
@@ -25,30 +27,52 @@ class Subscriptions extends StatelessWidget {
           ),
           // Add a SliverToBoxAdapter to display your warning message
           SliverToBoxAdapter(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 300.0),
-                  Icon(
-                    Icons.warning,
-                    size: 64.0,
-                    color: Colors.yellow,
-                  ),
-                  SizedBox(height: 15.0),
-                  Text(
-                    'Fonctionnalité en cours de developpement',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
+            child: FutureBuilder(
+              future: SubscriptionController.getAll(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 300.0),
+                      CircularProgressIndicator(),
+                    ],
+                  );
+                } else if (snapshot.hasData) {
+                  List<Subscription>? subs = snapshot.data;
+                  if (subs != null && subs.isNotEmpty) {
+                    return ListView.builder(
+                        itemCount: subs.length,
+                        itemBuilder: (context, index) {
+                          _buildSubscription(subs[index]);
+                        });
+                  }
+                }
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 300.0),
+                    Icon(
+                      Icons.warning,
+                      size: 64.0,
+                      color: Colors.grey,
                     ),
-                  ),
-                ],
-              ),
+                    SizedBox(height: 15.0),
+                    Text("Vous n'avez souscrit à aucun abonnement"),
+                  ],
+                );
+              },
             ),
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildSubscription(Subscription subscription) {
+    return Card(
+        child: Row(
+      children: [],
+    ));
   }
 }
