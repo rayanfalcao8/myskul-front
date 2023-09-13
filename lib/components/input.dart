@@ -7,9 +7,9 @@ class NewInput extends StatelessWidget {
   const NewInput({
     required this.controller,
     required this.onSubmit,
-    required this.keyboardType,
+    this.keyboardType,
     required this.hintText,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.errorText,
     this.onTap,
     this.readOnly = false,
@@ -19,9 +19,9 @@ class NewInput extends StatelessWidget {
   final TextEditingController controller;
   final void Function(String a) onSubmit;
   final void Function()? onTap;
-  final TextInputType keyboardType;
+  final TextInputType? keyboardType;
   final String hintText;
-  final Icon prefixIcon;
+  final Icon? prefixIcon;
   final String? errorText;
   final bool readOnly;
   final bool obscureText;
@@ -39,7 +39,7 @@ class NewInput extends StatelessWidget {
             onSubmitted: onSubmit,
             onTap: onTap,
             readOnly: readOnly,
-            keyboardType: keyboardType,
+            keyboardType: keyboardType ?? TextInputType.text,
             decoration: InputDecoration(
                 hintText: hintText.tr,
                 hintStyle: TextHelper().h4l.copyWith(
