@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myskul/models/question.dart';
-
 import 'quiz_5.dart';
 
-class Question extends StatelessWidget {
+class Question extends StatefulWidget {
   Question({
     required this.question,
     required this.position,
@@ -15,6 +16,42 @@ class Question extends StatelessWidget {
   var total;
   var position;
   var duration;
+
+  @override
+  State<Question> createState() => _QuestionState();
+}
+
+class _QuestionState extends State<Question> {
+
+  late Timer _timer;
+
+  late int _start;
+
+  void startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _start = widget.duration;
+    startTimer();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +125,7 @@ class Question extends StatelessWidget {
                         height: 60,
                       ),
                       Text(
-                        "QUESTION :  ${position.toString()}/${total.toString()}",
+                        "QUESTION :  ${widget.position.toString()}/${widget.total.toString()}",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
@@ -99,7 +136,7 @@ class Question extends StatelessWidget {
                         height: 16,
                       ),
                       Text(
-                        question.name,
+                        widget.question.name,
                         // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -112,29 +149,30 @@ class Question extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 150),
-                height: 100,
-                width: 100,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xff22987F), Color(0xff2BB799)],
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    position.toString(),
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
+              // Container(
+              //   margin: const EdgeInsets.only(top: 150),
+              //   height: 100,
+              //   width: 100,
+              //   decoration: const BoxDecoration(
+              //     shape: BoxShape.circle,
+              //     gradient: LinearGradient(
+              //       begin: Alignment.topCenter,
+              //       end: Alignment.bottomCenter,
+              //       colors: [Color(0xff22987F), Color(0xff2BB799)],
+              //     ),
+              //   ),
+              //   child: Center(
+              //     child: Text(
+              //      // _start.toString(),
+              //      '',
+              //       style: TextStyle(
+              //         fontSize: 32,
+              //         fontWeight: FontWeight.w700,
+              //         color: Colors.white,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -144,37 +182,33 @@ class Question extends StatelessWidget {
 }
 
 class Answer extends StatelessWidget {
-  Answer({this.answer});
+  Answer({required this.answer, required this.color});
   var answer;
-
+  var color;
+ 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Get.to(Quiz5());
-      },
-      child: Container(
-        width: double.infinity,
-        // height: MediaQuery.of(context).size.height * 0.4,
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        margin: EdgeInsets.only(bottom: 15),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          border: Border.all(
-            color: Colors.black.withOpacity(.24),
-            width: 2,
-          ),
+    return Container(
+      width: double.infinity,
+      // height: MediaQuery.of(context).size.height * 0.4,
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      margin: EdgeInsets.only(bottom: 15),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+        border: Border.all(
+          color: color,//Colors.black.withOpacity(.24),
+          width: 2,
         ),
-        child: Text(
-          // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
-          answer.name,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w200,
-            height: 1.7,
-          ),
+      ),
+      child: Text(
+        // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
+        answer.name,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w200,
+          height: 1.7,
         ),
       ),
     );

@@ -1,5 +1,9 @@
+import 'dart:async';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:myskul/models/quiz.dart';
 import 'package:myskul/screens/quiz/question.dart';
@@ -13,18 +17,21 @@ import '../../controllers/quiz_controller.dart';
 import '../../models/question.dart';
 
 class Questions extends StatefulWidget {
-  Questions({required this.quiz});
+  Questions({required this.quiz, required this.index});
   QuizModel quiz;
+  int index;
+  late int firstId;
+
   @override
   State<Questions> createState() => _QuestionsState();
 }
 
 class _QuestionsState extends State<Questions> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   var couleurs = ColorHelper();
 
   var questions;
-
-  var index = 0;
 
   var textes = TextHelper();
 
@@ -32,32 +39,97 @@ class _QuestionsState extends State<Questions> {
 
   var gradients = GradientHelper();
 
-  int questionDuration = 10;
+  int questionDuration = 35;
 
-  Question? displayQuestion(List<QuestionModel> questionList, int id) {
-    // List<Widget> w = [];
-    Question? w;
-    var c = 1;
-    questionList.forEach((element) {
-      // if (c == questionList.length) {
-      //   Get.to(Quiz5());
-      // }
+  late Timer _timer;
 
-      if (element.id == id) {
-        w = Question(
-            question: element, position: c, total: questionList.length, duration: questionDuration,);
-      }
-      c += 1;
-    });
-    return w;
+  late int _start;
+
+  setScore(int num) async {
+    final SharedPreferences prefs = await _prefs;
+    int tmp = await prefs.getInt('currentScore')!;
+    prefs.setInt('currentScore', num + tmp);
+    print("current score $tmp");
   }
 
-  List<Answer>? displayAnswers(List<QuestionModel> questionList, int id) {
-    List<Answer> w = [];
+  void startTimer() async {
+    const oneSec = const Duration(seconds: 1);
+    var tmp = widget.index + 1;
+    var tmp2 = await questions as List<QuestionModel>;
+
+    _timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else if (_start < 0) {
+          if (tmp == tmp2.length) {
+            setScore(0);
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              return Quiz5(questionsLength: tmp2.length, quizName: widget.quiz.name);
+            }));
+          } else {
+            setScore(0);
+            Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation1, animation2) =>
+                    Questions(quiz: widget.quiz, index: tmp),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+              ),
+            );
+          }
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  List<Widget>? displayAnswers(List<QuestionModel> questionList, int id) {
+    List<Widget> w = [];
+    var color = Colors.black.withOpacity(.24);
     questionList.forEach((element) {
       if (element.id == id) {
         element.answers.forEach((answer) {
-          w.add(Answer(answer: answer));
+          w.add(InkWell(
+              onTap: () async {
+                if (answer.isCorrect == true) {
+                  setScore(1);
+                 await EasyLoading.showSuccess;
+                } else {
+                  await EasyLoading.showError;
+                  color = ColorHelper().red;
+                }
+
+                var tmp = widget.index + 1;
+
+                if (tmp == questionList.length) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return Quiz5(questionsLength:questionList.length, quizName: widget.quiz.name);
+                  }));
+                } else {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          Questions(quiz: widget.quiz, index: tmp),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                }
+
+                //setState(() {});
+              },
+              child: Answer(answer: answer, color: color)));
         });
       }
     });
@@ -65,13 +137,19 @@ class _QuestionsState extends State<Questions> {
   }
 
   getQuestions() async {
-    questions = await QuizController().getQuestionsByTheme(widget.quiz.id);
-    index = (questions[0] as QuestionModel).id;
+    List<QuestionModel> questions =
+        await QuizController().getQuestionsByTheme(widget.quiz.id);
+    widget.firstId = (questions[0] as QuestionModel).id;
     return questions;
   }
 
-  onAnswer(questionList, id) {
-    displayQuestion(questionList, id + 1);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    questions = getQuestions();
+    _start = questionDuration;
+    startTimer();
   }
 
   @override
@@ -80,12 +158,12 @@ class _QuestionsState extends State<Questions> {
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
-                  color: couleurs.white.withOpacity(0.5),
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/math.png"),
-                      opacity: 0.04,
-                      fit: BoxFit.cover),
-                ),
+            color: couleurs.white.withOpacity(0.5),
+            image: DecorationImage(
+                image: AssetImage("assets/images/math.png"),
+                opacity: 0.04,
+                fit: BoxFit.cover),
+          ),
           child: Column(
             children: [
               Stack(
@@ -106,41 +184,40 @@ class _QuestionsState extends State<Questions> {
                       ),
                     ),
                   ),
-
                   Positioned(
-                      top: MediaQuery.of(context).padding.top,
-                      left: 0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 10,
+                    top: MediaQuery.of(context).padding.top,
+                    left: 0,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.back();
+                                  },
+                                  child: Icon(
+                                    icones.back2,
+                                    color: couleurs.white,
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.back();
-                                    },
-                                    child: Icon(
-                                      icones.back2,
-                                      color: couleurs.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(),
-                            ],
-                          ),
-                        ],
-                      ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(),
+                          ],
+                        ),
+                      ],
                     ),
+                  ),
                   Positioned(
                       bottom: 0,
                       left: 0,
@@ -186,60 +263,88 @@ class _QuestionsState extends State<Questions> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     child: FutureBuilder(
-                      future: getQuestions(),
+                      future: questions,
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           if (snapshot.hasError) {
                             print(snapshot.error);
                             return NotFoundWidget(texte: 'Not Found');
                           } else {
-                            Question? quest = displayQuestion(
-                                snapshot.data as List<QuestionModel>, index);
-                            if (quest == null) {
-                              Get.to(Quiz5());
-                            } else {
-                              return quest;
-                            }
+                            List<QuestionModel> tmp =
+                                snapshot.data as List<QuestionModel>;
+                            List<Widget>? answers = displayAnswers(
+                                snapshot.data as List<QuestionModel>,
+                                widget.firstId);
+                            // Question? quest = displayQuestion(tmp, widget.index);
+                            // if (quest == null) {
+                            //   Get.to(Quiz5());
+                            // } else {
+                            //   return quest;
+                            // }
+                            return Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Question(
+                                        question: tmp[widget.index - 1],
+                                        position: widget.index,
+                                        total: tmp.length,
+                                        duration: questionDuration),
+                                    Positioned(
+                                      left: 0,
+                                      right: 0,
+                                      child: Container(
+                                        margin: const EdgeInsets.only(top: 150),
+                                        height: 100,
+                                        width: 100,
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              Color(0xff22987F),
+                                              Color(0xff2BB799)
+                                            ],
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            _start.toString(),
+                                            style: TextStyle(
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 24,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 14),
+                                  child: Column(
+                                    children: answers!,
+                                  ),
+                                ),
+                              ],
+                            );
                           }
                         }
                         return Center(
-                            // child: CircularProgressIndicator(),
+                            // child: CircularProgressIndicator(
+                            //   color: Colors.amber,
+                            // ),
                             ); // Display the fetched data
                       },
                     ),
                   )
                 ],
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14),
-                child: FutureBuilder(
-                  future: getQuestions(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasError) {
-                        print(snapshot.error);
-                        return NotFoundWidget(texte: 'Not Found');
-                      } else {
-                        List<Answer>? answers = displayAnswers(
-                            snapshot.data as List<QuestionModel>, index);
-                        if (answers == null) {
-                          // Get.to(Quiz5());
-                          print("Pas de reponses");
-                        } else {
-                          return Column(
-                            children: answers,
-                          );
-                        }
-                      }
-                    }
-                    return Center(
-                        // child: CircularProgressIndicator(),
-                        ); // Display the fetched data
-                  },
-                ),
               ),
             ],
           ),
@@ -247,4 +352,23 @@ class _QuestionsState extends State<Questions> {
       ),
     );
   }
+}
+
+showAlertDialog(BuildContext context, String text, bool isCorrect) {
+  // show the dialog
+  showDialog(
+      context: Get.context as BuildContext,
+      builder: (context) => CupertinoAlertDialog(
+            title: isCorrect
+                ? Text("correct-a".tr, style: TextHelper().h1r)
+                : Text("wrong-a".tr, style: TextHelper().h1r),
+            content: Text(text, style: TextHelper().h4l),
+            actions: [
+              CupertinoButton.filled(
+                  child: Text("ok".tr),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ],
+          ));
 }

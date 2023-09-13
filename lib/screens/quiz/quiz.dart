@@ -3,6 +3,7 @@ import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
 import 'package:myskul/screens/quiz/quiz_detail.dart';
 import 'package:myskul/utilities/colors.dart';
+import 'package:flutter/cupertino.dart';
 
 class QuizWidget extends StatelessWidget {
   QuizWidget({required this.quiz});
@@ -22,7 +23,9 @@ class QuizWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
           color: const Color(0x72ffffff),
           border: Border.all(
-            color: quiz.done ? ColorHelper().grey.withOpacity(0.3) :  ColorHelper().green,
+            color: quiz.done
+                ? ColorHelper().grey.withOpacity(0.3)
+                : ColorHelper().green,
           ),
         ),
         child: Row(
@@ -30,20 +33,24 @@ class QuizWidget extends StatelessWidget {
             Expanded(
               flex: 5,
               child: Padding(
-                padding:
-                    EdgeInsets.fromLTRB(12, 14, 0, 0),
+                padding: EdgeInsets.fromLTRB(12, 14, 0, 0),
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FittedBox(
+                    GestureDetector(
+                      onLongPress: () {
+                        showAlertDialog(context, quiz.name);
+                      },
                       child: Text(
                         quiz.name,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: quiz.done ? ColorHelper().grey.withOpacity(0.3) :  ColorHelper().green,
+                          color: quiz.done
+                              ? ColorHelper().grey.withOpacity(0.3)
+                              : ColorHelper().green,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     SizedBox(
@@ -53,10 +60,9 @@ class QuizWidget extends StatelessWidget {
                       child: Text(
                         quiz.done ? "Ce quiz a déjà été passé" : " ",
                         style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: ColorHelper().grey
-                        ),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                            color: ColorHelper().grey),
                       ),
                     ),
                   ],
@@ -70,7 +76,9 @@ class QuizWidget extends StatelessWidget {
                 margin: EdgeInsets.only(left: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  color: quiz.done ? ColorHelper().grey.withOpacity(0.3) :  ColorHelper().green,
+                  color: quiz.done
+                      ? ColorHelper().grey.withOpacity(0.3)
+                      : ColorHelper().green,
                 ),
                 child: Column(
                   children: [
@@ -109,4 +117,13 @@ class QuizWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+showAlertDialog(BuildContext context, String text) {
+  // show the dialog
+  showDialog(
+      context: Get.context as BuildContext,
+      builder: (context) => CupertinoAlertDialog(
+            content: Text(text),
+          ));
 }

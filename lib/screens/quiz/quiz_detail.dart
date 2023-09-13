@@ -1,23 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myskul/screens/quiz/questions.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../utilities/colors.dart';
 import '../../utilities/texts.dart';
-
 import '../../utilities/gradients.dart';
 import '../../utilities/icons.dart';
 
-class QuizDetail extends StatelessWidget {
+class QuizDetail extends StatefulWidget {
   QuizDetail({required this.quiz});
   var quiz;
+
+  @override
+  State<QuizDetail> createState() => _QuizDetailState();
+}
+
+class _QuizDetailState extends State<QuizDetail> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  @override
+  void initState() {
+    // TODO: implement initState
+    initializeScore();
+  }
+
   var couleurs = ColorHelper();
+
   var textes = TextHelper();
 
   var icones = IconHelper();
 
   var gradients = GradientHelper();
-  int questionDuration = 10;
+
+  int questionDuration = 30;
+
+  initializeScore() async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.setInt('currentScore', 0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,13 +125,12 @@ class QuizDetail extends StatelessWidget {
                               ],
                             ),
                             Container(
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: FittedBox(
-                                child: Text(
-                                  quiz.name,
-                                  style: textes.h2l
-                                      .copyWith(color: couleurs.white),
-                                ),
+                              width: MediaQuery.of(context).size.width / 1.2,
+                              child: Text(
+                                widget.quiz.name,
+                                style:
+                                    textes.h4l.copyWith(color: couleurs.white),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             SizedBox(),
@@ -167,7 +186,7 @@ class QuizDetail extends StatelessWidget {
                                     ),
                                   ),
                                   trailing: Text(
-                                    quiz.nb_questions.toString(),
+                                    widget.quiz.nb_questions.toString(),
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w200,
@@ -176,14 +195,18 @@ class QuizDetail extends StatelessWidget {
                                 ),
                                 ListTile(
                                   title: Text(
-                                    quiz.done ? "p-score".tr : "never-tried".tr,
+                                    widget.quiz.done
+                                        ? "p-score".tr
+                                        : "never-tried".tr,
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w200,
                                     ),
                                   ),
                                   trailing: Text(
-                                    quiz.done ? quiz.score.toString() : "/",
+                                    widget.quiz.done
+                                        ? widget.quiz.score.toString()
+                                        : "/",
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w200,
@@ -199,7 +222,10 @@ class QuizDetail extends StatelessWidget {
                                     ),
                                   ),
                                   trailing: Text(
-                                    (quiz.nb_questions * questionDuration).toString()+" Sec",
+                                    (widget.quiz.nb_questions *
+                                                questionDuration)
+                                            .toString() +
+                                        " Sec",
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w200,
@@ -239,7 +265,10 @@ class QuizDetail extends StatelessWidget {
                         height: 50,
                         child: TextButton(
                           onPressed: () {
-                            Get.to(() => Questions(quiz: quiz));
+                            Get.to(() => Questions(
+                                  quiz: widget.quiz,
+                                  index: 1,
+                                ));
                           },
                           child: Padding(
                             padding: EdgeInsets.all(0),

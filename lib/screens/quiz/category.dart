@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
-import 'package:myskul/screens/quiz/quiz_list.dart' as q;
 import 'package:myskul/screens/quiz/quiz_list.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/texts.dart';
@@ -24,7 +23,7 @@ class CategoryWidget extends StatelessWidget {
         height: 81,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: const Color(0x72000000),
+          color: ColorHelper().grey.withOpacity(0.3),
         ),
         margin: EdgeInsets.only(bottom: 17),
         child: Center(
@@ -40,6 +39,7 @@ class CategoryWidget extends StatelessWidget {
             title: Text(
               category.displayText ?? "Default",
               style: TextHelper().h4r.copyWith(color: ColorHelper().white),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ),

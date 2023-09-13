@@ -97,7 +97,6 @@ class HomepageScaffold extends StatelessWidget {
             await Future.delayed(Duration(seconds: 3));
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (BuildContext context) => Home()));
-
           },
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
@@ -634,7 +633,7 @@ class DashBox extends StatelessWidget {
     return InkWell(
       onTap: function,
       child: SizedBox(
-        width: MediaQuery.of(context).size.width/3.3,//110,
+        width: MediaQuery.of(context).size.width / 3.3, //110,
         height: 100,
         child: Material(
           elevation: 1,

@@ -105,5 +105,8 @@ class EN {
     'internet-check2': 'You are now connected !',
     'retry': 'Retry',
     'quiz-d': 'DURATION',
+     'correct-a': 'It\'s right !',
+    'wrong-a': 'It\'s wrong !',
+    'ok': 'Understood !',
   };
 }

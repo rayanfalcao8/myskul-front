@@ -31,15 +31,15 @@ String?
 User? user; // Ici sera stocké l'utilisateur principal
 
 //fonction pour capture les notification et faire des actions lorsqu'on les reçoit
-@pragma("vm:entry-point")
-Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  final prefs = await _prefs;
-  var userString = await prefs.getString('user');
-  var userJson = jsonDecode(userString!);
-  user = User.fromJson(userJson);
-  Get.to(() => GroupChat(user: user!));
-}
+// @pragma("vm:entry-point")
+// Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
+//   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+//   final prefs = await _prefs;
+//   var userString = await prefs.getString('user');
+//   var userJson = jsonDecode(userString!);
+//   user = User.fromJson(userJson);
+//   Get.to(() => GroupChat(user: user!));
+// }
 
  shMethods(SharedPreferences prefs) async {
   seen = await prefs.getBool('first');
