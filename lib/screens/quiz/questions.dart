@@ -39,7 +39,7 @@ class _QuestionsState extends State<Questions> {
 
   var gradients = GradientHelper();
 
-  int questionDuration = 35;
+  int questionDuration = 10;
 
   late Timer _timer;
 
@@ -63,26 +63,26 @@ class _QuestionsState extends State<Questions> {
         if (_start == 0) {
           setState(() {
             timer.cancel();
+            if (tmp == tmp2.length) {
+              setScore(0);
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                return Quiz5(
+                    questionsLength: tmp2.length, quizName: widget.quiz.name);
+              }));
+            } else {
+              setScore(0);
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      Questions(quiz: widget.quiz, index: tmp),
+                  transitionDuration: Duration.zero,
+                  reverseTransitionDuration: Duration.zero,
+                ),
+              );
+            }
           });
-        } else if (_start < 0) {
-          if (tmp == tmp2.length) {
-            setScore(0);
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) {
-              return Quiz5(questionsLength: tmp2.length, quizName: widget.quiz.name);
-            }));
-          } else {
-            setScore(0);
-            Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) =>
-                    Questions(quiz: widget.quiz, index: tmp),
-                transitionDuration: Duration.zero,
-                reverseTransitionDuration: Duration.zero,
-              ),
-            );
-          }
         } else {
           setState(() {
             _start--;
@@ -102,7 +102,7 @@ class _QuestionsState extends State<Questions> {
               onTap: () async {
                 if (answer.isCorrect == true) {
                   setScore(1);
-                 await EasyLoading.showSuccess;
+                  await EasyLoading.showSuccess;
                 } else {
                   await EasyLoading.showError;
                   color = ColorHelper().red;
@@ -110,10 +110,15 @@ class _QuestionsState extends State<Questions> {
 
                 var tmp = widget.index + 1;
 
-                if (tmp == questionList.length) {
+                if (tmp == questionList.length + 1) {
+                  EasyLoading.show();
+                  await Future.delayed(Duration(seconds: 5));
+                  EasyLoading.dismiss();
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
-                    return Quiz5(questionsLength:questionList.length, quizName: widget.quiz.name);
+                    return Quiz5(
+                        questionsLength: questionList.length,
+                        quizName: widget.quiz.name);
                   }));
                 } else {
                   Navigator.pushReplacement(

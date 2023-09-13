@@ -105,8 +105,15 @@ class EN {
     'internet-check2': 'You are now connected !',
     'retry': 'Retry',
     'quiz-d': 'DURATION',
-     'correct-a': 'It\'s right !',
+    'correct-a': 'It\'s right !',
     'wrong-a': 'It\'s wrong !',
     'ok': 'Understood !',
+    'null': 'Null',
+    'insuffisant': 'Insufficient',
+    'mediocre': 'Mediocre',
+    'passable': 'Average',
+    'assez-bien': 'Quite good',
+    'bien': 'Good',
+    'excellent': 'Excellent',
   };
 }

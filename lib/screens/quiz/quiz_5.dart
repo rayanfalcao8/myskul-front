@@ -25,9 +25,29 @@ class _Quiz5State extends State<Quiz5> {
 
   getCorrectAnswers() async {
     final SharedPreferences prefs = await _prefs;
-   var correctAnswers = await prefs.getInt('currentScore')!;
+    var correctAnswers = await prefs.getInt('currentScore')!;
 
     return correctAnswers;
+  }
+
+  String getAppreciation(var score, var length) {
+    if (score <= (length * 20 / 100)) {
+      return "null".tr;
+    } else if (score <= (length * 40 / 100)) {
+      return "insuffisant".tr;
+    } else if (score <= (length * 49 / 100)) {
+      return "mediocre".tr;
+    } else if (score == (length * 50 / 100)) {
+      return "passable".tr;
+    } else if (score <= (length * 70 / 100)) {
+      return "assez-bien".tr;
+    } else if (score <= (length * 80 / 100)) {
+      return "bien".tr;
+    } else if (score <= (length * 90 / 100)) {
+      return "tres-bien".tr;
+    } else {
+      return "excellent".tr;
+    }
   }
 
   var couleurs = ColorHelper();
@@ -41,7 +61,7 @@ class _Quiz5State extends State<Quiz5> {
   @override
   void initState() {
     // TODO: implement initState
-   correctAnswers = getCorrectAnswers();
+    correctAnswers = getCorrectAnswers();
   }
 
   @override
@@ -128,7 +148,7 @@ class _Quiz5State extends State<Quiz5> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Get.to(()=>Home());
+                                    Get.to(() => Home());
                                   },
                                   child: Icon(
                                     icones.back2,
@@ -268,8 +288,9 @@ class _Quiz5State extends State<Quiz5> {
                             const SizedBox(
                               height: 38,
                             ),
-                            const Text(
-                              "APPRECIATION",
+                            Text(
+                              getAppreciation(
+                                  snapshot.data, widget.questionsLength),
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w800,
