@@ -5,8 +5,7 @@ import 'package:myskul/main.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SpeController extends GetxController {
-  
+class SpecialityController extends GetxController {
   Future<List<String>> getDomains() async {
     token = await (await SharedPreferences.getInstance()).getString('token');
     var headers = {
@@ -87,7 +86,7 @@ class SpeController extends GetxController {
     return list;
   }
 
-  Future<List<String>> getSpec() async {
+  Future<List<String>> getSpeciality() async {
     token = await (await SharedPreferences.getInstance()).getString('token');
     var headers = {
       "Authorization": "Bearer" + " " + token.toString(),

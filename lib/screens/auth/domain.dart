@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/components/gender_box.dart';
-import 'package:myskul/controllers/spe_controller.dart';
+import 'package:myskul/controllers/speciality_controller.dart';
 import 'package:myskul/screens/auth/sc.dart';
 import 'package:myskul/screens/auth/sp2.dart';
 import 'package:myskul/utilities/colors.dart';
@@ -32,7 +32,7 @@ class _DomainState extends State<Domain> {
   bool? checkbox = false;
 
   Future<List<Widget>> getDomain() async {
-    var domains = await SpeController().getDomains();
+    var domains = await SpecialityController().getDomains();
     List<Widget> l = [];
     for (var element in domains) {
       Map tmp = element as Map;
