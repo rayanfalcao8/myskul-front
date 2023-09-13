@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:get/get_utils/get_utils.dart';
+import 'package:myskul/components/button_g.dart';
 import 'package:myskul/components/input.dart';
-import 'package:myskul/controllers/subscripiton_controller.dart';
-import 'package:myskul/models/subscription.dart';
 import 'package:myskul/utilities/helpers.dart';
 
 class SubscriptionForm extends StatefulWidget {
@@ -64,25 +62,16 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
             hintText: "Id specialite",
             obscureText: true,
           ),
-          SizedBox(height: 10),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                if (formKey.currentState!.validate()) {
-                  Subscription sub = Subscription(
-                      domainId: domainIdController.text,
-                      levelId: levelIdController.text,
-                      specialityId: specialityIdController.text,
-                      abonnementTypeId: typeController.text);
-                  SubscriptionController.create(sub).then((value) {
-                    print("Subscribed successfully !!");
-                    EasyLoading.showSuccess("Souscription effectuée !");
-                  });
-                }
+          SizedBox(height: 50),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 50),
+            child: NewButtonG(
+              text: "Souscrire",
+              function: () {
+                EasyLoading.showSuccess("Souscription effectuée !");
               },
-              child: Text("Souscrire"),
             ),
-          )
+          ),
         ]),
       ),
     );
