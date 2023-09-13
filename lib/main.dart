@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:convert';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/screens/auth/domain.dart';
+import 'package:myskul/screens/auth/reset.dart';
 import 'package:myskul/screens/chat/chat_group_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +21,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:uni_links/uni_links.dart';
+import 'package:crypto/crypto.dart';
 
 bool?
     seen; // Cette variable va permettre d'afficher le splash screen une seule fois
@@ -50,8 +54,8 @@ Future<void> shMethods(SharedPreferences prefs) async {
     Get.updateLocale(Locale(locale!));
   }
   if (fmToken == null) {
-    var tmp = await ChatController().getFmToken();
-    await prefs.setString('fmToken', tmp);
+    // var tmp = await ChatController().getFmToken();
+    // await prefs.setString('fmToken', tmp);
   }
 }
 
@@ -183,6 +187,33 @@ class _Home1State extends State<Home1> {
     });
   }
 
+  StreamSubscription? _sub;
+
+  Future<void> initUniLinks() async {
+    // ... check initialLink
+
+    // Attach a listener to the stream
+    _sub = linkStream.listen((String? link) {
+      // Parse the link and warn the user, if it is not correct
+      if (link != null ) {
+        var uri = Uri.parse(link);
+        if (uri.queryParameters['token'] != null && uri.queryParameters['email'] != null) {
+          var hashedBytes = uri.queryParameters['token'].toString();
+          var digest = sha256.convert(utf8.encode(uri.queryParameters['email'].toString()));
+          if( digest.toString() == hashedBytes ) {
+            Get.to(Reset(token:uri.queryParameters['token'].toString(),email:uri.queryParameters['email'].toString()));;
+          } else {
+            EasyLoading.showError("Erreur de reinitialisation");
+          }
+        }
+      }
+    }, onError: (err) {
+      // Handle exception by warning the user their action did not succeed
+    });
+
+    // NOTE: Don't forget to call _sub.cancel() in dispose()
+  }
+
   @override
   void initState() {
     // AwesomeNotifications().isNotificationAllowed().then((value) {
@@ -192,6 +223,7 @@ class _Home1State extends State<Home1> {
     // });
 
     startStreaming();
+    initUniLinks();
   }
 
   @override

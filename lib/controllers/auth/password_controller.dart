@@ -32,7 +32,7 @@ class PasswordController extends GetxController {
       if (res.statusCode == 200) {
         var json = jsonDecode(res.body);
         EasyLoading.showSuccess(json["message"]);
-        Get.to(Reset(token:json["data"]["token"],email:json["data"]["user"]["email"]));
+        Get.to(Login());
       } else {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }
