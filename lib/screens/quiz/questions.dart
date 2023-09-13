@@ -39,7 +39,11 @@ class _QuestionsState extends State<Questions> {
 
   var gradients = GradientHelper();
 
-  int questionDuration = 10;
+  int questionDuration = 30;
+
+  var score ;
+
+  var wrong ;
 
   late Timer _timer;
 
@@ -49,7 +53,24 @@ class _QuestionsState extends State<Questions> {
     final SharedPreferences prefs = await _prefs;
     int tmp = await prefs.getInt('currentScore')!;
     prefs.setInt('currentScore', num + tmp);
-    print("current score $tmp");
+  }
+
+  setWrongScore(int num) async {
+    final SharedPreferences prefs = await _prefs;
+    int tmp = await prefs.getInt('wrongScore')!;
+    prefs.setInt('wrongScore', num + tmp);
+  }
+
+  getScore() async {
+    final SharedPreferences prefs = await _prefs;
+    int tmp = await prefs.getInt('currentScore')!;
+    return tmp;
+  }
+
+  getWrongScore() async {
+    final SharedPreferences prefs = await _prefs;
+    int tmp = await prefs.getInt('wrongScore')!;
+    return tmp;
   }
 
   void startTimer() async {
@@ -65,6 +86,7 @@ class _QuestionsState extends State<Questions> {
             timer.cancel();
             if (tmp == tmp2.length) {
               setScore(0);
+              setWrongScore(1);
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) {
                 return Quiz5(
@@ -72,6 +94,7 @@ class _QuestionsState extends State<Questions> {
               }));
             } else {
               setScore(0);
+              setWrongScore(1);
               Navigator.pushReplacement(
                 context,
                 PageRouteBuilder(
@@ -92,55 +115,6 @@ class _QuestionsState extends State<Questions> {
     );
   }
 
-  List<Widget>? displayAnswers(List<QuestionModel> questionList, int id) {
-    List<Widget> w = [];
-    var color = Colors.black.withOpacity(.24);
-    questionList.forEach((element) {
-      if (element.id == id) {
-        element.answers.forEach((answer) {
-          w.add(InkWell(
-              onTap: () async {
-                if (answer.isCorrect == true) {
-                  setScore(1);
-                  await EasyLoading.showSuccess;
-                } else {
-                  await EasyLoading.showError;
-                  color = ColorHelper().red;
-                }
-
-                var tmp = widget.index + 1;
-
-                if (tmp == questionList.length + 1) {
-                  EasyLoading.show();
-                  await Future.delayed(Duration(seconds: 5));
-                  EasyLoading.dismiss();
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) {
-                    return Quiz5(
-                        questionsLength: questionList.length,
-                        quizName: widget.quiz.name);
-                  }));
-                } else {
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) =>
-                          Questions(quiz: widget.quiz, index: tmp),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                  );
-                }
-
-                //setState(() {});
-              },
-              child: Answer(answer: answer, color: color)));
-        });
-      }
-    });
-    return w;
-  }
-
   getQuestions() async {
     List<QuestionModel> questions =
         await QuizController().getQuestionsByTheme(widget.quiz.id);
@@ -152,6 +126,11 @@ class _QuestionsState extends State<Questions> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // () async {
+    //   score = await getScore();
+    //   wrong = await getWrongScore();
+    // };
+
     questions = getQuestions();
     _start = questionDuration;
     startTimer();
@@ -277,67 +256,128 @@ class _QuestionsState extends State<Questions> {
                           } else {
                             List<QuestionModel> tmp =
                                 snapshot.data as List<QuestionModel>;
-                            List<Widget>? answers = displayAnswers(
-                                snapshot.data as List<QuestionModel>,
-                                widget.firstId);
-                            // Question? quest = displayQuestion(tmp, widget.index);
-                            // if (quest == null) {
-                            //   Get.to(Quiz5());
-                            // } else {
-                            //   return quest;
-                            // }
-                            return Column(
-                              children: [
-                                Stack(
-                                  children: [
-                                    Question(
+
+                            return SingleChildScrollView(
+                              physics: BouncingScrollPhysics(),
+                              child: Column(
+                                children: [
+                                  Stack(
+                                    children: [
+                                      Question(
                                         question: tmp[widget.index - 1],
                                         position: widget.index,
                                         total: tmp.length,
-                                        duration: questionDuration),
-                                    Positioned(
-                                      left: 0,
-                                      right: 0,
-                                      child: Container(
-                                        margin: const EdgeInsets.only(top: 150),
-                                        height: 100,
-                                        width: 100,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topCenter,
-                                            end: Alignment.bottomCenter,
-                                            colors: [
-                                              Color(0xff22987F),
-                                              Color(0xff2BB799)
-                                            ],
+                                        correct: score,
+                                        wrong: wrong,
+                                      ),
+                                      Positioned(
+                                        left: 0,
+                                        right: 0,
+                                        child: Container(
+                                          margin:
+                                              const EdgeInsets.only(top: 150),
+                                          height: 100,
+                                          width: 100,
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                Color(0xff22987F),
+                                                Color(0xff2BB799)
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            _start.toString(),
-                                            style: TextStyle(
-                                              fontSize: 32,
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.white,
+                                          child: Center(
+                                            child: Text(
+                                              _start.toString(),
+                                              style: TextStyle(
+                                                fontSize: 32,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.white,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 24,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 14),
-                                  child: Column(
-                                    children: answers!,
+                                    ],
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(
+                                    height: 24,
+                                  ),
+                                  Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              1.3,
+                                      child: ListView.builder(
+                                        itemCount: tmp[widget.index - 1]
+                                            .answers
+                                            .length,
+                                        itemBuilder: (context, index) {
+                                          return InkWell(
+                                              onTap: () async {
+                                                if (tmp[widget.index - 1]
+                                                        .answers[index]
+                                                        .isCorrect ==
+                                                    true) {
+                                                  setScore(1);
+                                                  setWrongScore(0);
+                                                  await EasyLoading.showSuccess;
+                                                } else {
+                                                  await EasyLoading.showError;
+                                                }
+
+                                                var tmp2 = widget.index + 1;
+
+                                                if (tmp2 == tmp.length + 1) {
+                                                  EasyLoading.show();
+                                                  await Future.delayed(
+                                                      Duration(seconds: 5));
+                                                  EasyLoading.dismiss();
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) {
+                                                    return Quiz5(
+                                                        questionsLength:
+                                                            tmp.length,
+                                                        quizName:
+                                                            widget.quiz.name);
+                                                  }));
+                                                } else {
+                                                  Navigator.pushReplacement(
+                                                    context,
+                                                    PageRouteBuilder(
+                                                      pageBuilder: (context,
+                                                              animation1,
+                                                              animation2) =>
+                                                          Questions(
+                                                              quiz: widget.quiz,
+                                                              index: tmp2),
+                                                      transitionDuration:
+                                                          Duration.zero,
+                                                      reverseTransitionDuration:
+                                                          Duration.zero,
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                              child: Answer(
+                                                  answer: tmp[widget.index - 1]
+                                                      .answers[index]));
+                                        },
+                                      )),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.symmetric(
+                                  //       horizontal: 14),
+                                  //   child: Column(
+                                  //     children: answers!,
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
                             );
                           }
                         }

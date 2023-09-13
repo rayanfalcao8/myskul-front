@@ -36,6 +36,7 @@ class _QuizDetailState extends State<QuizDetail> {
   initializeScore() async {
     final SharedPreferences prefs = await _prefs;
     prefs.setInt('currentScore', 0);
+    prefs.setInt('wrongScore', 0);
   }
 
   @override
