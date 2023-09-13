@@ -36,6 +36,7 @@ class _QuizDetailState extends State<QuizDetail> {
   initializeScore() async {
     final SharedPreferences prefs = await _prefs;
     prefs.setInt('currentScore', 0);
+    prefs.setInt('wrongScore', 0);
   }
 
   @override
@@ -126,11 +127,13 @@ class _QuizDetailState extends State<QuizDetail> {
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width / 1.2,
-                              child: Text(
-                                widget.quiz.name,
-                                style:
-                                    textes.h4l.copyWith(color: couleurs.white),
-                                overflow: TextOverflow.ellipsis,
+                              child: Center(
+                                child: Text(
+                                  widget.quiz.name,
+                                  style:
+                                      textes.h4l.copyWith(color: couleurs.white),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ),
                             SizedBox(),

@@ -10,12 +10,14 @@ class Question extends StatefulWidget {
     required this.question,
     required this.position,
     required this.total,
-    required this.duration,
+    required this.correct,
+    required this.wrong,
   });
   var question;
   var total;
   var position;
-  var duration;
+  var correct;
+  var wrong;
 
   @override
   State<Question> createState() => _QuestionState();
@@ -23,35 +25,7 @@ class Question extends StatefulWidget {
 
 class _QuestionState extends State<Question> {
 
-  late Timer _timer;
-
-  late int _start;
-
-  void startTimer() {
-    const oneSec = const Duration(seconds: 1);
-    _timer = new Timer.periodic(
-      oneSec,
-      (Timer timer) {
-        if (_start == 0) {
-          setState(() {
-            timer.cancel();
-          });
-        } else {
-          setState(() {
-            _start--;
-          });
-        }
-      },
-    );
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    _start = widget.duration;
-    startTimer();
-    super.initState();
-  }
+double c=100;
 
   @override
   Widget build(BuildContext context) {
@@ -80,45 +54,45 @@ class _QuestionState extends State<Question> {
                       ),
                       Row(
                         children: [
-                          const Text(
-                            "05",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.green,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Container(
-                            width: 50,
-                            height: 6,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              color: const Color(0xff17bf27),
-                            ),
-                          ),
+                          // Text(
+                          //   widget.correct.toString(),
+                          //   style: TextStyle(
+                          //     fontSize: 12,
+                          //     fontWeight: FontWeight.w700,
+                          //     color: Colors.green,
+                          //   ),
+                          // ),
+                          //  SizedBox(
+                          //   width: 5,
+                          // ),
+                          // Container(
+                          //   width: (widget.correct*100)/widget.total,
+                          //   height: 6,
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(25),
+                          //     color: const Color(0xff17bf27),
+                          //   ),
+                          // ),
                           const Spacer(),
-                          Container(
-                            width: 50,
-                            height: 6,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              color: Colors.red,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const Text(
-                            "04",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.red,
-                            ),
-                          ),
+                          // Container(
+                          //   width: (widget.wrong*100)/widget.total,
+                          //   height: 6,
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(25),
+                          //     color: Colors.red,
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   width: 5,
+                          // ),
+                          // Text(
+                          //    widget.wrong.toString(),
+                          //   style: TextStyle(
+                          //     fontSize: 12,
+                          //     fontWeight: FontWeight.w700,
+                          //     color: Colors.red,
+                          //   ),
+                          // ),
                         ],
                       ),
                       const SizedBox(
@@ -135,14 +109,16 @@ class _QuestionState extends State<Question> {
                       const SizedBox(
                         height: 16,
                       ),
-                      Text(
-                        widget.question.name,
-                        // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          height: 1.2,
-                          fontWeight: FontWeight.w200,
+                      SingleChildScrollView(
+                        child: Text(
+                          widget.question.name,
+                          // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            height: 1.2,
+                            fontWeight: FontWeight.w200,
+                          ),
                         ),
                       ),
                     ],
@@ -182,7 +158,7 @@ class _QuestionState extends State<Question> {
 }
 
 class Answer extends StatelessWidget {
-  Answer({required this.answer, required this.color});
+  Answer({required this.answer,  this.color});
   var answer;
   var color;
  
@@ -197,7 +173,7 @@ class Answer extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
         border: Border.all(
-          color: color,//Colors.black.withOpacity(.24),
+          color: Colors.black.withOpacity(.24),
           width: 2,
         ),
       ),
