@@ -109,14 +109,16 @@ double c=100;
                       const SizedBox(
                         height: 16,
                       ),
-                      Text(
-                        widget.question.name,
-                        // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          height: 1.2,
-                          fontWeight: FontWeight.w200,
+                      SingleChildScrollView(
+                        child: Text(
+                          widget.question.name,
+                          // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            height: 1.2,
+                            fontWeight: FontWeight.w200,
+                          ),
                         ),
                       ),
                     ],
