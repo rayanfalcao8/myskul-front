@@ -1,54 +1,70 @@
 import 'package:flutter/material.dart';
+// import 'package:google_bard/google_bard.dart';
+
+import '../../utilities/colors.dart';
+import '../../utilities/gradients.dart';
+import '../../utilities/helpers.dart';
+import '../../utilities/icons.dart';
+import '../../utilities/texts.dart';
 
 class ChatGPT extends StatelessWidget {
+
+  var couleurs = ColorHelper();
+
+  var textes = TextHelper();
+
+  var icones = IconHelper();
+
+  var gradients = GradientHelper();
+
+  var messageController = TextEditingController();
+
+  final ScrollController controller = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            pinned: true,
-            leading: BackButton(),
-            backgroundColor: Color(0xff22987f),
-            expandedHeight: 80,
-            title: Padding(
-              padding: EdgeInsets.only(top: 32.0),
-              child: Text("ChatGPT"),
-            ),
-            centerTitle: true,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(35),
-                bottomRight: Radius.circular(35),
-              ),
-            ),
-          ),
-          // Add a SliverToBoxAdapter to display your warning message
-          SliverToBoxAdapter(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 300.0),
-                  Icon(
-                    Icons.warning,
-                    size: 64.0,
-                    color: Colors.yellow,
-                  ),
-                  SizedBox(height: 15.0),
-                  Text(
-                    'Fonctionnalité en cours de developpement',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
+      appBar: getAppBar(title: "My AI", context: context),
+      body: Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+              width: MediaQuery.of(context).size.width,
+              height: 80,
+              decoration: BoxDecoration(
+                  color: couleurs.green,
+                  borderRadius:
+                  BorderRadius.only(topLeft: Radius.circular(20))),
+              child: Row(children: [
+                Expanded(
+                    child: TextFormField(
+                      controller: messageController,
+                      style: const TextStyle(color: Colors.white),
+                      cursorColor: couleurs.white,
+                    )),
+                const SizedBox(
+                  width: 12,
+                ),
+                GestureDetector(
+                  onTap: () {
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: couleurs.green,
+                      borderRadius: BorderRadius.circular(30),
                     ),
+                    child: const Center(
+                        child: Icon(
+                          Icons.send,
+                          color: Colors.white,
+                        )),
                   ),
-                ],
-              ),
+                )
+              ]),
             ),
           ),
-        ],
-      ),
     );
   }
 }

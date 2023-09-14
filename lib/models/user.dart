@@ -13,6 +13,7 @@ class User {
   var speciality;
   var school;
   var domain;
+  var score;
 
   User(
       {id,
@@ -41,6 +42,7 @@ class User {
     speciality = json['speciality'];
     school = json['school'];
     domain = json['domain'];
+    score = json['score'];
   }
 
   Map<String, dynamic> toJson() {
@@ -59,6 +61,7 @@ class User {
       'speciality': speciality,
       'school': school,
       'domain': domain,
+      'score': score,
     };
   }
 }

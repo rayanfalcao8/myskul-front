@@ -122,4 +122,38 @@ class QuizController extends GetxController {
       EasyLoading.showError(e.toString());
     }
   }
+
+  getLeaderBoard() async {
+    var token;
+
+    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+
+    token = await prefs.getString('token');
+    try {
+      var headers = {
+        "Authorization": "Bearer" + " " + token.toString(),
+        "Content-Type": "application/json; charset=UTF-8",
+        "Accept": "application/json",
+      };
+      var url = Uri.parse(
+          ApiEndponits().baseUrl + ApiEndponits().endpoints.leaderboard);
+
+      http.Response res = await http.get(url, headers: headers);
+
+      if (res.statusCode == 200) {
+        Map<String, dynamic> json = jsonDecode(res.body);
+        List<User> leaders = [];
+        json['data']['leaderboard'].forEach((elt) {
+          leaders.add(User.fromJson(elt));
+        });
+
+        return [leaders, User.fromJson(json['data']['user']), json['data']['position']];
+      } else {
+        throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
+      }
+    } catch (e) {
+      EasyLoading.showError(e.toString());
+    }
+  }
 }

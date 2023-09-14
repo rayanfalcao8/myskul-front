@@ -8,7 +8,7 @@ class Subscriptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(title: "Abonnements"),
+      appBar: getAppBar(title: "Abonnements", context: context),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,

@@ -348,12 +348,12 @@ class HomepageScaffold extends StatelessWidget {
                                 texte: "Leaderboard",
                                 couleur: ColorHelper().lemon,
                                 function: () {
-                                  Get.to(() => LeaderBoard());
+                                  Get.to(() => LeaderBoard(user: user));
                                 },
                               ),
                               DashBox(
                                 icone: IconHelper().shop,
-                                texte: "ChatGPT",
+                                texte: "My AI",
                                 couleur: ColorHelper().lightGreen,
                                 function: () {
                                   Get.to(() => ChatGPT());
