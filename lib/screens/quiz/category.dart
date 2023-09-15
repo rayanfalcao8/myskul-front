@@ -5,8 +5,6 @@ import 'package:myskul/screens/quiz/quiz_list.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/texts.dart';
 
-import '../../models/quiz.dart';
-import '../chat/chat.dart';
 
 class CategoryWidget extends StatelessWidget {
   CategoryWidget({required this.category});

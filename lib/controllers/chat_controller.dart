@@ -4,7 +4,6 @@ import 'package:myskul/components/messages_tiles.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:myskul/utilities/colors.dart';
-import 'package:myskul/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;

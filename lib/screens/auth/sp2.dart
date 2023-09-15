@@ -6,8 +6,6 @@ import 'package:myskul/components/button_d.dart';
 import 'package:myskul/controllers/auth/registration_controller.dart';
 import 'package:myskul/controllers/home_controller.dart';
 import 'package:myskul/models/user.dart';
-import 'package:myskul/screens/auth/login.dart';
-import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';

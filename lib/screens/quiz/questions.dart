@@ -117,7 +117,7 @@ class _QuestionsState extends State<Questions> {
   getQuestions() async {
     List<QuestionModel> questions =
         await QuizController().getQuestionsByTheme(widget.quiz.id);
-    widget.firstId = (questions[0] as QuestionModel).id;
+    widget.firstId = (questions[0]).id;
     return questions;
   }
 

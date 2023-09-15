@@ -1,14 +1,10 @@
-import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:myskul/controllers/quiz_controller.dart';
 
 import '../../components/messages_tiles.dart';
 import '../../models/category.dart';
-import '../../models/quiz.dart';
 import '../../models/user.dart';
 import '../../utilities/colors.dart';
 import '../../utilities/gradients.dart';

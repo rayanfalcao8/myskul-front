@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:myskul/screens/auth/login.dart';
-import 'package:myskul/screens/auth/reset.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';

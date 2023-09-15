@@ -1,9 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:myskul/models/question.dart';
-import 'quiz_5.dart';
 
 class Question extends StatefulWidget {
   Question({

@@ -37,6 +37,7 @@ class Subscriptions extends StatelessWidget {
                       itemCount: subs.length,
                       itemBuilder: (context, index) {
                         _buildSubscription(subs[index]);
+                        return null;
                       });
                 }
               }

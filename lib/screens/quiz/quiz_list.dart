@@ -1,9 +1,6 @@
-import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:myskul/controllers/quiz_controller.dart';
 import 'package:myskul/screens/quiz/quiz.dart';
 
@@ -14,7 +11,6 @@ import '../../utilities/colors.dart';
 import '../../utilities/gradients.dart';
 import '../../utilities/icons.dart';
 import '../../utilities/texts.dart';
-import 'category.dart';
 
 class QuizList extends StatefulWidget {
   QuizList({required this.category});

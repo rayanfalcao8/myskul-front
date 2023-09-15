@@ -4,7 +4,6 @@ import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:audioplayers/audioplayers.dart';
 
 class SentMessage extends StatefulWidget {
   SentMessage({
