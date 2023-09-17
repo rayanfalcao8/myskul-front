@@ -106,7 +106,7 @@ class Subscriptions extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 10),
-              Text("${subscription.domain!.description}"),
+              Text("${subscription.domain!.name}"),
             ],
           ),
         ));
