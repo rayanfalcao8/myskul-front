@@ -8,8 +8,8 @@ class Subscription {
   String? abonnementTypeId;
   String? transactionID;
   String? buyerPhoneNumber;
-  int? levelId;
-  int? specialityId;
+  String? levelId;
+  String? specialityId;
   String? domainId;
   Domain? domain;
   Speciality? speciality;
@@ -48,9 +48,9 @@ class Subscription {
     levelId = json['level_id'];
     specialityId = json['speciality_id'];
     domainId = json['domain_id'];
-    domain = Domain.fromJson(json['level_id']);
-    speciality = Speciality.fromJson(json['speciality_id']);
-    level = Level.fromJson(json['speciality_id']);
+    domain = Domain.fromJson(json['domain']);
+    speciality = Speciality.fromJson(json['speciality']);
+    level = Level.fromJson(json['level']);
     createdAt =
         json['created_at'] != null ? DateTime.parse(json['created_at']) : null;
     updatedAt =

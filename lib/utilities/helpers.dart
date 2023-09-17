@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myskul/utilities/colors.dart';
 
 AppBar getAppBar({required String title}) {
   return AppBar(
@@ -20,5 +21,16 @@ FloatingActionButton fab({Function()? onPressed}) {
     onPressed: onPressed,
     backgroundColor: Color(0xff22987f),
     child: Icon(Icons.add),
+  );
+}
+
+BoxDecoration getDecoration() {
+  var colors = ColorHelper();
+  return BoxDecoration(
+    color: colors.white.withOpacity(0.5),
+    image: DecorationImage(
+        image: AssetImage("assets/images/math.png"),
+        opacity: 0.04,
+        fit: BoxFit.cover),
   );
 }

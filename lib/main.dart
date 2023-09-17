@@ -39,7 +39,7 @@ User? user; // Ici sera stocké l'utilisateur principal
 //   Get.to(() => GroupChat(user: user!));
 // }
 
- shMethods(SharedPreferences prefs) async {
+shMethods(SharedPreferences prefs) async {
   seen = await prefs.getBool('first');
   token = await prefs.getString('token');
   fmToken = await prefs.getString('fmToken');
@@ -54,7 +54,7 @@ User? user; // Ici sera stocké l'utilisateur principal
   }
 }
 
- getUser(SharedPreferences prefs) async {
+getUser(SharedPreferences prefs) async {
   var userString = await prefs.getString('user');
   if (userString != null) {
     var userJson = jsonDecode(userString);
@@ -103,7 +103,7 @@ User? user; // Ici sera stocké l'utilisateur principal
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); // Initialisation de firebase
+  // await Firebase.initializeApp(); // Initialisation de firebase
 
   // Initialisation de firebase messaging et awesome notifications
   //await messagingInit();
@@ -190,13 +190,18 @@ class _Home1State extends State<Home1> {
     // Attach a listener to the stream
     _sub = linkStream.listen((String? link) {
       // Parse the link and warn the user, if it is not correct
-      if (link != null ) {
+      if (link != null) {
         var uri = Uri.parse(link);
-        if (uri.queryParameters['token'] != null && uri.queryParameters['email'] != null) {
+        if (uri.queryParameters['token'] != null &&
+            uri.queryParameters['email'] != null) {
           var hashedBytes = uri.queryParameters['token'].toString();
-          var digest = sha256.convert(utf8.encode(uri.queryParameters['email'].toString()));
-          if( digest.toString() == hashedBytes ) {
-            Get.to(Reset(token:uri.queryParameters['token'].toString(),email:uri.queryParameters['email'].toString()));;
+          var digest = sha256
+              .convert(utf8.encode(uri.queryParameters['email'].toString()));
+          if (digest.toString() == hashedBytes) {
+            Get.to(Reset(
+                token: uri.queryParameters['token'].toString(),
+                email: uri.queryParameters['email'].toString()));
+            ;
           } else {
             EasyLoading.showError("Erreur de reinitialisation");
           }
