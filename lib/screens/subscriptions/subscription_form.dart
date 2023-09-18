@@ -182,7 +182,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(title: "Ajouter Abonnement"),
+      appBar: getAppBar(title: "Ajouter Abonnement", context: context),
       body: Container(
         decoration: getBckDecoration(),
         padding: EdgeInsets.only(top: 20),
