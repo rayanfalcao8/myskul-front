@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myskul/components/messages_tiles.dart';
+import 'package:myskul/controllers/quiz_controller.dart';
+import 'package:myskul/models/quiz.dart';
 import 'package:myskul/screens/home.dart';
 import '../../utilities/colors.dart';
 import '../../utilities/texts.dart';
@@ -7,12 +9,13 @@ import 'package:get/get.dart';
 import '../../utilities/gradients.dart';
 import '../../utilities/icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class Quiz5 extends StatefulWidget {
-  Quiz5({this.questionsLength, this.quizName});
+  Quiz5({required this.questionsLength, required this.quiz});
 
   var questionsLength;
-  var quizName;
+  QuizModel quiz;
 
   @override
   State<Quiz5> createState() => _Quiz5State();
@@ -21,13 +24,25 @@ class Quiz5 extends StatefulWidget {
 class _Quiz5State extends State<Quiz5> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
+  final player = AudioPlayer();
+
   var correctAnswers;
 
   getCorrectAnswers() async {
     final SharedPreferences prefs = await _prefs;
     var correctAnswers = await prefs.getInt('currentScore')!;
 
+    if (correctAnswers < (widget.questionsLength * 50 / 100)) {
+      playLocalAudio("wrong-final");
+    } else {
+      playLocalAudio("right-final");
+    }
+    QuizController().answerQuiz(score: correctAnswers, quiz: widget.quiz);
     return correctAnswers;
+  }
+
+  playLocalAudio(String music) async {
+    await player.play(AssetSource('sons/$music.mp3'));
   }
 
   String getAppreciation(var score, var length) {
@@ -160,7 +175,7 @@ class _Quiz5State extends State<Quiz5> {
                             Container(
                               width: MediaQuery.of(context).size.width / 1.2,
                               child: Text(
-                                widget.quizName,
+                                widget.quiz.name,
                                 style:
                                     textes.h4l.copyWith(color: couleurs.white),
                                 overflow: TextOverflow.ellipsis,

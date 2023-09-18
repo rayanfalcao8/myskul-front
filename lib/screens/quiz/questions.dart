@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class Questions extends StatefulWidget {
 
 class _QuestionsState extends State<Questions> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-
+  final player = AudioPlayer();
   var couleurs = ColorHelper();
 
   var questions;
@@ -62,34 +63,36 @@ class _QuestionsState extends State<Questions> {
 
   getScore() async {
     final SharedPreferences prefs = await _prefs;
-    int tmp = await prefs.getInt('currentScore')!;
-    return tmp;
+    score = await prefs.getInt('currentScore')!;
   }
 
   getWrongScore() async {
     final SharedPreferences prefs = await _prefs;
-    int tmp = await prefs.getInt('wrongScore')!;
-    return tmp;
+    wrong = await prefs.getInt('wrongScore')!;
+  }
+
+  playLocalAudio(String music) async {
+    await player.play(AssetSource('sons/$music.mp3'));
   }
 
   void startTimer() async {
     const oneSec = const Duration(seconds: 1);
     var tmp = widget.index + 1;
     var tmp2 = await questions as List<QuestionModel>;
-
+    playLocalAudio('start');
     _timer = new Timer.periodic(
       oneSec,
       (Timer timer) {
         if (_start == 0) {
           setState(() {
             timer.cancel();
-            if (tmp == tmp2.length) {
+            if (tmp == tmp2.length+1) {
               setScore(0);
               setWrongScore(1);
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) {
                 return Quiz5(
-                    questionsLength: tmp2.length, quizName: widget.quiz.name);
+                    questionsLength: tmp2.length, quiz: widget.quiz.name);
               }));
             } else {
               setScore(0);
@@ -124,15 +127,17 @@ class _QuestionsState extends State<Questions> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
-    // () async {
-    //   score = await getScore();
-    //   wrong = await getWrongScore();
-    // };
+
+    Future.delayed(Duration.zero, (() {
+      getScore();
+      getWrongScore();
+    }));
 
     questions = getQuestions();
     _start = questionDuration;
     startTimer();
+
+    super.initState();
   }
 
   @override
@@ -271,8 +276,7 @@ class _QuestionsState extends State<Questions> {
                                       left: 0,
                                       right: 0,
                                       child: Container(
-                                        margin:
-                                            const EdgeInsets.only(top: 150),
+                                        margin: const EdgeInsets.only(top: 150),
                                         height: 100,
                                         width: 100,
                                         decoration: const BoxDecoration(
@@ -305,12 +309,11 @@ class _QuestionsState extends State<Questions> {
                                 ),
                                 Container(
                                     width: MediaQuery.of(context).size.width,
-                                    height:
-                                        MediaQuery.of(context).size.height /1.8,
+                                    height: MediaQuery.of(context).size.height /
+                                        1.8,
                                     child: ListView.builder(
-                                      itemCount: tmp[widget.index - 1]
-                                          .answers
-                                          .length,
+                                      itemCount:
+                                          tmp[widget.index - 1].answers.length,
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                             onTap: () async {
@@ -320,9 +323,25 @@ class _QuestionsState extends State<Questions> {
                                                   true) {
                                                 setScore(1);
                                                 setWrongScore(0);
-                                                await EasyLoading.showSuccess;
+
+                                                await EasyLoading.showSuccess(
+                                                    "correct-a".tr);
+
+                                                playLocalAudio('right-answer');
+
+                                                await Future.delayed(
+                                                    Duration(seconds: 1));
                                               } else {
-                                                await EasyLoading.showError;
+                                                setScore(0);
+                                                setWrongScore(1);
+
+                                                await EasyLoading.showError(
+                                                    "wrong-a".tr);
+
+                                                playLocalAudio('wrong-answer');
+
+                                                await Future.delayed(
+                                                    Duration(seconds: 1));
                                               }
 
                                               var tmp2 = widget.index + 1;
@@ -330,17 +349,16 @@ class _QuestionsState extends State<Questions> {
                                               if (tmp2 == tmp.length + 1) {
                                                 EasyLoading.show();
                                                 await Future.delayed(
-                                                    Duration(seconds: 5));
+                                                    Duration(seconds: 1));
                                                 EasyLoading.dismiss();
                                                 Navigator.pushReplacement(
-                                                    context,
-                                                    MaterialPageRoute(
+                                                    context, MaterialPageRoute(
                                                         builder: (context) {
                                                   return Quiz5(
                                                       questionsLength:
                                                           tmp.length,
-                                                      quizName:
-                                                          widget.quiz.name);
+                                                      quiz:
+                                                          widget.quiz);
                                                 }));
                                               } else {
                                                 Navigator.pushReplacement(

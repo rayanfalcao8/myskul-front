@@ -51,45 +51,45 @@ double c=100;
                       ),
                       Row(
                         children: [
-                          // Text(
-                          //   widget.correct.toString(),
-                          //   style: TextStyle(
-                          //     fontSize: 12,
-                          //     fontWeight: FontWeight.w700,
-                          //     color: Colors.green,
-                          //   ),
-                          // ),
-                          //  SizedBox(
-                          //   width: 5,
-                          // ),
-                          // Container(
-                          //   width: (widget.correct*100)/widget.total,
-                          //   height: 6,
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(25),
-                          //     color: const Color(0xff17bf27),
-                          //   ),
-                          // ),
+                          Text(
+                            widget.correct.toString(),
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.green,
+                            ),
+                          ),
+                           SizedBox(
+                            width: 5,
+                          ),
+                          Container(
+                            width: (widget.correct*100)/widget.total,
+                            height: 6,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: const Color(0xff17bf27),
+                            ),
+                          ),
                           const Spacer(),
-                          // Container(
-                          //   width: (widget.wrong*100)/widget.total,
-                          //   height: 6,
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(25),
-                          //     color: Colors.red,
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   width: 5,
-                          // ),
-                          // Text(
-                          //    widget.wrong.toString(),
-                          //   style: TextStyle(
-                          //     fontSize: 12,
-                          //     fontWeight: FontWeight.w700,
-                          //     color: Colors.red,
-                          //   ),
-                          // ),
+                          Container(
+                            width: (widget.wrong*100)/widget.total,
+                            height: 6,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: Colors.red,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                             widget.wrong.toString(),
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.red,
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(

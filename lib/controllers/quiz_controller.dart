@@ -158,4 +158,58 @@ class QuizController extends GetxController {
       EasyLoading.showError(e.toString());
     }
   }
+
+  answerQuiz({required score, required QuizModel quiz}) async {
+    var token;
+    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+
+    token = await prefs.getString('token');
+    try {
+      var headers = {
+        "Authorization": "Bearer" + " " + token.toString(),
+        "Content-Type": "application/json; charset=UTF-8",
+        "Accept": "application/json",
+      };
+
+      if (quiz.done == false) {
+        var body = {
+          "score": score,
+          "theme_id": quiz.id,
+        };
+
+        var url =
+            Uri.parse(ApiEndponits().baseUrl + ApiEndponits().endpoints.quiz);
+
+        http.Response res =
+            await http.post(url, headers: headers, body: jsonEncode(body));
+
+        if (res.statusCode == 200) {
+          print("Nouveau score $score");
+        } else {
+          throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
+        }
+      } else {
+        var body = {
+          "score": score,
+        };
+
+        var url = Uri.parse(ApiEndponits().baseUrl +
+            ApiEndponits().endpoints.quiz +
+            '/' +
+            quiz.id);
+
+        http.Response res =
+            await http.put(url, headers: headers, body: jsonEncode(body));
+
+        if (res.statusCode == 200) {
+          print("Score mis à jour : nouveau score $score");
+        } else {
+          throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
+        }
+      }
+    } catch (e) {
+      EasyLoading.showError(e.toString());
+    }
+  }
 }
