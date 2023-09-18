@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:myskul/models/sub-type.dart';
 import 'package:myskul/models/subscription.dart';
 import 'package:myskul/main.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
@@ -22,6 +23,24 @@ class SubscriptionController {
     final json = jsonDecode(res.body);
     return (json['data']['subscriptions'] as List)
         .map((e) => Subscription.fromJson(e))
+        .toList();
+  }
+
+  static Future<List<SubscriptionType>> getSubTypes() async {
+    token = await (await SharedPreferences.getInstance()).getString('token');
+    var headers = {
+      "Authorization": "Bearer" + " " + token.toString(),
+      "Content-Type": "application/json; charset=UTF-8",
+      "Accept": "application/json",
+    };
+
+    var url = Uri.parse(
+        ApiEndponits().baseUrl + ApiEndponits().endpoints.subscriptionTypes);
+
+    http.Response res = await http.get(url, headers: headers);
+    final json = jsonDecode(res.body);
+    return (json['data']['subscriptions'] as List)
+        .map((e) => SubscriptionType.fromJson(e))
         .toList();
   }
 
