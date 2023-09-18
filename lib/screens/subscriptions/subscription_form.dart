@@ -11,6 +11,7 @@ import 'package:myskul/controllers/subscripiton_controller.dart';
 import 'package:myskul/models/domain.dart';
 import 'package:myskul/models/level.dart';
 import 'package:myskul/models/speciality.dart';
+import 'package:myskul/models/sub-type.dart';
 import 'package:myskul/models/subscription.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/helpers.dart';
@@ -26,7 +27,7 @@ class SubscriptionForm extends StatefulWidget {
 
 class _SubscriptionFormState extends State<SubscriptionForm> {
   final _formKey = GlobalKey<FormState>();
-  final _typeController = TextEditingController();
+  int? _typeId;
   int? _domainId;
   int? _levelId;
   int? _specialityId;
@@ -34,24 +35,21 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
   List<Domain> _domains = [];
   List<Level> _levels = [];
   List<Speciality> _specialities = [];
+  List<SubscriptionType> _subTypes = [];
   int _currentStep = 0;
   List<int> _paymentTypes = [1, 2];
-
-  @override
-  void dispose() {
-    _typeController.dispose();
-    super.dispose();
-  }
 
   _loadData() async {
     List resp = await Future.wait([
       DomainController.getAll(),
       LevelController.getAll(),
-      SpecialityController.getAll()
+      SpecialityController.getAll(),
+      SubscriptionController.getSubTypes(),
     ]);
     _domains = resp[0];
     _levels = resp[1];
     _specialities = resp[2];
+    _subTypes = resp[3];
     return true;
   }
 
@@ -61,6 +59,17 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
       items.add(DropdownMenuItem(
         child: Text("Type $t"),
         value: t,
+      ));
+    }
+    return items;
+  }
+
+  List<DropdownMenuItem<int>> _getTypesItems(List<SubscriptionType> types) {
+    List<DropdownMenuItem<int>> items = [];
+    for (var t in types) {
+      items.add(DropdownMenuItem(
+        child: Text(t.category!),
+        value: t.id!,
       ));
     }
     return items;
@@ -118,12 +127,13 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                 ),
               ),
               SizedBox(height: 30),
-              TextFieldInput(
-                controller: _typeController,
-                validator: stringValidator,
-                labelText: "Type",
-                hintText: "Type",
-              ),
+              DropdownMenuInput(
+                  hintText: "Type",
+                  items: _getTypesItems(_subTypes),
+                  validator: dropDownValidator,
+                  onChanged: (value) {
+                    _typeId = value;
+                  }),
               SizedBox(height: 20),
               DropdownMenuInput(
                   hintText: "Domaine",
