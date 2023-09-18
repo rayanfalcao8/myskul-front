@@ -18,13 +18,13 @@ class Subscription {
   DateTime? updatedAt;
 
   Subscription({
-    userId,
-    abonnementTypeId,
-    transactionID,
-    buyerPhoneNumber,
-    levelId,
-    specialityId,
-    domainId,
+    this.userId,
+    required this.abonnementTypeId,
+    this.transactionID,
+    this.buyerPhoneNumber,
+    required this.levelId,
+    required this.specialityId,
+    required this.domainId,
   });
 
   Map<String, dynamic> toJson() {

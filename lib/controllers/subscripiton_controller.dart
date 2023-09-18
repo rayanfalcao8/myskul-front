@@ -52,8 +52,10 @@ class SubscriptionController {
     var url = Uri.parse(
         ApiEndponits().baseUrl + ApiEndponits().endpoints.subscription);
 
+    Map data = subscription.toJson();
+
     http.Response res =
-        await http.post(url, headers: headers, body: subscription);
+        await http.post(url, headers: headers, body: jsonEncode(data));
     final json = jsonDecode(res.body);
     return Subscription.fromJson(json['data']['subscription']);
   }

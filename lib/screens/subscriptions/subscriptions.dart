@@ -22,7 +22,7 @@ class Subscriptions extends StatelessWidget {
           child: Icon(Icons.add),
         ),
         body: Container(
-          decoration: getDecoration(),
+          decoration: getBckDecoration(),
           child: FutureBuilder(
             future: SubscriptionController.getAll(),
             builder: (context, snapshot) {
