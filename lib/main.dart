@@ -106,7 +106,7 @@ void main() async {
   await Firebase.initializeApp(); // Initialisation de firebase
 
   // Initialisation de firebase messaging et awesome notifications
-  //await messagingInit();
+  // await messagingInit();
 
   // Initialisation du package SharedPreferences
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
