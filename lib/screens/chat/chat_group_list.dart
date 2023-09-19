@@ -1,20 +1,14 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myskul/components/messages_tiles.dart';
-import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/screens/chat/chat.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:myskul/components/button_g.dart';
-import 'package:myskul/components/input.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:myskul/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

@@ -9,16 +9,14 @@ import '../../utilities/icons.dart';
 import '../../utilities/texts.dart';
 
 
-class Librarypage extends StatefulWidget {
-  Librarypage ({required this.user});
+class Shop_d extends StatefulWidget {
+  Shop_d({required this.user});
   User user;
   @override
-  State<Librarypage> createState() => LibrarypageState();
+  State<Shop_d> createState() => _Shop_dState();
 }
 
-
-
-class LibrarypageState extends State<Librarypage> {
+class _Shop_dState extends State<Shop_d> {
   var couleurs = ColorHelper();
 
   var textes = TextHelper();
@@ -39,10 +37,6 @@ class LibrarypageState extends State<Librarypage> {
             leading: BackButton(),
             backgroundColor: Color.fromRGBO(34, 152, 127, 1),
             expandedHeight: 80,
-            title: Padding(
-              padding: EdgeInsets.only(top: 32.0),
-              child: Text("Library"),
-            ),
             centerTitle: true,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -53,7 +47,7 @@ class LibrarypageState extends State<Librarypage> {
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               title: Padding(
-                padding: EdgeInsets.only(top: 20.0),
+                padding: EdgeInsets.only(top: 20.0),               
               ),
               background: Stack(
                 children: [
@@ -127,89 +121,17 @@ class LibrarypageState extends State<Librarypage> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 16,),
-                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.78,
-                    child: ListView(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 74,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: const Color(0x72ffffff),
-                            border: Border.all(
-                              color: const Color(0xFF2BB799),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              const Expanded(
-                                flex: 5,
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.fromLTRB(12, 14, 0, 0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "TITRE",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0xFF2BB799),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 12,
-                                      ),
-                                    Text(
-                                      "TAILLE : 10.0Mo",
-                                      style: TextStyle(
-                                        color: Color.fromARGB(112, 74, 72, 72),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    ],
-                                  ), 
-                                ),
-                              ),
-                             Expanded(
-                                  child: Container(
-                                    width: 63.859649658203125,
-                                    height: 74,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: const Color(0xff2bb799),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.download,
-                                          color: Colors.white,
-                                          size: 38,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                 
+                 
                 ],
               ),
             ),
           ),
         ],
+        
       ),
-
+      
     );
+    
   }
 }

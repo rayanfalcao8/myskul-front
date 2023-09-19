@@ -1,7 +1,5 @@
 //import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bounceable/flutter_bounceable.dart';
-import 'package:get/get.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';

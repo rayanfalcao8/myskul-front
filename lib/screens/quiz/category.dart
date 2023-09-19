@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
-import 'package:myskul/screens/quiz/quiz_list.dart' as q;
 import 'package:myskul/screens/quiz/quiz_list.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/texts.dart';
 
-import '../../models/quiz.dart';
-import '../chat/chat.dart';
 
 class CategoryWidget extends StatelessWidget {
   CategoryWidget({required this.category});

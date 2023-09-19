@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/controllers/auth/password_controller.dart';
-import 'package:myskul/screens/auth/register.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';

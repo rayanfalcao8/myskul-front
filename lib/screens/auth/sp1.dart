@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/components/gender_box.dart';
 import 'package:myskul/components/button_d.dart';
-import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/auth/lv.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';

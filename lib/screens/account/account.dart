@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:myskul/components/gender_box.dart';
 import 'package:myskul/components/input_number.dart';
 import 'package:myskul/controllers/auth/registration_controller.dart';
-import 'package:myskul/controllers/home_controller.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/account/account_password.dart';
 import 'package:myskul/utilities/colors.dart';

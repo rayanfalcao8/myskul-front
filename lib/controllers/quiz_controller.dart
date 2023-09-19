@@ -8,7 +8,6 @@ import 'package:myskul/models/quiz.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
-import '../models/user.dart';
 import '../utilities/api_endpoints.dart';
 
 class QuizController extends GetxController {

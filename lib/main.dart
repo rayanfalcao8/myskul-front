@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/screens/auth/domain.dart';
 import 'package:myskul/screens/chat/chat_group_list.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/home.dart';
-import 'package:myskul/test.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'screens/splash.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -63,6 +61,7 @@ Future<User?> getUser(SharedPreferences prefs) async {
     user = User.fromJson(userJson);
     return user;
   }
+  return null;
 }
 
 Future<void> messagingInit() async {

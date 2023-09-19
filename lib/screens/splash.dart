@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

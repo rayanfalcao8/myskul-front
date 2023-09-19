@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
 import 'package:myskul/models/quiz.dart';
 import 'package:myskul/screens/quiz/question.dart';
