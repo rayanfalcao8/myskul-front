@@ -6,8 +6,8 @@ import 'package:myskul/controllers/auth/login_controller.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/account/account.dart';
 import 'package:myskul/screens/history/history.dart';
-import 'package:myskul/screens/library/library.dart';
 import 'package:myskul/screens/partner.dart';
+import 'package:myskul/screens/shop/shop2.dart';
 import 'package:myskul/screens/subscriptions/subscriptions.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
@@ -16,6 +16,8 @@ import 'package:myskul/utilities/gradients.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
+
+import 'library/library.dart';
 
 class MainDrawer extends StatelessWidget {
   MainDrawer({required this.user});
@@ -168,7 +170,7 @@ class MainDrawer extends StatelessWidget {
               ),
               tileColor: Get.currentRoute == '/home' ? Colors.grey[300] : null,
               onTap: () {
-                Get.to(() => Library());
+                Get.to(() => Librarypage(user: user,));
               },
             ),
             ListTile(

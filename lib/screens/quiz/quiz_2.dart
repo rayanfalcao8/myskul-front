@@ -66,14 +66,14 @@ class Quiz2 extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                               Expanded(
+                              Expanded(
                                 flex: 5,
                                 child: Padding(
                                   padding:
-                                      EdgeInsets.fromLTRB(12, 14, 0, 0),
+                                  EdgeInsets.fromLTRB(12, 14, 0, 0),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "INTITULE DU QUIZ",
@@ -158,10 +158,10 @@ class Quiz2 extends StatelessWidget {
                                 flex: 5,
                                 child: Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(12, 14, 0, 0),
+                                  const EdgeInsets.fromLTRB(12, 14, 0, 0),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "INTITULE DU QUIZ",
@@ -206,6 +206,7 @@ class Quiz2 extends StatelessWidget {
                                           color: Colors.white,
                                         ),
                                       ),
+                                      Container(height: 100, ),
                                       SizedBox(
                                         width: 30,
                                         child: Divider(

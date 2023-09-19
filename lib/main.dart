@@ -61,6 +61,7 @@ getUser(SharedPreferences prefs) async {
     user = User.fromJson(userJson);
     return user;
   }
+  return null;
 }
 
 // Future<void> messagingInit() async {
