@@ -155,7 +155,7 @@ double c=100;
 }
 
 class Answer extends StatelessWidget {
-  Answer({required this.answer,  this.color});
+  Answer({required this.answer,required  this.color});
   var answer;
   var color;
  
@@ -170,7 +170,7 @@ class Answer extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
         border: Border.all(
-          color: Colors.black.withOpacity(.24),
+          color: color,//Colors.black.withOpacity(.24),
           width: 2,
         ),
       ),

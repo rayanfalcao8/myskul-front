@@ -115,6 +115,7 @@ class FR {
     'passable': 'Passable',
     'assez-bien': 'Assez Bien',
     'bien': 'Bien',
+    'tres-bien': 'Très Bien',
     'excellent': 'Excellent',
   };
 }

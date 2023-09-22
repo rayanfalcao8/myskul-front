@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/screens/auth/domain.dart';
 import 'package:myskul/screens/auth/reset.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/auth/login.dart';
+import 'package:myskul/screens/chat/chat_group_list.dart';
 import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'screens/splash.dart';
@@ -18,6 +20,8 @@ import 'package:flutter/services.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:crypto/crypto.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 bool?
     seen; // Cette variable va permettre d'afficher le splash screen une seule fois
@@ -29,15 +33,15 @@ String?
 User? user; // Ici sera stocké l'utilisateur principal
 
 //fonction pour capture les notification et faire des actions lorsqu'on les reçoit
-// @pragma("vm:entry-point")
-// Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
-//   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-//   final prefs = await _prefs;
-//   var userString = await prefs.getString('user');
-//   var userJson = jsonDecode(userString!);
-//   user = User.fromJson(userJson);
-//   Get.to(() => GroupChat(user: user!));
-// }
+@pragma("vm:entry-point")
+Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final prefs = await _prefs;
+  var userString = await prefs.getString('user');
+  var userJson = jsonDecode(userString!);
+  user = User.fromJson(userJson);
+  Get.to(() => GroupChat(user: user!));
+}
 
 shMethods(SharedPreferences prefs) async {
   seen = await prefs.getBool('first');
@@ -49,8 +53,8 @@ shMethods(SharedPreferences prefs) async {
     Get.updateLocale(Locale(locale!));
   }
   if (fmToken == null) {
-    // var tmp = await ChatController().getFmToken();
-    // await prefs.setString('fmToken', tmp);
+    var tmp = await ChatController().getFmToken();
+    await prefs.setString('fmToken', tmp);
   }
 }
 
@@ -64,50 +68,50 @@ getUser(SharedPreferences prefs) async {
   return null;
 }
 
-// Future<void> messagingInit() async {
-//   FirebaseMessaging.onBackgroundMessage(notify);
-//   await AwesomeNotifications().setListeners(
-//     onActionReceivedMethod: onActionReceivedMethod,
-//   );
+Future<void> messagingInit() async {
+  FirebaseMessaging.onBackgroundMessage(notify);
+  await AwesomeNotifications().setListeners(
+    onActionReceivedMethod: onActionReceivedMethod,
+  );
 
-//   FirebaseMessaging.instance
-//       .setForegroundNotificationPresentationOptions(alert: true, sound: true);
-//   FirebaseMessaging.onMessage.listen(
-//     (m) {
-//        notify(m);
-//     },
-//   );
+  FirebaseMessaging.instance
+      .setForegroundNotificationPresentationOptions(alert: true, sound: true);
+  FirebaseMessaging.onMessage.listen(
+    (m) {
+      notify(m);
+    },
+  );
 
-//   FirebaseMessaging.onMessageOpenedApp.listen(
-//     (m) {
-//       print("OnMessageOpenedAp : ${m.data}");
-//     },
-//   );
+  FirebaseMessaging.onMessageOpenedApp.listen(
+    (m) {
+      print("OnMessageOpenedAp : ${m.data}");
+    },
+  );
 
-//   AwesomeNotifications().initialize(
-//     'resource://drawable/res_app_ico',
-//     [
-//       NotificationChannel(
-//         channelKey: 'MySkul',
-//         channelName: 'MySkul',
-//         channelDescription: 'MySkul Notification',
-//         playSound: true,
-//         importance: NotificationImportance.Max,
-//         defaultColor: ColorHelper().green,
-//         ledColor: Colors.white,
-//         icon: 'resource://drawable/res_app_ico',
-//       ),
-//     ],
-//     debug: true,
-//   );
-// }
+  AwesomeNotifications().initialize(
+    'resource://drawable/res_app_ico',
+    [
+      NotificationChannel(
+        channelKey: 'MySkul',
+        channelName: 'MySkul',
+        channelDescription: 'MySkul Notification',
+        playSound: true,
+        importance: NotificationImportance.Max,
+        defaultColor: ColorHelper().green,
+        ledColor: Colors.white,
+        icon: 'resource://drawable/res_app_ico',
+      ),
+    ],
+    debug: true,
+  );
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // Initialisation de firebase
 
   // Initialisation de firebase messaging et awesome notifications
-  // await messagingInit();
+  await messagingInit();
 
   // Initialisation du package SharedPreferences
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -217,11 +221,11 @@ class _Home1State extends State<Home1> {
 
   @override
   void initState() {
-    // AwesomeNotifications().isNotificationAllowed().then((value) {
-    //   if (!value) {
-    //     AwesomeNotifications().requestPermissionToSendNotifications();
-    //   }
-    // });
+    AwesomeNotifications().isNotificationAllowed().then((value) {
+      if (!value) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
 
     startStreaming();
     initUniLinks();
@@ -269,29 +273,27 @@ class _Home1State extends State<Home1> {
   }
 }
 
-// int createUniqueId() {
-//   return DateTime.now().millisecondsSinceEpoch.remainder(100000);
-// }
+int createUniqueId() {
+  return DateTime.now().millisecondsSinceEpoch.remainder(100000);
+}
 
-// Future notify(RemoteMessage m) async {
-//   var tmp = m.data as Map;
-//   var local = Get.locale;
+Future notify(RemoteMessage m) async {
+  var tmp = m.data;
 
-// AwesomeNotifications().createNotification(
-//       content: NotificationContent(
-//         id: createUniqueId(),
-//         channelKey: 'MySkul',
-//         title: tmp['nom'],
-//         body: tmp['message'],
-//         summary: tmp['groupe'],
-//         largeIcon: tmp['image'],
-//         roundedLargeIcon: true,
-//         notificationLayout: NotificationLayout.Messaging,
-//       ),
-//       actionButtons: [
-//         NotificationActionButton(
-//             key: 'key',
-//             label: Get.locale.toString().contains('en') ? 'ANSWER' : 'REPONDRE')
-//       ]);
-// }
-
+  AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: createUniqueId(),
+        channelKey: 'MySkul',
+        title: tmp['nom'],
+        body: tmp['message'],
+        summary: tmp['groupe'],
+        largeIcon: tmp['image'],
+        roundedLargeIcon: true,
+        notificationLayout: NotificationLayout.Messaging,
+      ),
+      actionButtons: [
+        NotificationActionButton(
+            key: 'key',
+            label: Get.locale.toString().contains('en') ? 'ANSWER' : 'REPONDRE')
+      ]);
+}

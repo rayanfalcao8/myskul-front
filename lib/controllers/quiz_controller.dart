@@ -197,7 +197,7 @@ class QuizController extends GetxController {
         var url = Uri.parse(ApiEndponits().baseUrl +
             ApiEndponits().endpoints.quiz +
             '/' +
-            quiz.id);
+            quiz.id.toString());
 
         http.Response res =
             await http.put(url, headers: headers, body: jsonEncode(body));

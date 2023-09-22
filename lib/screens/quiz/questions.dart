@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:myskul/components/button_d.dart';
+import 'package:myskul/components/button_g.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,10 +30,18 @@ class Questions extends StatefulWidget {
 
 class _QuestionsState extends State<Questions> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   final player = AudioPlayer();
+
   var couleurs = ColorHelper();
 
+  var answerColor = Colors.black.withOpacity(.24);
+
+  var answered = false;
+
   var questions;
+
+  Widget questionsWidget = Center();
 
   var textes = TextHelper();
 
@@ -45,9 +55,9 @@ class _QuestionsState extends State<Questions> {
 
   var wrong;
 
-  late Timer _timer;
+  late Timer timer;
 
-  late int _start;
+  late int start;
 
   setScore(int num) async {
     final SharedPreferences prefs = await _prefs;
@@ -80,13 +90,13 @@ class _QuestionsState extends State<Questions> {
     var tmp = widget.index + 1;
     var tmp2 = await questions as List<QuestionModel>;
     playLocalAudio('start');
-    _timer = new Timer.periodic(
+    timer = new Timer.periodic(
       oneSec,
       (Timer timer) {
-        if (_start == 0) {
+        if (start == 0) {
           setState(() {
             timer.cancel();
-            if (tmp == tmp2.length+1) {
+            if (tmp == tmp2.length + 1) {
               setScore(0);
               setWrongScore(1);
               Navigator.pushReplacement(context,
@@ -110,7 +120,7 @@ class _QuestionsState extends State<Questions> {
           });
         } else {
           setState(() {
-            _start--;
+            start--;
           });
         }
       },
@@ -134,9 +144,8 @@ class _QuestionsState extends State<Questions> {
     }));
 
     questions = getQuestions();
-    _start = questionDuration;
+    start = questionDuration;
     startTimer();
-
     super.initState();
   }
 
@@ -181,28 +190,32 @@ class _QuestionsState extends State<Questions> {
                         SizedBox(
                           height: 30,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Icon(
-                                    icones.back2,
-                                    color: couleurs.white,
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 10,
                                   ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(),
-                          ],
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    child: Icon(
+                                      icones.back2,
+                                      color: couleurs.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              questionsWidget
+                            ],
+                          ),
                         ),
+                        SizedBox(),
                       ],
                     ),
                   ),
@@ -292,7 +305,7 @@ class _QuestionsState extends State<Questions> {
                                         ),
                                         child: Center(
                                           child: Text(
-                                            _start.toString(),
+                                            start.toString(),
                                             style: TextStyle(
                                               fontSize: 32,
                                               fontWeight: FontWeight.w700,
@@ -313,74 +326,144 @@ class _QuestionsState extends State<Questions> {
                                         1.8,
                                     child: ListView.builder(
                                       itemCount:
-                                          tmp[widget.index - 1].answers.length,
+                                          tmp[widget.index - 1].answers.length +
+                                              1,
                                       itemBuilder: (context, index) {
-                                        return InkWell(
-                                            onTap: () async {
-                                              if (tmp[widget.index - 1]
-                                                      .answers[index]
-                                                      .isCorrect ==
-                                                  true) {
-                                                setScore(1);
-                                                setWrongScore(0);
+                                        if (index ==
+                                            tmp[widget.index - 1]
+                                                .answers
+                                                .length) {
+                                          return answered == true
+                                              ? Column(
+                                                children: [
+                                                  NewButtonG(
+                                                      text: 'next',
+                                                      function: () async {
+                                                        var tmp2 = widget.index + 1;
 
-                                                await EasyLoading.showSuccess(
-                                                    "correct-a".tr);
+                                                        if (tmp2 ==
+                                                            tmp.length + 1) {
+                                                          EasyLoading.show();
+                                                          await Future.delayed(
+                                                              Duration(seconds: 1));
+                                                          EasyLoading.dismiss();
 
-                                                playLocalAudio('right-answer');
+                                                          Navigator.pushReplacement(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) {
+                                                            return Quiz5(
+                                                                questionsLength:
+                                                                    tmp.length,
+                                                                quiz: widget.quiz);
+                                                          }));
+                                                        } else {
+                                                          Navigator.pushReplacement(
+                                                            context,
+                                                            PageRouteBuilder(
+                                                              pageBuilder: (context,
+                                                                      animation1,
+                                                                      animation2) =>
+                                                                  Questions(
+                                                                      quiz: widget
+                                                                          .quiz,
+                                                                      index: tmp2),
+                                                              transitionDuration:
+                                                                  Duration.zero,
+                                                              reverseTransitionDuration:
+                                                                  Duration.zero,
+                                                            ),
+                                                          );
+                                                        }
+                                                      },
+                                                    ),
+                                               SizedBox(height: 20,)
+                                                ],
+                                              )
+                                              : Center();
+                                        } else {
+                                          return InkWell(
+                                              onTap: () async {
+                                                if (tmp[widget.index - 1]
+                                                        .answers[index]
+                                                        .isCorrect ==
+                                                    true) {
+                                                  setScore(1);
+                                                  setWrongScore(0);
 
-                                                await Future.delayed(
-                                                    Duration(seconds: 1));
-                                              } else {
-                                                setScore(0);
-                                                setWrongScore(1);
+                                                  await EasyLoading.showSuccess(
+                                                      "correct-a".tr);
 
-                                                await EasyLoading.showError(
-                                                    "wrong-a".tr);
+                                                  playLocalAudio(
+                                                      'right-answer');
 
-                                                playLocalAudio('wrong-answer');
+                                                  // await Future.delayed(
+                                                  //     Duration(seconds: 1));
+                                                } else {
+                                                  setScore(0);
+                                                  setWrongScore(1);
 
-                                                await Future.delayed(
-                                                    Duration(seconds: 1));
-                                              }
+                                                  await EasyLoading.showError(
+                                                      "wrong-a".tr);
 
-                                              var tmp2 = widget.index + 1;
+                                                  playLocalAudio(
+                                                      'wrong-answer');
 
-                                              if (tmp2 == tmp.length + 1) {
-                                                EasyLoading.show();
-                                                await Future.delayed(
-                                                    Duration(seconds: 1));
-                                                EasyLoading.dismiss();
-                                                Navigator.pushReplacement(
-                                                    context, MaterialPageRoute(
-                                                        builder: (context) {
-                                                  return Quiz5(
-                                                      questionsLength:
-                                                          tmp.length,
-                                                      quiz:
-                                                          widget.quiz);
-                                                }));
-                                              } else {
-                                                Navigator.pushReplacement(
-                                                  context,
-                                                  PageRouteBuilder(
-                                                    pageBuilder: (context,
-                                                            animation1,
-                                                            animation2) =>
-                                                        Questions(
-                                                            quiz: widget.quiz,
-                                                            index: tmp2),
-                                                    transitionDuration:
-                                                        Duration.zero,
-                                                    reverseTransitionDuration:
-                                                        Duration.zero,
-                                                  ),
+                                                  // await Future.delayed(
+                                                  //     Duration(seconds: 1));
+                                                }
+
+                                                answered = true;
+                                                timer.cancel();
+                                                questionsWidget = Row(
+                                                  children: [
+                                                    AnimatedOpacity(
+                                                      opacity: 1.0,
+                                                      duration: const Duration(
+                                                          seconds: 2),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          showAlertDialog(
+                                                              context: context,
+                                                              text: tmp[widget
+                                                                          .index -
+                                                                      1]
+                                                                  .justification,
+                                                              quiz:
+                                                                  widget.quiz);
+                                                        },
+                                                        child: Icon(
+                                                          Icons.question_mark,
+                                                          color: couleurs.white,
+                                                          size: 30,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    )
+                                                  ],
                                                 );
-                                              }
-                                            },
-                                            child: Answer(
-                                                answer: tmp[widget.index - 1]
-                                                    .answers[index]));
+                                                setState(() {});
+                                              },
+                                              child: AnimatedOpacity(
+                                                opacity: 1.0,
+                                                duration:
+                                                    const Duration(seconds: 2),
+                                                child: Answer(
+                                                  answer: tmp[widget.index - 1]
+                                                      .answers[index],
+                                                  color: answered == false
+                                                      ? answerColor
+                                                      : tmp[widget.index - 1]
+                                                              .answers[index]
+                                                              .isCorrect
+                                                          ? couleurs.green
+                                                          : couleurs.red,
+                                                ),
+                                              ));
+                                        }
                                       },
                                     )),
                                 // Padding(
@@ -412,21 +495,15 @@ class _QuestionsState extends State<Questions> {
   }
 }
 
-showAlertDialog(BuildContext context, String text, bool isCorrect) {
+showAlertDialog(
+    {required BuildContext context,
+    required String text,
+    required QuizModel quiz}) {
   // show the dialog
   showDialog(
       context: Get.context as BuildContext,
       builder: (context) => CupertinoAlertDialog(
-            title: isCorrect
-                ? Text("correct-a".tr, style: TextHelper().h1r)
-                : Text("wrong-a".tr, style: TextHelper().h1r),
+            title: Text("Justification"),
             content: Text(text, style: TextHelper().h4l),
-            actions: [
-              CupertinoButton.filled(
-                  child: Text("ok".tr),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
-            ],
           ));
 }

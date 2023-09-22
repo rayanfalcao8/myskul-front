@@ -174,11 +174,13 @@ class _Quiz5State extends State<Quiz5> {
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width / 1.2,
-                              child: Text(
-                                widget.quiz.name,
-                                style:
-                                    textes.h4l.copyWith(color: couleurs.white),
-                                overflow: TextOverflow.ellipsis,
+                              child: Center(
+                                child: Text(
+                                  widget.quiz.name,
+                                  style: textes.h4l
+                                      .copyWith(color: couleurs.white),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ),
                             SizedBox(),
@@ -303,13 +305,17 @@ class _Quiz5State extends State<Quiz5> {
                             const SizedBox(
                               height: 38,
                             ),
-                            Text(
-                              getAppreciation(
-                                  snapshot.data, widget.questionsLength),
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w800,
-                                color: Color(0xFF22987F),
+                            AnimatedOpacity(
+                              opacity: 1.0,
+                              duration: const Duration(seconds: 2),
+                              child: Text(
+                                getAppreciation(
+                                    snapshot.data, widget.questionsLength),
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w800,
+                                  color: Color(0xFF22987F),
+                                ),
                               ),
                             ),
                           ],

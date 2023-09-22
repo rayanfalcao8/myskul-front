@@ -114,6 +114,7 @@ class EN {
     'passable': 'Average',
     'assez-bien': 'Quite good',
     'bien': 'Good',
+    'tres-bien': 'Very Good',
     'excellent': 'Excellent',
   };
 }
