@@ -163,6 +163,7 @@ class NotFoundWidget extends StatelessWidget {
             ),
             Text(
               texte,
+              textAlign: TextAlign.center,
               style: TextHelper()
                   .h3b
                   .copyWith(color: ColorHelper().black.withOpacity(0.5)),

@@ -226,7 +226,6 @@ class ChatController {
 
         return snapshot.data.docs.length > 0
             ? ListView.builder(
-              physics: BouncingScrollPhysics(),
                 controller: controller,
                 itemCount: snapshot.data.docs.length + 1,
                 itemBuilder: (context, index) {

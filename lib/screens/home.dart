@@ -295,19 +295,13 @@ class HomepageScaffold extends StatelessWidget {
                               SizedBox(
                                 height: 05,
                               ),
-                              Container(
-                                height: 1,
-                                width: 100,
-                                margin: EdgeInsets.only(left: 4),
-                                color: ColorHelper().grey,
-                              ),
                             ],
                           ),
                           SizedBox(
                             height: 10,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               DashBox(
                                 icone: IconHelper().quiz,
@@ -333,13 +327,14 @@ class HomepageScaffold extends StatelessWidget {
                                   Get.to(() => GroupChat(user: user));
                                 },
                               ),
+                              SizedBox()
                             ],
                           ),
                           SizedBox(
                             height: 20,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               DashBox(
                                 icone: IconHelper().leader,
@@ -365,6 +360,8 @@ class HomepageScaffold extends StatelessWidget {
                                   Get.to(() => Fitness());
                                 },
                               ),
+
+                              SizedBox()
                             ],
                           ),
                           SizedBox(
@@ -381,12 +378,6 @@ class HomepageScaffold extends StatelessWidget {
                               ),
                               SizedBox(
                                 height: 05,
-                              ),
-                              Container(
-                                height: 1,
-                                width: 100,
-                                margin: EdgeInsets.only(left: 4),
-                                color: ColorHelper().grey,
                               ),
                             ],
                           ),
@@ -495,12 +486,7 @@ class HomepageScaffold extends StatelessWidget {
                               SizedBox(
                                 height: 05,
                               ),
-                              Container(
-                                height: 1,
-                                width: 110,
-                                margin: EdgeInsets.only(left: 4),
-                                color: ColorHelper().grey,
-                              ),
+                              
                             ],
                           ),
                           SizedBox(

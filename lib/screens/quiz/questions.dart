@@ -3,6 +3,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myskul/components/button_d.dart';
 import 'package:myskul/components/button_g.dart';
+import 'package:myskul/screens/quiz/quiz_3.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -101,8 +102,8 @@ class _QuestionsState extends State<Questions> {
               setWrongScore(1);
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) {
-                return Quiz5(
-                    questionsLength: tmp2.length, quiz: widget.quiz.name);
+                return Quiz3(
+                    questionsLength: tmp2.length, quiz: widget.quiz);
               }));
             } else {
               setScore(0);
@@ -335,17 +336,19 @@ class _QuestionsState extends State<Questions> {
                                                 .length) {
                                           return answered == true
                                               ? Column(
-                                                children: [
-                                                  NewButtonG(
+                                                  children: [
+                                                    NewButtonG(
                                                       text: 'next',
                                                       function: () async {
-                                                        var tmp2 = widget.index + 1;
+                                                        var tmp2 =
+                                                            widget.index + 1;
 
                                                         if (tmp2 ==
                                                             tmp.length + 1) {
                                                           EasyLoading.show();
                                                           await Future.delayed(
-                                                              Duration(seconds: 1));
+                                                              Duration(
+                                                                  seconds: 1));
                                                           EasyLoading.dismiss();
 
                                                           Navigator.pushReplacement(
@@ -353,13 +356,15 @@ class _QuestionsState extends State<Questions> {
                                                               MaterialPageRoute(
                                                                   builder:
                                                                       (context) {
-                                                            return Quiz5(
+                                                            return Quiz3(
                                                                 questionsLength:
                                                                     tmp.length,
-                                                                quiz: widget.quiz);
+                                                                quiz: widget
+                                                                    .quiz);
                                                           }));
                                                         } else {
-                                                          Navigator.pushReplacement(
+                                                          Navigator
+                                                              .pushReplacement(
                                                             context,
                                                             PageRouteBuilder(
                                                               pageBuilder: (context,
@@ -368,7 +373,8 @@ class _QuestionsState extends State<Questions> {
                                                                   Questions(
                                                                       quiz: widget
                                                                           .quiz,
-                                                                      index: tmp2),
+                                                                      index:
+                                                                          tmp2),
                                                               transitionDuration:
                                                                   Duration.zero,
                                                               reverseTransitionDuration:
@@ -378,40 +384,48 @@ class _QuestionsState extends State<Questions> {
                                                         }
                                                       },
                                                     ),
-                                               SizedBox(height: 20,)
-                                                ],
-                                              )
+                                                    SizedBox(
+                                                      height: 20,
+                                                    )
+                                                  ],
+                                                )
                                               : Center();
                                         } else {
                                           return InkWell(
                                               onTap: () async {
-                                                if (tmp[widget.index - 1]
-                                                        .answers[index]
-                                                        .isCorrect ==
-                                                    true) {
-                                                  setScore(1);
-                                                  setWrongScore(0);
+                                                if (answered == false) {
+                                                  if (tmp[widget.index - 1]
+                                                          .answers[index]
+                                                          .isCorrect ==
+                                                      true) {
+                                                    setScore(1);
+                                                    setWrongScore(0);
 
-                                                  await EasyLoading.showSuccess(
-                                                      "correct-a".tr);
+                                                    await EasyLoading
+                                                        .showSuccess(
+                                                            "correct-a".tr);
 
-                                                  playLocalAudio(
-                                                      'right-answer');
+                                                    playLocalAudio(
+                                                        'right-answer');
 
-                                                  // await Future.delayed(
-                                                  //     Duration(seconds: 1));
+                                                    // await Future.delayed(
+                                                    //     Duration(seconds: 1));
+                                                  } else {
+                                                    setScore(0);
+                                                    setWrongScore(1);
+
+                                                    await EasyLoading.showError(
+                                                        "wrong-a".tr);
+
+                                                    playLocalAudio(
+                                                        'wrong-answer');
+
+                                                    // await Future.delayed(
+                                                    //     Duration(seconds: 1));
+                                                  }
                                                 } else {
-                                                  setScore(0);
-                                                  setWrongScore(1);
-
-                                                  await EasyLoading.showError(
-                                                      "wrong-a".tr);
-
                                                   playLocalAudio(
                                                       'wrong-answer');
-
-                                                  // await Future.delayed(
-                                                  //     Duration(seconds: 1));
                                                 }
 
                                                 answered = true;

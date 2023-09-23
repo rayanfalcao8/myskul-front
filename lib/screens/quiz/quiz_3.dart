@@ -1,172 +1,125 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:myskul/models/quiz.dart';
+import 'package:myskul/screens/quiz/quiz_5.dart';
+import 'package:myskul/utilities/colors.dart';
 
-class Quiz3 extends StatelessWidget {
+class Quiz3 extends StatefulWidget {
+  Quiz3({required this.questionsLength, required this.quiz});
+  var questionsLength;
+  QuizModel quiz;
+  @override
+  State<Quiz3> createState() => _Quiz3State();
+}
+
+class _Quiz3State extends State<Quiz3> {
+  var couleurs = ColorHelper();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration(seconds: 2), () {
+      Get.to(() => Quiz5(
+          questionsLength: widget.questionsLength, quiz: widget.quiz));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          const SliverAppBar(
-            pinned: true,
-            leading: BackButton(),
-            backgroundColor: Color(0xff22987f),
-            expandedHeight: 80,
-            title: Padding(
-              padding: EdgeInsets.only(top: 32.0),
-              child: Text("INTITULE DU QUIZ"),
+        backgroundColor: ColorHelper().green,
+        body: Stack(
+          children: [
+            Positioned(
+                bottom: 0,
+                left: 0,
+                child: CircleAvatar(
+                  backgroundColor: couleurs.white.withOpacity(0.05),
+                  radius: 20,
+                )),
+            Positioned(
+                top: 50,
+                right: 40,
+                child: CircleAvatar(
+                  backgroundColor: couleurs.white.withOpacity(0.05),
+                  radius: 08,
+                )),
+            Positioned(
+                top: MediaQuery.of(context).size.height / 5,
+                right: 40,
+                child: CircleAvatar(
+                  backgroundColor: couleurs.white.withOpacity(0.05),
+                  radius: 15,
+                )),
+            Positioned(
+                top: MediaQuery.of(context).size.height / 5,
+                left: 40,
+                child: CircleAvatar(
+                  backgroundColor: couleurs.white.withOpacity(0.05),
+                  radius: 25,
+                )),
+            Positioned(
+                top: 0,
+                left: MediaQuery.of(context).size.width / 1.5,
+                child: CircleAvatar(
+                  backgroundColor: couleurs.white.withOpacity(0.05),
+                  radius: 28,
+                )),
+            Positioned(
+                top: 40,
+                left: 40,
+                child: CircleAvatar(
+                  backgroundColor: couleurs.white.withOpacity(0.05),
+                  radius: 08,
+                )),
+            Positioned(
+                bottom: 80,
+                left: 40,
+                child: CircleAvatar(
+                  backgroundColor: couleurs.white.withOpacity(0.05),
+                  radius: 08,
+                )),
+            Positioned(
+                bottom: 0,
+                left: 0,
+                child: CircleAvatar(
+                  backgroundColor: couleurs.white.withOpacity(0.05),
+                  radius: 20,
+                )),
+            Positioned(
+                bottom: 50,
+                right: 40,
+                child: CircleAvatar(
+                  backgroundColor: couleurs.white.withOpacity(0.05),
+                  radius: 08,
+                )),
+            Positioned(
+                bottom: MediaQuery.of(context).size.height / 5,
+                right: 40,
+                child: CircleAvatar(
+                  backgroundColor: couleurs.white.withOpacity(0.05),
+                  radius: 15,
+                )),
+            Positioned(
+                bottom: MediaQuery.of(context).size.height / 5,
+                left: 40,
+                child: CircleAvatar(
+                  backgroundColor: couleurs.white.withOpacity(0.05),
+                  radius: 25,
+                )),
+            Positioned(
+                bottom: 0,
+                left: MediaQuery.of(context).size.width / 1.5,
+                child: CircleAvatar(
+                  backgroundColor: couleurs.white.withOpacity(0.05),
+                  radius: 28,
+                )),
+            Center(
+              child: LoadingAnimationWidget.inkDrop(
+                  color: ColorHelper().white, size: 70),
             ),
-            centerTitle: true,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(35),
-                bottomRight: Radius.circular(35),
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Column(
-                children: [
-                  Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(top: 150),
-                        width: MediaQuery.of(context).size.width,
-                        height: 240,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                        ),
-                        child:  Column(
-                          children: [
-                            SizedBox(
-                              height: 50,
-                            ),
-                            ListTile(
-                              title: Text(
-                                "NOMBRE DE QUESTIONS",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w200,
-                                ),
-                              ),
-                              trailing: Text(
-                                "10",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w200,
-                                ),
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(
-                                "DUREE DU QUIZ",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w200,
-                                ),
-                              ),
-                              trailing: Text(
-                                "24 MIN",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w200,
-                                ),
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(
-                                "DUREE DU QUIZ",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w200,
-                                ),
-                              ),
-                              trailing: Text(
-                                "90 sec",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w200,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 90),
-                        height: 100,
-                        width: 100,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [Color(0xff22987F), Color(0xff2BB799)],
-                          ),
-                        ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.event_note_outlined,
-                            color: Colors.white,
-                            size: 58,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 27,
-                  ),
-                  SizedBox(
-                    width: 270,
-                    height: 50,
-                    child: TextButton(
-                      onPressed: () {},
-                      child:  Padding(
-                        padding: EdgeInsets.all(0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(),
-                            Text(
-                              "COMMENCER",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
-                            CircleAvatar(
-                              backgroundColor: Colors.white,
-                              child: Icon(
-                                Icons.chevron_right_rounded,
-                                color: Color(0xFF22987F),
-                                size: 24,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      style: ButtonStyle(
-                        elevation: MaterialStateProperty.all(10),
-                        backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFF22987F)),
-                        shape: MaterialStateProperty.all(
-                            const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                        )),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ));
   }
 }

@@ -3,6 +3,7 @@ import 'package:myskul/components/messages_tiles.dart';
 import 'package:myskul/controllers/quiz_controller.dart';
 import 'package:myskul/models/quiz.dart';
 import 'package:myskul/screens/home.dart';
+import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import '../../utilities/colors.dart';
 import '../../utilities/texts.dart';
 import 'package:get/get.dart';
@@ -305,9 +306,10 @@ class _Quiz5State extends State<Quiz5> {
                             const SizedBox(
                               height: 38,
                             ),
-                            AnimatedOpacity(
-                              opacity: 1.0,
-                              duration: const Duration(seconds: 2),
+                            WidgetAnimator(
+                              incomingEffect: WidgetTransitionEffects.incomingSlideInFromBottom(
+                                duration: Duration(milliseconds: 500)
+                              ),
                               child: Text(
                                 getAppreciation(
                                     snapshot.data, widget.questionsLength),
