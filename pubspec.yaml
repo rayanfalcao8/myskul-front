@@ -67,6 +67,8 @@ dependencies:
   chat_gpt_sdk:
     git:
       url: https://github.com/iampawan/Flutter-ChatGPT
+  tutorial_coach_mark: ^1.2.9
+  introduction_screen: ^3.1.11
 
 
 dev_dependencies:
