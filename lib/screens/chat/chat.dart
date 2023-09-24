@@ -38,9 +38,9 @@ class _ChatState extends State<Chat> {
 
   final ScrollController controller = ScrollController();
 
-  void scrollDown(ScrollController ctrl) {
-    if (ctrl.positions.isNotEmpty) {
-      ctrl.animateTo(ctrl.position.maxScrollExtent,
+  void scrollDown(ScrollController ctrl) async{
+    if (ctrl.positions.isNotEmpty && ctrl.position.hasContentDimensions) {
+    await ctrl.animateTo(ctrl.position.maxScrollExtent,
           duration: Duration(milliseconds: 300), curve: Curves.ease);
     }
   }

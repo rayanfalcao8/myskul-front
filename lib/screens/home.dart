@@ -349,7 +349,7 @@ class HomepageScaffold extends StatelessWidget {
                                 texte: "My AI",
                                 couleur: ColorHelper().lightGreen,
                                 function: () {
-                                  Get.to(() => ChatGPT());
+                                  Get.to(() => GPT(user: user,));
                                 },
                               ),
                               DashBox(

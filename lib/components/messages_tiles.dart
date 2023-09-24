@@ -175,6 +175,44 @@ class NotFoundWidget extends StatelessWidget {
   }
 }
 
+class NotFoundAiWidget extends StatelessWidget {
+  const NotFoundAiWidget({
+    required this.texte,
+  });
+
+  final String texte;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: (MediaQuery.of(context).size.height / 4)),
+        Center(
+            child: Column(
+          children: [
+            FadeInImage(
+              placeholder: AssetImage('assets/images/loading.gif'),
+              image: AssetImage('assets/images/bot.png'),
+              width: 200,
+            ),
+            SizedBox(
+              height: 05,
+            ),
+            Text(
+              texte,
+              textAlign: TextAlign.center,
+              style: TextHelper()
+                  .h3b
+                  .copyWith(color: ColorHelper().black.withOpacity(0.5)),
+            )
+          ],
+        )),
+      ],
+    );
+  }
+}
+
+
 class SentImage extends StatelessWidget {
   const SentImage({
     required this.tmp,
@@ -281,6 +319,66 @@ class ReceivedImage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ReceivedAiMessage extends StatefulWidget {
+  const ReceivedAiMessage({
+    required this.texte,
+    required this.image,
+    required this.nom,
+  });
+
+  final String texte;
+  final String image;
+  final String nom;
+
+  @override
+  State<ReceivedAiMessage> createState() => _ReceivedAiMessageState();
+}
+
+class _ReceivedAiMessageState extends State<ReceivedAiMessage> {
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        margin: EdgeInsets.only(left: 10),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            CircleAvatar(
+              radius: 10,
+              backgroundColor: Colors.transparent,
+              backgroundImage: AssetImage('assets/images/logo2.png'),
+            ),
+            Container(
+              constraints: BoxConstraints(
+                maxWidth: 250,
+              ),
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: ColorHelper().grey.withOpacity(0.2),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                      bottomRight: Radius.circular(10))),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    widget.texte,
+                    style: TextHelper().h4r,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

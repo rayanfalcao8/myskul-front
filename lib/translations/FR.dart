@@ -117,5 +117,7 @@ class FR {
     'bien': 'Bien',
     'tres-bien': 'Très Bien',
     'excellent': 'Excellent',
+    'ask-question': 'Pose-moi une question',
+    'ai-bot': 'Salut ! Je suis l\' Intelligence articielle de MySkul',
   };
 }

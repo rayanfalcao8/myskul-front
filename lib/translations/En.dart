@@ -116,5 +116,7 @@ class EN {
     'bien': 'Good',
     'tres-bien': 'Very Good',
     'excellent': 'Excellent',
+    'ask-question': 'Ask me a question',
+    'ai-bot': 'Hi !, I\'m  MySkul Artificial Intelligence',
   };
 }
