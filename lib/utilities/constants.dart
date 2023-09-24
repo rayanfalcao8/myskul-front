@@ -8,4 +8,5 @@ class Constant {
   final PTOE = 'C7gRWxsrT29HmzMzH99G';
   final TOKEN = '82Cw4E4IJ6LtT9ElSBgc';
   final DEF = 'e1C0MtjKykQUPwqnmth4';
+  final MS = '';
 }
