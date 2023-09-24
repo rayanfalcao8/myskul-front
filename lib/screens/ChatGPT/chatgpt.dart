@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myskul/components/messages_tiles.dart';
 import 'package:myskul/models/user.dart';
+import 'package:myskul/utilities/openai.dart';
 import '../../utilities/colors.dart';
 import '../../utilities/gradients.dart';
 import '../../utilities/helpers.dart';
@@ -58,7 +59,7 @@ class _GPTState extends State<GPT> {
 
   sendRequest(String msg) async {
     final openAI = OpenAI.instance.build(
-        token: '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',
+        token: OpenAiConstant().MS,
         baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
         enableLog: true);
 
