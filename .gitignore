@@ -27,7 +27,7 @@
 .pub-cache/
 .pub/
 /build/
-/utilities/openai.dart
+/lib/utilities/openai.dart
 
 # Android related
 **/android/**/gradle-wrapper.jar
