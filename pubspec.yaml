@@ -64,7 +64,7 @@ dependencies:
   uni_links: ^0.5.1
   crypto: ^3.0.3
   loading_animation_widget: any
-  chat_gpt_sdk: ^2.2.5
+  chat_gpt_sdk: ^2.2.4
   tutorial_coach_mark: ^1.2.9
   introduction_screen: ^3.1.11
 
