@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:myskul/controllers/chat_controller.dart';
+import 'package:myskul/introduction_screen.dart';
 import 'package:myskul/screens/auth/domain.dart';
 import 'package:myskul/screens/auth/reset.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ String? locale; // Cette variable nous permettra de gérer la langue utilisée
 String?
     fmToken; // Cette variable nous permettra d'envoyer des notifications sur chaque appareil
 User? user; // Ici sera stocké l'utilisateur principal
+bool show = true; // Show onBoarding
 
 //fonction pour capture les notification et faire des actions lorsqu'on les reçoit
 @pragma("vm:entry-point")
@@ -114,13 +116,12 @@ void main() async {
   await messagingInit();
 
   // Initialisation du package SharedPreferences
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  final SharedPreferences prefs = await _prefs;
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  show = await prefs.getBool("ON_BOARDING") ?? true;
 
   // lignes de codes afférentes aux SharedPreferences
-
   await shMethods(prefs);
-
   await getUser(prefs);
 
   SystemChrome.setPreferredOrientations(
@@ -262,7 +263,7 @@ class _Home1State extends State<Home1> {
         body: seen == null || seen == false
             ? Splash()
             : token == null
-                ? Login()
+                ? (!show ? IntroScreen() : Login())
                 : user!.speciality == null
                     ? Domain()
                     : Home(),

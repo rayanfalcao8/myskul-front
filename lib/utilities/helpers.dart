@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/texts.dart';
 
-AppBar getAppBar({required String title, required context}) {
+AppBar getAppBar(
+    {required String title, required context, bool showBackBtn = true}) {
   var couleurs = ColorHelper();
 
   return AppBar(
-    leading: BackButton(),
+    leading: showBackBtn ? BackButton() : null,
     backgroundColor: Color(0xff22987f),
     elevation: 0.1,
     flexibleSpace: Stack(
@@ -83,6 +85,18 @@ BoxDecoration getBckDecoration() {
         image: AssetImage("assets/images/math.png"),
         opacity: 0.04,
         fit: BoxFit.cover),
+  );
+}
+
+PageDecoration getPageDec() {
+  return PageDecoration(
+    safeArea: 0,
+    imagePadding: EdgeInsets.only(bottom: 0),
+    footerPadding: EdgeInsets.all(0),
+    titleTextStyle: TextStyle(
+      fontSize: 25,
+      fontWeight: FontWeight.bold,
+    ),
   );
 }
 
