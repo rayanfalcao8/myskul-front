@@ -51,9 +51,8 @@ class IntroScreen extends StatelessWidget {
         pages: _pages,
         dotsDecorator: const DotsDecorator(
           size: Size(10, 10),
-          color: Color(0xff22987f),
           activeSize: Size.square(15),
-          activeColor: Colors.red,
+          activeColor: Color(0xff22987f),
         ),
         showDoneButton: true,
         done: const Text("Terminé", style: TextStyle(fontSize: 15)),
