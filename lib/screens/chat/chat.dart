@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:myskul/controllers/chat_controller.dart';
@@ -38,9 +39,9 @@ class _ChatState extends State<Chat> {
 
   final ScrollController controller = ScrollController();
 
-  void scrollDown(ScrollController ctrl) async{
+  void scrollDown(ScrollController ctrl) async {
     if (ctrl.positions.isNotEmpty && ctrl.position.hasContentDimensions) {
-    await ctrl.animateTo(ctrl.position.maxScrollExtent,
+      await ctrl.animateTo(ctrl.position.maxScrollExtent,
           duration: Duration(milliseconds: 300), curve: Curves.ease);
     }
   }
@@ -102,6 +103,7 @@ class _ChatState extends State<Chat> {
 
   Future uploadImage() async {
     String fileName = Uuid().v1();
+    EasyLoading.show();
     var ref =
         FirebaseStorage.instance.ref().child('images').child('{$fileName.jpg}');
     var uploadTask = await ref.putFile(imageFile!);
@@ -119,6 +121,8 @@ class _ChatState extends State<Chat> {
     imageUrl != ''
         ? ChatController().sendMessage(widget.group['groupId'], tmp)
         : null;
+
+    EasyLoading.dismiss();
     messageController.clear();
   }
 
@@ -157,7 +161,7 @@ class _ChatState extends State<Chat> {
             alignment: Alignment.topCenter,
             child: Container(
               height: MediaQuery.of(context).padding.top +
-                (MediaQuery.of(context).size.height / 12),
+                  (MediaQuery.of(context).size.height / 12),
               decoration: BoxDecoration(
                   gradient: gradients.greenGradient,
                   borderRadius: BorderRadius.only(
@@ -211,9 +215,9 @@ class _ChatState extends State<Chat> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                     SizedBox(
-                          height: 30,
-                        ),
+                      SizedBox(
+                        height: 30,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -249,8 +253,7 @@ class _ChatState extends State<Chat> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
               width: MediaQuery.of(context).size.width,
               height: 80,
               decoration: BoxDecoration(
@@ -286,8 +289,7 @@ class _ChatState extends State<Chat> {
                       'sender': widget.user.username,
                       'senderImage': widget.user.profile_image,
                       'type': 'texte',
-                      'time':
-                          DateTime.now().microsecondsSinceEpoch.toString(),
+                      'time': DateTime.now().microsecondsSinceEpoch.toString(),
                       'groupId': widget.group['groupId']
                     };
                     messageController.text != ''

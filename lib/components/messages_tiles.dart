@@ -327,13 +327,9 @@ class ReceivedImage extends StatelessWidget {
 class ReceivedAiMessage extends StatefulWidget {
   const ReceivedAiMessage({
     required this.texte,
-    required this.image,
-    required this.nom,
   });
 
   final String texte;
-  final String image;
-  final String nom;
 
   @override
   State<ReceivedAiMessage> createState() => _ReceivedAiMessageState();
@@ -371,7 +367,7 @@ class _ReceivedAiMessageState extends State<ReceivedAiMessage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    widget.texte,
+                    widget.texte.trim(),
                     style: TextHelper().h4r,
                   ),
                 ],

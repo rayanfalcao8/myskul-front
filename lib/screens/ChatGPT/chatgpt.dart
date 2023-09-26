@@ -1,13 +1,14 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myskul/components/messages_tiles.dart';
+import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/utilities/constants.dart';
 import '../../utilities/colors.dart';
 import '../../utilities/gradients.dart';
-import '../../utilities/helpers.dart';
 import '../../utilities/icons.dart';
 import '../../utilities/texts.dart';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
@@ -66,20 +67,31 @@ class _GPTState extends State<GPT> {
     final request =
         CompleteText(prompt: msg, maxTokens: 200, model: TextDavinci3Model());
 
-    final response = await openAI!.onCompletion(request: request);
+    try {
+      final response = await openAI!.onCompletion(request: request);
+      print('AI response ' + response!.choices[0].text);
 
-    print('AI response ' + response!.choices[0].text);
+      var tmp = {
+        'message': response!.choices[0].text,
+        'sender': 'chatGPT',
+        'senderImage':
+            'https://ww2.freelogovectors.net/svg16/chatgpt-logo-freelogovectors.net.svg',
+        'type': 'bot',
+        'time': DateTime.now().microsecondsSinceEpoch.toString(),
+      };
+      messages.add(tmp);
+    } catch (e) {
+      var tmp = {
+        'message': 'ai-error'.tr,
+        'sender': 'chatGPT',
+        'type': 'bot',
+        'time': DateTime.now().microsecondsSinceEpoch.toString(),
+      };
 
-    var tmp = {
-      'message': response!.choices[0].text,
-      'sender': 'chatGPT',
-      'senderImage':
-          'https://ww2.freelogovectors.net/svg16/chatgpt-logo-freelogovectors.net.svg',
-      'type': 'bot',
-      'time': DateTime.now().microsecondsSinceEpoch.toString(),
-    };
+      messages.add(tmp);
+    }
 
-    messages.add(tmp);
+    ChatController().playLocalAudio("bubble.wav");
 
     setState(() {});
 
@@ -91,55 +103,52 @@ class _GPTState extends State<GPT> {
     return Scaffold(
       body: Stack(
         children: [
-          SingleChildScrollView(
-            child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                padding: EdgeInsets.only(bottom: 80),
-                margin: EdgeInsets.only(
-                  top: (MediaQuery.of(context).size.height / 12),
-                ),
-                decoration: BoxDecoration(
-                  color: couleurs.white.withOpacity(0.5),
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/math.png"),
-                      opacity: 0.04,
-                      fit: BoxFit.cover),
-                ),
-                child: messages.isEmpty
-                    ? NotFoundAiWidget(texte: 'ai-bot'.tr)
-                    : ListView.builder(
-                        controller: controller,
-                        itemCount: messages.length + 1,
-                        itemBuilder: (context, index) {
-                          if (index == messages.length) {
-                            scrollDown(controller);
-                            return Container(
-                              height: 100,
-                            );
-                          }
+          Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              padding: EdgeInsets.only(bottom: 80),
+              margin: EdgeInsets.only(
+                top: (MediaQuery.of(context).size.height / 12),
+              ),
+              decoration: BoxDecoration(
+                color: couleurs.white.withOpacity(0.5),
+                image: DecorationImage(
+                    image: AssetImage("assets/images/math.png"),
+                    opacity: 0.04,
+                    fit: BoxFit.cover),
+              ),
+              child: messages.isEmpty
+                  ? SingleChildScrollView(
+                      child: NotFoundAiWidget(texte: 'ai-bot'.tr))
+                  : ListView.builder(
+                      controller: controller,
+                      itemCount: messages.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index == messages.length) {
+                          scrollDown(controller);
+                          return Container(
+                            height: 100,
+                          );
+                        }
 
-                          if (index == 0) {
-                            SizedBox(
-                              height:
-                                  (MediaQuery.of(context).size.height / 10) +
-                                      10,
-                            );
-                          }
+                        if (index == 0) {
+                          SizedBox(
+                            height:
+                                (MediaQuery.of(context).size.height / 10) + 10,
+                          );
+                        }
 
-                          if (messages[index]['type'] == 'user') {
-                            return SentMessage(
-                                texte: messages[index]['message'],
-                                image: messages[index]['senderImage'],
-                                nom: messages[index]['sender']);
-                          } else {
-                            return ReceivedAiMessage(
-                                texte: messages[index]['message'],
-                                image: messages[index]['senderImage'],
-                                nom: messages[index]['sender']);
-                          }
-                        })),
-          ),
+                        if (messages[index]['type'] == 'user') {
+                          return SentMessage(
+                              texte: messages[index]['message'],
+                              image: messages[index]['senderImage'],
+                              nom: messages[index]['sender']);
+                        } else {
+                          return ReceivedAiMessage(
+                            texte: messages[index]['message'],
+                          );
+                        }
+                      })),
           Align(
             alignment: Alignment.topCenter,
             child: Container(
@@ -211,7 +220,9 @@ class _GPTState extends State<GPT> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Get.back();
+                                  // Get.back();
+
+                                  showDialogBox();
                                 },
                                 child: Icon(
                                   icones.back2,
@@ -301,4 +312,21 @@ class _GPTState extends State<GPT> {
       ),
     );
   }
+}
+
+showDialogBox() {
+  showDialog(
+      context: Get.context as BuildContext,
+      builder: (context) => CupertinoAlertDialog(
+            title: Text('warning'.tr),
+            content: Text('ai-warning'.tr),
+            actions: [
+              CupertinoButton.filled(
+                  child: Text('yes'.tr),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Get.back();
+                  })
+            ],
+          ));
 }

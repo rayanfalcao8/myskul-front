@@ -119,5 +119,7 @@ class FR {
     'excellent': 'Excellent',
     'ask-question': 'Pose-moi une question',
     'ai-bot': 'Salut ! Je suis l\' Intelligence articielle de MySkul',
+    'ai-error': 'Une erreur s\'est produite lors du traitement de votre demande, réessayez plus tard !',
+    'ai-warning': 'En quittant, vous perdrez tous les messages en cours \n Voulez-vous vraiment sortir ?',
   };
 }

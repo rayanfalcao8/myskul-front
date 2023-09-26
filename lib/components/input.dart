@@ -37,7 +37,6 @@ class NewInput extends StatelessWidget {
             obscureText: obscureText,
             controller: controller,
             onSubmitted: onSubmit,
-            maxLength: 25,
             onTap: onTap,
             readOnly: readOnly,
             keyboardType: keyboardType ?? TextInputType.text,

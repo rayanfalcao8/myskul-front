@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myskul/components/messages_tiles.dart';
+import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/controllers/quiz_controller.dart';
 import 'package:myskul/models/quiz.dart';
 import 'package:myskul/screens/home.dart';
@@ -10,7 +11,6 @@ import 'package:get/get.dart';
 import '../../utilities/gradients.dart';
 import '../../utilities/icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:audioplayers/audioplayers.dart';
 
 class Quiz5 extends StatefulWidget {
   Quiz5({required this.questionsLength, required this.quiz});
@@ -25,8 +25,6 @@ class Quiz5 extends StatefulWidget {
 class _Quiz5State extends State<Quiz5> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-  final player = AudioPlayer();
-
   var correctAnswers;
 
   getCorrectAnswers() async {
@@ -34,16 +32,12 @@ class _Quiz5State extends State<Quiz5> {
     var correctAnswers = await prefs.getInt('currentScore')!;
 
     if (correctAnswers < (widget.questionsLength * 50 / 100)) {
-      playLocalAudio("wrong-final");
+       ChatController().playLocalAudio("wrong-final.wav");
     } else {
-      playLocalAudio("right-final");
+       ChatController().playLocalAudio("right-final.wav");
     }
     QuizController().answerQuiz(score: correctAnswers, quiz: widget.quiz);
     return correctAnswers;
-  }
-
-  playLocalAudio(String music) async {
-    await player.play(AssetSource('sons/$music.mp3'));
   }
 
   String getAppreciation(var score, var length) {

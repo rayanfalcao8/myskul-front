@@ -80,7 +80,7 @@ Future<void> messagingInit() async {
       .setForegroundNotificationPresentationOptions(alert: true, sound: true);
   FirebaseMessaging.onMessage.listen(
     (m) {
-      notify(m);
+      ChatController().playLocalAudio("bubble.wav");
     },
   );
 

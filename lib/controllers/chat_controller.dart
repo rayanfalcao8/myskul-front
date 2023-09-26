@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:audioplayers/audioplayers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatController {
@@ -195,11 +195,18 @@ class ChatController {
 
 // Scroll automatique
 
-  void scrollDown(ScrollController ctrl) async{
+  void scrollDown(ScrollController ctrl) async {
     if (ctrl.positions.isNotEmpty && ctrl.position.hasContentDimensions) {
-    await ctrl.animateTo(ctrl.position.maxScrollExtent,
+      await ctrl.animateTo(ctrl.position.maxScrollExtent,
           duration: Duration(milliseconds: 300), curve: Curves.ease);
     }
+  }
+
+  // Play sound
+
+  playLocalAudio(String music) async {
+    final player = AudioPlayer();
+    await player.play(AssetSource('sons/$music'));
   }
 
   chatMessages({chats, user, couleurs, textes, controller}) {
@@ -249,6 +256,7 @@ class ChatController {
                         nom: tmp['sender'],
                       );
                     }
+
                     return ReceivedMessage(
                       texte: tmp['message'],
                       image: tmp['senderImage'],
@@ -261,6 +269,7 @@ class ChatController {
                         user: user,
                       );
                     }
+
                     return ReceivedImage(
                       tmp: tmp,
                     );
@@ -268,7 +277,7 @@ class ChatController {
                 },
               )
             : SingleChildScrollView(
-                child: NotFoundWidget(texte: 'not-found-group'.tr),
+                child: NotFoundWidget(texte: 'not-found-message'.tr),
               );
       },
     );
@@ -288,7 +297,7 @@ class ChatController {
       "recentMessageSender": chatMessageData['sender'],
       "recentMessageTime": chatMessageData['time'].toString(),
     });
-
+    playLocalAudio("long-pop.wav");
     await groups.where("groupId", isEqualTo: groupId).get().then((value) {
       groupUsers = value;
     });
@@ -304,18 +313,17 @@ class ChatController {
     for (var i in u['members']) {
       for (var element in v['users']) {
         if (element['userId'] == i['userId']) {
-
-          if (element['userPushToken']!=null && element['userPushToken']!="") {
-             sendPushNotification(
-              element['userPushToken'],
-              u['groupName'],
-              u['groupPic'],
-              chatMessageData['sender'],
-              chatMessageData['type'] == 'texte'
-                  ? chatMessageData['message']
-                  : '📷');
+          if (element['userPushToken'] != null &&
+              element['userPushToken'] != "") {
+            sendPushNotification(
+                element['userPushToken'],
+                u['groupName'],
+                u['groupPic'],
+                chatMessageData['sender'],
+                chatMessageData['type'] == 'texte'
+                    ? chatMessageData['message']
+                    : '📷');
           }
-         
         }
       }
     }

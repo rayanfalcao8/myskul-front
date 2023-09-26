@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:myskul/components/button_d.dart';
 import 'package:myskul/components/button_g.dart';
+import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/screens/quiz/quiz_3.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:myskul/models/quiz.dart';
 import 'package:myskul/screens/quiz/question.dart';
-import 'package:myskul/screens/quiz/quiz_5.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
@@ -31,9 +29,6 @@ class Questions extends StatefulWidget {
 
 class _QuestionsState extends State<Questions> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-
-  final player = AudioPlayer();
-
   var couleurs = ColorHelper();
 
   var answerColor = Colors.black.withOpacity(.24);
@@ -82,15 +77,11 @@ class _QuestionsState extends State<Questions> {
     wrong = await prefs.getInt('wrongScore')!;
   }
 
-  playLocalAudio(String music) async {
-    await player.play(AssetSource('sons/$music.mp3'));
-  }
-
   void startTimer() async {
     const oneSec = const Duration(seconds: 1);
     var tmp = widget.index + 1;
     var tmp2 = await questions as List<QuestionModel>;
-    playLocalAudio('start');
+    ChatController().playLocalAudio('start.mp3');
     timer = new Timer.periodic(
       oneSec,
       (Timer timer) {
@@ -102,8 +93,7 @@ class _QuestionsState extends State<Questions> {
               setWrongScore(1);
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) {
-                return Quiz3(
-                    questionsLength: tmp2.length, quiz: widget.quiz);
+                return Quiz3(questionsLength: tmp2.length, quiz: widget.quiz);
               }));
             } else {
               setScore(0);
@@ -405,8 +395,9 @@ class _QuestionsState extends State<Questions> {
                                                         .showSuccess(
                                                             "correct-a".tr);
 
-                                                    playLocalAudio(
-                                                        'right-answer');
+                                                    ChatController()
+                                                        .playLocalAudio(
+                                                            'right-answer.wav');
 
                                                     // await Future.delayed(
                                                     //     Duration(seconds: 1));
@@ -417,15 +408,17 @@ class _QuestionsState extends State<Questions> {
                                                     await EasyLoading.showError(
                                                         "wrong-a".tr);
 
-                                                    playLocalAudio(
-                                                        'wrong-answer');
+                                                    ChatController()
+                                                        .playLocalAudio(
+                                                            'wrong-answer.wav');
 
                                                     // await Future.delayed(
                                                     //     Duration(seconds: 1));
                                                   }
                                                 } else {
-                                                  playLocalAudio(
-                                                      'wrong-answer');
+                                                  ChatController()
+                                                      .playLocalAudio(
+                                                          'long-pop.wav');
                                                 }
 
                                                 answered = true;

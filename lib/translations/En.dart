@@ -117,6 +117,10 @@ class EN {
     'tres-bien': 'Very Good',
     'excellent': 'Excellent',
     'ask-question': 'Ask me a question',
-    'ai-bot': 'Hi !, I\'m  MySkul Artificial Intelligence',
+    'ai-bot': 'Hi !, I\'m  MySkul\'s  Artificial Intelligence',
+    'ai-error':
+        'An error occurred while processing your request, try again later!',
+    'ai-warning':
+        'By quitting, you will lose all current messages \n Do you really want to quit ? ',
   };
 }
