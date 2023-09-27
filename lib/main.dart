@@ -71,24 +71,12 @@ getUser(SharedPreferences prefs) async {
 }
 
 Future<void> messagingInit() async {
+  
   FirebaseMessaging.onBackgroundMessage(notify);
   await AwesomeNotifications().setListeners(
     onActionReceivedMethod: onActionReceivedMethod,
   );
 
-  FirebaseMessaging.instance
-      .setForegroundNotificationPresentationOptions(alert: true, sound: true);
-  FirebaseMessaging.onMessage.listen(
-    (m) {
-      ChatController().playLocalAudio("bubble.wav");
-    },
-  );
-
-  FirebaseMessaging.onMessageOpenedApp.listen(
-    (m) {
-      print("OnMessageOpenedAp : ${m.data}");
-    },
-  );
 
   AwesomeNotifications().initialize(
     'resource://drawable/res_app_ico',

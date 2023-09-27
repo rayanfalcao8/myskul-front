@@ -139,10 +139,11 @@ class _GPTState extends State<GPT> {
                         }
 
                         if (messages[index]['type'] == 'user') {
-                          return SentMessage(
-                              texte: messages[index]['message'],
-                              image: messages[index]['senderImage'],
-                              nom: messages[index]['sender']);
+                          return SentAiMessage(
+                            texte: messages[index]['message'],
+                            image: messages[index]['senderImage'],
+                            nom: messages[index]['sender'],
+                          );
                         } else {
                           return ReceivedAiMessage(
                             texte: messages[index]['message'],
@@ -282,7 +283,7 @@ class _GPTState extends State<GPT> {
                       };
 
                       messages.add(tmp);
-                      print(messages[0]);
+                      ChatController().playLocalAudio("long-pop.wav");
                       setState(() {});
                       sendRequest(messageController.text);
                       messageController.clear();

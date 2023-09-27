@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:myskul/components/messages_tiles.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
@@ -10,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import "package:collection/collection.dart";
 
 class ChatController {
   static final db = FirebaseFirestore.instance;
@@ -231,51 +233,86 @@ class ChatController {
           );
         }
 
+        Map<String, List> grouped =
+            groupBy<dynamic, String>(snapshot.data.docs, (chat) {
+          DateTime time =
+              DateTime.fromMicrosecondsSinceEpoch(int.parse(chat['time']));
+          return " ${time.day} - ${time.month} - ${time.year} ";
+        });
+
         return snapshot.data.docs.length > 0
             ? ListView.builder(
+                shrinkWrap: true,
                 controller: controller,
-                itemCount: snapshot.data.docs.length + 1,
+                itemCount: grouped.keys.length,
                 itemBuilder: (context, index) {
-                  if (index == snapshot.data.docs.length) {
-                    scrollDown(controller);
-                    return Container(
-                      height: 60,
-                    );
-                  }
-                  if (index == 0) {
-                    SizedBox(
-                      height: (MediaQuery.of(context).size.height / 10) + 10,
-                    );
-                  }
-                  var tmp = snapshot.data.docs[index].data() as Map;
-                  if (tmp['type'] == 'texte') {
-                    if (tmp['sender'] == user.username) {
-                      return SentMessage(
-                        texte: tmp['message'],
-                        image: tmp['senderImage'],
-                        nom: tmp['sender'],
-                      );
-                    }
+                  String date = grouped.keys.toList()[index];
 
-                    return ReceivedMessage(
-                      texte: tmp['message'],
-                      image: tmp['senderImage'],
-                      nom: tmp['sender'],
-                    );
-                  } else {
-                    if (tmp['sender'] == (user.username)) {
-                      return SentImage(
-                        tmp: tmp,
-                        user: user,
-                      );
-                    }
+                  var messages = grouped[date];
 
-                    return ReceivedImage(
-                      tmp: tmp,
-                    );
-                  }
-                },
-              )
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 30.0, bottom: 30.0),
+                        child: Text(
+                          date,
+                          style: TextStyle(
+                              color: Colors.black.withOpacity(0.3),
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      ListView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        itemCount: messages!.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index == messages.length) {
+                            scrollDown(controller);
+                            return Container(
+                              height: 80,
+                            );
+                          }
+                          if (index == 0) {
+                            SizedBox(
+                              height:
+                                  (MediaQuery.of(context).size.height / 10) +
+                                      10,
+                            );
+                          }
+                          var tmp = messages[index].data() as Map;
+                          if (tmp['type'] == 'texte') {
+                            if (tmp['sender'] == user.username) {
+                              return SentMessage(
+                                texte: tmp['message'],
+                                image: tmp['senderImage'],
+                                nom: tmp['sender'],
+                                time: tmp['time'],
+                              );
+                            }
+
+                            return ReceivedMessage(
+                              texte: tmp['message'],
+                              image: tmp['senderImage'],
+                              nom: tmp['sender'],
+                              time: tmp['time'],
+                            );
+                          } else {
+                            if (tmp['sender'] == (user.username)) {
+                              return SentImage(
+                                tmp: tmp,
+                                user: user,
+                              );
+                            }
+
+                            return ReceivedImage(
+                              tmp: tmp,
+                            );
+                          }
+                        },
+                      )
+                    ],
+                  );
+                })
             : SingleChildScrollView(
                 child: NotFoundWidget(texte: 'not-found-message'.tr),
               );

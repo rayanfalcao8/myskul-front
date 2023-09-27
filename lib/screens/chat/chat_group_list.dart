@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myskul/components/messages_tiles.dart';
+import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/screens/chat/chat.dart';
 import 'package:myskul/utilities/colors.dart';
+import 'package:myskul/utilities/constants.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
@@ -21,6 +23,7 @@ class GroupChat extends StatefulWidget {
 }
 
 class _GroupChatState extends State<GroupChat> {
+  
   var couleurs = ColorHelper();
 
   var textes = TextHelper();
@@ -50,10 +53,8 @@ class _GroupChatState extends State<GroupChat> {
   }
 
   Future<List<QueryDocumentSnapshot<Object?>>> getUserGroup() async {
-    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-    final SharedPreferences prefs = await _prefs;
 
-    final fmToken = await prefs.getString('fmToken');
+    ChatController().addUserPushToken(widget.user, Constant().TOKEN);
 
     Map userTmp = {
       'userId': widget.user.id,

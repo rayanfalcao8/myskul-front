@@ -25,6 +25,7 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
+
   late Stream<QuerySnapshot> messageStream;
 
   var couleurs = ColorHelper();
@@ -55,6 +56,7 @@ class _ChatState extends State<Chat> {
         .orderBy("time")
         .snapshots();
   }
+
 
   // get image
   Future getImage() async {
