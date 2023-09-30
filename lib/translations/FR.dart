@@ -77,6 +77,8 @@ class FR {
     'unknown-error': 'Erreur inconnue',
     'warning': 'Avertissement',
     'warning-text': 'Voulez-vous vraiment vous déconnecter ?',
+    'warning-leave':
+        'Vous êtes en train de quitter l\'application, voulez-vous vraiment continuer ?',
     'yes': 'Oui',
     'cancel': 'Annuler',
     'close': 'Fermer',
@@ -119,7 +121,11 @@ class FR {
     'excellent': 'Excellent',
     'ask-question': 'Pose-moi une question',
     'ai-bot': 'Salut ! Je suis l\' Intelligence articielle de MySkul',
-    'ai-error': 'Une erreur s\'est produite lors du traitement de votre demande, réessayez plus tard !',
-    'ai-warning': 'En quittant, vous perdrez tous les messages en cours \n Voulez-vous vraiment sortir ?',
+    'ai-error':
+        'Une erreur s\'est produite lors du traitement de votre demande, réessayez plus tard !',
+    'ai-warning':
+        'En quittant, vous perdrez tous les messages en cours \n Voulez-vous vraiment sortir ?',
+    'cp-to-cb': 'Contenu copié avec succès dans le presse-papiers',
+    'act-notif': 'Activer les notifications',
   };
 }

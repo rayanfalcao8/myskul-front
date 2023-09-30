@@ -76,6 +76,8 @@ class EN {
     'unknown-error': 'Unknown Error',
     'warning': 'Warning',
     'warning-text': 'Do you really want to log out ?',
+    'warning-leave':
+        'You\'re leaving the application, do you really want to continue?',
     'yes': 'Yes',
     'cancel': 'Cancel',
     'close': 'Fermer',
@@ -122,5 +124,7 @@ class EN {
         'An error occurred while processing your request, try again later!',
     'ai-warning':
         'By quitting, you will lose all current messages \n Do you really want to quit ? ',
+    'cp-to-cb': 'Content successfully copied to clipboard',
+    'act-notif': 'Enable notifications',
   };
 }

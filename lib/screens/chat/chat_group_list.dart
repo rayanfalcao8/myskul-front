@@ -53,9 +53,6 @@ class _GroupChatState extends State<GroupChat> {
   }
 
   Future<List<QueryDocumentSnapshot<Object?>>> getUserGroup() async {
-
-    ChatController().addUserPushToken(widget.user, Constant().TOKEN);
-
     Map userTmp = {
       'userId': widget.user.id,
       'userName': widget.user.username,

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/date_symbol_data_file.dart';
 import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/introduction_screen.dart';
 import 'package:myskul/screens/auth/domain.dart';
@@ -12,6 +13,7 @@ import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/chat/chat_group_list.dart';
 import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/colors.dart';
+import 'package:myskul/utilities/constants.dart';
 import 'screens/splash.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,6 +34,8 @@ String? locale; // Cette variable nous permettra de gérer la langue utilisée
 String?
     fmToken; // Cette variable nous permettra d'envoyer des notifications sur chaque appareil
 User? user; // Ici sera stocké l'utilisateur principal
+bool?
+    notif; // Ici sera stocké si oui ou non l'utilisateur veut recevoir les notifications
 bool show = true; // Show onBoarding
 
 //fonction pour capture les notification et faire des actions lorsqu'on les reçoit
@@ -50,6 +54,7 @@ shMethods(SharedPreferences prefs) async {
   token = await prefs.getString('token');
   fmToken = await prefs.getString('fmToken');
   locale = await prefs.getString('locale');
+  notif = await prefs.getBool('notif');
 
   if (locale != null) {
     Get.updateLocale(Locale(locale!));
@@ -57,6 +62,13 @@ shMethods(SharedPreferences prefs) async {
   if (fmToken == null) {
     var tmp = await ChatController().getFmToken();
     await prefs.setString('fmToken', tmp);
+  }
+
+  if (notif == null || notif == false) {
+    var tmp = await ChatController()
+        .checkUserPushNotification(user!, Constant().TOKEN);
+    await prefs.setBool('notif', tmp);
+    print("tmp est egal à $tmp");
   }
 }
 
@@ -71,12 +83,18 @@ getUser(SharedPreferences prefs) async {
 }
 
 Future<void> messagingInit() async {
-  
   FirebaseMessaging.onBackgroundMessage(notify);
   await AwesomeNotifications().setListeners(
     onActionReceivedMethod: onActionReceivedMethod,
   );
 
+  FirebaseMessaging.instance
+      .setForegroundNotificationPresentationOptions(alert: true, sound: true);
+  FirebaseMessaging.onMessage.listen(
+    (m) {
+      ChatController().playLocalAudio('bubble.wav');
+    },
+  );
 
   AwesomeNotifications().initialize(
     'resource://drawable/res_app_ico',
@@ -98,6 +116,7 @@ Future<void> messagingInit() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(); // Initialisation de firebase
 
   // Initialisation de firebase messaging et awesome notifications
@@ -109,8 +128,8 @@ void main() async {
   show = await prefs.getBool("ON_BOARDING") ?? true;
 
   // lignes de codes afférentes aux SharedPreferences
-  await shMethods(prefs);
   await getUser(prefs);
+  await shMethods(prefs);
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then(

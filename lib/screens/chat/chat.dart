@@ -8,12 +8,14 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/utilities/colors.dart';
+import 'package:myskul/utilities/constants.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 class Chat extends StatefulWidget {
@@ -25,6 +27,7 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   late Stream<QuerySnapshot> messageStream;
 
@@ -35,6 +38,8 @@ class _ChatState extends State<Chat> {
   var icones = IconHelper();
 
   var gradients = GradientHelper();
+
+  late bool notif;
 
   var messageController = TextEditingController();
 
@@ -47,6 +52,11 @@ class _ChatState extends State<Chat> {
     }
   }
 
+  void getNotif() async {
+    final SharedPreferences prefs = await _prefs;
+    notif = prefs.getBool('notif')!;
+  }
+
   File? imageFile;
 
   getMessageStream() {
@@ -56,7 +66,6 @@ class _ChatState extends State<Chat> {
         .orderBy("time")
         .snapshots();
   }
-
 
   // get image
   Future getImage() async {
@@ -132,6 +141,9 @@ class _ChatState extends State<Chat> {
   void initState() {
     // TODO: implement initState
     getMessageStream();
+    Future.delayed(Duration.zero, (() {
+      getNotif();
+    }));
   }
 
   @override
@@ -243,7 +255,35 @@ class _ChatState extends State<Chat> {
                             widget.group['groupName'],
                             style: textes.h2l.copyWith(color: couleurs.white),
                           ),
-                          SizedBox(),
+                          PopupMenuButton(
+                              icon: Icon(
+                                Icons.more_vert,
+                                color: ColorHelper().white,
+                              ),
+                              itemBuilder: (context) {
+                                return [
+                                  notif == true
+                                      ? PopupMenuItem<int>(
+                                          value: 0,
+                                          child: Text("Silence"),
+                                        )
+                                      : PopupMenuItem<int>(
+                                          value: 1,
+                                          child: Text("act-notif".tr),
+                                        ),
+                                ];
+                              },
+                              onSelected: (value) {
+                                if (value == 0) {
+                                  ChatController().removeUserPushNotification(
+                                      widget.user, Constant().TOKEN);
+                                }
+
+                                if (value == 1) {
+                                  ChatController().addUserPushToken(
+                                      widget.user, Constant().TOKEN);
+                                }
+                              }),
                         ],
                       ),
                     ],

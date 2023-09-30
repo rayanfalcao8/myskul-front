@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:myskul/components/messages_tiles.dart';
@@ -10,6 +11,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:myskul/utilities/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "package:collection/collection.dart";
 
@@ -78,6 +80,9 @@ class ChatController {
       'userId': user.id,
       'userPushToken': fmToken,
     };
+
+    EasyLoading.show();
+
     tokens
         .doc(document)
         .update({
@@ -86,6 +91,8 @@ class ChatController {
         .then((value) => print("DocumentSnapshot successfully updated!"))
         .onError((e, stackTrace) =>
             print("Error updating document ${user.email} $e"));
+    await prefs.setBool('notif', true);
+    EasyLoading.dismiss();
   }
 
 // Raccourci pour ajouter tous les groups sur firestore
@@ -181,10 +188,16 @@ class ChatController {
   // Une fonction pour enlever le token d' un utilisateur d'un groupe
 
   void removeUserPushNotification(User user, String document) async {
+    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+    final fmToken = await prefs.getString('fmToken');
+
     Map<Object, Object?> userTmp = {
       'userId': user.id,
-      'userPushToken': '',
+      'userPushToken': fmToken,
     };
+
+    EasyLoading.show();
 
     tokens
         .doc(document)
@@ -193,6 +206,34 @@ class ChatController {
         })
         .then((value) => print("DocumentSnapshot successfully updated!"))
         .onError((e, stackTrace) => print("Error updating document $e"));
+    await prefs.setBool('notif', false);
+    EasyLoading.dismiss();
+  }
+
+  // Une fonction pour enlever le token d' un utilisateur d'un groupe
+
+  Future<bool> checkUserPushNotification(User user, String document) async {
+    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+    final fmToken = await prefs.getString('fmToken');
+    List list = [];
+
+    Map<Object, Object?> userTmp = {
+      'userId': user.id,
+      'userPushToken': fmToken,
+    };
+
+    await tokens.doc(Constant().TOKEN).get().then((value) {
+      var tmp = value.data()! as Map;
+
+      for (var docSnapshot in tmp['users']) {
+        if (docSnapshot['userId'] == user.id) {
+          list.add(docSnapshot);
+        }
+      }
+    });
+
+    return list.isEmpty ? false : true;
   }
 
 // Scroll automatique
@@ -253,7 +294,7 @@ class ChatController {
                   return Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 30.0, bottom: 30.0),
+                        padding: const EdgeInsets.only(bottom: 30.0),
                         child: Text(
                           date,
                           style: TextStyle(
@@ -323,8 +364,15 @@ class ChatController {
 // envoyer un message
 
   sendMessage(String groupId, Map<String, dynamic> chatMessageData) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     var groupUsers;
     var tokenUsers;
+    User user;
+
+    var userString = await prefs.getString('user');
+
+    var userJson = jsonDecode(userString!);
+    user = User.fromJson(userJson);
 
     messages.add(chatMessageData);
     groups.doc(groupId).update({
@@ -349,7 +397,7 @@ class ChatController {
 
     for (var i in u['members']) {
       for (var element in v['users']) {
-        if (element['userId'] == i['userId']) {
+        if (element['userId'] == i['userId'] && user.id != i['userId']) {
           if (element['userPushToken'] != null &&
               element['userPushToken'] != "") {
             sendPushNotification(

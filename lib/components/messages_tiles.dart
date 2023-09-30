@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/models/user.dart';
@@ -429,42 +431,54 @@ class ReceivedAiMessage extends StatefulWidget {
 class _ReceivedAiMessageState extends State<ReceivedAiMessage> {
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        margin: EdgeInsets.only(left: 10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            CircleAvatar(
-              radius: 10,
-              backgroundColor: Colors.transparent,
-              backgroundImage: AssetImage('assets/images/logo2.png'),
-            ),
-            Container(
-              constraints: BoxConstraints(
-                maxWidth: 250,
+    return InkWell(
+      onLongPress: () async {
+        // await Clipboard.setData(ClipboardData(text: widget.texte.trim()));
+        // EasyLoading.showInfo('cp-to-cb'.tr);
+
+        Clipboard.setData(ClipboardData(text: widget.texte.trim())).then((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('cp-to-cb'.tr)));
+        });
+        // copied successfully
+      },
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+          margin: EdgeInsets.only(left: 10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                radius: 10,
+                backgroundColor: Colors.transparent,
+                backgroundImage: AssetImage('assets/images/logo2.png'),
               ),
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: ColorHelper().grey.withOpacity(0.2),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                      bottomRight: Radius.circular(10))),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.texte.trim(),
-                    style: TextHelper().h4r,
-                  ),
-                ],
+              Container(
+                constraints: BoxConstraints(
+                  maxWidth: 250,
+                ),
+                padding: EdgeInsets.all(10),
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: ColorHelper().grey.withOpacity(0.2),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomRight: Radius.circular(10))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      widget.texte.trim(),
+                      style: TextHelper().h4r,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -487,7 +501,6 @@ class SentAiMessage extends StatefulWidget {
 }
 
 class _SentAiMessageState extends State<SentAiMessage> {
-
   @override
   Widget build(BuildContext context) {
     return Align(

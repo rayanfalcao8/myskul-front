@@ -323,6 +323,7 @@ showDialogBox() {
             content: Text('ai-warning'.tr),
             actions: [
               CupertinoButton.filled(
+                 borderRadius: BorderRadius.zero,
                   child: Text('yes'.tr),
                   onPressed: () {
                     Navigator.pop(context);

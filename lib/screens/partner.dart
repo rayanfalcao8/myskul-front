@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myskul/utilities/colors.dart';
@@ -8,6 +7,8 @@ import 'package:myskul/utilities/texts.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/cupertino.dart';
 
 class Partner extends StatefulWidget {
   @override
@@ -25,7 +26,81 @@ class _PartnerState extends State<Partner> {
 
   var gradients = GradientHelper();
 
-  List partners = ['Orange', 'MTN', 'Camtel', 'Nextell', 'Yoomee'];
+  Future<void> launchUrl2(String url) async {
+    if (!await launch(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+  showAlertDialog(BuildContext context, String url) {
+    // show the dialog
+    showDialog(
+        context: Get.context as BuildContext,
+        builder: (context) => CupertinoAlertDialog(
+              title: Text("warning".tr, style: TextHelper().h1r),
+              content: Text("warning-leave".tr, style: TextHelper().h4l),
+              actions: [
+                CupertinoButton.filled(
+                  borderRadius: BorderRadius.zero,
+                    child: Text("yes".tr),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      launchUrl2(url);
+                    }),
+              ],
+            ));
+  }
+
+  List<Map<String, String>> partners = [
+    {
+      'name': 'ORANGE CAMEROUN',
+      'image': 'om.png',
+      'link': 'https://www.orange.cm/fr/',
+    },
+    {
+      'name': 'MTN CAMEROUN',
+      'image': 'momo.png',
+      'link': 'https://mtn.cm/fr/',
+    },
+    {
+      'name': 'FACULTÉ DE MÉDECINE ET DES SCIENCES PHARMACEUTIQUES DE DOUALA',
+      'image': 'douala.jpg',
+      'link': 'https://www.fmsp-udo.com/',
+    },
+    {
+      'name': 'FACULTÉ DE MÉDECINE ET DES SCIENCES DE DSCHANG',
+      'image': 'dschang.png',
+      'link': 'https://www.univ-dschang.org/fmsp/',
+    },
+    {
+      'name': 'FACULTÉ DE MÉDECINE ET DES SCIENCES BIOMÉDICALE DE GAROUA',
+      'image': 'garoua.jpg',
+      'link': 'https://www.osidimbea-edu.cm/superieur/garoua/fmsb-garoua/',
+    },
+    {
+      'name': 'BMS FOUNDATION',
+      'image': 'bmsf.jpeg',
+      'link':
+          'https://www.facebook.com/FondationBMS/posts/d41d8cd9/2494969947436652/?locale=sw_KE',
+    },
+    {
+      'name': 'BMS STYLE',
+      'image': 'bmss.jpeg',
+      'link':
+          'https://www.facebook.com/FondationBMS/posts/bms-style%EF%B8%8F%EF%B8%8F/2818344301765880/?locale=ms_MY',
+    },
+    {
+      'name': 'MUCOTECH SARL',
+      'image': 'mucotech.jpeg',
+      'link': 'https://www.youtube.com/channel/UC1k_nAPWq9tBO3YPUbOR3PA',
+    },
+    {
+      'name': 'DIGIHEALTH SARL',
+      'image': 'digih.jpeg',
+      'link': 'https://www.youtube.com/channel/UCoPaZnTialRvTDbCSTG8dkg',
+    },
+    // {'name': 'FLASH ART', 'image': ''},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +133,48 @@ class _PartnerState extends State<Partner> {
                         horizontalOffset: 50.0,
                         child: FadeInAnimation(
                           child: Bounceable(
-                            onTap: () {},
+                            onTap: () {
+                              showAlertDialog(
+                                  context, partners[index]['link']!);
+                            },
                             child: Container(
                               height: 150,
                               margin:
                                   EdgeInsets.only(top: 10, left: 10, right: 10),
-                              decoration: BoxDecoration(color: couleurs.grey),
-                              child: Center(child: Text(partners[index])),
+                              decoration: BoxDecoration(
+                                  gradient: gradients.greenGradient),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3,
+                                    height: MediaQuery.of(context).size.height,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: AssetImage(
+                                                'assets/images/${partners[index]['image']!}'))),
+                                  ),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3,
+                                    height: MediaQuery.of(context).size.height,
+                                    child: Center(
+                                      child: Text(
+                                        partners[index]['name']!,
+                                        style: TextHelper().bodyTextl.copyWith(
+                                            color: couleurs.white,
+                                            wordSpacing: 1),
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.clip,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -77,7 +187,8 @@ class _PartnerState extends State<Partner> {
             Align(
               alignment: Alignment.topCenter,
               child: Container(
-                height: MediaQuery.of(context).padding.top + MediaQuery.of(context).size.height/12,
+                height: MediaQuery.of(context).padding.top +
+                    MediaQuery.of(context).size.height / 12,
                 decoration: BoxDecoration(
                     gradient: gradients.greenGradient,
                     borderRadius: BorderRadius.only(

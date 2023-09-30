@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
@@ -39,6 +38,7 @@ class MainDrawer extends StatelessWidget {
       throw Exception('Could not launch $_url');
     }
   }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +105,7 @@ class MainDrawer extends StatelessWidget {
                           SizedBox(),
                           Bounceable(
                             onTap: () {
-                              showAlertDialog(context);
+                              showAlertDialog2(context);
                             },
                             child: Icon(
                               icones.logout,
@@ -170,7 +170,9 @@ class MainDrawer extends StatelessWidget {
               ),
               tileColor: Get.currentRoute == '/home' ? Colors.grey[300] : null,
               onTap: () {
-                Get.to(() => Librarypage(user: user,));
+                Get.to(() => Librarypage(
+                      user: user,
+                    ));
               },
             ),
             ListTile(
@@ -313,7 +315,7 @@ class MainDrawer extends StatelessWidget {
   }
 }
 
-showAlertDialog(BuildContext context) {
+showAlertDialog2(BuildContext context) {
   // show the dialog
   showDialog(
       context: Get.context as BuildContext,
@@ -322,6 +324,7 @@ showAlertDialog(BuildContext context) {
             content: Text("warning-text".tr, style: TextHelper().h4l),
             actions: [
               CupertinoButton.filled(
+                  borderRadius: BorderRadius.zero,
                   child: Text("yes".tr),
                   onPressed: () {
                     LoginController().logout();
