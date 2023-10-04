@@ -90,8 +90,8 @@ class HomepageScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ShowCaseWidget.of(context).startShowCase([_menuKey]));
+    // WidgetsBinding.instance.addPostFrameCallback(
+    //     (_) => ShowCaseWidget.of(context).startShowCase([_menuKey]));
 
     return Scaffold(
       key: scaffoldKey,
@@ -335,27 +335,27 @@ class HomepageScaffold extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ShowCaseView(
-                                globalKey: _menuKey,
-                                title: "Title 1",
-                                description: "Description",
-                                child: DashBox(
-                                  icone: IconHelper().quiz,
-                                  texte: "Quiz",
-                                  couleur: Colors.blue,
-                                  function: () {
-                                    Get.to(() => CategorList(user: user));
-                                  },
-                                ),
-                              ),
-                              // DashBox(
-                              //   icone: IconHelper().quiz,
-                              //   texte: "Quiz",
-                              //   couleur: Colors.blue,
-                              //   function: () {
-                              //     Get.to(() => CategorList(user: user));
-                              //   },
+                              // ShowCaseView(
+                              //   globalKey: _menuKey,
+                              //   title: "Title 1",
+                              //   description: "Description",
+                              //   child: DashBox(
+                              //     icone: IconHelper().quiz,
+                              //     texte: "Quiz",
+                              //     couleur: Colors.blue,
+                              //     function: () {
+                              //       Get.to(() => CategorList(user: user));
+                              //     },
+                              //   ),
                               // ),
+                              DashBox(
+                                icone: IconHelper().quiz,
+                                texte: "Quiz",
+                                couleur: Colors.blue,
+                                function: () {
+                                  Get.to(() => CategorList(user: user));
+                                },
+                              ),
                               DashBox(
                                 icone: IconHelper().shop,
                                 texte: "Shop",

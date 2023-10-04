@@ -1,54 +1,100 @@
 import 'package:flutter/material.dart';
+import 'package:myskul/screens/fitness/workout_page.dart';
+import 'package:myskul/utilities/helpers.dart';
 
 class Fitness extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            pinned: true,
-            leading: BackButton(),
-            backgroundColor: Color(0xff22987f),
-            expandedHeight: 80,
-            title: Padding(
-              padding: EdgeInsets.only(top: 32.0),
-              child: Text("Fitness"),
-            ),
-            centerTitle: true,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(35),
-                bottomRight: Radius.circular(35),
-              ),
-            ),
-          ),
-          // Add a SliverToBoxAdapter to display your warning message
-          SliverToBoxAdapter(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 300.0),
-                  Icon(
-                    Icons.warning,
-                    size: 64.0,
-                    color: Colors.yellow,
-                  ),
-                  SizedBox(height: 15.0),
-                  Text(
-                    'Fonctionnalité en cours de developpement',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+      appBar: getAppBar(title: "Fitness", context: context),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        decoration: getBckDecoration(),
+        child: ListView(
+          children: [
+            SizedBox(height: 20),
+            Text("Débutant".toUpperCase(),
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 20),
+            _buildCard(context, bodyPart: "ABDOS", bckImg: "bckImg"),
+            _buildCard(context, bodyPart: "POITRINE", bckImg: "bckImg"),
+            _buildCard(context, bodyPart: "BRAS", bckImg: "bckImg"),
+            _buildCard(context, bodyPart: "JAMBES", bckImg: "bckImg"),
+            _buildCard(context, bodyPart: "Epaules", bckImg: "bckImg"),
+            SizedBox(height: 20),
+            Text("Intermédiaire".toUpperCase(),
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 20),
+            _buildCard(context, bodyPart: "ABDOS", bckImg: "bckImg", level: 2),
+            _buildCard(context,
+                bodyPart: "POITRINE", bckImg: "bckImg", level: 2),
+            _buildCard(context, bodyPart: "BRAS", bckImg: "bckImg", level: 2),
+            _buildCard(context, bodyPart: "JAMBES", bckImg: "bckImg", level: 2),
+            _buildCard(context,
+                bodyPart: "Epaules", bckImg: "bckImg", level: 2),
+            SizedBox(height: 20),
+            Text("Avancé".toUpperCase(),
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 20),
+            _buildCard(context, bodyPart: "ABDOS", bckImg: "bckImg", level: 3),
+            _buildCard(context,
+                bodyPart: "POITRINE", bckImg: "bckImg", level: 3),
+            _buildCard(context, bodyPart: "BRAS", bckImg: "bckImg", level: 3),
+            _buildCard(context, bodyPart: "JAMBES", bckImg: "bckImg", level: 3),
+            _buildCard(context,
+                bodyPart: "Epaules", bckImg: "bckImg", level: 3),
+            SizedBox(height: 50),
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget _buildCard(BuildContext context,
+      {required String bodyPart, required String bckImg, level = 1}) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    WorkoutPage(level: level, bodyPart: bodyPart)));
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 3),
+        child: Card(
+          child: Container(
+            height: 150,
+            padding: EdgeInsets.all(15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  ("${bodyPart} " +
+                          (level == 1
+                              ? "Débutant"
+                              : level > 2
+                                  ? "Avancé"
+                                  : "Intermédiaire"))
+                      .toUpperCase(),
+                ),
+                _buildBolt(level: level),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _buildBolt({int level = 1}) {
+    return Row(
+      children: [
+        Icon(Icons.star, color: Colors.yellow),
+        Icon(Icons.star, color: level > 1 ? Colors.yellow : Colors.grey),
+        Icon(Icons.star, color: level > 2 ? Colors.yellow : Colors.grey),
+      ],
     );
   }
 }
