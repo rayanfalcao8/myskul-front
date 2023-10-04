@@ -75,7 +75,7 @@ class Fitness extends StatelessWidget {
                 level: 3),
             _buildCard(context,
                 bodyPart: "Epaules",
-                bckImg: "${imgPath}/chest_advanced.png",
+                bckImg: "${imgPath}/shoulders_advanced.png",
                 level: 3),
             SizedBox(height: 50),
           ],
