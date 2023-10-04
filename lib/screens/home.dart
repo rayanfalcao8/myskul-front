@@ -7,6 +7,7 @@ import 'package:myskul/screens/drawer.dart';
 import 'package:myskul/screens/quiz/category_list.dart';
 import 'package:myskul/screens/quiz/leaderboard.dart';
 import 'package:myskul/screens/shop/shop2.dart';
+import 'package:myskul/showcase/showcase_view.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import 'ChatGPT/chatgpt.dart';
 import 'fitness/fitness.dart';
@@ -83,11 +85,20 @@ class HomepageScaffold extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> scaffoldKey;
   final User user;
+  final GlobalKey _menuKey = GlobalKey();
+  final GlobalKey _subMenuKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => ShowCaseWidget.of(context).startShowCase([_menuKey]));
+
     return Scaffold(
       key: scaffoldKey,
-      drawer: MainDrawer(user: user),
+      drawer: MainDrawer(
+        user: user,
+        subMenuKey: _subMenuKey,
+      ),
       body: SafeArea(
         child: RefreshIndicator(
           color: ColorHelper().green,
@@ -142,6 +153,16 @@ class HomepageScaffold extends StatelessWidget {
                             color: ColorHelper().green,
                             size: 30,
                           ),
+                          // ShowCaseView(
+                          //   globalKey: _menuKey,
+                          //   title: "Titre 1",
+                          //   description: "Description",
+                          //   child: Icon(
+                          //     IconHelper().notif,
+                          //     color: ColorHelper().green,
+                          //     size: 30,
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -243,6 +264,17 @@ class HomepageScaffold extends StatelessWidget {
                                         .h4l
                                         .copyWith(color: ColorHelper().white),
                                   ),
+                                  // ShowCaseView(
+                                  //   globalKey: _menuKey,
+                                  //   title: "Title 1",
+                                  //   description: "Description",
+                                  //   child: Text(
+                                  //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nEtiam semper lacinia nunc . ",
+                                  //     style: TextHelper()
+                                  //         .h4l
+                                  //         .copyWith(color: ColorHelper().white),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -303,14 +335,27 @@ class HomepageScaffold extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              DashBox(
-                                icone: IconHelper().quiz,
-                                texte: "Quiz",
-                                couleur: Colors.blue,
-                                function: () {
-                                  Get.to(() => CategorList(user: user));
-                                },
+                              ShowCaseView(
+                                globalKey: _menuKey,
+                                title: "Title 1",
+                                description: "Description",
+                                child: DashBox(
+                                  icone: IconHelper().quiz,
+                                  texte: "Quiz",
+                                  couleur: Colors.blue,
+                                  function: () {
+                                    Get.to(() => CategorList(user: user));
+                                  },
+                                ),
                               ),
+                              // DashBox(
+                              //   icone: IconHelper().quiz,
+                              //   texte: "Quiz",
+                              //   couleur: Colors.blue,
+                              //   function: () {
+                              //     Get.to(() => CategorList(user: user));
+                              //   },
+                              // ),
                               DashBox(
                                 icone: IconHelper().shop,
                                 texte: "Shop",
@@ -349,7 +394,9 @@ class HomepageScaffold extends StatelessWidget {
                                 texte: "My AI",
                                 couleur: ColorHelper().lightGreen,
                                 function: () {
-                                  Get.to(() => GPT(user: user,));
+                                  Get.to(() => GPT(
+                                        user: user,
+                                      ));
                                 },
                               ),
                               DashBox(
@@ -360,7 +407,6 @@ class HomepageScaffold extends StatelessWidget {
                                   Get.to(() => Fitness());
                                 },
                               ),
-
                               SizedBox()
                             ],
                           ),
@@ -486,7 +532,6 @@ class HomepageScaffold extends StatelessWidget {
                               SizedBox(
                                 height: 05,
                               ),
-                              
                             ],
                           ),
                           SizedBox(
