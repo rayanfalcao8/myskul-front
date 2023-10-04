@@ -16,7 +16,9 @@ class Fitness extends StatelessWidget {
             Text("Débutant".toUpperCase(),
                 style: TextStyle(fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
-            _buildCard(context, bodyPart: "ABDOS", bckImg: "bckImg"),
+            _buildCard(context,
+                bodyPart: "ABDOS",
+                bckImg: "assets/images/workout/abs_begin.jpg"),
             _buildCard(context, bodyPart: "POITRINE", bckImg: "bckImg"),
             _buildCard(context, bodyPart: "BRAS", bckImg: "bckImg"),
             _buildCard(context, bodyPart: "JAMBES", bckImg: "bckImg"),
@@ -66,6 +68,11 @@ class Fitness extends StatelessWidget {
           child: Container(
             height: 150,
             padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              image: AssetImage(bckImg),
+              fit: BoxFit.cover,
+            )),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +86,7 @@ class Fitness extends StatelessWidget {
                                   : "Intermédiaire"))
                       .toUpperCase(),
                 ),
-                _buildBolt(level: level),
+                _buildStars(level: level),
               ],
             ),
           ),
@@ -88,7 +95,7 @@ class Fitness extends StatelessWidget {
     );
   }
 
-  _buildBolt({int level = 1}) {
+  _buildStars({int level = 1}) {
     return Row(
       children: [
         Icon(Icons.star, color: Colors.yellow),

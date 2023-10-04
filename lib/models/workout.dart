@@ -1,46 +1,37 @@
 class Workout {
   int? id;
-  String? label;
-  String? level;
-  String? bodyPart;
+  String? title;
   String? description;
-  DateTime? duration;
-  DateTime? reps;
+  int? seconds;
+  int? reps;
   String? picture;
   DateTime? createdAt;
   DateTime? updatedAt;
 
   Workout({
-    this.label,
-    this.description,
-    this.duration,
-    this.picture,
-    this.level,
-    this.bodyPart,
+    required this.title,
     this.reps,
+    this.seconds,
+    this.description,
+    this.picture,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      'label': label,
+      'title': title,
       'description': description,
-      'duration': duration!.toIso8601String(),
+      'seconds': seconds,
       'picture': picture,
-      'level': level,
-      'body_part': bodyPart,
       'reps': reps
     };
   }
 
   Workout.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    label = json['label'];
+    title = json['title'];
     description = json['description'];
-    duration =
-        json['duration'] != null ? DateTime.parse(json['duration']) : null;
+    seconds = json['seconds'];
     picture = json['picture'];
-    level = json['level'];
-    bodyPart = json['body_part'];
     reps = json['reps'];
     createdAt =
         json['created_at'] != null ? DateTime.parse(json['created_at']) : null;
