@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myskul/controllers/quiz_controller.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/chat/chat_group_list.dart';
 import 'package:myskul/screens/drawer.dart';
@@ -15,7 +16,6 @@ import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'ChatGPT/chatgpt.dart';
 import 'fitness/fitness.dart';
 
@@ -26,15 +26,17 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  late User user;
+  var user;
 
-  Future<User> getUser() async {
+  getUser() async {
     final prefs = await _prefs;
     var userString = await prefs.getString('user');
     var userJson = jsonDecode(userString!);
-    user = User.fromJson(userJson);
+    user =  User.fromJson(userJson);
     return user;
   }
+
+ 
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -46,7 +48,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      builder: (ctx, snapshot) {
+      builder: (ctx,  snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             return Scaffold(
@@ -75,24 +77,33 @@ class _HomeState extends State<Home> {
   }
 }
 
-class HomepageScaffold extends StatelessWidget {
-  HomepageScaffold({
-    required this.scaffoldKey,
-    required this.user,
-  });
+class HomepageScaffold extends StatefulWidget {
+  HomepageScaffold({required this.scaffoldKey, required this.user});
 
   final GlobalKey<ScaffoldState> scaffoldKey;
-  final User user;
+  var user;
+
+  @override
+  State<HomepageScaffold> createState() => _HomepageScaffoldState();
+}
+
+class _HomepageScaffoldState extends State<HomepageScaffold> {
+  late Map<String, dynamic> scores;
+
+  Future<Map<String, dynamic>> getScore() async {
+    scores = await QuizController().getAllScores();
+    return scores;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      drawer: MainDrawer(user: user),
+      key: widget.scaffoldKey,
+      drawer: MainDrawer(user: widget.user),
       body: SafeArea(
         child: RefreshIndicator(
           color: ColorHelper().green,
           onRefresh: () async {
-            await Future.delayed(Duration(seconds: 3));
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (BuildContext context) => Home()));
           },
@@ -119,11 +130,12 @@ class HomepageScaffold extends StatelessWidget {
                         children: [
                           Bounceable(
                             onTap: () {
-                              if (scaffoldKey.currentState!.isDrawerOpen) {
-                                scaffoldKey.currentState!.closeDrawer();
+                              if (widget
+                                  .scaffoldKey.currentState!.isDrawerOpen) {
+                                widget.scaffoldKey.currentState!.closeDrawer();
                                 //close drawer, if drawer is open
                               } else {
-                                scaffoldKey.currentState!.openDrawer();
+                                widget.scaffoldKey.currentState!.openDrawer();
                                 //open drawer, if drawer is closed
                               }
                             },
@@ -308,7 +320,7 @@ class HomepageScaffold extends StatelessWidget {
                                 texte: "Quiz",
                                 couleur: Colors.blue,
                                 function: () {
-                                  Get.to(() => CategorList(user: user));
+                                  Get.to(() => CategorList(user: widget.user));
                                 },
                               ),
                               DashBox(
@@ -324,7 +336,7 @@ class HomepageScaffold extends StatelessWidget {
                                 texte: "Chat",
                                 couleur: Colors.pink,
                                 function: () {
-                                  Get.to(() => GroupChat(user: user));
+                                  Get.to(() => GroupChat(user: widget.user));
                                 },
                               ),
                               SizedBox()
@@ -341,7 +353,7 @@ class HomepageScaffold extends StatelessWidget {
                                 texte: "Leaderboard",
                                 couleur: ColorHelper().lemon,
                                 function: () {
-                                  Get.to(() => LeaderBoard(user: user));
+                                  Get.to(() => LeaderBoard(user: widget.user));
                                 },
                               ),
                               DashBox(
@@ -349,7 +361,9 @@ class HomepageScaffold extends StatelessWidget {
                                 texte: "My AI",
                                 couleur: ColorHelper().lightGreen,
                                 function: () {
-                                  Get.to(() => GPT(user: user,));
+                                  Get.to(() => GPT(
+                                        user: widget.user,
+                                      ));
                                 },
                               ),
                               DashBox(
@@ -360,7 +374,6 @@ class HomepageScaffold extends StatelessWidget {
                                   Get.to(() => Fitness());
                                 },
                               ),
-
                               SizedBox()
                             ],
                           ),
@@ -424,8 +437,9 @@ class HomepageScaffold extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            user.domain.length > 0
-                                                ? user.domain[0]['display_name']
+                                            widget.user.domain.length > 0
+                                                ? widget.user.domain[0]
+                                                    ['display_name']
                                                 : ' ',
                                             style: TextHelper().h2l.copyWith(
                                                 color: ColorHelper().green),
@@ -434,8 +448,9 @@ class HomepageScaffold extends StatelessWidget {
                                             height: 10,
                                           ),
                                           Text(
-                                            user.speciality != null
-                                                ? user.speciality['sigle']
+                                            widget.user.speciality != null
+                                                ? widget
+                                                    .user.speciality['sigle']
                                                 : ' ',
                                             style: TextHelper().h4b.copyWith(
                                                 color: ColorHelper().green),
@@ -444,8 +459,9 @@ class HomepageScaffold extends StatelessWidget {
                                             height: 10,
                                           ),
                                           Text(
-                                            user.school != null
-                                                ? user.school['display_name']
+                                            widget.user.school != null
+                                                ? widget
+                                                    .user.school['display_name']
                                                 : ' ',
                                             style: TextHelper().h4b.copyWith(
                                                 color: ColorHelper().green),
@@ -454,8 +470,8 @@ class HomepageScaffold extends StatelessWidget {
                                             height: 10,
                                           ),
                                           Text(
-                                            user.level != null
-                                                ? user.level['level']
+                                            widget.user.level != null
+                                                ? widget.user.level['level']
                                                 : ' ',
                                             style: TextHelper().h4l.copyWith(
                                                 color: ColorHelper().green),
@@ -486,7 +502,6 @@ class HomepageScaffold extends StatelessWidget {
                               SizedBox(
                                 height: 05,
                               ),
-                              
                             ],
                           ),
                           SizedBox(
@@ -495,94 +510,145 @@ class HomepageScaffold extends StatelessWidget {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             height: 150,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                            child: FutureBuilder(
+                              builder: (ctx,
+                                  AsyncSnapshot<Map<String, dynamic>>
+                                      snapshot) {
+                                // Checking if future is resolved or not
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  // If we got an error
+                                  if (snapshot.hasError) {
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+
+                                    // if we got our data
+                                  } else if (snapshot.hasData) {
+                                    // Extracting data from snapshot object
+                                    final data =
+                                        snapshot.data as Map<String, dynamic>;
+                                    return Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("15", style: TextHelper().h3b),
-                                        Text("t-quiz".tr,
-                                            style: TextHelper().h4l),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 30,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("15", style: TextHelper().h3b),
-                                        Text("r".tr, style: TextHelper().h4l),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  height: 110,
-                                  width: 1,
-                                  color: ColorHelper().grey.withOpacity(0.1),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: 30,
-                                    ),
-                                    Text(
-                                      "score".tr,
-                                      style: TextHelper()
-                                          .h3r
-                                          .copyWith(color: ColorHelper().green),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text("150",
-                                        style: TextHelper().xxlb.copyWith(
-                                            color: ColorHelper().green)),
-                                  ],
-                                ),
-                                Container(
-                                  height: 110,
-                                  width: 1,
-                                  color: ColorHelper().grey.withOpacity(0.1),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Column(
+                                          MainAxisAlignment.spaceEvenly,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text("200", style: TextHelper().h3b),
-                                        Text("t-question".tr,
-                                            style: TextHelper().h4l),
+                                        Column(
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(data["quiz"].toString(),
+                                                    style: TextHelper().h3b),
+                                                Text("t-quiz".tr,
+                                                    style: TextHelper().h4l),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 30,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(data["correct"].toString(),
+                                                    style: TextHelper().h3b),
+                                                Text("r".tr,
+                                                    style: TextHelper().h4l),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        Container(
+                                          height: 110,
+                                          width: 1,
+                                          color: ColorHelper()
+                                              .grey
+                                              .withOpacity(0.1),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              height: 30,
+                                            ),
+                                            Text(
+                                              "score".tr,
+                                              style: TextHelper().h3r.copyWith(
+                                                  color: ColorHelper().green),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(data["score"].toString(),
+                                                style: TextHelper()
+                                                    .xxlb
+                                                    .copyWith(
+                                                        color: ColorHelper()
+                                                            .green)),
+                                          ],
+                                        ),
+                                        Container(
+                                          height: 110,
+                                          width: 1,
+                                          color: ColorHelper()
+                                              .grey
+                                              .withOpacity(0.1),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                    data["questions"]
+                                                        .toString(),
+                                                    style: TextHelper().h3b),
+                                                Text("t-question".tr,
+                                                    style: TextHelper().h4l),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 30,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(data["wrong"].toString(),
+                                                    style: TextHelper().h3b),
+                                                Text("t".tr,
+                                                    style: TextHelper().h4l),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ],
-                                    ),
-                                    SizedBox(
-                                      height: 30,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text("15", style: TextHelper().h3b),
-                                        Text("t".tr, style: TextHelper().h4l),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    );
+                                  }
+                                }
+
+                                // Displaying LoadingSpinner to indicate waiting state
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              },
+
+                              // Future that needs to be resolved
+                              // inorder to display something on the Canvas
+                              future: getScore(),
                             ),
                           )
                         ],

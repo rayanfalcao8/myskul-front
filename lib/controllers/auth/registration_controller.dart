@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:myskul/controllers/quiz_controller.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/home.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
@@ -162,10 +163,10 @@ class RegisterationController extends GetxController {
           idController);
 
       Map body = {
-        "level_id": lvController ?? '1' ,
-        "domain_id": domainController ,
-        "speciality_id": speController ,
-        "school_id": schoolController ,
+        "level_id": lvController ?? '1',
+        "domain_id": domainController,
+        "speciality_id": speController,
+        "school_id": schoolController,
       };
 
       EasyLoading.show();
@@ -182,7 +183,7 @@ class RegisterationController extends GetxController {
         var json = jsonDecode(res.body);
         EasyLoading.showSuccess(json['message']);
 
-        Get.to(()=>Home());
+        Get.to(() => Home());
       } else {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }

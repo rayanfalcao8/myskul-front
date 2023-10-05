@@ -13,11 +13,14 @@ import '../../utilities/icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Quiz5 extends StatefulWidget {
-  Quiz5({required this.questionsLength, required this.quiz});
+  Quiz5(
+      {required this.questionsLength,
+      required this.quiz,
+      required this.current});
 
   var questionsLength;
   QuizModel quiz;
-
+  List<Map<String, dynamic>> current;
   @override
   State<Quiz5> createState() => _Quiz5State();
 }
@@ -26,17 +29,19 @@ class _Quiz5State extends State<Quiz5> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   var correctAnswers;
+  var scores;
 
   getCorrectAnswers() async {
     final SharedPreferences prefs = await _prefs;
     var correctAnswers = await prefs.getInt('currentScore')!;
-
     if (correctAnswers < (widget.questionsLength * 50 / 100)) {
-       ChatController().playLocalAudio("wrong-final.wav");
+      ChatController().playLocalAudio("wrong-final.wav");
     } else {
-       ChatController().playLocalAudio("right-final.wav");
+      ChatController().playLocalAudio("right-final.wav");
     }
-    QuizController().answerQuiz(score: correctAnswers, quiz: widget.quiz);
+
+    QuizController().answerQuiz(
+        score: correctAnswers, quiz: widget.quiz, current: widget.current);
     return correctAnswers;
   }
 
@@ -301,9 +306,9 @@ class _Quiz5State extends State<Quiz5> {
                               height: 38,
                             ),
                             WidgetAnimator(
-                              incomingEffect: WidgetTransitionEffects.incomingSlideInFromBottom(
-                                duration: Duration(milliseconds: 500)
-                              ),
+                              incomingEffect: WidgetTransitionEffects
+                                  .incomingSlideInFromBottom(
+                                      duration: Duration(milliseconds: 500)),
                               child: Text(
                                 getAppreciation(
                                     snapshot.data, widget.questionsLength),

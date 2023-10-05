@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/date_symbol_data_file.dart';
 import 'package:myskul/controllers/chat_controller.dart';
+import 'package:myskul/controllers/quiz_controller.dart';
 import 'package:myskul/introduction_screen.dart';
 import 'package:myskul/screens/auth/domain.dart';
 import 'package:myskul/screens/auth/reset.dart';
@@ -61,7 +62,7 @@ shMethods(SharedPreferences prefs) async {
   }
   if (fmToken == null) {
     var tmp = await ChatController().getFmToken();
-    await prefs.setString('fmToken', tmp);
+    await prefs.setString('fmToken', tmp);                              
   }
 
   if (notif == null || notif == false) {

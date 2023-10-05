@@ -126,5 +126,8 @@ class EN {
         'By quitting, you will lose all current messages \n Do you really want to quit ? ',
     'cp-to-cb': 'Content successfully copied to clipboard',
     'act-notif': 'Enable notifications',
+     'today': 'TODAY',
+    'this-month': 'THIS MONTH',
+    'since-b': 'SINCE JOINING',
   };
 }
