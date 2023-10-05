@@ -6,7 +6,6 @@ import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/account/account.dart';
 import 'package:myskul/screens/history/history.dart';
 import 'package:myskul/screens/partner.dart';
-import 'package:myskul/screens/shop/shop2.dart';
 import 'package:myskul/screens/subscriptions/subscriptions.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
@@ -19,19 +18,20 @@ import 'package:flutter/cupertino.dart';
 import 'library/library.dart';
 
 class MainDrawer extends StatelessWidget {
-  MainDrawer({required this.user});
-  User user;
-  var couleurs = ColorHelper();
+  MainDrawer({required this.user, required this.subMenuKey});
+  final User user;
+  final couleurs = ColorHelper();
 
-  var textes = TextHelper();
+  final textes = TextHelper();
 
-  var icones = IconHelper();
+  final icones = IconHelper();
 
-  var gradients = GradientHelper();
+  final gradients = GradientHelper();
 
   final String _url = ('https://wa.link/7ipjc4');
 
   final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
+  final GlobalKey subMenuKey;
 
   Future<void> _launchUrl() async {
     if (!await launch(_url)) {
