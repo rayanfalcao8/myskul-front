@@ -53,8 +53,11 @@ class _LeaderBoardState extends State<LeaderBoard> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        BackButton(
-                          color: couleurs.white,
+                        Padding(
+                          padding: const EdgeInsets.only(left:10.0),
+                          child: BackButton(
+                            color: couleurs.white,
+                          ),
                         ),
                         CircleAvatar(
                           radius: 15,
@@ -72,7 +75,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                   ),
                 ),
                 Positioned(
-                  top: 10,
+                  top: 15,
                   left: 0,
                   right: 0,
                   child: Center(

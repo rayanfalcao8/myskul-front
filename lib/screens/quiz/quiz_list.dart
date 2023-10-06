@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:myskul/controllers/quiz_controller.dart';
 import 'package:myskul/screens/quiz/quiz.dart';
 
@@ -12,8 +13,9 @@ import '../../utilities/icons.dart';
 import '../../utilities/texts.dart';
 
 class QuizList extends StatefulWidget {
-  QuizList({required this.category});
+  QuizList({required this.category, this.name});
   Category category;
+  String? name;
   @override
   State<QuizList> createState() => _QuizListState();
 }
@@ -29,9 +31,7 @@ class _QuizListState extends State<QuizList> {
 
   var gradients = GradientHelper();
 
-  var quiz;
-
-  String? name;
+  var categories;
 
   List<Widget> displayQuizzes(List<QuizModel> quizList) {
     List<QuizWidget> w = [];
@@ -41,7 +41,17 @@ class _QuizListState extends State<QuizList> {
     return w;
   }
 
+  getCategories() {
+    categories =
+        QuizController().getQuizzesByCategory(widget.category.id, widget.name);
+  }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCategories();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -163,6 +173,8 @@ class _QuizListState extends State<QuizList> {
                         ),
                         TextField(
                           controller: controller,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.send,
                           cursorColor: ColorHelper().black,
                           decoration: InputDecoration(
                             filled: true,
@@ -181,10 +193,14 @@ class _QuizListState extends State<QuizList> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          onTapOutside: (h) {
-                            name = controller.text;
-                            print(name);
-                            setState(() {});
+                          onSubmitted: (v) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) => QuizList(
+                                          category: widget.category,
+                                          name: v,
+                                        )));
                           },
                         ),
                         Padding(
@@ -203,26 +219,41 @@ class _QuizListState extends State<QuizList> {
                             physics: const BouncingScrollPhysics(),
                             children: [
                               FutureBuilder(
-                                future: QuizController().getQuizzesByCategory(widget.category.id, name),
+                                future: categories,
                                 builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.done) {
-                                    if (snapshot.hasError) {
-                                      print(snapshot.error);
-                                      return NotFoundWidget(
-                                          texte: 'not-found'.tr);
-                                    } else {
-                                      return Column(
-                                        children: displayQuizzes(
-                                            snapshot.data as List<QuizModel>),
-                                      );
+                                  try {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      if (snapshot.hasError) {
+                                        print(snapshot.error);
+                                        return NotFoundWidget(
+                                            texte: 'not-found'.tr);
+                                      } else {
+                                        return snapshot.data != null
+                                            ? Column(
+                                                children: displayQuizzes(
+                                                    snapshot.data
+                                                        as List<QuizModel>),
+                                              )
+                                            : Center(
+                                                child: Text(
+                                                'not-found'.tr,
+                                                style: textes.h3r,
+                                              ));
+                                      }
                                     }
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        color: couleurs.green,
+                                      ),
+                                    ); // Display the fetched data
+                                  } catch (e) {
+                                    return Center(
+                                        child: Text(
+                                      e.toString(),
+                                      style: textes.h3r,
+                                    ));
                                   }
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      color: couleurs.green,
-                                    ),
-                                  ); // Display the fetched data
                                 },
                               ),
                             ],
