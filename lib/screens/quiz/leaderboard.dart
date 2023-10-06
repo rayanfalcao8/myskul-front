@@ -1,14 +1,9 @@
-import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
 import '../../components/messages_tiles.dart';
 import '../../controllers/quiz_controller.dart';
@@ -30,6 +25,10 @@ class _LeaderBoardState extends State<LeaderBoard> {
 
   var gradients = GradientHelper();
 
+  bool isDay = false;
+  bool isMonth = false;
+  bool isAll = true;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -47,7 +46,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
               alignment: Alignment.center,
               children: [
                 Positioned(
-                  top: 30,
+                  top: 10,
                   left: -10,
                   child: Container(
                     width: size.width,
@@ -73,12 +72,12 @@ class _LeaderBoardState extends State<LeaderBoard> {
                   ),
                 ),
                 Positioned(
-                  top: 30,
+                  top: 10,
                   left: 0,
                   right: 0,
                   child: Center(
                     child: Text('LEADERBOARD',
-                        style: textes.h1r.copyWith(color: couleurs.white)),
+                        style: textes.h1l.copyWith(color: couleurs.white)),
                   ),
                 ),
                 Positioned(
@@ -89,25 +88,56 @@ class _LeaderBoardState extends State<LeaderBoard> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
-                        'AUJOURD’HUI',
-                        style: textes.h4r
-                            .copyWith(color: couleurs.white.withOpacity(0.5)),
+                      InkWell(
+                        onTap: () {
+                          isDay = true;
+                          isMonth = false;
+                          isAll = false;
+                          setState(() {});
+                        },
+                        child: Text(
+                          'today'.tr,
+                          style: textes.h4r.copyWith(
+                              color: isDay == true
+                                  ? couleurs.white
+                                  : couleurs.white.withOpacity(0.5)),
+                        ),
                       ),
                       SizedBox(
                         width: 20,
                       ),
-                      Text(
-                        'CE MOIS',
-                        style: textes.h4r.copyWith(color: couleurs.white),
+                      InkWell(
+                        onTap: () {
+                          isDay = false;
+                          isMonth = true;
+                          isAll = false;
+                          setState(() {});
+                        },
+                        child: Text(
+                          'this-month'.tr,
+                          style: textes.h4r.copyWith(
+                              color: isMonth == true
+                                  ? couleurs.white
+                                  : couleurs.white.withOpacity(0.5)),
+                        ),
                       ),
                       SizedBox(
                         width: 20,
                       ),
-                      Text(
-                        'DEPUIS LE DEBUT',
-                        style: textes.h4r
-                            .copyWith(color: couleurs.white.withOpacity(0.5)),
+                      InkWell(
+                        onTap: () {
+                          isDay = false;
+                          isMonth = false;
+                          isAll = true;
+                          setState(() {});
+                        },
+                        child: Text(
+                          'since-b'.tr,
+                          style: textes.h4r.copyWith(
+                              color: isAll == true
+                                  ? couleurs.white
+                                  : couleurs.white.withOpacity(0.5)),
+                        ),
                       ),
                     ],
                   ),
@@ -171,8 +201,13 @@ class _LeaderBoardState extends State<LeaderBoard> {
                 Positioned(
                   bottom: 0,
                   left: 0,
+                  right: 0,
                   child: FutureBuilder(
-                    future: QuizController().getLeaderBoard(),
+                    future: QuizController().getLeaderBoard(isDay == true
+                        ? 0
+                        : isMonth == true
+                            ? 1
+                            : 2),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         var res = snapshot.data as dynamic;
@@ -186,93 +221,28 @@ class _LeaderBoardState extends State<LeaderBoard> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                WidgetAnimator(
-                                    incomingEffect: WidgetTransitionEffects
-                                        .incomingSlideInFromLeft(
-                                            duration:
-                                                Duration(milliseconds: 500)),
-                                    child: Column(
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 20,
-                                          backgroundImage: AssetImage(
-                                              'assets/images/loading.gif'),
-                                          child: CircleAvatar(
-                                            radius: 20,
-                                            backgroundColor: Colors.transparent,
-                                            backgroundImage: NetworkImage(
-                                                leaders[1].profile_image),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 05,
-                                        ),
-                                        Container(
-                                          width: size.width / 5,
-                                          height: size.height / 6,
-                                          decoration: BoxDecoration(
-                                              color: couleurs.white
-                                                  .withOpacity(0.6),
-                                              border: Border(
-                                                  bottom: BorderSide(
-                                                      color: couleurs.white
-                                                          .withOpacity(0.5)),
-                                                  top: BorderSide(
-                                                      color: couleurs.white
-                                                          .withOpacity(0.5)),
-                                                  left: BorderSide(
-                                                      color: couleurs.white
-                                                          .withOpacity(0.5)))),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Text(
-                                                "2",
-                                                style: textes.xxlb.copyWith(
-                                                    color: couleurs.white),
-                                              ),
-                                              Text(
-                                                "${leaders[1].score} pts",
-                                                style: textes.h3b.copyWith(
-                                                    color: couleurs.white),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                                WidgetAnimator(
-                                  incomingEffect: WidgetTransitionEffects
-                                      .incomingSlideInFromTop(
-                                          duration:
-                                              Duration(milliseconds: 500)),
-                                  child: Column(
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/crown.png',
-                                        width: 20,
-                                      ),
-                                      CircleAvatar(
+                                Column(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 20,
+                                      backgroundImage: AssetImage(
+                                          'assets/images/loading.gif'),
+                                      child: CircleAvatar(
                                         radius: 20,
-                                        backgroundImage: AssetImage(
-                                            'assets/images/loading.gif'),
-                                        child: CircleAvatar(
-                                          radius: 20,
-                                          backgroundColor: Colors.transparent,
-                                          backgroundImage: NetworkImage(
-                                              leaders[0].profile_image),
-                                        ),
+                                        backgroundColor: Colors.transparent,
+                                        backgroundImage: NetworkImage(
+                                            leaders[1].profile_image),
                                       ),
-                                      SizedBox(
-                                        height: 05,
-                                      ),
-                                      Container(
-                                        width: size.width / 5,
-                                        height: size.height / 4,
-                                        decoration: BoxDecoration(
-                                          color:
-                                              couleurs.white.withOpacity(0.6),
+                                    ),
+                                    SizedBox(
+                                      height: 05,
+                                    ),
+                                    Container(
+                                      width: size.width / 5,
+                                      height: size.height / 6,
+                                      decoration: BoxDecoration(
+                                          color: couleurs.white
+                                              .withOpacity(0.6),
                                           border: Border(
                                               bottom: BorderSide(
                                                   color: couleurs.white
@@ -282,99 +252,147 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                                       .withOpacity(0.5)),
                                               left: BorderSide(
                                                   color: couleurs.white
+                                                      .withOpacity(0.5)))),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            "2",
+                                            style: textes.xxlb.copyWith(
+                                                color: couleurs.white),
+                                          ),
+                                          Text(
+                                            "${leaders[1].score} pts",
+                                            style: textes.h3b.copyWith(
+                                                color: couleurs.white),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/crown.png',
+                                      width: 20,
+                                    ),
+                                    CircleAvatar(
+                                      radius: 20,
+                                      backgroundImage: AssetImage(
+                                          'assets/images/loading.gif'),
+                                      child: CircleAvatar(
+                                        radius: 20,
+                                        backgroundColor: Colors.transparent,
+                                        backgroundImage: NetworkImage(
+                                            leaders[0].profile_image),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 05,
+                                    ),
+                                    Container(
+                                      width: size.width / 5,
+                                      height: size.height / 4,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            couleurs.white.withOpacity(0.6),
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: couleurs.white
+                                                    .withOpacity(0.5)),
+                                            top: BorderSide(
+                                                color: couleurs.white
+                                                    .withOpacity(0.5)),
+                                            left: BorderSide(
+                                                color: couleurs.white
+                                                    .withOpacity(0.5)),
+                                            right: BorderSide(
+                                                color: couleurs.white
+                                                    .withOpacity(0.5))),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: couleurs.black
+                                                .withOpacity(0.2),
+                                            offset: const Offset(
+                                              5.0,
+                                              5.0,
+                                            ),
+                                            blurRadius: 10.0,
+                                            spreadRadius: 2.0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            "1",
+                                            style: textes.xxlb.copyWith(
+                                                color: couleurs.white),
+                                          ),
+                                          Text(
+                                            "${leaders[0].score} pts",
+                                            style: textes.h3b.copyWith(
+                                                color: couleurs.white),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 20,
+                                      backgroundImage: AssetImage(
+                                          'assets/images/loading.gif'),
+                                      child: CircleAvatar(
+                                        radius: 20,
+                                        backgroundColor: Colors.transparent,
+                                        backgroundImage: NetworkImage(
+                                            leaders[2].profile_image),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 05,
+                                    ),
+                                    Container(
+                                      width: size.width / 5,
+                                      height: size.height / 8,
+                                      decoration: BoxDecoration(
+                                          color:
+                                              couleurs.white.withOpacity(0.6),
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                  color: couleurs.white
+                                                      .withOpacity(0.5)),
+                                              top: BorderSide(
+                                                  color: couleurs.white
                                                       .withOpacity(0.5)),
                                               right: BorderSide(
                                                   color: couleurs.white
-                                                      .withOpacity(0.5))),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: couleurs.black
-                                                  .withOpacity(0.2),
-                                              offset: const Offset(
-                                                5.0,
-                                                5.0,
-                                              ),
-                                              blurRadius: 10.0,
-                                              spreadRadius: 2.0,
-                                            ),
-                                          ],
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Text(
-                                              "1",
-                                              style: textes.xxlb.copyWith(
-                                                  color: couleurs.white),
-                                            ),
-                                            Text(
-                                              "${leaders[0].score} pts",
-                                              style: textes.h3b.copyWith(
-                                                  color: couleurs.white),
-                                            ),
-                                          ],
-                                        ),
+                                                      .withOpacity(0.5)))),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            "3",
+                                            style: textes.xxlb.copyWith(
+                                                color: couleurs.white),
+                                          ),
+                                          Text(
+                                            "${leaders[2].score} pts",
+                                            style: textes.h3b.copyWith(
+                                                color: couleurs.white),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                WidgetAnimator(
-                                  incomingEffect: WidgetTransitionEffects
-                                      .incomingSlideInFromRight(
-                                          duration:
-                                              Duration(milliseconds: 500)),
-                                  child: Column(
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 20,
-                                        backgroundImage: AssetImage(
-                                            'assets/images/loading.gif'),
-                                        child: CircleAvatar(
-                                          radius: 20,
-                                          backgroundColor: Colors.transparent,
-                                          backgroundImage: NetworkImage(
-                                              leaders[2].profile_image),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 05,
-                                      ),
-                                      Container(
-                                        width: size.width / 5,
-                                        height: size.height / 8,
-                                        decoration: BoxDecoration(
-                                            color:
-                                                couleurs.white.withOpacity(0.6),
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    color: couleurs.white
-                                                        .withOpacity(0.5)),
-                                                top: BorderSide(
-                                                    color: couleurs.white
-                                                        .withOpacity(0.5)),
-                                                right: BorderSide(
-                                                    color: couleurs.white
-                                                        .withOpacity(0.5)))),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Text(
-                                              "3",
-                                              style: textes.xxlb.copyWith(
-                                                  color: couleurs.white),
-                                            ),
-                                            Text(
-                                              "${leaders[2].score} pts",
-                                              style: textes.h3b.copyWith(
-                                                  color: couleurs.white),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),

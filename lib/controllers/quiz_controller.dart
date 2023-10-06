@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:myskul/models/category.dart';
@@ -7,12 +6,12 @@ import 'package:myskul/models/question.dart';
 import 'package:myskul/models/quiz.dart';
 import 'package:myskul/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:http/http.dart' as http;
 import '../utilities/api_endpoints.dart';
 
 class QuizController extends GetxController {
-  getQuizzesByCategory(int categoryId) async {
+  
+  getQuizzesByCategory(int categoryId, String? name) async {
     var token;
     List<QuizModel> quizList = [];
     final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -25,9 +24,14 @@ class QuizController extends GetxController {
         "Content-Type": "application/json; charset=UTF-8",
         "Accept": "application/json",
       };
-      var url = Uri.parse(ApiEndponits().baseUrl +
-          ApiEndponits().endpoints.quizList +
-          categoryId.toString());
+      var url;
+      name == null
+          ? url = Uri.parse(ApiEndponits().baseUrl +
+              ApiEndponits().endpoints.quizList +
+              categoryId.toString())
+          : url = Uri.parse(ApiEndponits().baseUrl +
+              ApiEndponits().endpoints.quizList +
+              categoryId.toString() + '?name=$name');
 
       http.Response res = await http.get(url, headers: headers);
 
@@ -47,7 +51,7 @@ class QuizController extends GetxController {
     }
   }
 
-  getCategories() async {
+  getCategories(String? name) async {
     var token;
     var categories;
 
@@ -61,8 +65,14 @@ class QuizController extends GetxController {
         "Content-Type": "application/json; charset=UTF-8",
         "Accept": "application/json",
       };
-      var url = Uri.parse(
-          ApiEndponits().baseUrl + ApiEndponits().endpoints.categories);
+      var url;
+
+      name == null
+          ? url = Uri.parse(
+              ApiEndponits().baseUrl + ApiEndponits().endpoints.categories)
+          : url = Uri.parse(ApiEndponits().baseUrl +
+              ApiEndponits().endpoints.categories +
+              '?name=$name');
 
       http.Response res = await http.get(url, headers: headers);
 
@@ -121,7 +131,7 @@ class QuizController extends GetxController {
     }
   }
 
-  getLeaderBoard() async {
+  getLeaderBoard(int number) async {
     var token;
 
     final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -134,8 +144,17 @@ class QuizController extends GetxController {
         "Content-Type": "application/json; charset=UTF-8",
         "Accept": "application/json",
       };
-      var url = Uri.parse(
-          ApiEndponits().baseUrl + ApiEndponits().endpoints.leaderboard);
+      var url;
+      number == 0
+          ? url = Uri.parse(ApiEndponits().baseUrl +
+              ApiEndponits().endpoints.leaderboard +
+              '?period=day')
+          : number == 1
+              ? url = Uri.parse(ApiEndponits().baseUrl +
+                  ApiEndponits().endpoints.leaderboard +
+                  '?period=month')
+              : url = Uri.parse(ApiEndponits().baseUrl +
+                  ApiEndponits().endpoints.leaderboard);
 
       http.Response res = await http.get(url, headers: headers);
 
@@ -159,7 +178,10 @@ class QuizController extends GetxController {
     }
   }
 
-  answerQuiz({required score, required QuizModel quiz}) async {
+  answerQuiz(
+      {required score,
+      required QuizModel quiz,
+      required List<Map<String, dynamic>> current}) async {
     var token;
     final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     final SharedPreferences prefs = await _prefs;
@@ -176,14 +198,21 @@ class QuizController extends GetxController {
         var body = {
           "score": score,
           "theme_id": quiz.id,
+          "first": true,
+          "answers": current
         };
+
+        // {
+        //   "score": score,
+        //   "theme_id": quiz.id,
+        // };
 
         var url =
             Uri.parse(ApiEndponits().baseUrl + ApiEndponits().endpoints.quiz);
 
         http.Response res =
             await http.post(url, headers: headers, body: jsonEncode(body));
-
+        print("Corps ${res.request}");
         if (res.statusCode == 200) {
           print("Nouveau score $score");
         } else {
@@ -192,16 +221,17 @@ class QuizController extends GetxController {
       } else {
         var body = {
           "score": score,
+          "theme_id": quiz.id,
+          "first": false,
+          "answers": current
         };
 
-        var url = Uri.parse(ApiEndponits().baseUrl +
-            ApiEndponits().endpoints.quiz +
-            '/' +
-            quiz.id.toString());
+        var url =
+            Uri.parse(ApiEndponits().baseUrl + ApiEndponits().endpoints.quiz);
 
         http.Response res =
-            await http.put(url, headers: headers, body: jsonEncode(body));
-
+            await http.post(url, headers: headers, body: jsonEncode(body));
+        print("Corps ${res.request}");
         if (res.statusCode == 200) {
           print("Score mis à jour : nouveau score $score");
         } else {
@@ -211,5 +241,35 @@ class QuizController extends GetxController {
     } catch (e) {
       EasyLoading.showError(e.toString());
     }
+  }
+
+  Future<Map<String, dynamic>> getAllScores() async {
+    var token;
+    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+    Map<String, dynamic> map = {};
+    token = await prefs.getString('token');
+    try {
+      var headers = {
+        "Authorization": "Bearer" + " " + token.toString(),
+        "Content-Type": "application/json; charset=UTF-8",
+        "Accept": "application/json",
+      };
+
+      var url =
+          Uri.parse(ApiEndponits().baseUrl + ApiEndponits().endpoints.score);
+
+      http.Response res = await http.get(url, headers: headers);
+      print("debug ${jsonDecode(res.body)['data']}");
+      if (res.statusCode == 200) {
+        map = jsonDecode(res.body)['data'];
+      } else {
+        map = jsonDecode(res.body)['message'];
+        throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
+      }
+    } catch (e) {
+      EasyLoading.showError(e.toString());
+    }
+    return map;
   }
 }

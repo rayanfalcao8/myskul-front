@@ -18,9 +18,11 @@ import '../../controllers/quiz_controller.dart';
 import '../../models/question.dart';
 
 class Questions extends StatefulWidget {
-  Questions({required this.quiz, required this.index});
+  Questions({required this.quiz, required this.index, required this.current});
   QuizModel quiz;
   int index;
+  List<Map<String, dynamic>> current;
+
   late int firstId;
 
   @override
@@ -93,16 +95,27 @@ class _QuestionsState extends State<Questions> {
               setWrongScore(1);
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) {
-                return Quiz3(questionsLength: tmp2.length, quiz: widget.quiz);
+                return Quiz3(
+                  questionsLength: tmp2.length,
+                  quiz: widget.quiz,
+                  current: widget.current,
+                );
               }));
             } else {
               setScore(0);
               setWrongScore(1);
+
+              widget.current
+                  .add({"question_id": tmp2[tmp - 1].id, "status": false});
+
               Navigator.pushReplacement(
                 context,
                 PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) =>
-                      Questions(quiz: widget.quiz, index: tmp),
+                  pageBuilder: (context, animation1, animation2) => Questions(
+                    quiz: widget.quiz,
+                    index: tmp,
+                    current: widget.current,
+                  ),
                   transitionDuration: Duration.zero,
                   reverseTransitionDuration: Duration.zero,
                 ),
@@ -347,10 +360,12 @@ class _QuestionsState extends State<Questions> {
                                                                   builder:
                                                                       (context) {
                                                             return Quiz3(
-                                                                questionsLength:
-                                                                    tmp.length,
-                                                                quiz: widget
-                                                                    .quiz);
+                                                              questionsLength:
+                                                                  tmp.length,
+                                                              quiz: widget.quiz,
+                                                              current: widget
+                                                                  .current,
+                                                            );
                                                           }));
                                                         } else {
                                                           Navigator
@@ -361,10 +376,12 @@ class _QuestionsState extends State<Questions> {
                                                                       animation1,
                                                                       animation2) =>
                                                                   Questions(
-                                                                      quiz: widget
-                                                                          .quiz,
-                                                                      index:
-                                                                          tmp2),
+                                                                quiz:
+                                                                    widget.quiz,
+                                                                index: tmp2,
+                                                                current: widget
+                                                                    .current,
+                                                              ),
                                                               transitionDuration:
                                                                   Duration.zero,
                                                               reverseTransitionDuration:
@@ -390,7 +407,12 @@ class _QuestionsState extends State<Questions> {
                                                       true) {
                                                     setScore(1);
                                                     setWrongScore(0);
-
+                                                    widget.current.add({
+                                                      "question_id":
+                                                          tmp[widget.index - 1]
+                                                              .id,
+                                                      "status": true
+                                                    });
                                                     await EasyLoading
                                                         .showSuccess(
                                                             "correct-a".tr);
@@ -404,7 +426,12 @@ class _QuestionsState extends State<Questions> {
                                                   } else {
                                                     setScore(0);
                                                     setWrongScore(1);
-
+                                                    widget.current.add({
+                                                      "question_id":
+                                                          tmp[widget.index - 1]
+                                                              .id,
+                                                      "status": false
+                                                    });
                                                     await EasyLoading.showError(
                                                         "wrong-a".tr);
 
@@ -418,7 +445,7 @@ class _QuestionsState extends State<Questions> {
                                                 } else {
                                                   ChatController()
                                                       .playLocalAudio(
-                                                          'long-pop.wav');
+                                                          'pop.mp3');
                                                 }
 
                                                 answered = true;

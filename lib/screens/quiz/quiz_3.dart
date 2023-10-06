@@ -6,9 +6,13 @@ import 'package:myskul/screens/quiz/quiz_5.dart';
 import 'package:myskul/utilities/colors.dart';
 
 class Quiz3 extends StatefulWidget {
-  Quiz3({required this.questionsLength, required this.quiz});
+  Quiz3(
+      {required this.questionsLength,
+      required this.quiz,
+      required this.current});
   var questionsLength;
   QuizModel quiz;
+  List<Map<String, dynamic>> current;
   @override
   State<Quiz3> createState() => _Quiz3State();
 }
@@ -21,7 +25,9 @@ class _Quiz3State extends State<Quiz3> {
     super.initState();
     Future.delayed(Duration(seconds: 2), () {
       Get.to(() => Quiz5(
-          questionsLength: widget.questionsLength, quiz: widget.quiz));
+          questionsLength: widget.questionsLength,
+          quiz: widget.quiz,
+          current: widget.current));
     });
   }
 

@@ -10,6 +10,7 @@ import '../../utilities/icons.dart';
 class QuizDetail extends StatefulWidget {
   QuizDetail({required this.quiz});
   var quiz;
+ 
 
   @override
   State<QuizDetail> createState() => _QuizDetailState();
@@ -271,6 +272,7 @@ class _QuizDetailState extends State<QuizDetail> {
                             Get.to(() => Questions(
                                   quiz: widget.quiz,
                                   index: 1,
+                                  current: [],
                                 ));
                           },
                           child: Padding(

@@ -61,18 +61,28 @@ class _GPTState extends State<GPT> {
   sendRequest(String msg) async {
     final openAI = OpenAI.instance.build(
         token: Constant().MS,
-        baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
+        baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 20)),
         enableLog: true);
 
-    final request =
-        CompleteText(prompt: msg, maxTokens: 200, model: TextDavinci3Model());
+    // final request =
+    //     CompleteText(prompt: msg, maxTokens: 200, model: TextDavinci3Model());
+
+    final request = ChatCompleteText(messages: [
+      Messages(role: Role.user, content: msg),
+    ], maxToken: 200, model: GptTurboChatModel());
 
     try {
-      final response = await openAI!.onCompletion(request: request);
-      print('AI response ' + response!.choices[0].text);
+      // final response = await openAI!.onCompletion(request: request);
+      // print('AI response ' + response!.choices[0].text);
+      var text = " ";
+      final response = await openAI.onChatCompletion(request: request);
+      for (var element in response!.choices) {
+        text += " ${element.message?.content}";
+        print("data -> ${element.message?.content}");
+      }
 
       var tmp = {
-        'message': response!.choices[0].text,
+        'message': text,
         'sender': 'chatGPT',
         'senderImage':
             'https://ww2.freelogovectors.net/svg16/chatgpt-logo-freelogovectors.net.svg',
@@ -323,7 +333,7 @@ showDialogBox() {
             content: Text('ai-warning'.tr),
             actions: [
               CupertinoButton.filled(
-                 borderRadius: BorderRadius.zero,
+                  borderRadius: BorderRadius.zero,
                   child: Text('yes'.tr),
                   onPressed: () {
                     Navigator.pop(context);

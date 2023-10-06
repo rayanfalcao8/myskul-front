@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:myskul/controllers/home_controller.dart';
+import 'package:myskul/controllers/quiz_controller.dart';
 import 'package:myskul/screens/auth/domain.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/home.dart';
@@ -46,7 +47,7 @@ class LoginController extends GetxController {
 
           EasyLoading.dismiss();
           ChatController().addUser(user, Constant().DEF);
-           ChatController().addUserPushToken(user, Constant().TOKEN);
+          ChatController().addUserPushToken(user, Constant().TOKEN);
           EasyLoading.showSuccess("ynca".trParams({'email': emailController}));
 
           if (user.speciality == null) {

@@ -127,5 +127,8 @@ class FR {
         'En quittant, vous perdrez tous les messages en cours \n Voulez-vous vraiment sortir ?',
     'cp-to-cb': 'Contenu copié avec succès dans le presse-papiers',
     'act-notif': 'Activer les notifications',
+    'today': 'AUJOURD\'HUI',
+    'this-month': 'CE MOIS',
+    'since-b': 'DEPUIS LE DEBUT',
   };
 }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myskul/controllers/quiz_controller.dart';
@@ -20,7 +19,7 @@ class CategorList extends StatefulWidget {
 }
 
 class _CategorListState extends State<CategorList> {
-
+  var controller = TextEditingController();
   var couleurs = ColorHelper();
 
   var textes = TextHelper();
@@ -31,6 +30,8 @@ class _CategorListState extends State<CategorList> {
 
   var categories;
 
+  String? name;
+
   List<Widget> displaycategories(List<Category> CategorList) {
     List<CategoryWidget> w = [];
     CategorList.forEach((element) {
@@ -40,78 +41,19 @@ class _CategorListState extends State<CategorList> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    categories = QuizController().getCategories(name);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
           child: Column(
             children: [
-              // SliverAppBar(
-              //   pinned: true,
-              //   leading: BackButton(),
-              //   backgroundColor: Color.fromRGBO(34, 152, 127, 1),
-              //   expandedHeight: 80,
-              //   centerTitle: true,
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.only(
-              //       bottomLeft: Radius.circular(35),
-              //       bottomRight: Radius.circular(35),
-              //     ),
-              //   ),
-              //   flexibleSpace: FlexibleSpaceBar(
-              //     centerTitle: true,
-              //     title: Padding(
-              //       padding: EdgeInsets.only(top: 32.0),
-              //       child: Text("Quiz", style: TextHelper().h4l.copyWith(color: ColorHelper().white),),
-              //     ),
-              //     background: Stack(
-              //       children: [
-              //         Positioned(
-              //             bottom: 0,
-              //             left: 0,
-              //             child: CircleAvatar(
-              //               backgroundColor: couleurs.white.withOpacity(0.05),
-              //               radius: 20,
-              //             )),
-              //         Positioned(
-              //             top: 50,
-              //             right: 40,
-              //             child: CircleAvatar(
-              //               backgroundColor: couleurs.white.withOpacity(0.05),
-              //               radius: 08,
-              //             )),
-              //         Positioned(
-              //             top: MediaQuery.of(context).size.height / 5,
-              //             right: 40,
-              //             child: CircleAvatar(
-              //               backgroundColor: couleurs.white.withOpacity(0.05),
-              //               radius: 15,
-              //             )),
-              //         Positioned(
-              //             top: MediaQuery.of(context).size.height / 5,
-              //             left: 40,
-              //             child: CircleAvatar(
-              //               backgroundColor: couleurs.white.withOpacity(0.05),
-              //               radius: 25,
-              //             )),
-              //         Positioned(
-              //             top: 0,
-              //             left: MediaQuery.of(context).size.width / 1.5,
-              //             child: CircleAvatar(
-              //               backgroundColor: couleurs.white.withOpacity(0.05),
-              //               radius: 28,
-              //             )),
-              //         Positioned(
-              //             top: 40,
-              //             left: 40,
-              //             child: CircleAvatar(
-              //               backgroundColor: couleurs.white.withOpacity(0.05),
-              //               radius: 08,
-              //             )),
-              //       ],
-              //     ),
-              //   ),
-              // ),
               Align(
                 alignment: Alignment.topCenter,
                 child: Container(
@@ -206,7 +148,6 @@ class _CategorListState extends State<CategorList> {
                   ),
                 ),
               ),
-
               SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: Container(
@@ -225,11 +166,14 @@ class _CategorListState extends State<CategorList> {
                           height: 28,
                         ),
                         TextField(
-                          cursorColor: ColorHelper().black ,
+                          cursorColor: ColorHelper().black,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: couleurs.grey.withOpacity(0.1),
-                            prefixIcon:  Icon(Icons.search, color: couleurs.black,),
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: couleurs.black,
+                            ),
                             hintText: "search".tr,
                             hintStyle: const TextStyle(
                               fontSize: 14,
@@ -240,8 +184,13 @@ class _CategorListState extends State<CategorList> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                          onChanged: (v) {
+                            setState(() {
+                              name = v;
+                            });
+                          },
                         ),
-                         Padding(
+                        Padding(
                           padding: EdgeInsets.only(top: 20.0),
                           child: Text(
                             "quiz-text".tr,
@@ -257,7 +206,7 @@ class _CategorListState extends State<CategorList> {
                             physics: const BouncingScrollPhysics(),
                             children: [
                               FutureBuilder(
-                                future: QuizController().getCategories(),
+                                future: QuizController().getCategories(name),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.done) {
@@ -266,12 +215,14 @@ class _CategorListState extends State<CategorList> {
                                           snapshot.data as List<Category>),
                                     );
                                   } else if (snapshot.hasError) {
-                                    print(snapshot.error);
-                                    return NotFoundWidget(texte: 'not-found'.tr);
+                                    return NotFoundWidget(
+                                        texte: 'not-found'.tr);
                                   } else {
                                     return Center(
-                                         child: CircularProgressIndicator(color: couleurs.green,),
-                                        ); // Display the fetched data
+                                      child: CircularProgressIndicator(
+                                        color: couleurs.green,
+                                      ),
+                                    ); // Display the fetched data
                                   }
                                 },
                               ),
