@@ -7,7 +7,7 @@ import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
 
 class DropdownMenuInput extends StatelessWidget {
-  final String hintText;
+  final String? hintText;
   // final Icon? prefixIcon;
   final List<DropdownMenuItem<int>> items;
   final int? defaultValue;
@@ -16,7 +16,7 @@ class DropdownMenuInput extends StatelessWidget {
 
   const DropdownMenuInput({
     super.key,
-    required this.hintText,
+    this.hintText,
     // this.prefixIcon,
     required this.items,
     this.defaultValue,
@@ -123,6 +123,19 @@ class ButtonInput extends StatelessWidget {
                     )
                 ],
               ))),
+    );
+  }
+}
+
+class LabelText extends StatelessWidget {
+  LabelText({super.key, required this.label});
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: 5, bottom: 5),
+      child: Text(label),
     );
   }
 }

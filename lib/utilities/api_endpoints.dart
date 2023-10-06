@@ -29,4 +29,5 @@ class Endpoints {
   final String subscriptionTypes = "/subscription-types/";
   final String leaderboard = "/score/leaderboard";
   final String product = "/products";
+  final String payment = "/payment";
 }
