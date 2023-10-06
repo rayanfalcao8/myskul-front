@@ -67,6 +67,7 @@ dependencies:
   chat_gpt_sdk: ^2.2.4
   introduction_screen: ^3.1.11
   showcaseview: ^2.0.3
+  cached_network_image: ^3.3.0
 
 
 dev_dependencies:

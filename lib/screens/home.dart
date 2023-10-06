@@ -6,6 +6,7 @@ import 'package:myskul/screens/chat/chat_group_list.dart';
 import 'package:myskul/screens/drawer.dart';
 import 'package:myskul/screens/quiz/category_list.dart';
 import 'package:myskul/screens/quiz/leaderboard.dart';
+import 'package:myskul/screens/shop/product_list_page.dart';
 import 'package:myskul/screens/shop/shop2.dart';
 import 'package:myskul/showcase/showcase_view.dart';
 import 'package:myskul/utilities/colors.dart';
@@ -361,7 +362,7 @@ class HomepageScaffold extends StatelessWidget {
                                 texte: "Shop",
                                 couleur: Colors.black26,
                                 function: () {
-                                  Get.to(() => Shop());
+                                  Get.to(() => ProductListPage());
                                 },
                               ),
                               DashBox(
