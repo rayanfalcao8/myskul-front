@@ -269,6 +269,8 @@ class _GPTState extends State<GPT> {
                 Expanded(
                     child: TextFormField(
                   controller: messageController,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.send,
                   style: const TextStyle(color: Colors.white),
                   cursorColor: couleurs.white,
                   decoration: InputDecoration(
@@ -276,6 +278,27 @@ class _GPTState extends State<GPT> {
                     hintStyle: TextStyle(color: Colors.white, fontSize: 16),
                     border: InputBorder.none,
                   ),
+                  onFieldSubmitted: (value) {
+                    if (messageController.text != '') {
+                      var tmp = {
+                        'message': messageController.text,
+                        'sender': widget.user.username,
+                        'senderImage': widget.user.profile_image,
+                        'type': 'user',
+                        'time':
+                            DateTime.now().microsecondsSinceEpoch.toString(),
+                      };
+
+                      messages.add(tmp);
+                      ChatController().playLocalAudio("long-pop.wav");
+                      setState(() {});
+                      sendRequest(messageController.text);
+                      messageController.clear();
+                      scrollDown(controller);
+                    } else {
+                      scrollDown(controller);
+                    }
+                  },
                 )),
                 const SizedBox(
                   width: 12,

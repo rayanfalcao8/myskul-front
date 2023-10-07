@@ -12,14 +12,16 @@ import '../../utilities/texts.dart';
 import 'category.dart';
 
 class CategorList extends StatefulWidget {
-  CategorList({required this.user});
+  CategorList({required this.user, this.name});
   User user;
+  String? name;
   @override
   State<CategorList> createState() => _CategorListState();
 }
 
 class _CategorListState extends State<CategorList> {
   var controller = TextEditingController();
+
   var couleurs = ColorHelper();
 
   var textes = TextHelper();
@@ -30,8 +32,6 @@ class _CategorListState extends State<CategorList> {
 
   var categories;
 
-  String? name;
-
   List<Widget> displaycategories(List<Category> CategorList) {
     List<CategoryWidget> w = [];
     CategorList.forEach((element) {
@@ -40,11 +40,15 @@ class _CategorListState extends State<CategorList> {
     return w;
   }
 
+  getCategories() {
+    categories = QuizController().getCategories(widget.name);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    categories = QuizController().getCategories(name);
+    getCategories();
   }
 
   @override
@@ -166,6 +170,9 @@ class _CategorListState extends State<CategorList> {
                           height: 28,
                         ),
                         TextField(
+                          controller: controller,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.send,
                           cursorColor: ColorHelper().black,
                           decoration: InputDecoration(
                             filled: true,
@@ -184,10 +191,15 @@ class _CategorListState extends State<CategorList> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          onChanged: (v) {
-                            setState(() {
-                              name = v;
-                            });
+                          onSubmitted: (v) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        CategorList(
+                                          user: widget.user,
+                                          name: v,
+                                        )));
                           },
                         ),
                         Padding(
@@ -206,23 +218,38 @@ class _CategorListState extends State<CategorList> {
                             physics: const BouncingScrollPhysics(),
                             children: [
                               FutureBuilder(
-                                future: QuizController().getCategories(name),
+                                future: categories,
                                 builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.done) {
-                                    return Column(
-                                      children: displaycategories(
-                                          snapshot.data as List<Category>),
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return NotFoundWidget(
-                                        texte: 'not-found'.tr);
-                                  } else {
+                                  try {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      return snapshot.data != null
+                                          ? Column(
+                                              children: displaycategories(
+                                                  snapshot.data
+                                                      as List<Category>),
+                                            )
+                                          : Center(
+                                              child: Text(
+                                              'not-found'.tr,
+                                              style: textes.h3r,
+                                            ));
+                                    } else if (snapshot.hasError) {
+                                      return NotFoundWidget(
+                                          texte: 'not-found'.tr);
+                                    } else {
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          color: couleurs.green,
+                                        ),
+                                      ); // Display the fetched data
+                                    }
+                                  } catch (e) {
                                     return Center(
-                                      child: CircularProgressIndicator(
-                                        color: couleurs.green,
-                                      ),
-                                    ); // Display the fetched data
+                                        child: Text(
+                                      e.toString(),
+                                      style: textes.h3r,
+                                    ));
                                   }
                                 },
                               ),

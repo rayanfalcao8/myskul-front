@@ -306,6 +306,8 @@ class _ChatState extends State<Chat> {
                 Expanded(
                     child: TextFormField(
                   controller: messageController,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.send,
                   style: const TextStyle(color: Colors.white),
                   cursorColor: couleurs.white,
                   decoration: InputDecoration(
@@ -320,6 +322,21 @@ class _ChatState extends State<Chat> {
                     hintStyle: TextStyle(color: Colors.white, fontSize: 16),
                     border: InputBorder.none,
                   ),
+                  onFieldSubmitted: (value) {
+                    var tmp = {
+                      'message': messageController.text,
+                      'sender': widget.user.username,
+                      'senderImage': widget.user.profile_image,
+                      'type': 'texte',
+                      'time': DateTime.now().microsecondsSinceEpoch.toString(),
+                      'groupId': widget.group['groupId']
+                    };
+                    messageController.text != ''
+                        ? ChatController()
+                            .sendMessage(widget.group['groupId'], tmp)
+                        : scrollDown(controller);
+                    messageController.clear();
+                  },
                 )),
                 const SizedBox(
                   width: 12,

@@ -235,11 +235,7 @@ class NotFoundAiWidget extends StatelessWidget {
         Center(
             child: Column(
           children: [
-            FadeInImage(
-              placeholder: AssetImage('assets/images/loading.gif'),
-              image: AssetImage('assets/images/bot.png'),
-              width: 200,
-            ),
+            Image.asset('assets/images/bot.png', width: 200,),
             SizedBox(
               height: 05,
             ),
@@ -247,7 +243,7 @@ class NotFoundAiWidget extends StatelessWidget {
               texte,
               textAlign: TextAlign.center,
               style: TextHelper()
-                  .h3b
+                  .h4b
                   .copyWith(color: ColorHelper().black.withOpacity(0.5)),
             )
           ],
@@ -512,7 +508,7 @@ class _SentAiMessageState extends State<SentAiMessage> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
@@ -525,8 +521,8 @@ class _SentAiMessageState extends State<SentAiMessage> {
                       color: ColorHelper().green.withOpacity(0.5),
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10))),
+                          bottomLeft: Radius.circular(10),
+                          topRight: Radius.circular(10))),
                   child: Text(
                     widget.texte,
                     style: TextHelper().h4r,
