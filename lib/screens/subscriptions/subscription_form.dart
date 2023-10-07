@@ -3,10 +3,12 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myskul/components/form_inputs.dart';
 import 'package:myskul/controllers/domain_controller.dart';
 import 'package:myskul/controllers/level_controller.dart';
+import 'package:myskul/controllers/payment_controller.dart';
 import 'package:myskul/controllers/speciality_controller.dart';
 import 'package:myskul/controllers/subscripiton_controller.dart';
 import 'package:myskul/models/domain.dart';
 import 'package:myskul/models/level.dart';
+import 'package:myskul/models/payment.dart';
 import 'package:myskul/models/speciality.dart';
 import 'package:myskul/models/sub-type.dart';
 import 'package:myskul/utilities/helpers.dart';
@@ -25,14 +27,13 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
   int? _domainId;
   int? _levelId;
   int? _specialityId;
-  int? _pType = 1;
+  String? _pMethod;
   List<Domain> _domains = [];
   List<Level> _levels = [];
   List<Speciality> _specialities = [];
   List<SubscriptionType> _subTypes = [];
   int _currentStep = 0;
-  List<int> _paymentTypes = [1, 2];
-  // List<int> _paymentTypes = [];
+  List<PaymentMethod> _paymentMethods = [];
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
 
@@ -42,22 +43,23 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
       LevelController.getAll(),
       SpecialityController.getAll(),
       SubscriptionController.getSubTypes(),
-      // PaymentController.getPaymentMethods(),
+      PaymentController.getPaymentMethods(),
     ]);
     _domains = resp[0];
     _levels = resp[1];
     _specialities = resp[2];
     _subTypes = resp[3];
+    _paymentMethods = resp[4];
     setState(() {});
-    // _paymentTypes = resp[4];
   }
 
-  List<DropdownMenuItem<int>> _getPaymentTypes(List<int> types) {
-    List<DropdownMenuItem<int>> items = [];
-    for (var t in types) {
+  List<DropdownMenuItem<String>> _getPaymentMethods(
+      List<PaymentMethod> methods) {
+    List<DropdownMenuItem<String>> items = [];
+    for (var t in methods) {
       items.add(DropdownMenuItem(
-        child: Text("Type $t"),
-        value: t,
+        child: Text("${t.merchant}"),
+        value: t.payItemId,
       ));
     }
     return items;
@@ -243,40 +245,40 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               LabelText(label: "Type"),
-              DropdownMenuInput(
+              DropdownMenuInputStr(
                   // hintText: "Type",
-                  items: _getPaymentTypes(_paymentTypes),
-                  defaultValue: _pType,
-                  validator: numValidator,
+                  items: _getPaymentMethods(_paymentMethods),
+                  defaultValue: _pMethod,
+                  validator: stringValidator,
                   onChanged: (value) {
                     setState(() {
-                      _pType = value;
+                      _pMethod = value;
                     });
                   }),
-              SizedBox(height: 30),
-              if (_pType == 1)
-                Container(
-                  height: 200,
-                  child: ListView(children: [
-                    LabelText(label: "Montant"),
-                    TextFieldInput(
-                      controller: _amountController,
-                      validator: stringValidator,
-                      textInputType: TextInputType.number,
-                    ),
-                    SizedBox(height: 20),
-                    LabelText(label: "Numéro téléphone"),
-                    TextFieldInput(
-                      controller: _phoneController,
-                      validator: stringValidator,
-                      textInputType: TextInputType.number,
-                    ),
-                  ]),
-                ),
-              if (_pType == 2)
-                Container(
-                  child: Text("Fill info for type 2"),
-                )
+              SizedBox(height: 20),
+              // if (_pMethod == "")
+              Container(
+                height: 200,
+                child: ListView(children: [
+                  LabelText(label: "Montant"),
+                  TextFieldInput(
+                    controller: _amountController,
+                    validator: stringValidator,
+                    textInputType: TextInputType.number,
+                  ),
+                  SizedBox(height: 20),
+                  LabelText(label: "Numéro téléphone"),
+                  TextFieldInput(
+                    controller: _phoneController,
+                    validator: stringValidator,
+                    textInputType: TextInputType.number,
+                  ),
+                ]),
+              ),
+              // if (_pType == 2)
+              //   Container(
+              //     child: Text("Fill info for type 2"),
+              //   )
             ],
           ),
         )

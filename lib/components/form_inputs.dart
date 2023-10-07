@@ -36,6 +36,36 @@ class DropdownMenuInput extends StatelessWidget {
   }
 }
 
+class DropdownMenuInputStr extends StatelessWidget {
+  final String? hintText;
+  // final Icon? prefixIcon;
+  final List<DropdownMenuItem<String>> items;
+  final String? defaultValue;
+  final void Function(String?) onChanged;
+  final String? Function(String? value)? validator;
+
+  const DropdownMenuInputStr({
+    super.key,
+    this.hintText,
+    // this.prefixIcon,
+    required this.items,
+    this.defaultValue,
+    required this.onChanged,
+    this.validator,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField(
+        isExpanded: true,
+        decoration: getInputDecoration(hintText: hintText),
+        items: items,
+        value: defaultValue,
+        validator: validator,
+        onChanged: onChanged);
+  }
+}
+
 class TextFieldInput extends StatelessWidget {
   final TextEditingController controller;
   final String? Function(String? value)? validator;
