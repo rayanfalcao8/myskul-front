@@ -31,3 +31,45 @@ class Payment {
         json['updated_at'] != null ? DateTime.parse(json['updated_at']) : null;
   }
 }
+
+class PaymentMethod {
+  int? serviceid;
+  String? merchant;
+  String? payItemId;
+  String? amountType;
+  String? localCur;
+  String? name;
+  String? description;
+
+  PaymentMethod({
+    this.serviceid,
+    this.merchant,
+    this.payItemId,
+    this.amountType,
+    this.localCur,
+    this.name,
+    this.description,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "serviceid": serviceid,
+      "merchant": merchant,
+      "payItemId": payItemId,
+      "amountType": amountType,
+      "localCur": localCur,
+      "name": name,
+      "description": description,
+    };
+  }
+
+  PaymentMethod.fromJson(Map<String, dynamic> json) {
+    serviceid = json['serviceid'];
+    merchant = json['merchant'];
+    payItemId = json['payItemId'];
+    amountType = json['amountType'];
+    localCur = json['localCur'];
+    name = json['name'];
+    description = json['description'];
+  }
+}
