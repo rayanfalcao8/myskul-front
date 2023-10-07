@@ -7,6 +7,7 @@ import 'package:myskul/screens/chat/chat_group_list.dart';
 import 'package:myskul/screens/drawer.dart';
 import 'package:myskul/screens/quiz/category_list.dart';
 import 'package:myskul/screens/quiz/leaderboard.dart';
+import 'package:myskul/screens/shop/product_list_page.dart';
 import 'package:myskul/screens/shop/shop2.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/gradients.dart';
@@ -99,7 +100,7 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: widget.scaffoldKey,
-      drawer: MainDrawer(user: widget.user),
+      drawer: MainDrawer(user: widget.user, subMenuKey: widget.scaffoldKey,),
       body: SafeArea(
         child: RefreshIndicator(
           color: ColorHelper().green,
@@ -328,7 +329,7 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                                 texte: "Shop",
                                 couleur: Colors.black26,
                                 function: () {
-                                  Get.to(() => Shop());
+                                  Get.to(() => ProductListPage());
                                 },
                               ),
                               DashBox(

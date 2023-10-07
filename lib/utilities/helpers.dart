@@ -5,7 +5,10 @@ import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/texts.dart';
 
 AppBar getAppBar(
-    {required String title, required context, bool showBackBtn = true}) {
+    {required String title,
+    required context,
+    bool showBackBtn = true,
+    bool setShape = true}) {
   var couleurs = ColorHelper();
 
   return AppBar(
@@ -60,12 +63,14 @@ AppBar getAppBar(
     ),
     title: Text(title),
     centerTitle: true,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        bottomLeft: Radius.circular(10),
-        bottomRight: Radius.circular(10),
-      ),
-    ),
+    shape: setShape
+        ? RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+            ),
+          )
+        : null,
   );
 }
 

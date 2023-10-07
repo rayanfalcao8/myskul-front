@@ -23,69 +23,73 @@ class Subscriptions extends StatelessWidget {
         ),
         body: Container(
           decoration: getBckDecoration(),
-          child: FutureBuilder(
-            future: SubscriptionController.getAll(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasData) {
-                List<Subscription>? subs = snapshot.data;
-                if (subs != null && subs.isNotEmpty) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: ListView(
-                      children: [
-                        TextField(
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: colors.grey.withOpacity(0.1),
-                            prefixIcon: Icon(Icons.search, color: colors.black),
-                            hintText: "search".tr,
-                            hintStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Center(
-                          child: Text(
-                            "Liste des abonnements",
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        for (Subscription sub in subs) _buildSubscription(sub)
-                      ],
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                TextField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: colors.grey.withOpacity(0.1),
+                    prefixIcon: Icon(Icons.search, color: colors.black),
+                    hintText: "search".tr,
+                    hintStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
                     ),
-                  );
-                }
-              }
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 300.0),
-                  Icon(
-                    Icons.warning,
-                    size: 64.0,
-                    color: Colors.grey,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                  SizedBox(height: 15.0),
-                  Text("Vous n'avez souscrit à aucun abonnement"),
-                ],
-              );
-            },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: Text(
+                    "Liste des abonnements",
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: FutureBuilder(
+                    future: SubscriptionController.getAll(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasData) {
+                        List<Subscription>? subs = snapshot.data;
+                        if (subs != null && subs.isNotEmpty) {
+                          return ListView(
+                            children: List.generate(subs.length,
+                                (index) => _buildSubscription(subs[index])),
+                          );
+                        }
+                      }
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.warning,
+                            size: 64.0,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(height: 15.0),
+                          Text("Vous n'avez souscrit à aucun abonnement"),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ));
   }
