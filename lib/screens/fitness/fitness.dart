@@ -50,7 +50,7 @@ class Fitness extends StatelessWidget {
                 bckImg: "${imgPath}/legs_interm.png",
                 level: 2),
             _buildCard(context,
-                bodyPart: "Epaules",
+                bodyPart: "EPAULES",
                 bckImg: "${imgPath}/shoulders_advanced.png",
                 level: 2),
             SizedBox(height: 20),
@@ -74,7 +74,7 @@ class Fitness extends StatelessWidget {
                 bckImg: "${imgPath}/legs_interm.png",
                 level: 3),
             _buildCard(context,
-                bodyPart: "Epaules",
+                bodyPart: "EPAULES",
                 bckImg: "${imgPath}/shoulders_advanced.png",
                 level: 3),
             SizedBox(height: 50),
@@ -85,7 +85,7 @@ class Fitness extends StatelessWidget {
   }
 
   Widget _buildCard(BuildContext context,
-      {required String bodyPart, required String bckImg, level = 1}) {
+      {required String bodyPart, required String bckImg, int level = 1}) {
     return InkWell(
       onTap: () {
         Navigator.push(
