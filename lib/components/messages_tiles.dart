@@ -235,7 +235,7 @@ class NotFoundAiWidget extends StatelessWidget {
         Center(
             child: Column(
           children: [
-            Image.asset('assets/images/bot.png', width: 200,),
+            Image.asset('assets/images/ia.png', width: 200,),
             SizedBox(
               height: 05,
             ),
