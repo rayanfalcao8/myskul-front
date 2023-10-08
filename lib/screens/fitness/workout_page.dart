@@ -16,13 +16,44 @@ class WorkoutPage extends StatefulWidget {
 class _WorkoutPageState extends State<WorkoutPage> {
   int _level;
   String _bodyPart;
+  List<Workout> _workouts = [];
 
   _WorkoutPageState(this._level, this._bodyPart);
 
   @override
-  Widget build(BuildContext context) {
-    List<Workout> workouts = getAbsWorkouts(level: _level);
+  void initState() {
+    super.initState();
+    switch (_bodyPart) {
+      case "ABDOS":
+        {
+          _workouts = getAbsWorkouts(level: _level);
+          break;
+        }
+      case "POITRINE":
+        {
+          _workouts = getChestWorkout(level: _level);
+          break;
+        }
+      case "BRAS":
+        {
+          _workouts = getArmsWorkout(level: _level);
+          break;
+        }
+      case "JAMBES":
+        {
+          _workouts = getLegsWorkout(level: _level);
+          break;
+        }
+      case "EPAULES":
+        {
+          _workouts = getShouldersWorkout(level: _level);
+          break;
+        }
+    }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: getAppBar(title: "Exercices", context: context),
       body: Container(
@@ -32,7 +63,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
             Container(
               decoration: BoxDecoration(color: Colors.red),
             ),
-            for (Workout w in workouts)
+            for (Workout w in _workouts)
               _buildContainer(w.title, w.seconds, w.reps, w.picture)
           ],
         ),
@@ -52,6 +83,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
             Icons.menu,
             color: Colors.grey,
           ),
+          SizedBox(width: 10),
           // Image.asset(picture!),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -63,6 +63,7 @@ shMethods(SharedPreferences prefs) async {
   if (fmToken == null) {
     var tmp = await ChatController().getFmToken();
     await prefs.setString('fmToken', tmp);
+    await prefs.setString('fmToken', tmp);
   }
 
   if (notif == null || notif == false) {
@@ -271,6 +272,8 @@ class _Home1State extends State<Home1> {
         body: seen == null || seen == false
             ? Splash()
             : token == null
+                ? (show ? IntroScreen() : Login())
+                // ? Login()
                 ? show
                     ? IntroScreen()
                     : Login()
