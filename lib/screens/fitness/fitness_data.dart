@@ -33,7 +33,24 @@ List<Workout> getAbsWorkouts({int level = 1}) {
       }
     default:
       {
-        return [];
+        return [
+          jJacks(seconds: 20),
+          crunchAbs(reps: 16),
+          tRuss(reps: 20),
+          escalade(reps: 16),
+          touchTal(reps: 20),
+          liftLegs(reps: 16),
+          plank(seconds: 20),
+          crunchAbs(reps: 12),
+          tRuss(reps: 32),
+          escalade(reps: 12),
+          touchTal(reps: 20),
+          liftLegs(reps: 14),
+          plank(seconds: 30),
+          cobraStretch(seconds: 30),
+          eltg(seconds: 30),
+          eltd(seconds: 30)
+        ];
       }
   }
 }
@@ -66,7 +83,19 @@ List<Workout> getChestWorkout({int level = 1}) {
       }
     default:
       {
-        return [];
+        return [
+          jJacks(seconds: 30),
+          pams(reps: 16),
+          pslg(reps: 12),
+          pompes(reps: 10),
+          pabe(reps: 10),
+          pams(reps: 12),
+          pgas(reps: 12),
+          pabe(reps: 10),
+          hinduPomps(reps: 10),
+          cobraStretch(seconds: 20),
+          bustStretch(seconds: 20)
+        ];
       }
   }
 }
@@ -107,7 +136,27 @@ List<Workout> getArmsWorkout({int level = 1}) {
       }
     default:
       {
-        return [];
+        return [
+          armsLift(seconds: 30),
+          elb(seconds: 30),
+          chearDips(reps: 10),
+          cbsam(seconds: 30),
+          cbsiam(seconds: 30),
+          diamondPushUps(reps: 6),
+          jJacks(seconds: 30),
+          prayer(seconds: 16),
+          cjbg(reps: 8),
+          cjbd(reps: 8),
+          diagPlanch(reps: 10),
+          punch(seconds: 30),
+          pompes(reps: 10),
+          chenille(reps: 8),
+          wallPushUp(reps: 12),
+          etg(seconds: 30),
+          etd(seconds: 30),
+          edbg(seconds: 30),
+          edbd(seconds: 30)
+        ];
       }
   }
 }
@@ -152,7 +201,31 @@ List<Workout> getLegsWorkout({int level = 1}) {
       }
     default:
       {
-        return [];
+        return [
+          sideJump(seconds: 30),
+          squats(reps: 12),
+          squats(reps: 12),
+          ljag(reps: 12),
+          ljad(reps: 12),
+          ljag(reps: 12),
+          ljad(reps: 12),
+          backF(reps: 14),
+          backF(reps: 14),
+          dkg(reps: 16),
+          dkd(reps: 16),
+          dkg(reps: 16),
+          dkd(reps: 16),
+          eqgcm(seconds: 30),
+          eqdcm(seconds: 30),
+          eggvp(seconds: 30),
+          edgvp(seconds: 30),
+          emcm(reps: 12),
+          emcm(reps: 12),
+          ssemcm(reps: 12),
+          ssemcm(reps: 12),
+          emg(seconds: 30),
+          emd(seconds: 30)
+        ];
       }
   }
 }
@@ -191,7 +264,25 @@ List<Workout> getShouldersWorkout({int level = 1}) {
       }
     default:
       {
-        return [];
+        return [
+          jJacks(seconds: 30),
+          armsLift(seconds: 16),
+          rhomStretch(reps: 14),
+          elb(seconds: 16),
+          pslg(reps: 14),
+          easg(seconds: 30),
+          easd(seconds: 30),
+          cdb(seconds: 30),
+          rhomStretch(reps: 12),
+          elb(seconds: 14),
+          pslg(reps: 12),
+          pcv(seconds: 30),
+          ptv(reps: 14),
+          cir(reps: 12),
+          ptv(reps: 14),
+          cir(reps: 12),
+          childPosture(seconds: 30)
+        ];
       }
   }
 }
