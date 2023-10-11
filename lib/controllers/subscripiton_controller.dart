@@ -61,7 +61,7 @@ class SubscriptionController {
     return Subscription.fromJson(json['data']['subscription']);
   }
 
-  static Future<Subscription?> create(Subscription subscription) async {
+  static Future<bool> create(Subscription subscription) async {
     token = await (await SharedPreferences.getInstance()).getString('token');
     var headers = {
       "Authorization": "Bearer" + " " + token.toString(),
@@ -80,18 +80,19 @@ class SubscriptionController {
       http.Response res =
           await http.post(url, headers: headers, body: jsonEncode(data));
       EasyLoading.dismiss();
-
       if (res.statusCode == 200) {
-        final json = jsonDecode(res.body);
-        return Subscription.fromJson(json['data']['subscription']);
+        print("Success");
+        // final json = jsonDecode(res.body);
+        // print(json['data']['subscription']);
+        return true;
       } else {
         EasyLoading.showInfo("${json.decode(res.body)}");
-        return null;
+        return false;
       }
     } catch (e) {
       EasyLoading.dismiss();
       EasyLoading.showInfo("$e");
-      return null;
+      return false;
     }
   }
 }
