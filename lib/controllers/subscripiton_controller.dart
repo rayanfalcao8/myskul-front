@@ -84,12 +84,8 @@ class SubscriptionController {
       EasyLoading.dismiss();
       if (res.statusCode == 200) {
         print("Success");
-<<<<<<< HEAD
-        Get.back();
-=======
         // final json = jsonDecode(res.body);
         // print(json['data']['subscription']);
->>>>>>> fa2d124 (Implement subscription module)
         return true;
       } else {
         EasyLoading.showInfo("${json.decode(res.body)}");
