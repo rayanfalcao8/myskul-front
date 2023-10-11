@@ -6,6 +6,7 @@ class Subscription {
   int? id;
   String? userId;
   String? abonnementTypeId;
+  String? type;
   String? transactionID;
   String? buyerPhoneNumber;
   String? levelId;
@@ -19,7 +20,7 @@ class Subscription {
 
   Subscription({
     this.userId,
-    required this.abonnementTypeId,
+    required this.type,
     this.transactionID,
     this.buyerPhoneNumber,
     required this.levelId,
@@ -30,6 +31,7 @@ class Subscription {
   Map<String, dynamic> toJson() {
     return {
       "user_id": userId,
+      "type": type,
       "abonnementType_id": abonnementTypeId,
       "transactionID": transactionID,
       "buyerPhoneNumber": buyerPhoneNumber,
@@ -48,12 +50,12 @@ class Subscription {
     levelId = json['level_id'];
     specialityId = json['speciality_id'];
     domainId = json['domain_id'];
-    domain = Domain.fromJson(json['domain']);
-    speciality = Speciality.fromJson(json['speciality']);
+    domain = json['domain'] != null ? Domain.fromJson(json['domain']) : null;
+    speciality = json['speciality'] != null
+        ? Speciality.fromJson(json['speciality'])
+        : null;
     level = Level.fromJson(json['level']);
     createdAt =
         json['created_at'] != null ? DateTime.parse(json['created_at']) : null;
-    updatedAt =
-        json['updated_at'] != null ? DateTime.parse(json['updated_at']) : null;
   }
 }

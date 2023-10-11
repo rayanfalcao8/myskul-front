@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myskul/models/sub-type.dart';
 import 'package:myskul/models/subscription.dart';
 import 'package:myskul/main.dart';
@@ -73,8 +74,12 @@ class SubscriptionController {
 
     Map data = subscription.toJson();
 
+    EasyLoading.show();
+
     http.Response res =
         await http.post(url, headers: headers, body: jsonEncode(data));
+    EasyLoading.dismiss();
+
     final json = jsonDecode(res.body);
     return Subscription.fromJson(json['data']['subscription']);
   }

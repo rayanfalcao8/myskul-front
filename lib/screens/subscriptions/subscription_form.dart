@@ -11,6 +11,7 @@ import 'package:myskul/models/level.dart';
 import 'package:myskul/models/payment.dart';
 import 'package:myskul/models/speciality.dart';
 import 'package:myskul/models/sub-type.dart';
+import 'package:myskul/models/subscription.dart';
 import 'package:myskul/utilities/helpers.dart';
 import 'package:myskul/utilities/validators.dart';
 
@@ -22,7 +23,8 @@ class SubscriptionForm extends StatefulWidget {
 }
 
 class _SubscriptionFormState extends State<SubscriptionForm> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey1 = GlobalKey<FormState>();
+  final _formKey2 = GlobalKey<FormState>();
   int? _typeId;
   int? _domainId;
   int? _levelId;
@@ -51,6 +53,16 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
     _subTypes = resp[3];
     _paymentMethods = resp[4];
     setState(() {});
+  }
+
+  void initForms() {
+    _typeId = null;
+    _domainId = null;
+    _levelId = null;
+    _specialityId = null;
+    _pMethod = null;
+    _phoneController.clear();
+    _amountController.clear();
   }
 
   List<DropdownMenuItem<String>> _getPaymentMethods(
@@ -115,53 +127,65 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
         padding: EdgeInsets.only(top: 20),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0),
-          child: Form(
-            key: _formKey,
-            child: Stepper(
-              type: StepperType.horizontal,
-              steps: _getSteps(),
-              currentStep: _currentStep,
-              controlsBuilder: (context, details) {
-                return Container(
-                  margin: EdgeInsets.symmetric(vertical: 50),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ButtonInput(
-                          onPressed: details.onStepCancel,
-                          putIconLeft: true,
-                          text: "Précédent"),
-                      SizedBox(width: 15),
-                      ButtonInput(
-                          onPressed: details.onStepContinue,
-                          putIconLeft: false,
-                          text: isLastStep ? "Souscrire" : "Suivant"),
-                    ],
-                  ),
-                );
-              },
-              onStepContinue: () {
-                setState(() {
-                  if (isLastStep) {
-                    if (_formKey.currentState!.validate()) {
+          child: Stepper(
+            type: StepperType.horizontal,
+            steps: _getSteps(),
+            currentStep: _currentStep,
+            controlsBuilder: (context, details) {
+              return Container(
+                margin: EdgeInsets.symmetric(vertical: 50),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ButtonInput(
+                        onPressed: details.onStepCancel,
+                        putIconLeft: true,
+                        text: "Précédent"),
+                    SizedBox(width: 15),
+                    ButtonInput(
+                        onPressed: details.onStepContinue,
+                        putIconLeft: false,
+                        text: isLastStep ? "Souscrire" : "Suivant"),
+                  ],
+                ),
+              );
+            },
+            onStepContinue: () {
+              setState(() {
+                if (isLastStep) {
+                  if (_formKey2.currentState!.validate()) {
+                    Subscription sub = Subscription(
+                        type: _typeId.toString(),
+                        levelId: _levelId.toString(),
+                        specialityId: _specialityId.toString(),
+                        domainId: _domainId.toString(),
+                        buyerPhoneNumber: _phoneController.text);
+                    SubscriptionController.create(sub).then((value) {
+                      print(value.toJson());
                       EasyLoading.showSuccess(
                           "Souscription effectuée avec succès !");
-                    } else {
-                      EasyLoading.showInfo("Veuillez remplir tous les champs");
-                    }
-                  } else {
-                    _currentStep += 1;
-                  }
-                });
-              },
-              onStepCancel: _currentStep == 0
-                  ? null
-                  : () {
                       setState(() {
+                        initForms();
                         _currentStep -= 1;
                       });
-                    },
-            ),
+                    });
+                  } else {
+                    EasyLoading.showInfo("Veuillez remplir tous les champs");
+                  }
+                } else {
+                  if (_formKey1.currentState!.validate()) {
+                    _currentStep += 1;
+                  }
+                }
+              });
+            },
+            onStepCancel: _currentStep == 0
+                ? null
+                : () {
+                    setState(() {
+                      _currentStep -= 1;
+                    });
+                  },
           ),
         ),
       ),
@@ -184,102 +208,108 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
             state: _currentStep > 0 ? StepState.complete : StepState.indexed,
             title: Text("Abonnement"),
             isActive: _currentStep >= 0,
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: Text(
-                    "Veuillez renseigner les informations d'abonnement",
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w300,
+            content: Form(
+              key: _formKey1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: Text(
+                      "Veuillez renseigner les informations d'abonnement",
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w300,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 30),
-                LabelText(label: "Type"),
-                DropdownMenuInput(
-                    // hintText: "Type",
-                    items: _getTypesItems(_subTypes),
-                    validator: dropDownValidator,
-                    onChanged: (value) {
-                      _typeId = value;
-                    }),
-                SizedBox(height: 20),
-                LabelText(label: "Domaine"),
-                DropdownMenuInput(
-                    // hintText: "Domaine",
-                    items: _getDomainItems(_domains),
-                    validator: dropDownValidator,
-                    onChanged: (value) {
-                      _domainId = value;
-                    }),
-                SizedBox(height: 20),
-                LabelText(label: "Niveau"),
-                DropdownMenuInput(
-                    // hintText: "Niveau",
-                    items: _getLevelItems(_levels),
-                    validator: dropDownValidator,
-                    onChanged: (value) {
-                      _levelId = value;
-                    }),
-                SizedBox(height: 20),
-                LabelText(label: "Spécialité"),
-                DropdownMenuInput(
-                    // hintText: "Spécialité",
-                    items: _getSpecItems(_specialities),
-                    validator: dropDownValidator,
-                    onChanged: (value) {
-                      _specialityId = value;
-                    }),
-              ],
+                  SizedBox(height: 30),
+                  LabelText(label: "Type"),
+                  DropdownMenuInput(
+                      // hintText: "Type",
+                      items: _getTypesItems(_subTypes),
+                      validator: dropDownValidator,
+                      onChanged: (value) {
+                        _typeId = value;
+                      }),
+                  SizedBox(height: 20),
+                  LabelText(label: "Domaine"),
+                  DropdownMenuInput(
+                      // hintText: "Domaine",
+                      items: _getDomainItems(_domains),
+                      validator: dropDownValidator,
+                      onChanged: (value) {
+                        _domainId = value;
+                      }),
+                  SizedBox(height: 20),
+                  LabelText(label: "Niveau"),
+                  DropdownMenuInput(
+                      // hintText: "Niveau",
+                      items: _getLevelItems(_levels),
+                      validator: dropDownValidator,
+                      onChanged: (value) {
+                        _levelId = value;
+                      }),
+                  SizedBox(height: 20),
+                  LabelText(label: "Spécialité"),
+                  DropdownMenuInput(
+                      // hintText: "Spécialité",
+                      items: _getSpecItems(_specialities),
+                      validator: dropDownValidator,
+                      onChanged: (value) {
+                        _specialityId = value;
+                      }),
+                ],
+              ),
             )),
         Step(
           state: _currentStep > 1 ? StepState.complete : StepState.indexed,
           title: Text("Paiement"),
           isActive: _currentStep >= 1,
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              LabelText(label: "Type"),
-              DropdownMenuInputStr(
-                  // hintText: "Type",
-                  items: _getPaymentMethods(_paymentMethods),
-                  defaultValue: _pMethod,
-                  validator: stringValidator,
-                  onChanged: (value) {
-                    setState(() {
-                      _pMethod = value;
-                    });
-                  }),
-              SizedBox(height: 20),
-              // if (_pMethod == "")
-              Container(
-                height: 200,
-                child: ListView(children: [
-                  LabelText(label: "Montant"),
-                  TextFieldInput(
-                    controller: _amountController,
+          content: Form(
+            key: _formKey2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                LabelText(label: "Type"),
+                DropdownMenuInputStr(
+                    // hintText: "Type",
+                    items: _getPaymentMethods(_paymentMethods),
+                    defaultValue: _pMethod,
                     validator: stringValidator,
-                    textInputType: TextInputType.number,
-                  ),
-                  SizedBox(height: 20),
-                  LabelText(label: "Numéro téléphone"),
-                  TextFieldInput(
-                    controller: _phoneController,
-                    validator: stringValidator,
-                    textInputType: TextInputType.number,
-                  ),
-                ]),
-              ),
-              // if (_pType == 2)
-              //   Container(
-              //     child: Text("Fill info for type 2"),
-              //   )
-            ],
+                    onChanged: (value) {
+                      setState(() {
+                        _pMethod = value;
+                      });
+                    }),
+                SizedBox(height: 20),
+                // if (_pMethod == "")
+                Container(
+                  height: 200,
+                  child: ListView(children: [
+                    LabelText(label: "Montant"),
+                    TextFieldInput(
+                      controller: _amountController,
+                      validator: stringValidator,
+                      textInputType: TextInputType.number,
+                    ),
+                    SizedBox(height: 20),
+                    LabelText(label: "Numéro téléphone"),
+                    TextFieldInput(
+                      controller: _phoneController,
+                      validator: stringValidator,
+                      textInputType: TextInputType.number,
+                    ),
+                  ]),
+                ),
+                // if (_pType == 2)
+                //   Container(
+                //     child: Text("Fill info for type 2"),
+                //   )
+              ],
+            ),
           ),
         )
       ];

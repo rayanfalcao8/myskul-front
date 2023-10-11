@@ -127,7 +127,7 @@ void main() async {
   // Initialisation du package SharedPreferences
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  show = await prefs.getBool("ON_BOARDING") ?? true;
+  // show = await prefs.getBool("ON_BOARDING") ?? true;
 
   // lignes de codes afférentes aux SharedPreferences
   await getUser(prefs);
