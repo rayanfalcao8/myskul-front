@@ -76,22 +76,21 @@ class SubscriptionController {
 
     EasyLoading.show();
 
-    print(jsonEncode(data));
-
     try {
       http.Response res =
           await http.post(url, headers: headers, body: jsonEncode(data));
       EasyLoading.dismiss();
+
       if (res.statusCode == 200) {
         final json = jsonDecode(res.body);
         return Subscription.fromJson(json['data']['subscription']);
       } else {
-        EasyLoading.show(status: "${json.decode(res.body)}");
+        EasyLoading.showInfo("${json.decode(res.body)}");
         return null;
       }
     } catch (e) {
       EasyLoading.dismiss();
-      EasyLoading.show(status: "$e");
+      EasyLoading.showInfo("$e");
       return null;
     }
   }
