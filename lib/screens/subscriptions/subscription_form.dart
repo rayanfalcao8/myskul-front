@@ -171,15 +171,14 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                         amount: _amountController.text,
                         serviceId: _pMethod,
                         buyerPhoneNumber: _phoneController.text);
-
                     print(sub.toJson());
                     SubscriptionController.create(sub).then((value) {
                       if (value != null) {
                         EasyLoading.showSuccess(
                             "Souscription effectuée avec succès !");
                         setState(() {
-                          initForms();
                           _currentStep -= 1;
+                          initForms();
                         });
                       }
                     });
@@ -243,6 +242,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                   LabelText(label: "Type"),
                   DropdownMenuInput(
                       // hintText: "Type",
+                      defaultValue: _typeId,
                       items: _getTypesItems(_subTypes),
                       validator: dropDownValidator,
                       onChanged: (value) {
@@ -252,6 +252,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                   LabelText(label: "Domaine"),
                   DropdownMenuInput(
                       // hintText: "Domaine",
+                      defaultValue: _domainId,
                       items: _getDomainItems(_domains),
                       validator: dropDownValidator,
                       onChanged: (value) {
@@ -261,6 +262,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                   LabelText(label: "Niveau"),
                   DropdownMenuInput(
                       // hintText: "Niveau",
+                      defaultValue: _levelId,
                       items: _getLevelItems(_levels),
                       validator: dropDownValidator,
                       onChanged: (value) {
@@ -270,6 +272,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                   LabelText(label: "Spécialité"),
                   DropdownMenuInput(
                       // hintText: "Spécialité",
+                      defaultValue: _specialityId,
                       items: _getSpecItems(_specialities),
                       validator: dropDownValidator,
                       onChanged: (value) {
@@ -319,10 +322,6 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                     ),
                   ]),
                 ),
-                // if (_pType == 2)
-                //   Container(
-                //     child: Text("Fill info for type 2"),
-                //   )
               ],
             ),
           ),
