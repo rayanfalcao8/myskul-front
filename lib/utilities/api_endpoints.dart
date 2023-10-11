@@ -26,7 +26,7 @@ class Endpoints {
   final String quiz = "/quiz";
   final String score = "/score";
   final String questions = "/questions/theme/";
-  final String subscription = "/subscriptions/";
+  final String subscription = "/subscriptions";
   final String subscriptionTypes = "/subscription-types/";
   final String leaderboard = "/score/leaderboard";
   final String product = "/products";
