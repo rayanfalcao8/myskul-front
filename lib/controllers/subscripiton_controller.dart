@@ -82,8 +82,6 @@ class SubscriptionController {
       EasyLoading.dismiss();
       if (res.statusCode == 200) {
         print("Success");
-        // final json = jsonDecode(res.body);
-        // print(json['data']['subscription']);
         return true;
       } else {
         EasyLoading.showInfo("${json.decode(res.body)}");

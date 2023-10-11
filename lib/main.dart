@@ -1,10 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-import 'package:intl/date_symbol_data_file.dart';
 import 'package:myskul/controllers/chat_controller.dart';
-import 'package:myskul/controllers/quiz_controller.dart';
-import 'package:myskul/introduction_screen.dart';
 import 'package:myskul/screens/auth/domain.dart';
 import 'package:myskul/screens/auth/reset.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +34,6 @@ String?
 User? user; // Ici sera stocké l'utilisateur principal
 bool?
     notif; // Ici sera stocké si oui ou non l'utilisateur veut recevoir les notifications
-bool show = true; // Show onBoarding
 
 //fonction pour capture les notification et faire des actions lorsqu'on les reçoit
 @pragma("vm:entry-point")
@@ -51,7 +47,6 @@ Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
 }
 
 shMethods(SharedPreferences prefs) async {
-  seen = await prefs.getBool('first');
   token = await prefs.getString('token');
   fmToken = await prefs.getString('fmToken');
   locale = await prefs.getString('locale');
@@ -130,6 +125,7 @@ void main() async {
   // show = await prefs.getBool("ON_BOARDING") ?? true;
 
   // lignes de codes afférentes aux SharedPreferences
+  seen = await prefs.getBool('first');
   await getUser(prefs);
   user != null ? await shMethods(prefs) : null;
 
@@ -272,8 +268,7 @@ class _Home1State extends State<Home1> {
         body: seen == null || seen == false
             ? Splash()
             : token == null
-                ? (show ? IntroScreen() : Login())
-                // ? Login()
+                ? Login()
                 : user!.speciality == null
                     ? Domain()
                     : Home(),
