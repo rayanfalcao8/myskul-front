@@ -29,7 +29,7 @@ class Subscription {
     required this.levelId,
     required this.specialityId,
     required this.domainId,
-    // required this.serviceId,
+    required this.serviceId,
   });
 
   Map<String, String?> toJson() {
@@ -46,7 +46,7 @@ class Subscription {
 
   Subscription.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    userId = json['user_id'];
+    userId = (json['user_id']).toString();
     abonnementTypeId = json['abonnementType_id'];
     transactionID = json['transactionID'];
     buyerPhoneNumber = json['buyerPhoneNumber'];
