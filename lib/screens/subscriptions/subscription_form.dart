@@ -170,6 +170,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                         domainId: _domainId.toString(),
                         amount: _amountController.text,
 <<<<<<< HEAD
+<<<<<<< HEAD
                         serviceId: _pMethod,
                         buyerPhoneNumber: _phoneController.text);
                     print(sub.toJson());
@@ -182,6 +183,9 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                           initForms();
 =======
                         // serviceId: ,
+=======
+                        serviceId: _pMethod,
+>>>>>>> a4b1a46 (Implement subscription module)
                         buyerPhoneNumber: _phoneController.text);
 
                     print(sub.toJson());
@@ -331,11 +335,16 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                     TextFieldInput(
                       controller: _phoneController,
 <<<<<<< HEAD
+<<<<<<< HEAD
                       validator: (value) =>
                           phoneNumValidator(value, _getRegex()),
 =======
                       validator: phoneNumValidator,
 >>>>>>> a913078 (Add phone validator)
+=======
+                      validator: (value) =>
+                          phoneNumValidator(value, _getRegex()),
+>>>>>>> a4b1a46 (Implement subscription module)
                       textInputType: TextInputType.number,
                     ),
                   ]),

@@ -30,10 +30,14 @@ class Subscription {
     required this.specialityId,
     required this.domainId,
 <<<<<<< HEAD
+<<<<<<< HEAD
     required this.serviceId,
 =======
     // required this.serviceId,
 >>>>>>> a913078 (Add phone validator)
+=======
+    required this.serviceId,
+>>>>>>> a4b1a46 (Implement subscription module)
   });
 
   Map<String, String?> toJson() {
