@@ -5,8 +5,10 @@ import 'package:myskul/models/speciality.dart';
 class Subscription {
   int? id;
   String? userId;
+  String? amount;
   String? abonnementTypeId;
   String? type;
+  String? serviceId;
   String? transactionID;
   String? buyerPhoneNumber;
   String? levelId;
@@ -21,23 +23,24 @@ class Subscription {
   Subscription({
     this.userId,
     required this.type,
+    required this.amount,
     this.transactionID,
     this.buyerPhoneNumber,
     required this.levelId,
     required this.specialityId,
     required this.domainId,
+    // required this.serviceId,
   });
 
-  Map<String, dynamic> toJson() {
+  Map<String, String?> toJson() {
     return {
-      "user_id": userId,
+      "domain_id": domainId,
       "type": type,
-      "abonnementType_id": abonnementTypeId,
-      "transactionID": transactionID,
-      "buyerPhoneNumber": buyerPhoneNumber,
       "level_id": levelId,
       "speciality_id": specialityId,
-      "domain_id": domainId
+      "serviceId": serviceId,
+      "amount": amount,
+      "phoneNumber": buyerPhoneNumber,
     };
   }
 
