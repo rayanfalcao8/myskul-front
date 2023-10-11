@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myskul/introduction_screen.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/icons.dart';
@@ -128,7 +129,7 @@ class _SplashState extends State<Splash> {
                       child: TextButton(
                         onPressed: () {
                           first();
-                          Get.off(() => Login());
+                          Get.off(() => IntroScreen());
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(0),
@@ -156,8 +157,7 @@ class _SplashState extends State<Splash> {
                               MaterialStateProperty.all(couleurs.white),
                           shape: MaterialStateProperty.all(
                               const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25)),
+                            borderRadius: BorderRadius.all(Radius.circular(25)),
                           )),
                         ),
                       ),

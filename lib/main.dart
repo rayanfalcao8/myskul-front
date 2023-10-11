@@ -130,6 +130,7 @@ void main() async {
   // show = await prefs.getBool("ON_BOARDING") ?? true;
 
   // lignes de codes afférentes aux SharedPreferences
+  seen = await prefs.getBool('first');
   await getUser(prefs);
   user != null ? await shMethods(prefs) : null;
 

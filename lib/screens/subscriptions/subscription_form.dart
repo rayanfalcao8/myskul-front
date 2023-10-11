@@ -52,7 +52,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
     _specialities = resp[2];
     _subTypes = resp[3];
     _paymentMethods = resp[4];
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   void initForms() {
