@@ -176,7 +176,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
 
                     print(sub.toJson());
                     SubscriptionController.create(sub).then((value) {
-                      if (value != null) {
+                      if (value) {
                         EasyLoading.showSuccess(
                             "Souscription effectuée avec succès !");
                         setState(() {
