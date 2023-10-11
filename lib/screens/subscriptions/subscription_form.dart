@@ -110,6 +110,15 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
     return items;
   }
 
+  String _getRegex() {
+    for (var element in _paymentMethods) {
+      if (element.payItemId == _pMethod) {
+        return element.regex!;
+      }
+    }
+    return "";
+  }
+
   @override
   void initState() {
     super.initState();
@@ -160,7 +169,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                         specialityId: _specialityId.toString(),
                         domainId: _domainId.toString(),
                         amount: _amountController.text,
-                        // serviceId: ,
+                        serviceId: _pMethod,
                         buyerPhoneNumber: _phoneController.text);
 
                     print(sub.toJson());
@@ -304,7 +313,8 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                     LabelText(label: "Numéro téléphone"),
                     TextFieldInput(
                       controller: _phoneController,
-                      validator: phoneNumValidator,
+                      validator: (value) =>
+                          phoneNumValidator(value, _getRegex()),
                       textInputType: TextInputType.number,
                     ),
                   ]),
