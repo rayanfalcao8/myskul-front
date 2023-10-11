@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myskul/components/form_inputs.dart';
@@ -169,23 +171,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                         specialityId: _specialityId.toString(),
                         domainId: _domainId.toString(),
                         amount: _amountController.text,
-<<<<<<< HEAD
-<<<<<<< HEAD
                         serviceId: _pMethod,
-                        buyerPhoneNumber: _phoneController.text);
-                    print(sub.toJson());
-                    SubscriptionController.create(sub).then((value) {
-                      if (value) {
-                        EasyLoading.showSuccess(
-                            "Souscription initiée avec succès, veuillez confirmer le paiement !");
-                        setState(() {
-                          _currentStep -= 1;
-                          initForms();
-=======
-                        // serviceId: ,
-=======
-                        serviceId: _pMethod,
->>>>>>> a4b1a46 (Implement subscription module)
                         buyerPhoneNumber: _phoneController.text);
 
                     print(sub.toJson());
@@ -196,7 +182,6 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                         setState(() {
                           initForms();
                           _currentStep -= 1;
->>>>>>> a913078 (Add phone validator)
                         });
                       }
                     });
@@ -334,21 +319,16 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                     LabelText(label: "Numéro téléphone"),
                     TextFieldInput(
                       controller: _phoneController,
-<<<<<<< HEAD
-<<<<<<< HEAD
                       validator: (value) =>
                           phoneNumValidator(value, _getRegex()),
-=======
-                      validator: phoneNumValidator,
->>>>>>> a913078 (Add phone validator)
-=======
-                      validator: (value) =>
-                          phoneNumValidator(value, _getRegex()),
->>>>>>> a4b1a46 (Implement subscription module)
                       textInputType: TextInputType.number,
                     ),
                   ]),
                 ),
+                // if (_pType == 2)
+                //   Container(
+                //     child: Text("Fill info for type 2"),
+                //   )
               ],
             ),
           ),

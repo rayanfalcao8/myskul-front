@@ -63,11 +63,7 @@ class SubscriptionController {
     return Subscription.fromJson(json['data']['subscription']);
   }
 
-<<<<<<< HEAD
   static Future<bool> create(Subscription subscription) async {
-=======
-  static Future<Subscription?> create(Subscription subscription) async {
->>>>>>> a913078 (Add phone validator)
     token = await (await SharedPreferences.getInstance()).getString('token');
     var headers = {
       "Authorization": "Bearer" + " " + token.toString(),
@@ -82,17 +78,12 @@ class SubscriptionController {
 
     EasyLoading.show();
 
-<<<<<<< HEAD
-=======
-    print(jsonEncode(data));
-
->>>>>>> a913078 (Add phone validator)
     try {
       http.Response res =
           await http.post(url, headers: headers, body: jsonEncode(data));
       EasyLoading.dismiss();
+
       if (res.statusCode == 200) {
-<<<<<<< HEAD
         print("Success");
         Get.back();
         return true;
@@ -104,18 +95,6 @@ class SubscriptionController {
       EasyLoading.dismiss();
       EasyLoading.showInfo("$e");
       return false;
-=======
-        final json = jsonDecode(res.body);
-        return Subscription.fromJson(json['data']['subscription']);
-      } else {
-        EasyLoading.show(status: "${json.decode(res.body)}");
-        return null;
-      }
-    } catch (e) {
-      EasyLoading.dismiss();
-      EasyLoading.show(status: "$e");
-      return null;
->>>>>>> a913078 (Add phone validator)
     }
   }
 }
