@@ -29,7 +29,11 @@ class Subscription {
     required this.levelId,
     required this.specialityId,
     required this.domainId,
+<<<<<<< HEAD
     required this.serviceId,
+=======
+    // required this.serviceId,
+>>>>>>> a913078 (Add phone validator)
   });
 
   Map<String, String?> toJson() {

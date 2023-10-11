@@ -169,6 +169,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                         specialityId: _specialityId.toString(),
                         domainId: _domainId.toString(),
                         amount: _amountController.text,
+<<<<<<< HEAD
                         serviceId: _pMethod,
                         buyerPhoneNumber: _phoneController.text);
                     print(sub.toJson());
@@ -179,6 +180,19 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                         setState(() {
                           _currentStep -= 1;
                           initForms();
+=======
+                        // serviceId: ,
+                        buyerPhoneNumber: _phoneController.text);
+
+                    print(sub.toJson());
+                    SubscriptionController.create(sub).then((value) {
+                      if (value != null) {
+                        EasyLoading.showSuccess(
+                            "Souscription effectuée avec succès !");
+                        setState(() {
+                          initForms();
+                          _currentStep -= 1;
+>>>>>>> a913078 (Add phone validator)
                         });
                       }
                     });
@@ -316,8 +330,12 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                     LabelText(label: "Numéro téléphone"),
                     TextFieldInput(
                       controller: _phoneController,
+<<<<<<< HEAD
                       validator: (value) =>
                           phoneNumValidator(value, _getRegex()),
+=======
+                      validator: phoneNumValidator,
+>>>>>>> a913078 (Add phone validator)
                       textInputType: TextInputType.number,
                     ),
                   ]),
