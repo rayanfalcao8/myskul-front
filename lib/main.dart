@@ -274,10 +274,6 @@ class _Home1State extends State<Home1> {
             : token == null
                 ? (show ? IntroScreen() : Login())
                 // ? Login()
-                ? show
-                    ? IntroScreen()
-                    : Login()
-                // ? Login()
                 : user!.speciality == null
                     ? Domain()
                     : Home(),
