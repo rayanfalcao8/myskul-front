@@ -4,9 +4,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myskul/models/sub-type.dart';
 import 'package:myskul/models/subscription.dart';
 import 'package:myskul/main.dart';
+import 'package:myskul/screens/subscriptions/subscriptions.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 
 class SubscriptionController {
   static Future<List<Subscription>> getAll() async {
@@ -82,6 +84,7 @@ class SubscriptionController {
       EasyLoading.dismiss();
       if (res.statusCode == 200) {
         print("Success");
+        Get.back();
         return true;
       } else {
         EasyLoading.showInfo("${json.decode(res.body)}");

@@ -175,7 +175,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                     SubscriptionController.create(sub).then((value) {
                       if (value) {
                         EasyLoading.showSuccess(
-                            "Souscription effectuée avec succès !");
+                            "Souscription initiée avec succès, veuillez confirmer le paiement !");
                         setState(() {
                           _currentStep -= 1;
                           initForms();
