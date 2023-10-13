@@ -69,6 +69,7 @@ class _GPTState extends State<GPT> {
 
     final request = ChatCompleteText(messages: [
       Messages(role: Role.user, content: msg),
+      Messages(role: Role.system, content: 'Act as if your name is MyAI'),
     ], maxToken: 200, model: GptTurboChatModel());
 
     try {

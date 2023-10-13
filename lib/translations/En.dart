@@ -119,7 +119,7 @@ class EN {
     'tres-bien': 'Very Good',
     'excellent': 'Excellent',
     'ask-question': 'Ask me a question',
-    'ai-bot': 'Hi !, I\'m  MySkul\'s  Artificial Intelligence',
+    'ai-bot': 'I am MyIA, your artificial intelligence, with to me your adventure in Myskul will be even more exceptional, come and chat with me',
     'ai-error':
         'An error occurred while processing your request, try again later!',
     'ai-warning':

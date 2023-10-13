@@ -235,16 +235,19 @@ class NotFoundAiWidget extends StatelessWidget {
         Center(
             child: Column(
           children: [
-            Image.asset('assets/images/ia.png', width: 200,),
+            Image.asset('assets/images/ia.png', width: 150,),
             SizedBox(
               height: 05,
             ),
-            Text(
-              texte,
-              textAlign: TextAlign.center,
-              style: TextHelper()
-                  .h4b
-                  .copyWith(color: ColorHelper().black.withOpacity(0.5)),
+            Container(
+              width: MediaQuery.of(context).size.width*0.75,
+              child: Text(
+                texte,
+                textAlign: TextAlign.center,
+                style: TextHelper()
+                    .h4r
+                    .copyWith(color: ColorHelper().black.withOpacity(0.5)),
+              ),
             )
           ],
         )),
@@ -449,7 +452,7 @@ class _ReceivedAiMessageState extends State<ReceivedAiMessage> {
               CircleAvatar(
                 radius: 10,
                 backgroundColor: Colors.transparent,
-                backgroundImage: AssetImage('assets/images/logo2.png'),
+                backgroundImage: AssetImage('assets/images/ia.png'),
               ),
               Container(
                 constraints: BoxConstraints(

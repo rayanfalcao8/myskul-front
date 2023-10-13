@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 class GradientHelper {
-
-  late var greenGradient = const SweepGradient(
-    colors: [Color(0xff22987F), Color(0xff2BB799)],
-    stops: [0, 1],
-    center: Alignment.topLeft,
+  late var greenGradient = const LinearGradient(
+    colors: [Color(0xff067d6d), Color(0xff269d82)],
+    stops: [0.25, 0.75],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   );
-
 }

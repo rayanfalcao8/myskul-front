@@ -120,7 +120,7 @@ class FR {
     'tres-bien': 'Très Bien',
     'excellent': 'Excellent',
     'ask-question': 'Pose-moi une question',
-    'ai-bot': 'Salut ! Je suis l\' Intelligence articielle de MySkul',
+    'ai-bot': 'je suis MyIA, ton intelligence artificielle, grâce à moi ton aventure dans Myskul sera encore plus exceptionnelle, viens et discute avec moi',
     'ai-error':
         'Une erreur s\'est produite lors du traitement de votre demande, réessayez plus tard !',
     'ai-warning':
