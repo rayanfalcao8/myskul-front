@@ -129,5 +129,11 @@ class EN {
      'today': 'TODAY',
     'this-month': 'THIS MONTH',
     'since-b': 'SINCE JOINING',
+    'info': 'Information',
+    'game-mod': 'Choose a game mode',
+    'classic': 'Classic',
+    'ccm': 'Race against the clock',
+    'pay-text': 'To access the other quizzes, please subscribe',
+    'pay-process': 'SEE SUBSCRIPTION PLANS',
   };
 }

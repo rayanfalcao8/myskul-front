@@ -130,5 +130,11 @@ class FR {
     'today': 'AUJOURD\'HUI',
     'this-month': 'CE MOIS',
     'since-b': 'DEPUIS LE DEBUT',
+    'info': 'Information',
+    'game-mod': 'Veillez choisir un mode de jeu',
+    'classic': 'Classique',
+    'ccm': 'Course contre la montre',
+    'pay-text': 'Pour accéder aux autres quiz, veuillez souscrire à un abonnement',
+    'pay-process': 'VOIR LES PLANS',
   };
 }

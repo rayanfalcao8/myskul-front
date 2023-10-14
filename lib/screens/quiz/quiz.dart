@@ -1,19 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
+import 'package:myskul/components/button_g.dart';
 import 'package:myskul/screens/quiz/quiz_detail.dart';
+import 'package:myskul/screens/subscriptions/subscription_form.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:myskul/utilities/texts.dart';
 
 class QuizWidget extends StatelessWidget {
-  QuizWidget({required this.quiz});
+  QuizWidget({required this.quiz, this.isActive});
   var quiz;
+  bool? isActive;
 
   @override
   Widget build(BuildContext context) {
     return Bounceable(
       onTap: () {
-        Get.to(() => QuizDetail(quiz: this.quiz));
+        isActive == true
+            ? Get.to(() => QuizDetail(quiz: this.quiz))
+            : Get.bottomSheet(
+                Container(
+                    height: MediaQuery.of(context).size.height / 1.5,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20))),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: 150,
+                          width: 500,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/images/phone.jpg'),
+                                fit: BoxFit.cover),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          child: Text(
+                            'pay-text'.tr,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        NewButtonG(text: 'pay-process'.tr, function: () {
+                          Get.to(()=>SubscriptionForm());
+                        },),
+                        SizedBox(
+                          height: 20,
+                        )
+                      ],
+                    )),
+              );
       },
       child: Container(
         width: double.infinity,

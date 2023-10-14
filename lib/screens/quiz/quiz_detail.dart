@@ -6,11 +6,11 @@ import '../../utilities/colors.dart';
 import '../../utilities/texts.dart';
 import '../../utilities/gradients.dart';
 import '../../utilities/icons.dart';
+import 'package:flutter/cupertino.dart';
 
 class QuizDetail extends StatefulWidget {
   QuizDetail({required this.quiz});
   var quiz;
- 
 
   @override
   State<QuizDetail> createState() => _QuizDetailState();
@@ -38,6 +38,40 @@ class _QuizDetailState extends State<QuizDetail> {
     final SharedPreferences prefs = await _prefs;
     prefs.setInt('currentScore', 0);
     prefs.setInt('wrongScore', 0);
+  }
+
+  showAlertDialog2(BuildContext context) {
+    // show the dialog
+    showDialog(
+        context: Get.context as BuildContext,
+        builder: (context) => CupertinoAlertDialog(
+              title: Text("info".tr, style: TextHelper().h1r),
+              content: Text("game-mod".tr, style: TextHelper().h4l),
+              actions: [
+                CupertinoButton(
+                    borderRadius: BorderRadius.zero,
+                    child: Text("classic".tr),
+                    onPressed: () {
+                      Get.to(() => Questions(
+                            quiz: widget.quiz,
+                            index: 1,
+                            current: [],
+                            mod: 0,
+                          ));
+                    }),
+                CupertinoButton(
+                    borderRadius: BorderRadius.zero,
+                    child: Center(child: Text("ccm".tr)),
+                    onPressed: () {
+                      Get.to(() => Questions(
+                            quiz: widget.quiz,
+                            index: 1,
+                            current: [],
+                            mod: 1,
+                          ));
+                    }),
+              ],
+            ));
   }
 
   @override
@@ -131,8 +165,8 @@ class _QuizDetailState extends State<QuizDetail> {
                               child: Center(
                                 child: Text(
                                   widget.quiz.name,
-                                  style:
-                                      textes.h4l.copyWith(color: couleurs.white),
+                                  style: textes.h4l
+                                      .copyWith(color: couleurs.white),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -269,11 +303,12 @@ class _QuizDetailState extends State<QuizDetail> {
                         height: 50,
                         child: TextButton(
                           onPressed: () {
-                            Get.to(() => Questions(
-                                  quiz: widget.quiz,
-                                  index: 1,
-                                  current: [],
-                                ));
+                            // Get.to(() => Questions(
+                            //       quiz: widget.quiz,
+                            //       index: 1,
+                            //       current: [],
+                            //     ));
+                            showAlertDialog2(context);
                           },
                           child: Padding(
                             padding: EdgeInsets.all(0),

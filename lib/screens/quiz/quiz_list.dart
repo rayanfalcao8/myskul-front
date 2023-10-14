@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:myskul/controllers/quiz_controller.dart';
+import 'package:myskul/controllers/subscripiton_controller.dart';
 import 'package:myskul/screens/quiz/quiz.dart';
 
 import '../../components/messages_tiles.dart';
@@ -33,10 +34,32 @@ class _QuizListState extends State<QuizList> {
 
   var categories;
 
+  List subList = [];
+
   List<Widget> displayQuizzes(List<QuizModel> quizList) {
     List<QuizWidget> w = [];
+    int index = 0;
     quizList.forEach((element) {
-      w.add(QuizWidget(quiz: element));
+      if (subList.length >= 2) {
+        w.add(QuizWidget(
+          quiz: element,
+          isActive: true,
+        ));
+      } else {
+        if (index <= 2) {
+          w.add(QuizWidget(
+            quiz: element,
+            isActive: true,
+          ));
+        } else {
+          w.add(QuizWidget(
+            quiz: element,
+            isActive: false,
+          ));
+        }
+      }
+
+      index++;
     });
     return w;
   }
@@ -46,11 +69,19 @@ class _QuizListState extends State<QuizList> {
         QuizController().getQuizzesByCategory(widget.category.id, widget.name);
   }
 
+  getSubList() async {
+    subList = await SubscriptionController.getAll();
+    setState(() {});
+    print("sublist ${subList.length}");
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getCategories();
+    Future.delayed(Duration.zero, (() async {
+      await getSubList();
+    }));
   }
 
   @override

@@ -18,9 +18,14 @@ import '../../controllers/quiz_controller.dart';
 import '../../models/question.dart';
 
 class Questions extends StatefulWidget {
-  Questions({required this.quiz, required this.index, required this.current});
+  Questions(
+      {required this.quiz,
+      required this.index,
+      required this.current,
+      this.mod});
   QuizModel quiz;
   int index;
+  int? mod;
   List<Map<String, dynamic>> current;
 
   late int firstId;
@@ -149,7 +154,7 @@ class _QuestionsState extends State<Questions> {
 
     questions = getQuestions();
     start = questionDuration;
-    startTimer();
+    widget.mod == 1 ? startTimer() : null;
     super.initState();
   }
 
@@ -182,6 +187,15 @@ class _QuestionsState extends State<Questions> {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [Color(0xff22987f), Color(0xff2bb799)],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/logo-blanc.png',
+                        width: 150,
                       ),
                     ),
                   ),
@@ -309,7 +323,9 @@ class _QuestionsState extends State<Questions> {
                                         ),
                                         child: Center(
                                           child: Text(
-                                            start.toString(),
+                                            widget.mod == 1
+                                                ? start.toString()
+                                                : '/',
                                             style: TextStyle(
                                               fontSize: 32,
                                               fontWeight: FontWeight.w700,
@@ -326,9 +342,9 @@ class _QuestionsState extends State<Questions> {
                                 ),
                                 Container(
                                     width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height /
-                                        1.8,
+                                    height: MediaQuery.of(context).size.height/1.4,
                                     child: ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
                                       itemCount:
                                           tmp[widget.index - 1].answers.length +
                                               1,
@@ -392,7 +408,7 @@ class _QuestionsState extends State<Questions> {
                                                       },
                                                     ),
                                                     SizedBox(
-                                                      height: 20,
+                                                      height: 10,
                                                     )
                                                   ],
                                                 )
@@ -449,7 +465,7 @@ class _QuestionsState extends State<Questions> {
                                                 }
 
                                                 answered = true;
-                                                timer.cancel();
+                                               widget.mod==1 ? timer.cancel():null;
                                                 questionsWidget = Row(
                                                   children: [
                                                     AnimatedOpacity(
@@ -521,6 +537,9 @@ class _QuestionsState extends State<Questions> {
                   )
                 ],
               ),
+              SizedBox(
+                height: 50,
+              )
             ],
           ),
         ),
