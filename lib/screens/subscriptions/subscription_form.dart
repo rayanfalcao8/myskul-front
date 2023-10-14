@@ -92,7 +92,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
     List<DropdownMenuItem<int>> items = [];
     for (var d in domains) {
       items.add(DropdownMenuItem(
-        child: Text(d.name!),
+        child: Text(d.displayName!),
         value: d.id!,
       ));
     }
@@ -103,7 +103,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
     List<DropdownMenuItem<int>> items = [];
     for (var l in levels) {
       items.add(DropdownMenuItem(
-        child: Text(l.level!),
+        child: Text(l.id.toString()!),
         value: l.id!,
       ));
     }

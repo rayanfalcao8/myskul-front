@@ -39,7 +39,7 @@ class _ProductListPageState extends State<ProductListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(title: "Produits", context: context),
+      appBar: getAppBar(title: "My Shop and Delivery", context: context),
       body: Container(
         decoration: getBckDecoration(),
         child: Padding(

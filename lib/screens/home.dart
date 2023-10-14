@@ -318,7 +318,7 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                             children: [
                               DashBox(
                                 icone: IconHelper().quiz,
-                                texte: "Quiz",
+                                texte: "My Quiz",
                                 couleur: Colors.blue,
                                 function: () {
                                   Get.to(() => CategorList(user: widget.user));
@@ -326,7 +326,7 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                               ),
                               DashBox(
                                 icone: IconHelper().shop,
-                                texte: "Shop",
+                                texte: "My Shop ",
                                 couleur: Colors.black26,
                                 function: () {
                                   Get.to(() => ProductListPage());
@@ -334,7 +334,7 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                               ),
                               DashBox(
                                 icone: IconHelper().chat,
-                                texte: "Chat",
+                                texte: "My Chat",
                                 couleur: Colors.pink,
                                 function: () {
                                   Get.to(() => GroupChat(user: widget.user));
@@ -369,7 +369,7 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                               ),
                               DashBox(
                                 icone: IconHelper().fitness,
-                                texte: "Fitness",
+                                texte: "My Fitness",
                                 couleur: Colors.red,
                                 function: () {
                                   Get.to(() => Fitness());
