@@ -223,7 +223,8 @@ class _CategorListState extends State<CategorList> {
                                   try {
                                     if (snapshot.connectionState ==
                                         ConnectionState.done) {
-                                      return snapshot.data != null
+                                           List tmp = snapshot.data as List;
+                                      return tmp.isNotEmpty
                                           ? Column(
                                               children: displaycategories(
                                                   snapshot.data
@@ -233,6 +234,7 @@ class _CategorListState extends State<CategorList> {
                                               child: Text(
                                               'not-found'.tr,
                                               style: textes.h3r,
+                                              textAlign: TextAlign.center,
                                             ));
                                     } else if (snapshot.hasError) {
                                       return NotFoundWidget(

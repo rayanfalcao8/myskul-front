@@ -10,12 +10,15 @@ import 'package:http/http.dart' as http;
 import '../utilities/api_endpoints.dart';
 
 class QuizController extends GetxController {
-  
   getQuizzesByCategory(int categoryId, String? name) async {
     var token;
+    User user;
     List<QuizModel> quizList = [];
     final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     final SharedPreferences prefs = await _prefs;
+    var userString = await prefs.getString('user');
+    var userJson = jsonDecode(userString!);
+    user = User.fromJson(userJson);
 
     token = await prefs.getString('token');
     try {
@@ -28,12 +31,16 @@ class QuizController extends GetxController {
       name == null
           ? url = Uri.parse(ApiEndponits().baseUrl +
               ApiEndponits().endpoints.quizList +
-              categoryId.toString())
+              categoryId.toString() +
+              '?level_id=${user.level['id']}&speciality_id=${user.speciality['id']}')
           : url = Uri.parse(ApiEndponits().baseUrl +
               ApiEndponits().endpoints.quizList +
-              categoryId.toString() + '?name=$name');
+              categoryId.toString() +
+              '?name=$name&level_id=${user.level['id']}&speciality_id=${user.speciality['id']}');
 
       http.Response res = await http.get(url, headers: headers);
+      
+      print(res.request);
 
       if (res.statusCode == 200) {
         Map<String, dynamic> json = jsonDecode(res.body);

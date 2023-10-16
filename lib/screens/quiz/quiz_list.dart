@@ -260,7 +260,8 @@ class _QuizListState extends State<QuizList> {
                                         return NotFoundWidget(
                                             texte: 'not-found'.tr);
                                       } else {
-                                        return snapshot.data != null
+                                        List tmp = snapshot.data as List;
+                                        return tmp.isNotEmpty  
                                             ? Column(
                                                 children: displayQuizzes(
                                                     snapshot.data
@@ -270,6 +271,7 @@ class _QuizListState extends State<QuizList> {
                                                 child: Text(
                                                 'not-found'.tr,
                                                 style: textes.h3r,
+                                                textAlign: TextAlign.center,
                                               ));
                                       }
                                     }

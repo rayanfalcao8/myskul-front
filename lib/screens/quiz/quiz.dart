@@ -49,9 +49,12 @@ class QuizWidget extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        NewButtonG(text: 'pay-process'.tr, function: () {
-                          Get.to(()=>SubscriptionForm());
-                        },),
+                        NewButtonG(
+                          text: 'pay-process'.tr,
+                          function: () {
+                            Get.to(() => SubscriptionForm());
+                          },
+                        ),
                         SizedBox(
                           height: 20,
                         )
