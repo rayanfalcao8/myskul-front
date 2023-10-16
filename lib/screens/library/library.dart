@@ -3,10 +3,10 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:myskul/controllers/product_controller.dart';
 import 'package:myskul/models/product.dart';
 import 'package:myskul/utilities/helpers.dart';
-import '../../utilities/colors.dart';
-import '../../utilities/gradients.dart';
-import '../../utilities/icons.dart';
-import '../../utilities/texts.dart';
+import 'package:myskul/utilities/colors.dart';
+import 'package:myskul/utilities/gradients.dart';
+import 'package:myskul/utilities/icons.dart';
+import 'package:myskul/utilities/texts.dart';
 
 class LibraryPage extends StatefulWidget {
   @override
