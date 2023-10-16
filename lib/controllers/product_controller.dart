@@ -91,6 +91,7 @@ class ProductController {
       "amount": amount,
       "phoneNumber": phoneNumber
     };
+    print(data);
 
     EasyLoading.show();
 
