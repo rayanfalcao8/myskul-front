@@ -55,24 +55,24 @@ class _PurchaseProductState extends State<PurchaseProduct> {
             Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  LabelText(label: "Type"),
-                  DropdownMenuInputStr(
-                      // hintText: "Type",
-                      items: _getPaymentMethods(_paymentMethods),
-                      defaultValue: _pMethod,
-                      validator: stringValidator,
-                      onChanged: (value) {
-                        setState(() {
-                          _pMethod = value;
-                        });
-                      }),
-                  SizedBox(height: 20),
-                  // if (_pMethod == "")
                   Container(
-                    height: 200,
+                    height: 320,
                     child: ListView(children: [
+                      SizedBox(height: 20),
+                      LabelText(label: "Type"),
+                      DropdownMenuInputStr(
+                          // hintText: "Type",
+                          items: _getPaymentMethods(_paymentMethods),
+                          defaultValue: _pMethod,
+                          validator: stringValidator,
+                          onChanged: (value) {
+                            setState(() {
+                              _pMethod = value;
+                            });
+                          }),
+                      SizedBox(height: 20),
                       LabelText(label: "Montant"),
                       TextFieldInput(
                         controller: _amountController,
@@ -90,29 +90,70 @@ class _PurchaseProductState extends State<PurchaseProduct> {
                     ]),
                   ),
                   SizedBox(width: 15),
-                  ButtonInput(
-                    putIconLeft: false,
-                    text: "Acheter",
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        ProductController.purchase(
-                                productId: widget.product.id.toString(),
-                                serviceId: _pMethod!,
-                                amount: _amountController.text,
-                                phoneNumber: _phoneController.text)
-                            .then((value) {
-                          if (value) {
-                            EasyLoading.showSuccess(
-                                "Souscription effectuée avec succès !");
-                            ;
-                          }
-                        });
-                      } else {
-                        EasyLoading.showInfo(
-                            "Veuillez valider tous les champs");
-                      }
-                    },
-                  )
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 50),
+                    child: TextButton(
+                      child: Padding(
+                        padding: EdgeInsets.all(0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(),
+                            Center(
+                              child: Text(
+                                "Acheter",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.chevron_right_rounded,
+                                color: Color(0xFF22987F),
+                                size: 24,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      style: ButtonStyle(
+                        elevation: MaterialStateProperty.all(10),
+                        backgroundColor:
+                            MaterialStateProperty.all(const Color(0xFF22987F)),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.horizontal(
+                              left: Radius.circular(30),
+                              right: Radius.circular(30),
+                            ),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          ProductController.purchase(
+                                  productId: widget.product.id.toString(),
+                                  serviceId: _pMethod!,
+                                  amount: _amountController.text,
+                                  phoneNumber: _phoneController.text)
+                              .then((value) {
+                            if (value) {
+                              EasyLoading.showSuccess(
+                                  "Souscription effectuée avec succès !");
+                              ;
+                            }
+                          });
+                        } else {
+                          EasyLoading.showInfo(
+                              "Veuillez valider tous les champs");
+                        }
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
