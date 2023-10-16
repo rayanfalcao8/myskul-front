@@ -51,7 +51,7 @@ class _PurchaseProductState extends State<PurchaseProduct> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 25),
             Form(
               key: _formKey,
               child: Column(
