@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:myskul/models/product.dart';
+import 'package:myskul/screens/shop/purchase_product.dart';
 import 'package:myskul/utilities/helpers.dart';
 
 class ProductDetail extends StatelessWidget {
@@ -89,7 +92,9 @@ class ProductDetail extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 50),
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(() => PurchaseProduct(product: product));
+                        },
                         child: Padding(
                           padding: EdgeInsets.all(0),
                           child: Row(
