@@ -143,7 +143,8 @@ class _PurchaseProductState extends State<PurchaseProduct> {
                               .then((value) {
                             if (value) {
                               EasyLoading.showSuccess(
-                                  "Souscription effectuée avec succès !");
+                                  "Achat effectué avec succès !");
+                              Navigator.pop(context);
                               ;
                             }
                           });
