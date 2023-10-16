@@ -38,7 +38,6 @@ class MainDrawer extends StatelessWidget {
       throw Exception('Could not launch $_url');
     }
   }
- 
 
   @override
   Widget build(BuildContext context) {
@@ -170,9 +169,7 @@ class MainDrawer extends StatelessWidget {
               ),
               tileColor: Get.currentRoute == '/home' ? Colors.grey[300] : null,
               onTap: () {
-                Get.to(() => Librarypage(
-                      user: user,
-                    ));
+                Get.to(() => LibraryPage());
               },
             ),
             ListTile(
