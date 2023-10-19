@@ -5,7 +5,10 @@ import 'package:myskul/models/speciality.dart';
 class Subscription {
   int? id;
   String? userId;
+  String? amount;
   String? abonnementTypeId;
+  String? type;
+  String? serviceId;
   String? transactionID;
   String? buyerPhoneNumber;
   String? levelId;
@@ -19,41 +22,43 @@ class Subscription {
 
   Subscription({
     this.userId,
-    required this.abonnementTypeId,
+    required this.type,
+    required this.amount,
     this.transactionID,
     this.buyerPhoneNumber,
     required this.levelId,
     required this.specialityId,
     required this.domainId,
+    required this.serviceId,
   });
 
-  Map<String, dynamic> toJson() {
+  Map<String, String?> toJson() {
     return {
-      "user_id": userId,
-      "abonnementType_id": abonnementTypeId,
-      "transactionID": transactionID,
-      "buyerPhoneNumber": buyerPhoneNumber,
+      "domain_id": domainId,
+      "type": type,
       "level_id": levelId,
       "speciality_id": specialityId,
-      "domain_id": domainId
+      "serviceId": serviceId,
+      "amount": amount,
+      "phoneNumber": buyerPhoneNumber,
     };
   }
 
   Subscription.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    userId = json['user_id'];
+    userId = (json['user_id']).toString();
     abonnementTypeId = json['abonnementType_id'];
     transactionID = json['transactionID'];
     buyerPhoneNumber = json['buyerPhoneNumber'];
     levelId = json['level_id'];
     specialityId = json['speciality_id'];
     domainId = json['domain_id'];
-    domain = Domain.fromJson(json['domain']);
-    speciality = Speciality.fromJson(json['speciality']);
+    domain = json['domain'] != null ? Domain.fromJson(json['domain']) : null;
+    speciality = json['speciality'] != null
+        ? Speciality.fromJson(json['speciality'])
+        : null;
     level = Level.fromJson(json['level']);
     createdAt =
         json['created_at'] != null ? DateTime.parse(json['created_at']) : null;
-    updatedAt =
-        json['updated_at'] != null ? DateTime.parse(json['updated_at']) : null;
   }
 }

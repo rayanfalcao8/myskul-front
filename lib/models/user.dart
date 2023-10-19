@@ -8,6 +8,7 @@ class User {
   var birthdate;
   var phoneNumber;
   var profile_image;
+  var fcm_token;
   var town;
   var level;
   var speciality;
@@ -25,7 +26,7 @@ class User {
       birthdate,
       phoneNumber,
       profile_image,
-      town});
+      town,fcm_token});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -37,6 +38,7 @@ class User {
     birthdate = json['birthdate'];
     phoneNumber = json['phoneNumber'];
     profile_image = json['profile_image'];
+    fcm_token = json['fcm_token'];
     town = json['town'];
     level = json['level'];
     speciality = json['speciality'];
@@ -56,6 +58,7 @@ class User {
       'birthdate': birthdate,
       'phoneNumber': phoneNumber,
       'profile_image': profile_image,
+      'fcm_token': fcm_token,
       'town': town,
       'level': level,
       'speciality': speciality,

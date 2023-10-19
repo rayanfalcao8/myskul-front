@@ -39,7 +39,7 @@ class _ProductListPageState extends State<ProductListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(title: "Produits", context: context),
+      appBar: getAppBar(title: "My Shop and Delivery", context: context),
       body: Container(
         decoration: getBckDecoration(),
         child: Padding(
@@ -65,17 +65,17 @@ class _ProductListPageState extends State<ProductListPage> {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                height: 40,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: List.generate(categories.length,
-                      (index) => _buildCatBadge(categories[index])),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              // Container(
+              //   height: 40,
+              //   child: ListView(
+              //     scrollDirection: Axis.horizontal,
+              //     children: List.generate(categories.length,
+              //         (index) => _buildCatBadge(categories[index])),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
               if (!_products.isEmpty)
                 Expanded(
                   child: GridView.count(

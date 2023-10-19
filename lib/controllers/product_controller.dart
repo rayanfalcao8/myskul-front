@@ -23,7 +23,9 @@ class ProductController {
 
     http.Response res = await http.get(url, headers: headers);
     final json = jsonDecode(res.body);
+
     EasyLoading.dismiss();
+
     return (json['data']['products'] as List)
         .map((e) => Product.fromJson(e))
         .toList();
@@ -45,7 +47,34 @@ class ProductController {
     return Product.fromJson(json['data']['product']);
   }
 
-  static Future<Product> create(Product product) async {
+  static Future<List<Product>> getByUser() async {
+    token = await (await SharedPreferences.getInstance()).getString('token');
+    var headers = {
+      "Authorization": "Bearer" + " " + token.toString(),
+      "Content-Type": "application/json; charset=UTF-8",
+      "Accept": "application/json",
+    };
+
+    var url = Uri.parse(
+        ApiEndponits().baseUrl + ApiEndponits().endpoints.product + "user");
+
+    EasyLoading.show();
+
+    http.Response res = await http.get(url, headers: headers);
+    final json = jsonDecode(res.body);
+
+    EasyLoading.dismiss();
+
+    return (json['data']['products'] as List)
+        .map((e) => Product.fromJson(e))
+        .toList();
+  }
+
+  static Future<bool> purchase(
+      {required String productId,
+      required String serviceId,
+      required String amount,
+      required String phoneNumber}) async {
     token = await (await SharedPreferences.getInstance()).getString('token');
     var headers = {
       "Authorization": "Bearer" + " " + token.toString(),
@@ -56,11 +85,34 @@ class ProductController {
     var url =
         Uri.parse(ApiEndponits().baseUrl + ApiEndponits().endpoints.product);
 
-    Map data = product.toJson();
+    Map data = {
+      "productId": productId,
+      "serviceId": serviceId,
+      "amount": amount,
+      "phoneNumber": phoneNumber
+    };
+    print(data);
 
-    http.Response res =
-        await http.post(url, headers: headers, body: jsonEncode(data));
-    final json = jsonDecode(res.body);
-    return Product.fromJson(json['data']['product']);
+    EasyLoading.show();
+
+    try {
+      http.Response res =
+          await http.post(url, headers: headers, body: jsonEncode(data));
+      final json = jsonDecode(res.body);
+
+      EasyLoading.dismiss();
+
+      if (res.statusCode == 200) {
+        print("Success");
+        return true;
+      } else {
+        EasyLoading.showInfo("${json.decode(res.body)}");
+        return false;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      EasyLoading.showInfo("$e");
+      return false;
+    }
   }
 }

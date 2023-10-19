@@ -169,9 +169,7 @@ class MainDrawer extends StatelessWidget {
               ),
               tileColor: Get.currentRoute == '/home' ? Colors.grey[300] : null,
               onTap: () {
-                Get.to(() => Librarypage(
-                      user: user,
-                    ));
+                Get.to(() => LibraryPage());
               },
             ),
             ListTile(

@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myskul/models/sub-type.dart';
 import 'package:myskul/models/subscription.dart';
 import 'package:myskul/main.dart';
+import 'package:myskul/screens/subscriptions/subscriptions.dart';
 import 'package:myskul/utilities/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 
 class SubscriptionController {
   static Future<List<Subscription>> getAll() async {
@@ -60,7 +63,7 @@ class SubscriptionController {
     return Subscription.fromJson(json['data']['subscription']);
   }
 
-  static Future<Subscription> create(Subscription subscription) async {
+  static Future<bool> create(Subscription subscription) async {
     token = await (await SharedPreferences.getInstance()).getString('token');
     var headers = {
       "Authorization": "Bearer" + " " + token.toString(),
@@ -71,11 +74,27 @@ class SubscriptionController {
     var url = Uri.parse(
         ApiEndponits().baseUrl + ApiEndponits().endpoints.subscription);
 
-    Map data = subscription.toJson();
+    Map<String, String?> data = subscription.toJson();
 
-    http.Response res =
-        await http.post(url, headers: headers, body: jsonEncode(data));
-    final json = jsonDecode(res.body);
-    return Subscription.fromJson(json['data']['subscription']);
+    EasyLoading.show();
+
+    try {
+      http.Response res =
+          await http.post(url, headers: headers, body: jsonEncode(data));
+      EasyLoading.dismiss();
+      if (res.statusCode == 200) {
+        print("Success");
+        // final json = jsonDecode(res.body);
+        // print(json['data']['subscription']);
+        return true;
+      } else {
+        EasyLoading.showInfo("${json.decode(res.body)}");
+        return false;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      EasyLoading.showInfo("$e");
+      return false;
+    }
   }
 }

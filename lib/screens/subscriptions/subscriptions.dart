@@ -67,6 +67,7 @@ class Subscriptions extends StatelessWidget {
                       } else if (snapshot.hasData) {
                         List<Subscription>? subs = snapshot.data;
                         if (subs != null && subs.isNotEmpty) {
+                          print("Length: ${subs.length}");
                           return ListView(
                             children: List.generate(subs.length,
                                 (index) => _buildSubscription(subs[index])),
@@ -105,12 +106,14 @@ class Subscriptions extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("${subscription.domain!.displayName}"),
+                  if (subscription.domain != null)
+                    Text("${subscription.domain!.displayName}"),
                   Text("${subscription.level!.level}"),
                 ],
               ),
               SizedBox(height: 10),
-              Text("${subscription.domain!.name}"),
+              if (subscription.domain != null)
+                Text("${subscription.domain!.name}"),
             ],
           ),
         ));

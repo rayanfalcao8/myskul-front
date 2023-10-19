@@ -9,7 +9,7 @@ class Fitness extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(title: "Fitness", context: context),
+      appBar: getAppBar(title: "My Fitness", context: context),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 10),
         decoration: getBckDecoration(),

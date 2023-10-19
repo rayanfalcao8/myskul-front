@@ -15,6 +15,8 @@ import 'package:myskul/utilities/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "package:collection/collection.dart";
 
+import 'auth/registration_controller.dart';
+
 class ChatController {
   static final db = FirebaseFirestore.instance;
   static final fMessaging = FirebaseMessaging.instance;
@@ -418,11 +420,15 @@ class ChatController {
 
   Future<String> getFmToken() async {
     String? tmp;
+    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+    var token = await prefs.getString('token');
     await fMessaging.requestPermission();
     await fMessaging.getToken().then((value) {
       if (value != null) {
         print(value);
         tmp = value;
+        RegisterationController().updateToken(fcm_token: value, token: token);
       } else {
         tmp = '';
       }
