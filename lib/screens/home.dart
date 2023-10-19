@@ -33,11 +33,9 @@ class _HomeState extends State<Home> {
     final prefs = await _prefs;
     var userString = await prefs.getString('user');
     var userJson = jsonDecode(userString!);
-    user =  User.fromJson(userJson);
+    user = User.fromJson(userJson);
     return user;
   }
-
- 
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -49,7 +47,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      builder: (ctx,  snapshot) {
+      builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             return Scaffold(
@@ -100,7 +98,13 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: widget.scaffoldKey,
-      drawer: MainDrawer(user: widget.user, subMenuKey: widget.scaffoldKey,),
+      drawer: MainDrawer(
+        user: widget.user,
+        subMenuKey: widget.scaffoldKey,
+      ),
+      endDrawer: EndDrawer(
+        subMenuKey: widget.scaffoldKey,
+      ),
       body: SafeArea(
         child: RefreshIndicator(
           color: ColorHelper().green,
@@ -150,10 +154,22 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                             "assets/images/logo2.png",
                             width: 35,
                           ),
-                          Icon(
-                            IconHelper().notif,
-                            color: ColorHelper().green,
-                            size: 30,
+                          Bounceable(
+                            onTap: () {
+                              if (widget
+                                  .scaffoldKey.currentState!.isEndDrawerOpen) {
+                                widget.scaffoldKey.currentState!.closeEndDrawer();
+                                //close drawer, if drawer is open
+                              } else {
+                                widget.scaffoldKey.currentState!.openEndDrawer();
+                                //open drawer, if drawer is closed
+                              }
+                            },
+                            child: Icon(
+                              IconHelper().notif,
+                              color: ColorHelper().green,
+                              size: 30,
+                            ),
                           ),
                         ],
                       ),

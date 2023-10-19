@@ -38,7 +38,6 @@ class MainDrawer extends StatelessWidget {
       throw Exception('Could not launch $_url');
     }
   }
- 
 
   @override
   Widget build(BuildContext context) {
@@ -308,6 +307,85 @@ class MainDrawer extends StatelessWidget {
                 ),
               ],
             )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EndDrawer extends StatelessWidget {
+  EndDrawer({required this.subMenuKey});
+
+  final couleurs = ColorHelper();
+
+  final textes = TextHelper();
+
+  final icones = IconHelper();
+
+  final gradients = GradientHelper();
+
+  final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
+  final GlobalKey subMenuKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 1.5,
+      child: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            Container(
+              height: 100,
+              child: DrawerHeader(
+                child: Stack(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                              top: 0,
+                              right: 0,
+                              child: CircleAvatar(
+                                backgroundColor: couleurs.white.withOpacity(0.1),
+                                radius: 08,
+                              )),
+                          Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: CircleAvatar(
+                                backgroundColor: couleurs.white.withOpacity(0.1),
+                                radius: 15,
+                              )),
+                          Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: CircleAvatar(
+                                backgroundColor: couleurs.white.withOpacity(0.1),
+                                radius: 15,
+                              )),
+                        ],
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        'NOTIFICATIONS',
+                        style: textes.h3b.copyWith(color: couleurs.white),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    )
+                  ],
+                ),
+                decoration: BoxDecoration(
+                  gradient: gradients.greenGradient,
+                  borderRadius:
+                      BorderRadius.only(bottomRight: Radius.circular(10)),
+                ),
+              ),
+            ),
           ],
         ),
       ),
