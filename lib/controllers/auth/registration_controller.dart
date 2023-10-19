@@ -191,4 +191,30 @@ class RegisterationController extends GetxController {
       EasyLoading.showError(e.toString());
     }
   }
+
+  void updateToken({fcm_token, token}) async {
+    try {
+      var headers = {
+        "Authorization": "Bearer" + " " + token.toString(),
+        "Content-Type": "application/json; charset=UTF-8",
+        "Accept": "application/json",
+      };
+      var url = Uri.parse(
+          ApiEndponits().baseUrl + ApiEndponits().endpoints.updateToken);
+
+      Map body = {
+        "token": fcm_token,
+      };
+
+      http.Response res = await http.put(url,
+          body: utf8.encode(jsonEncode(body)), headers: headers);
+      if (res.statusCode == 200) {
+        // var json = jsonDecode(res.body);
+      } else {
+        throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
+      }
+    } catch (e) {
+      EasyLoading.showError(e.toString());
+    }
+  }
 }

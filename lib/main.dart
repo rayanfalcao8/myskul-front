@@ -60,11 +60,20 @@ shMethods(SharedPreferences prefs) async {
   if (locale != null) {
     Get.updateLocale(Locale(locale!));
   }
-  if (fmToken == null) {
+  if (user?.fcm_token == null) {
     var tmp = await ChatController().getFmToken();
     await prefs.setString('fmToken', tmp);
     await prefs.setString('fmToken', tmp);
   }
+
+  if (fmToken == null) {
+    var tmp = await ChatController().getFmToken();
+    await prefs.setString('fmToken', tmp);
+    await prefs.setString('fmToken', tmp);
+    print("fmtoken ${tmp}");
+  }
+
+  print(fmToken);
 
   if (notif == null || notif == false) {
     var tmp = await ChatController()
@@ -94,6 +103,7 @@ Future<void> messagingInit() async {
       .setForegroundNotificationPresentationOptions(alert: true, sound: true);
   FirebaseMessaging.onMessage.listen(
     (m) {
+      notify(m);
       ChatController().playLocalAudio('bubble.wav');
     },
   );
@@ -291,7 +301,6 @@ int createUniqueId() {
 
 Future notify(RemoteMessage m) async {
   var tmp = m.data;
-
   AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: createUniqueId(),
