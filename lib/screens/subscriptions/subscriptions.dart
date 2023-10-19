@@ -112,8 +112,8 @@ class Subscriptions extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 10),
-              if (subscription.domain != null)
-                Text("${subscription.domain!.name}"),
+              if (subscription.speciality != null)
+                Text("${subscription.speciality!.speciality}"),
             ],
           ),
         ));
