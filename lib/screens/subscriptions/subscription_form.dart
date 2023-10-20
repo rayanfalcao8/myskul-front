@@ -245,7 +245,19 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                       items: _getTypesItems(_subTypes),
                       validator: dropDownValidator,
                       onChanged: (value) {
-                        _typeId = value;
+                        setState(() {
+                          _typeId = value;
+                          for (var st in _subTypes) {
+                            if (st.id == value) {
+                              if (_domainId == 1) {
+                                _amount = st.amount_prepa;
+                              } else if (_domainId == 2) {
+                                _amount = st.amount_bord;
+                              }
+                              break;
+                            }
+                          }
+                        });
                       }),
                   SizedBox(height: 20),
                   LabelText(label: "Domaine"),
@@ -254,7 +266,19 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                       items: _getDomainItems(_domains),
                       validator: dropDownValidator,
                       onChanged: (value) {
-                        _domainId = value;
+                        setState(() {
+                          _domainId = value;
+                          for (var st in _subTypes) {
+                            if (st.id == _typeId) {
+                              if (_domainId == 1) {
+                                _amount = st.amount_prepa;
+                              } else if (_domainId == 2) {
+                                _amount = st.amount_bord;
+                              }
+                              break;
+                            }
+                          }
+                        });
                       }),
                   SizedBox(height: 20),
                   LabelText(label: "Niveau"),
