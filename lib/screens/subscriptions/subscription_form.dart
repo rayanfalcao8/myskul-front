@@ -2,6 +2,8 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:myskul/components/form_inputs.dart';
 import 'package:myskul/controllers/domain_controller.dart';
 import 'package:myskul/controllers/level_controller.dart';
@@ -178,11 +180,12 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                     SubscriptionController.create(sub).then((value) {
                       if (value) {
                         EasyLoading.showSuccess(
-                            "Souscription effectuée avec succès !");
+                            "Souscription initiée avec succès, veuillez confirmer le paiement !", duration: Duration(seconds: 5), dismissOnTap: true );
                         setState(() {
                           initForms();
                           _currentStep -= 1;
                         });
+                        Get.back();
                       }
                     });
                   } else {
