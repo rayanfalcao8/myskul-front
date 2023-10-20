@@ -35,9 +35,9 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
   List<Speciality> _specialities = [];
   List<SubscriptionType> _subTypes = [];
   int _currentStep = 0;
+  String? _amount = "0";
   List<PaymentMethod> _paymentMethods = [];
   TextEditingController _phoneController = TextEditingController();
-  TextEditingController _amountController = TextEditingController();
 
   _loadData() async {
     List resp = await Future.wait([
@@ -62,7 +62,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
     _specialityId = null;
     _pMethod = null;
     _phoneController.clear();
-    _amountController.clear();
+    _amount = "0";
   }
 
   List<DropdownMenuItem<String>> _getPaymentMethods(
@@ -168,7 +168,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                         levelId: _levelId.toString(),
                         specialityId: _specialityId.toString(),
                         domainId: _domainId.toString(),
-                        amount: _amountController.text,
+                        amount: _amount,
                         serviceId: _pMethod,
                         buyerPhoneNumber: _phoneController.text);
                     print(sub.toJson());
@@ -241,7 +241,6 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                   SizedBox(height: 30),
                   LabelText(label: "Type"),
                   DropdownMenuInput(
-                      // hintText: "Type",
                       defaultValue: _typeId,
                       items: _getTypesItems(_subTypes),
                       validator: dropDownValidator,
@@ -251,7 +250,6 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                   SizedBox(height: 20),
                   LabelText(label: "Domaine"),
                   DropdownMenuInput(
-                      // hintText: "Domaine",
                       defaultValue: _domainId,
                       items: _getDomainItems(_domains),
                       validator: dropDownValidator,
@@ -261,7 +259,6 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                   SizedBox(height: 20),
                   LabelText(label: "Niveau"),
                   DropdownMenuInput(
-                      // hintText: "Niveau",
                       defaultValue: _levelId,
                       items: _getLevelItems(_levels),
                       validator: dropDownValidator,
@@ -271,7 +268,6 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                   SizedBox(height: 20),
                   LabelText(label: "Spécialité"),
                   DropdownMenuInput(
-                      // hintText: "Spécialité",
                       defaultValue: _specialityId,
                       items: _getSpecItems(_specialities),
                       validator: dropDownValidator,
@@ -290,9 +286,26 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Center(
+                  child: Text(
+                    "Montant produit: $_amount U",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "Entrez vos informations de paiement et finaliser l'abonnement",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 25),
                 LabelText(label: "Type"),
                 DropdownMenuInputStr(
-                    // hintText: "Type",
                     items: _getPaymentMethods(_paymentMethods),
                     defaultValue: _pMethod,
                     validator: stringValidator,
@@ -302,17 +315,9 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                       });
                     }),
                 SizedBox(height: 20),
-                // if (_pMethod == "")
                 Container(
-                  height: 200,
+                  height: 100,
                   child: ListView(children: [
-                    LabelText(label: "Montant"),
-                    TextFieldInput(
-                      controller: _amountController,
-                      validator: stringValidator,
-                      textInputType: TextInputType.number,
-                    ),
-                    SizedBox(height: 20),
                     LabelText(label: "Numéro téléphone"),
                     TextFieldInput(
                       controller: _phoneController,
