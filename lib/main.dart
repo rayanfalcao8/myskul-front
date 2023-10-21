@@ -301,6 +301,7 @@ int createUniqueId() {
 
 Future notify(RemoteMessage m) async {
   var tmp = m.data;
+
   AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: createUniqueId(),
