@@ -19,6 +19,7 @@ class LibraryPageState extends State<LibraryPage> {
   var icones = IconHelper();
   var gradients = GradientHelper();
   List<Product> _products = [];
+  final double _height = 90;
 
   @override
   void initState() {
@@ -89,8 +90,7 @@ class LibraryPageState extends State<LibraryPage> {
         // onTap: () => Get.to(() => ProductDetail(product: product)),
         child: Card(
       child: Container(
-        width: double.infinity,
-        height: 74,
+        height: _height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: const Color(0x72ffffff),
@@ -101,14 +101,27 @@ class LibraryPageState extends State<LibraryPage> {
         child: Row(
           children: [
             Expanded(
-              flex: 5,
+              flex: 4,
               child: Padding(
-                padding: EdgeInsets.fromLTRB(12, 14, 0, 0),
+                padding: EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "TITRE",
+                      product.name!,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF2BB799),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      product.description!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
@@ -116,10 +129,10 @@ class LibraryPageState extends State<LibraryPage> {
                       ),
                     ),
                     SizedBox(
-                      height: 12,
+                      height: 10,
                     ),
                     Text(
-                      "TAILLE : 10.0Mo",
+                      "TAILLE : 10.0 Mo",
                       style: TextStyle(
                         color: Color.fromARGB(112, 74, 72, 72),
                         fontSize: 16,
@@ -130,22 +143,24 @@ class LibraryPageState extends State<LibraryPage> {
                 ),
               ),
             ),
-            Container(
-              width: 63.859649658203125,
-              height: 74,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: const Color(0xff2bb799),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.download,
-                    color: Colors.white,
-                    size: 38,
-                  ),
-                ],
+            Expanded(
+              flex: 1,
+              child: Container(
+                height: _height,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: const Color(0xff2bb799),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.download,
+                      color: Colors.white,
+                      size: 38,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
