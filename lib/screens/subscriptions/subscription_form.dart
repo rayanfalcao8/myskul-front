@@ -32,6 +32,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
   String? _pMethod;
   List<Domain> _domains = [];
   List<Level> _levels = [];
+  List<Level> _copyLevels = [];
   List<Speciality> _specialities = [];
   List<SubscriptionType> _subTypes = [];
   int _currentStep = 0;
@@ -101,10 +102,10 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
 
   List<DropdownMenuItem<int>> _getLevelItems(List<Level> levels) {
     List<DropdownMenuItem<int>> items = [];
-    for (var l in levels) {
+    for (var lv in levels) {
       items.add(DropdownMenuItem(
-        child: Text(l.level!),
-        value: l.id!,
+        child: Text(lv.level!),
+        value: lv.id!,
       ));
     }
     return items;
@@ -117,6 +118,31 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
       }
     }
     return "";
+  }
+
+  String? _getAmount() {
+    String? amount = "0";
+    for (var st in _subTypes) {
+      if (st.id == _typeId) {
+        if (_domainId == 1) {
+          amount = st.amount_prepa ?? "0";
+        } else if (_domainId == 2) {
+          amount = st.amount_bord ?? "0";
+        }
+        break;
+      }
+    }
+    return amount;
+  }
+
+  void _updLevels() {
+    _levelId = null;
+    _copyLevels = [];
+    if (_domainId == 1) {
+      _copyLevels.addAll(_levels.getRange(0, 5));
+    } else if (_domainId == 2) {
+      _copyLevels.addAll(_levels.getRange(5, 7));
+    }
   }
 
   @override
@@ -175,7 +201,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                     SubscriptionController.create(sub).then((value) {
                       if (value) {
                         EasyLoading.showSuccess(
-                            "Souscription effectuée avec succès !");
+                            "Votre abonnement a bien été enclanché, vous recevrez un message pour valider votre paiement.");
                         setState(() {
                           _currentStep -= 1;
                           initForms();
@@ -247,16 +273,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                       onChanged: (value) {
                         setState(() {
                           _typeId = value;
-                          for (var st in _subTypes) {
-                            if (st.id == value) {
-                              if (_domainId == 1) {
-                                _amount = st.amount_prepa;
-                              } else if (_domainId == 2) {
-                                _amount = st.amount_bord;
-                              }
-                              break;
-                            }
-                          }
+                          _amount = _getAmount();
                         });
                       }),
                   SizedBox(height: 20),
@@ -268,26 +285,21 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                       onChanged: (value) {
                         setState(() {
                           _domainId = value;
-                          for (var st in _subTypes) {
-                            if (st.id == _typeId) {
-                              if (_domainId == 1) {
-                                _amount = st.amount_prepa;
-                              } else if (_domainId == 2) {
-                                _amount = st.amount_bord;
-                              }
-                              break;
-                            }
-                          }
+                          _updLevels();
+                          _amount = _getAmount();
                         });
                       }),
                   SizedBox(height: 20),
                   LabelText(label: "Niveau"),
                   DropdownMenuInput(
                       defaultValue: _levelId,
-                      items: _getLevelItems(_levels),
+                      items: _getLevelItems(_copyLevels),
                       validator: dropDownValidator,
                       onChanged: (value) {
-                        _levelId = value;
+                        if (mounted)
+                          setState(() {
+                            _levelId = value;
+                          });
                       }),
                   SizedBox(height: 20),
                   LabelText(label: "Spécialité"),
@@ -296,7 +308,9 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                       items: _getSpecItems(_specialities),
                       validator: dropDownValidator,
                       onChanged: (value) {
-                        _specialityId = value;
+                        setState(() {
+                          _specialityId = value;
+                        });
                       }),
                 ],
               ),
@@ -310,6 +324,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 30),
                 Center(
                   child: Text(
                     "Montant produit: $_amount U",
@@ -340,7 +355,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                     }),
                 SizedBox(height: 20),
                 Container(
-                  height: 100,
+                  height: 80,
                   child: ListView(children: [
                     LabelText(label: "Numéro téléphone"),
                     TextFieldInput(
