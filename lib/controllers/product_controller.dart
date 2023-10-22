@@ -56,7 +56,7 @@ class ProductController {
     };
 
     var url = Uri.parse(
-        ApiEndponits().baseUrl + ApiEndponits().endpoints.product + "user");
+        ApiEndponits().baseUrl + ApiEndponits().endpoints.product + "/user");
 
     EasyLoading.show();
 

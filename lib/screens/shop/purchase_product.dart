@@ -40,10 +40,9 @@ class _PurchaseProductState extends State<PurchaseProduct> {
       body: Container(
         decoration: getBckDecoration(),
         padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
+            SizedBox(height: 50),
             Text(
               "Montant produit: ${widget.product.price} U",
               style: TextStyle(
