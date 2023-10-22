@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:get/get.dart';
 import 'package:myskul/controllers/auth/login_controller.dart';
+import 'package:myskul/controllers/notification_controller.dart';
+import 'package:myskul/models/notif.dart' as n;
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/account/account.dart';
 import 'package:myskul/screens/history/history.dart';
@@ -323,8 +325,15 @@ class EndDrawer extends StatelessWidget {
 
   final gradients = GradientHelper();
 
+  var notifs;
+
   final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
   final GlobalKey subMenuKey;
+
+  Future<List<n.Notification>> getNotif() async {
+    notifs = await NotificationController().getAllNotification();
+    return notifs;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -348,21 +357,24 @@ class EndDrawer extends StatelessWidget {
                               top: 0,
                               right: 0,
                               child: CircleAvatar(
-                                backgroundColor: couleurs.white.withOpacity(0.1),
+                                backgroundColor:
+                                    couleurs.white.withOpacity(0.1),
                                 radius: 08,
                               )),
                           Positioned(
                               bottom: 0,
                               right: 0,
                               child: CircleAvatar(
-                                backgroundColor: couleurs.white.withOpacity(0.1),
+                                backgroundColor:
+                                    couleurs.white.withOpacity(0.1),
                                 radius: 15,
                               )),
                           Positioned(
                               bottom: 0,
                               right: 0,
                               child: CircleAvatar(
-                                backgroundColor: couleurs.white.withOpacity(0.1),
+                                backgroundColor:
+                                    couleurs.white.withOpacity(0.1),
                                 radius: 15,
                               )),
                         ],
@@ -384,6 +396,48 @@ class EndDrawer extends StatelessWidget {
                 ),
               ),
             ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width,
+              child: FutureBuilder(
+                builder: (ctx, AsyncSnapshot<List<n.Notification>> snapshot) {
+                  // Checking if future is resolved or not
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    // If we got an error
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+
+                      // if we got our data
+                    } else if (snapshot.hasData) {
+                      // Extracting data from snapshot object
+                      final data = snapshot.data;
+                      return data!.isNotEmpty
+                          ? ListView.builder(
+                              itemCount: data!.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  leading: Text(data[index].contenu),
+                                );
+                              })
+                          : Center(
+                              child: Text('not-found'.tr),
+                            );
+                    }
+                  }
+
+                  // Displaying LoadingSpinner to indicate waiting state
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+
+                // Future that needs to be resolved
+                // inorder to display something on the Canvas
+                future: getNotif(),
+              ),
+            )
           ],
         ),
       ),

@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-import 'package:intl/date_symbol_data_file.dart';
 import 'package:myskul/controllers/chat_controller.dart';
-import 'package:myskul/controllers/quiz_controller.dart';
+import 'package:myskul/controllers/notification_controller.dart';
 import 'package:myskul/introduction_screen.dart';
+import 'package:myskul/models/notif.dart';
 import 'package:myskul/screens/auth/domain.dart';
 import 'package:myskul/screens/auth/reset.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +103,10 @@ Future<void> messagingInit() async {
       .setForegroundNotificationPresentationOptions(alert: true, sound: true);
   FirebaseMessaging.onMessage.listen(
     (m) {
-      notify(m);
+      var tmp = m.data;
+      if (tmp['type'] != 'chat') {
+        notify(m);
+      }
       ChatController().playLocalAudio('bubble.wav');
     },
   );
@@ -301,20 +304,36 @@ int createUniqueId() {
 
 Future notify(RemoteMessage m) async {
   var tmp = m.data;
-  AwesomeNotifications().createNotification(
+  if (tmp['type'] == 'chat') {
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: createUniqueId(),
+          channelKey: 'MySkul',
+          title: tmp['nom'],
+          body: tmp['message'],
+          summary: tmp['groupe'],
+          largeIcon: tmp['image'],
+          roundedLargeIcon: true,
+          notificationLayout: NotificationLayout.Messaging,
+        ),
+        actionButtons: [
+          NotificationActionButton(
+              key: 'key',
+              label:
+                  Get.locale.toString().contains('en') ? 'ANSWER' : 'REPONDRE')
+        ]);
+  } else {
+    AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: createUniqueId(),
         channelKey: 'MySkul',
-        title: tmp['nom'],
-        body: tmp['message'],
-        summary: tmp['groupe'],
+        title: tmp['titre'],
+        body: tmp['contenu'],
         largeIcon: tmp['image'],
         roundedLargeIcon: true,
         notificationLayout: NotificationLayout.Messaging,
       ),
-      actionButtons: [
-        NotificationActionButton(
-            key: 'key',
-            label: Get.locale.toString().contains('en') ? 'ANSWER' : 'REPONDRE')
-      ]);
+    );
+    NotificationController().recordNotification(tmp);
+  }
 }

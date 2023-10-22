@@ -457,6 +457,7 @@ Future<void> sendPushNotification(String fmToken, String group, String image,
         "image": image,
         "nom": '~ ' + user.capitalizeFirst!,
         "message": message,
+        "type":"chat"
       },
     };
 
