@@ -143,7 +143,7 @@ class _PurchaseProductState extends State<PurchaseProduct> {
                               .then((value) {
                             if (value) {
                               EasyLoading.showSuccess(
-                                  "Achat effectué avec succès !");
+                                  "Votre processus d'acaht a bien été enclanché, vous recevrez un message pour valider votre paiement.");
                               Navigator.pop(context);
                               ;
                             }
