@@ -87,7 +87,6 @@ class LibraryPageState extends State<LibraryPage> {
 
   Widget _buildProduct(Product product) {
     return InkWell(
-        // onTap: () => Get.to(() => ProductDetail(product: product)),
         child: Card(
       child: Container(
         height: _height,
@@ -120,7 +119,7 @@ class LibraryPageState extends State<LibraryPage> {
                     ),
                     Text(
                       product.description!,
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 16,
@@ -131,35 +130,41 @@ class LibraryPageState extends State<LibraryPage> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      "TAILLE : 10.0 Mo",
-                      style: TextStyle(
-                        color: Color.fromARGB(112, 74, 72, 72),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
+                    // if (product.file != null)
+                    //   Text(
+                    //     "TAILLE : 10.0 Mo",
+                    //     style: TextStyle(
+                    //       color: Color.fromARGB(112, 74, 72, 72),
+                    //       fontSize: 16,
+                    //       fontWeight: FontWeight.w400,
+                    //     ),
+                    //   ),
                   ],
                 ),
               ),
             ),
             Expanded(
               flex: 1,
-              child: Container(
-                height: _height,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: const Color(0xff2bb799),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.download,
-                      color: Colors.white,
-                      size: 38,
-                    ),
-                  ],
+              child: InkWell(
+                onTap: () {
+                  downloadFile(product.file!);
+                },
+                child: Container(
+                  height: _height,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: const Color(0xff2bb799),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.download,
+                        color: Colors.white,
+                        size: 38,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
