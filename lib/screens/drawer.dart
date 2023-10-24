@@ -332,6 +332,7 @@ class EndDrawer extends StatelessWidget {
 
   Future<List<n.Notification>> getNotif() async {
     notifs = await NotificationController().getAllNotification();
+    print("notifs ${notifs}");
     return notifs;
   }
 
@@ -351,6 +352,8 @@ class EndDrawer extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
+                      margin: EdgeInsets.zero,
+                      padding: EdgeInsets.zero,
                       child: Stack(
                         children: [
                           Positioned(
@@ -380,51 +383,108 @@ class EndDrawer extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Center(
-                      child: Text(
-                        'NOTIFICATIONS',
-                        style: textes.h3b.copyWith(color: couleurs.white),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(),
+                        Text(
+                          'NOTIFICATIONS',
+                          style: textes.h3b.copyWith(color: couleurs.white),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        PopupMenuButton(
+                            padding: EdgeInsets.only(bottom: 10),
+                            icon: Icon(
+                              Icons.more_vert,
+                              color: ColorHelper().white,
+                            ),
+                            itemBuilder: (context) {
+                              return [
+                                PopupMenuItem<int>(
+                                  value: 1,
+                                  child: Text("as-read".tr.toLowerCase()),
+                                ),
+                              ];
+                            },
+                            onSelected: (value) {
+                              if (value == 1) {
+                                NotificationController().readAllNotification();
+                              }
+                            }),
+                      ],
                     )
                   ],
                 ),
                 decoration: BoxDecoration(
                   gradient: gradients.greenGradient,
-                  borderRadius:
-                      BorderRadius.only(bottomRight: Radius.circular(10)),
                 ),
               ),
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               child: FutureBuilder(
                 builder: (ctx, AsyncSnapshot<List<n.Notification>> snapshot) {
                   // Checking if future is resolved or not
                   if (snapshot.connectionState == ConnectionState.done) {
                     // If we got an error
                     if (snapshot.hasError) {
-                         print(snapshot.error.toString());
+                      print(snapshot.error.toString());
                       return Center(
-                        child: Text(snapshot.error.toString(), style: TextHelper().bodyTextl, textAlign: TextAlign.center,),
+                        child: Text(
+                          snapshot.error.toString(),
+                          style: TextHelper().bodyTextl,
+                          textAlign: TextAlign.center,
+                        ),
                       );
 
                       // if we got our data
                     } else if (snapshot.hasData) {
                       // Extracting data from snapshot object
                       final data = snapshot.data;
-                      print(data);
-                      return data!.length>=1
+                      print(data!.first.isRead);
+                      return data != null && data.length >= 1
                           ? ListView.builder(
-                              itemCount: data!.length,
+                              padding: EdgeInsets.zero,
+                              itemCount: data.length,
                               itemBuilder: (context, index) {
-                                return ListTile(
-                                  leading: Text(data[index].contenu),
+                                return Container(
+                                  margin: EdgeInsets.all(10),
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: data[index].isRead == 1
+                                              ? ColorHelper().green
+                                              : Colors.transparent)),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(data[index].dateDeCreation),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        data[index].contenu,
+                                        textAlign: TextAlign.justify,
+                                      ),
+                                      SizedBox(
+                                        height: 05,
+                                      ),
+                                      Divider(
+                                        color: Colors.black26,
+                                      )
+                                    ],
+                                  ),
                                 );
                               })
                           : Center(
-                              child: Text('not-found'.tr, style: TextHelper().bodyTextl, textAlign: TextAlign.center,),
+                              child: Text(
+                                'not-found'.tr,
+                                style: TextHelper().bodyTextl,
+                                textAlign: TextAlign.center,
+                              ),
                             );
                     }
                   }

@@ -7,13 +7,32 @@ class Notification {
   var isRead;
   var dateDeCreation;
 
+  Notification({
+    id,
+    titre,
+    type,
+    contenu,
+    image,
+    isRead,
+    dateDeCreation,
+  });
+
   Notification.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     titre = json['titre'];
     type = json['type'];
-    contenu = json['contenu'];
+    contenu = json['content'];
     image = json['image'];
     isRead = json['isRead'];
-    dateDeCreation = json['dateDeCreation'];
+    dateDeCreation = json['createdAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'titre': titre,
+      'type': type,
+      'contenu': contenu,
+    };
   }
 }

@@ -33,4 +33,5 @@ class Endpoints {
   final String product = "/products";
   final String payment = "/payment";
    final String notifications = "/notifications";
+   final String readNotifications = "/notifications/read";
 }

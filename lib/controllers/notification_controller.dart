@@ -66,13 +66,42 @@ class NotificationController extends GetxController {
 
       http.Response res = await http.get(url, headers: headers);
 
-      print("debug ${jsonDecode(res.body)['data']}");
-
+      print("debug ${jsonDecode(res.body)['data']['notifications']}");
       var tmp = jsonDecode(res.body)['data']['notifications'] as List;
 
-      if (res.statusCode == 200 && tmp.isNotEmpty ) {
-        list.add( Notification.fromJson(jsonDecode(res.body)['data'])) ;
-      } 
+      if (res.statusCode == 200 && tmp.isNotEmpty) {
+        for (var element in tmp) {
+          list.add(Notification.fromJson(element));
+        }
+      }
+    } catch (e) {
+      EasyLoading.showError(e.toString());
+    }
+    return list;
+  }
+
+
+   readAllNotification() async {
+    var token;
+    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+    List<Notification> list = [];
+    token = await prefs.getString('token');
+    try {
+      var headers = {
+        "Authorization": "Bearer" + " " + token.toString(),
+        "Content-Type": "application/json; charset=UTF-8",
+        "Accept": "application/json",
+      };
+
+      var url = Uri.parse(
+          ApiEndponits().baseUrl + ApiEndponits().endpoints.readNotifications);
+
+      http.Response res = await http.get(url, headers: headers);
+
+      if (res.statusCode == 200) {
+        EasyLoading.showSuccess(jsonDecode(res.body)['message']);
+      }
     } catch (e) {
       EasyLoading.showError(e.toString());
     }

@@ -38,7 +38,6 @@ class LoginController extends GetxController {
           EasyLoading.show();
           var tmp = json['data'];
           var token = tmp['token'];
-          print("token $token");
           final SharedPreferences prefs = await _prefs;
           await prefs.setString('token', token);
 
