@@ -33,6 +33,5 @@ String? phoneNumValidator(String? phoneNumber, String regex) {
   RegExp regExp = new RegExp(regex);
 
   if (!regExp.hasMatch(phoneNumber)) return "Numéro de téléphone invalide";
-
   return null;
 }

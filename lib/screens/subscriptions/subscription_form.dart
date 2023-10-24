@@ -36,12 +36,13 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
   String? _pMethod;
   List<Domain> _domains = [];
   List<Level> _levels = [];
+  List<Level> _copyLevels = [];
   List<Speciality> _specialities = [];
   List<SubscriptionType> _subTypes = [];
   int _currentStep = 0;
+  String? _amount = "0";
   List<PaymentMethod> _paymentMethods = [];
   TextEditingController _phoneController = TextEditingController();
-  TextEditingController _amountController = TextEditingController();
 
   _loadData() async {
     List resp = await Future.wait([
@@ -66,7 +67,7 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
     _specialityId = null;
     _pMethod = null;
     _phoneController.clear();
-    _amountController.clear();
+    _amount = "0";
   }
 
   List<DropdownMenuItem<String>> _getPaymentMethods(
@@ -105,10 +106,10 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
 
   List<DropdownMenuItem<int>> _getLevelItems(List<Level> levels) {
     List<DropdownMenuItem<int>> items = [];
-    for (var l in levels) {
+    for (var lv in levels) {
       items.add(DropdownMenuItem(
-        child: Text(l.id.toString()!),
-        value: l.id!,
+        child: Text(lv.id.toString()!),
+        value: lv.id!,
       ));
     }
     return items;
@@ -121,6 +122,31 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
       }
     }
     return "";
+  }
+
+  String? _getAmount() {
+    String? amount = "0";
+    for (var st in _subTypes) {
+      if (st.id == _typeId) {
+        if (_domainId == 1) {
+          amount = st.amount_prepa ?? "0";
+        } else if (_domainId == 2) {
+          amount = st.amount_bord ?? "0";
+        }
+        break;
+      }
+    }
+    return amount;
+  }
+
+  void _updLevels() {
+    _levelId = null;
+    _copyLevels = [];
+    if (_domainId == 1) {
+      _copyLevels.addAll(_levels.getRange(0, 5));
+    } else if (_domainId == 2) {
+      _copyLevels.addAll(_levels.getRange(5, 7));
+    }
   }
 
   @override
@@ -172,20 +198,18 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                         levelId: _levelId.toString(),
                         specialityId: _specialityId.toString(),
                         domainId: _domainId.toString(),
-                        amount: _amountController.text,
+                        amount: _amount,
                         serviceId: _pMethod,
                         buyerPhoneNumber: _phoneController.text);
-
                     print(sub.toJson());
                     SubscriptionController.create(sub).then((value) {
                       if (value) {
                         EasyLoading.showSuccess(
-                            "Souscription initiée avec succès, veuillez confirmer le paiement !", duration: Duration(seconds: 5), dismissOnTap: true );
+                            "Votre abonnement a bien été enclanché, vous recevrez un message pour valider votre paiement.");
                         setState(() {
-                          initForms();
                           _currentStep -= 1;
+                          initForms();
                         });
-                        Get.back();
                       }
                     });
                   } else {
@@ -247,42 +271,50 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                   SizedBox(height: 30),
                   LabelText(label: "Type"),
                   DropdownMenuInput(
-                      // hintText: "Type",
                       defaultValue: _typeId,
                       items: _getTypesItems(_subTypes),
                       validator: dropDownValidator,
                       onChanged: (value) {
-                        _typeId = value;
+                        setState(() {
+                          _typeId = value;
+                          _amount = _getAmount();
+                        });
                       }),
                   SizedBox(height: 20),
                   LabelText(label: "Domaine"),
                   DropdownMenuInput(
-                      // hintText: "Domaine",
                       defaultValue: _domainId,
                       items: _getDomainItems(_domains),
                       validator: dropDownValidator,
                       onChanged: (value) {
-                        _domainId = value;
+                        setState(() {
+                          _domainId = value;
+                          _updLevels();
+                          _amount = _getAmount();
+                        });
                       }),
                   SizedBox(height: 20),
                   LabelText(label: "Niveau"),
                   DropdownMenuInput(
-                      // hintText: "Niveau",
                       defaultValue: _levelId,
-                      items: _getLevelItems(_levels),
+                      items: _getLevelItems(_copyLevels),
                       validator: dropDownValidator,
                       onChanged: (value) {
-                        _levelId = value;
+                        if (mounted)
+                          setState(() {
+                            _levelId = value;
+                          });
                       }),
                   SizedBox(height: 20),
                   LabelText(label: "Spécialité"),
                   DropdownMenuInput(
-                      // hintText: "Spécialité",
                       defaultValue: _specialityId,
                       items: _getSpecItems(_specialities),
                       validator: dropDownValidator,
                       onChanged: (value) {
-                        _specialityId = value;
+                        setState(() {
+                          _specialityId = value;
+                        });
                       }),
                 ],
               ),
@@ -296,9 +328,27 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 30),
+                Center(
+                  child: Text(
+                    "Montant produit: $_amount U",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "Entrez vos informations de paiement et finaliser l'abonnement",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 25),
                 LabelText(label: "Type"),
                 DropdownMenuInputStr(
-                    // hintText: "Type",
                     items: _getPaymentMethods(_paymentMethods),
                     defaultValue: _pMethod,
                     validator: stringValidator,
@@ -308,17 +358,9 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                       });
                     }),
                 SizedBox(height: 20),
-                // if (_pMethod == "")
                 Container(
-                  height: 200,
+                  height: 80,
                   child: ListView(children: [
-                    LabelText(label: "Montant"),
-                    TextFieldInput(
-                      controller: _amountController,
-                      validator: stringValidator,
-                      textInputType: TextInputType.number,
-                    ),
-                    SizedBox(height: 20),
                     LabelText(label: "Numéro téléphone"),
                     TextFieldInput(
                       controller: _phoneController,
@@ -328,10 +370,6 @@ class _SubscriptionFormState extends State<SubscriptionForm> {
                     ),
                   ]),
                 ),
-                // if (_pType == 2)
-                //   Container(
-                //     child: Text("Fill info for type 2"),
-                //   )
               ],
             ),
           ),

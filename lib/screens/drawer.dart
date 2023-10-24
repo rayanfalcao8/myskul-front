@@ -6,7 +6,7 @@ import 'package:myskul/controllers/notification_controller.dart';
 import 'package:myskul/models/notif.dart' as n;
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/account/account.dart';
-import 'package:myskul/screens/history/history.dart';
+// import 'package:myskul/screens/history/history.dart';
 import 'package:myskul/screens/partner.dart';
 import 'package:myskul/screens/subscriptions/subscriptions.dart';
 import 'package:myskul/utilities/colors.dart';
@@ -192,24 +192,24 @@ class MainDrawer extends StatelessWidget {
                 Get.to(() => Subscriptions());
               },
             ),
-            ListTile(
-              title: Row(
-                children: [
-                  Icon(
-                    icones.history,
-                    color: couleurs.green,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('history'.tr),
-                ],
-              ),
-              tileColor: Get.currentRoute == '/home' ? Colors.grey[300] : null,
-              onTap: () {
-                Get.to(() => History());
-              },
-            ),
+            // ListTile(
+            //   title: Row(
+            //     children: [
+            //       Icon(
+            //         icones.history,
+            //         color: couleurs.green,
+            //       ),
+            //       SizedBox(
+            //         width: 10,
+            //       ),
+            //       Text('history'.tr),
+            //     ],
+            //   ),
+            //   tileColor: Get.currentRoute == '/home' ? Colors.grey[300] : null,
+            //   onTap: () {
+            //     Get.to(() => History());
+            //   },
+            // ),
             ListTile(
               title: Row(
                 children: [
