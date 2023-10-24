@@ -405,15 +405,17 @@ class EndDrawer extends StatelessWidget {
                   if (snapshot.connectionState == ConnectionState.done) {
                     // If we got an error
                     if (snapshot.hasError) {
+                         print(snapshot.error.toString());
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: Text(snapshot.error.toString(), style: TextHelper().bodyTextl, textAlign: TextAlign.center,),
                       );
 
                       // if we got our data
                     } else if (snapshot.hasData) {
                       // Extracting data from snapshot object
                       final data = snapshot.data;
-                      return data!.isNotEmpty
+                      print(data);
+                      return data!.length>=1
                           ? ListView.builder(
                               itemCount: data!.length,
                               itemBuilder: (context, index) {
@@ -422,7 +424,7 @@ class EndDrawer extends StatelessWidget {
                                 );
                               })
                           : Center(
-                              child: Text('not-found'.tr),
+                              child: Text('not-found'.tr, style: TextHelper().bodyTextl, textAlign: TextAlign.center,),
                             );
                     }
                   }

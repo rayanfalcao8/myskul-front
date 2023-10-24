@@ -24,10 +24,10 @@ class NotificationController extends GetxController {
         'id': tmp['id'],
         'titre': tmp['titre'],
         'type': tmp['type'],
-        'contenu': tmp['contenu'],
+        'content': tmp['contenu'],
         'image': tmp['image'] ?? '',
         'isRead': tmp['isRead'],
-        'dateDeCreation': tmp['dateDeCreation'],
+        'createdAt': tmp['dateDeCreation'],
       };
 
       var url = Uri.parse(
@@ -68,11 +68,11 @@ class NotificationController extends GetxController {
 
       print("debug ${jsonDecode(res.body)['data']}");
 
-      if (res.statusCode == 200) {
+      var tmp = jsonDecode(res.body)['data']['notifications'] as List;
+
+      if (res.statusCode == 200 && tmp.isNotEmpty ) {
         list.add( Notification.fromJson(jsonDecode(res.body)['data'])) ;
-      } else {
-        throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
-      }
+      } 
     } catch (e) {
       EasyLoading.showError(e.toString());
     }
