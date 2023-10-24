@@ -4,6 +4,7 @@ class Product {
   String? price;
   String? description;
   String? pictureURL;
+  String? file;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -24,6 +25,7 @@ class Product {
     price = json['price'];
     description = json['description'];
     pictureURL = json['pictureURL'];
+    file = json['file'];
     createdAt =
         json['created_at'] != null ? DateTime.parse(json['created_at']) : null;
     updatedAt =

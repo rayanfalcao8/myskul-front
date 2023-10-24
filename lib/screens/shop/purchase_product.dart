@@ -40,10 +40,9 @@ class _PurchaseProductState extends State<PurchaseProduct> {
       body: Container(
         decoration: getBckDecoration(),
         padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
+            SizedBox(height: 50),
             Text(
               "Montant produit: ${widget.product.price} U",
               style: TextStyle(
@@ -143,7 +142,7 @@ class _PurchaseProductState extends State<PurchaseProduct> {
                               .then((value) {
                             if (value) {
                               EasyLoading.showSuccess(
-                                  "Achat effectué avec succès !");
+                                  "Votre processus d'acaht a bien été enclanché, vous recevrez un message pour valider votre paiement.");
                               Navigator.pop(context);
                               ;
                             }

@@ -1,8 +1,13 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/texts.dart';
+import 'package:path_provider/path_provider.dart';
 
 AppBar getAppBar(
     {required String title,
@@ -136,4 +141,50 @@ getInputDecoration({String? hintText}) {
             color: ColorHelper().green,
           ),
           borderRadius: BorderRadius.all(Radius.circular(10.0))));
+}
+
+Future<void> downloadFile(String url) async {
+  HttpClient httpClient = new HttpClient();
+  File file;
+  String fileName;
+  String filePath = '';
+
+  try {
+    fileName = url.split("/").last;
+    EasyLoading.show();
+    var request = await httpClient.getUrl(Uri.parse(url));
+    var response = await request.close();
+    var path = await _getDownloadPath();
+    if (response.statusCode == 200) {
+      var bytes = await consolidateHttpClientResponseBytes(response);
+      filePath = '$path/$fileName';
+      file = File(filePath);
+      await file.writeAsBytes(bytes);
+      EasyLoading.showSuccess(
+          "Votre fichier a bien été téléchargé dans le repertoire $filePath",
+          duration: Duration(seconds: 5));
+    } else {
+      EasyLoading.showError(
+          "'Error code: ' + ${response.statusCode.toString()}");
+    }
+  } catch (err) {
+    print(err);
+    EasyLoading.showError("Cannot fetch url");
+  }
+}
+
+Future<String?> _getDownloadPath() async {
+  Directory? directory;
+  try {
+    if (Platform.isIOS) {
+      directory = await getApplicationDocumentsDirectory();
+    } else {
+      directory = Directory('/storage/emulated/0/Download');
+      if (!await directory.exists())
+        directory = await getExternalStorageDirectory();
+    }
+  } catch (err) {
+    print("Cannot get download folder path");
+  }
+  return directory?.path;
 }
