@@ -80,8 +80,7 @@ class NotificationController extends GetxController {
     return list;
   }
 
-
-   readAllNotification() async {
+  readAllNotification() async {
     var token;
     final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     final SharedPreferences prefs = await _prefs;
