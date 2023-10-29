@@ -21,13 +21,12 @@ class NotificationController extends GetxController {
       };
 
       var body = {
-        'id': tmp['id'],
-        'titre': tmp['titre'],
+        'title': tmp['titre'],
         'type': tmp['type'],
         'content': tmp['contenu'],
         'image': tmp['image'] ?? '',
-        'isRead': tmp['isRead'],
-        'createdAt': tmp['dateDeCreation'],
+        'isRead': tmp['isRead'] ?? false,
+        'createdAt': tmp['dateDeCreation'] ?? null,
       };
 
       var url = Uri.parse(
@@ -39,7 +38,7 @@ class NotificationController extends GetxController {
       print("Notifs ${res.request}");
 
       if (res.statusCode == 200) {
-        print("Notifs mise à jour : ${tmp['id']}");
+        print("Notifs mise à jour : ${tmp['titre']}");
       } else {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }

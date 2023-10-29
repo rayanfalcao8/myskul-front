@@ -330,6 +330,7 @@ Future notify(RemoteMessage m) async {
         title: tmp['titre'],
         body: tmp['contenu'],
         largeIcon: tmp['image'],
+        summary: tmp['type'],
         roundedLargeIcon: true,
         notificationLayout: NotificationLayout.Messaging,
       ),

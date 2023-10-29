@@ -41,6 +41,7 @@ class PaymentMethod {
   String? name;
   String? description;
   String? regex;
+  String? displayName;
 
   PaymentMethod({
     this.serviceid,
@@ -51,6 +52,7 @@ class PaymentMethod {
     this.name,
     this.description,
     this.regex,
+    this.displayName
   });
 
   Map<String, dynamic> toJson() {
@@ -62,6 +64,7 @@ class PaymentMethod {
       "localCur": localCur,
       "name": name,
       "description": description,
+      "displayName": displayName
     };
   }
 
@@ -74,5 +77,6 @@ class PaymentMethod {
     name = json['name'];
     description = json['description'];
     regex = json['regex'];
+    displayName = json['displayName'];
   }
 }
