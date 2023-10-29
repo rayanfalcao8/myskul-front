@@ -30,7 +30,7 @@ class MainDrawer extends StatelessWidget {
 
   final gradients = GradientHelper();
 
-  final String _url = ('https://wa.link/7ipjc4');
+  final String _url = ('https://wa.link/mxfdkn');
 
   final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
   final GlobalKey subMenuKey;

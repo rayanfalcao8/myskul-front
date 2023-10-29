@@ -168,7 +168,7 @@ class _PurchaseProductState extends State<PurchaseProduct> {
     List<DropdownMenuItem<String>> items = [];
     for (var t in methods) {
       items.add(DropdownMenuItem(
-        child: Text("${t.merchant}"),
+        child: Text("${t.displayName}"),
         value: t.payItemId,
       ));
     }
