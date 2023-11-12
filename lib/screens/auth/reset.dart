@@ -11,25 +11,45 @@ import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-class Reset extends StatelessWidget {
+class Reset extends StatefulWidget {
   Reset({required this.email, required this.token});
+  var email;
+  var token;
+
+  @override
+  State<Reset> createState() => _ResetState();
+}
+
+class _ResetState extends State<Reset> {
   var couleurs = ColorHelper();
+
   var textes = TextHelper();
+
   var icones = IconHelper();
+
   var controller = TextEditingController();
+
   var onSubmit = (String a) {};
+
   var keyboardType = TextInputType.visiblePassword;
+
   var hintText = "new-password";
+
   var prefixIcon = Icon(Icons.lock);
 
   var controller2 = TextEditingController();
+
   var onSubmit2 = (String a) {};
+
   var keyboardType2 = TextInputType.visiblePassword;
+
   var hintText2 = "password-conf";
+
   var prefixIcon2 = Icon(Icons.lock);
 
-  var email;
-  var token;
+  bool obscureText = true;
+
+  bool obscureText2 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -131,18 +151,36 @@ class Reset extends StatelessWidget {
                           height: 15,
                         ),
                         NewInput(
-                            obscureText: true,
+                            obscureText: obscureText,
                             controller: controller,
                             onSubmit: onSubmit,
                             keyboardType: keyboardType,
                             hintText: hintText,
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                obscureText = !obscureText;
+                                setState(() {});
+                              },
+                              child: obscureText
+                                  ? Icon(Icons.visibility)
+                                  : Icon(Icons.visibility_off),
+                            ),
                             prefixIcon: prefixIcon),
                         NewInput(
-                            obscureText: true,
+                            obscureText: obscureText2,
                             controller: controller2,
                             onSubmit: onSubmit2,
                             keyboardType: keyboardType2,
                             hintText: hintText2,
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                obscureText = !obscureText;
+                                setState(() {});
+                              },
+                              child: obscureText
+                                  ? Icon(Icons.visibility)
+                                  : Icon(Icons.visibility_off),
+                            ),
                             prefixIcon: prefixIcon2),
                         SizedBox(
                           height: 30,
@@ -155,11 +193,10 @@ class Reset extends StatelessWidget {
                             } else if (controller2.text.isEmpty ||
                                 controller2.text.isEmpty !=
                                     controller.text.isEmpty) {
-                              EasyLoading.showError(
-                                  "pwd-egal".tr);
+                              EasyLoading.showError("pwd-egal".tr);
                             } else {
-                              PasswordController().reset(
-                                  email, controller.text, controller2.text, token);
+                              PasswordController().reset(widget.email, controller.text,
+                                  controller2.text, widget.token);
                             }
                           },
                         ),

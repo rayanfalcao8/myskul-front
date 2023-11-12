@@ -183,7 +183,7 @@ class RegisterationController extends GetxController {
         var json = jsonDecode(res.body);
         EasyLoading.showSuccess(json['message']);
 
-        Get.to(() => Home());
+        Get.off(() => Home());
       } else {
         throw jsonDecode(res.body)['message'] ?? "unknown-error".tr;
       }

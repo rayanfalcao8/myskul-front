@@ -48,16 +48,18 @@ class _LoginState extends State<Login> {
 
   bool isLoading = false;
 
+  bool obscureText = true;
+
   bool validEmail = true;
   bool validPassword = true;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-    final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
+  final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
 
   void first() async {
     final SharedPreferences prefs = await _prefs;
     final SharedPreferences prefs2 = await _prefs2;
     bool? seen = await prefs2.getBool('first');
-String? token = await prefs.getString('token');
+    String? token = await prefs.getString('token');
   }
 
   @override
@@ -162,12 +164,22 @@ String? token = await prefs.getString('token');
                             hintText: hintText,
                             prefixIcon: prefixIcon),
                         NewInput(
-                            obscureText: true,
-                            controller: controller2,
-                            onSubmit: onSubmit2,
-                            keyboardType: keyboardType2,
-                            hintText: hintText2,
-                            prefixIcon: prefixIcon2),
+                          obscureText: obscureText,
+                          controller: controller2,
+                          onSubmit: onSubmit2,
+                          keyboardType: keyboardType2,
+                          hintText: hintText2,
+                          prefixIcon: prefixIcon2,
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              obscureText = !obscureText;
+                              setState(() {});
+                            },
+                            child: obscureText
+                                ? Icon(Icons.visibility)
+                                : Icon(Icons.visibility_off),
+                          ),
+                        ),
                         NewButtonG(
                           text: "connect",
                           function: () async {
@@ -200,8 +212,8 @@ String? token = await prefs.getString('token');
                               },
                               child: Text(
                                 "new-here2".tr,
-                                style: textes.h4l
-                                    .copyWith(color: couleurs.green),
+                                style:
+                                    textes.h4l.copyWith(color: couleurs.green),
                               ),
                             )
                           ],
@@ -222,8 +234,8 @@ String? token = await prefs.getString('token');
                               },
                               child: Text(
                                 "forgot-password2".tr,
-                                style: textes.h4l
-                                    .copyWith(color: couleurs.green),
+                                style:
+                                    textes.h4l.copyWith(color: couleurs.green),
                               ),
                             )
                           ],

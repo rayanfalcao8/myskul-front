@@ -50,6 +50,10 @@ class _RegisterState extends State<Register> {
 
   bool? checkbox = false;
 
+  bool obscureText = true;
+
+  bool obscureText2 = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,8 +175,8 @@ class _RegisterState extends State<Register> {
                                               .green, // header background color
                                           onPrimary: couleurs
                                               .white, // header text color
-                                          onSurface: couleurs
-                                              .black, // body text color
+                                          onSurface:
+                                              couleurs.black, // body text color
                                         ),
                                         textButtonTheme: TextButtonThemeData(
                                           style: TextButton.styleFrom(
@@ -194,8 +198,8 @@ class _RegisterState extends State<Register> {
                               if (pickedDate != null) {
                                 print(
                                     pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
-                                String formattedDate =
-                                    DateFormat('yyyy-MM-dd').format(
+                                String formattedDate = DateFormat('yyyy-MM-dd')
+                                    .format(
                                         pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
                                 print(
                                     formattedDate); //formatted date output using intl package =>  2022-07-04
@@ -229,7 +233,9 @@ class _RegisterState extends State<Register> {
                                 icones: icones.boy,
                                 condition: 0,
                                 gender: "male",
-                                width: (MediaQuery.of(context).size.width/1.2)/2.1 ,//145,
+                                width:
+                                    (MediaQuery.of(context).size.width / 1.2) /
+                                        2.1, //145,
                                 height: 80,
                               ),
                             ),
@@ -247,7 +253,9 @@ class _RegisterState extends State<Register> {
                                 icones: icones.girl,
                                 condition: 1,
                                 gender: "female",
-                                width: (MediaQuery.of(context).size.width/1.2)/2.1 ,//145,
+                                width:
+                                    (MediaQuery.of(context).size.width / 1.2) /
+                                        2.1, //145,
                                 height: 80,
                               ),
                             )
@@ -257,18 +265,36 @@ class _RegisterState extends State<Register> {
                           height: 10,
                         ),
                         NewInput(
-                            obscureText: true,
+                            obscureText: obscureText,
                             controller: password,
                             onSubmit: (g) {},
                             keyboardType: TextInputType.visiblePassword,
                             hintText: "password",
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                obscureText = !obscureText;
+                                setState(() {});
+                              },
+                              child: obscureText
+                                  ? Icon(Icons.visibility)
+                                  : Icon(Icons.visibility_off),
+                            ),
                             prefixIcon: Icon(icones.lock)),
                         NewInput(
-                            obscureText: true,
+                            obscureText: obscureText2,
                             controller: passwordConfirm,
                             onSubmit: (g) {},
                             keyboardType: TextInputType.visiblePassword,
                             hintText: "password-conf",
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                obscureText2 = !obscureText2;
+                                setState(() {});
+                              },
+                              child: obscureText2
+                                  ? Icon(Icons.visibility)
+                                  : Icon(Icons.visibility_off),
+                            ),
                             prefixIcon: Icon(icones.lock)),
                         SizedBox(
                           height: 30,
@@ -332,7 +358,8 @@ class _RegisterState extends State<Register> {
                                   cityController: ville.text,
                                   bdController: datenaiss.text,
                                   passwordController: password.text,
-                                  genderController: selectedGender==0 ? "Male":"Female");
+                                  genderController:
+                                      selectedGender == 0 ? "Male" : "Female");
                             }
                           },
                         ),
@@ -355,8 +382,8 @@ class _RegisterState extends State<Register> {
                               },
                               child: Text(
                                 "connect-min".tr,
-                                style: textes.h4l
-                                    .copyWith(color: couleurs.green),
+                                style:
+                                    textes.h4l.copyWith(color: couleurs.green),
                               ),
                             )
                           ],

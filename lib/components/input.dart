@@ -10,6 +10,7 @@ class NewInput extends StatelessWidget {
     this.keyboardType,
     required this.hintText,
     this.prefixIcon,
+    this.suffixIcon,
     this.errorText,
     this.onTap,
     this.readOnly = false,
@@ -22,6 +23,7 @@ class NewInput extends StatelessWidget {
   final TextInputType? keyboardType;
   final String hintText;
   final Icon? prefixIcon;
+  final Widget? suffixIcon;
   final String? errorText;
   final bool readOnly;
   final bool obscureText;
@@ -50,6 +52,7 @@ class NewInput extends StatelessWidget {
                             ? ColorHelper().green
                             : ColorHelper().grey)),
                 prefixIcon: prefixIcon,
+                suffixIcon: suffixIcon,
                 prefixIconColor: MaterialStateColor.resolveWith((states) =>
                     states.contains(MaterialState.focused)
                         ? ColorHelper().green
