@@ -336,7 +336,7 @@ class ChatController {
                             return ReceivedMessage(
                               texte: tmp['message'],
                               image: tmp['senderImage'],
-                              nom: tmp['sender'],
+                              nom: tmp['sender'] ?? ' ',
                               time: tmp['time'],
                             );
                           } else {
