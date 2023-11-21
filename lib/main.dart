@@ -174,7 +174,7 @@ class _Home1State extends State<Home1> {
 
   late ConnectivityResult result;
   late StreamSubscription subscription;
-  bool isConnected = false;
+  bool isConnected = false ;
 
   showDialogBox() {
     showDialog(
