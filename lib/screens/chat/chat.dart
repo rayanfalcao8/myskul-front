@@ -47,8 +47,8 @@ class _ChatState extends State<Chat> {
 
   void scrollDown(ScrollController ctrl) async {
     if (ctrl.positions.isNotEmpty && ctrl.position.hasContentDimensions) {
-      await ctrl.animateTo(ctrl.position.maxScrollExtent,
-          duration: Duration(milliseconds: 300), curve: Curves.ease);
+      final position = ctrl.position.maxScrollExtent; 
+       ctrl.jumpTo(position);
     }
   }
 
@@ -149,8 +149,8 @@ class _ChatState extends State<Chat> {
   @override
   void dispose() {
     // TODO: implement dispose
-    super.dispose();
     controller.dispose();
+    super.dispose();
   }
 
   @override

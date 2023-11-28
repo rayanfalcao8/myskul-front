@@ -242,8 +242,8 @@ class ChatController {
 
   void scrollDown(ScrollController ctrl) async {
     if (ctrl.positions.isNotEmpty && ctrl.position.hasContentDimensions) {
-      await ctrl.animateTo(ctrl.position.maxScrollExtent,
-          duration: Duration(milliseconds: 300), curve: Curves.ease);
+      final position = ctrl.position.maxScrollExtent; 
+       ctrl.jumpTo(position);
     }
   }
 
@@ -284,78 +284,81 @@ class ChatController {
         });
 
         return snapshot.data.docs.length > 0
-            ? ListView.builder(
-                shrinkWrap: true,
+            ? SingleChildScrollView(
                 controller: controller,
-                itemCount: grouped.keys.length,
-                itemBuilder: (context, index) {
-                  String date = grouped.keys.toList()[index];
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: grouped.keys.length,
+                    itemBuilder: (context, index) {
+                      String date = grouped.keys.toList()[index];
 
-                  var messages = grouped[date];
+                      var messages = grouped[date];
 
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 30.0),
-                        child: Text(
-                          date,
-                          style: TextStyle(
-                              color: Colors.black.withOpacity(0.3),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      ListView.builder(
-                        primary: false,
-                        shrinkWrap: true,
-                        itemCount: messages!.length + 1,
-                        itemBuilder: (context, index) {
-                          if (index == messages.length) {
-                            scrollDown(controller);
-                            return Container(
-                              height: 80,
-                            );
-                          }
-                          if (index == 0) {
-                            SizedBox(
-                              height:
-                                  (MediaQuery.of(context).size.height / 10) +
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 30.0),
+                            child: Text(
+                              date,
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.3),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          ListView.builder(
+                            primary: false,
+                            shrinkWrap: true,
+                            itemCount: messages!.length + 1,
+                            itemBuilder: (context, index) {
+                              if (index == messages.length) {
+                                scrollDown(controller);
+                                return Container(
+                                  height: 80,
+                                );
+                              }
+                              if (index == 0) {
+                                SizedBox(
+                                  height: (MediaQuery.of(context).size.height /
+                                          10) +
                                       10,
-                            );
-                          }
-                          var tmp = messages[index].data() as Map;
-                          if (tmp['type'] == 'texte') {
-                            if (tmp['sender'] == user.username) {
-                              return SentMessage(
-                                texte: tmp['message'],
-                                image: tmp['senderImage'],
-                                nom: tmp['sender'],
-                                time: tmp['time'],
-                              );
-                            }
+                                );
+                              }
+                              var tmp = messages[index].data() as Map;
+                              if (tmp['type'] == 'texte') {
+                                if (tmp['sender'] == user.username) {
+                                  return SentMessage(
+                                    texte: tmp['message'],
+                                    image: tmp['senderImage'],
+                                    nom: tmp['sender'],
+                                    time: tmp['time'],
+                                  );
+                                }
 
-                            return ReceivedMessage(
-                              texte: tmp['message'],
-                              image: tmp['senderImage'],
-                              nom: tmp['sender'] ?? ' ',
-                              time: tmp['time'],
-                            );
-                          } else {
-                            if (tmp['sender'] == (user.username)) {
-                              return SentImage(
-                                tmp: tmp,
-                                user: user,
-                              );
-                            }
+                                return ReceivedMessage(
+                                  texte: tmp['message'],
+                                  image: tmp['senderImage'],
+                                  nom: tmp['sender'] ?? ' ',
+                                  time: tmp['time'],
+                                );
+                              } else {
+                                if (tmp['sender'] == (user.username)) {
+                                  return SentImage(
+                                    tmp: tmp,
+                                    user: user,
+                                  );
+                                }
 
-                            return ReceivedImage(
-                              tmp: tmp,
-                            );
-                          }
-                        },
-                      )
-                    ],
-                  );
-                })
+                                return ReceivedImage(
+                                  tmp: tmp,
+                                );
+                              }
+                            },
+                          )
+                        ],
+                      );
+                    }),
+              )
             : SingleChildScrollView(
                 child: NotFoundWidget(texte: 'not-found-message'.tr),
               );
@@ -457,7 +460,7 @@ Future<void> sendPushNotification(String fmToken, String group, String image,
         "image": image,
         "nom": '~ ' + user.capitalizeFirst!,
         "message": message,
-        "type":"chat"
+        "type": "chat"
       },
     };
 
