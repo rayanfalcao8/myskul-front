@@ -1,13 +1,45 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:myskul/controllers/auth/registration_controller.dart';
+import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/controllers/subscripiton_controller.dart';
 import 'package:myskul/models/subscription.dart';
+import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/subscriptions/subscription_form.dart';
 import 'package:myskul/utilities/colors.dart';
+import 'package:myskul/utilities/constants.dart';
 import 'package:myskul/utilities/helpers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Subscriptions extends StatelessWidget {
+class Subscriptions extends StatefulWidget {
+  @override
+  State<Subscriptions> createState() => _SubscriptionsState();
+}
+
+class _SubscriptionsState extends State<Subscriptions> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   var colors = ColorHelper();
+
+  var spec;
+  var user;
+
+  getUser() async {
+    final prefs = await _prefs;
+    var userString = await prefs.getString('user');
+    var userJson = jsonDecode(userString!);
+    user = User.fromJson(userJson);
+    spec = user.speciality['speciality'];
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getUser();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,26 +128,75 @@ class Subscriptions extends StatelessWidget {
   }
 
   Widget _buildSubscription(Subscription subscription) {
-    return Card(
-        elevation: 1,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (subscription.domain != null)
-                    Text("${subscription.domain!.displayName}"),
-                  Text("${subscription.level!.level}"),
-                ],
-              ),
-              SizedBox(height: 10),
-              if (subscription.speciality != null)
-                Text("${subscription.speciality!.speciality}"),
-            ],
-          ),
-        ));
+    var token;
+
+    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+    Future<void> getToken() async {
+      final SharedPreferences prefs = await _prefs;
+      token = await prefs.getString('token');
+    }
+
+    return InkWell(
+      onTap: () {
+        RegisterationController().updatePlan(
+            idController: user.id!.toString(),
+            domainController: subscription.domainId!.toString(),
+            speController: subscription.specialityId!.toString(),
+            lvController: subscription.levelId!.toString(),
+            token: token);
+            setState(() {
+              
+            });
+      },
+      child: Card(
+          elevation: 1,
+          color: subscription.speciality!.speciality!
+                  .toLowerCase()
+                  .contains(spec.toString().toLowerCase())
+              ? ColorHelper().green
+              : ColorHelper().white,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (subscription.domain != null)
+                      Text("${subscription.domain!.displayName}",
+                          style: TextStyle(
+                              color: subscription.speciality!.speciality!
+                                      .toLowerCase()
+                                      .contains(spec.toString().toLowerCase())
+                                  ? ColorHelper().white
+                                  : ColorHelper().grey)),
+                    Text(
+                      "${subscription.level!.level}",
+                      style: TextStyle(
+                          color: subscription.speciality!.speciality!
+                                  .toLowerCase()
+                                  .contains(spec.toString().toLowerCase())
+                              ? ColorHelper().white
+                              : ColorHelper().grey),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                if (subscription.speciality != null)
+                  Text(
+                    "${subscription.speciality!.speciality}",
+                    style: TextStyle(
+                        color: subscription.speciality!.speciality!
+                                .toLowerCase()
+                                .contains(spec.toString().toLowerCase())
+                            ? ColorHelper().white
+                            : ColorHelper().grey),
+                  ),
+              ],
+            ),
+          )),
+    );
   }
 }

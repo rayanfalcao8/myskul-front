@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myskul/controllers/chat_controller.dart';
 import 'package:myskul/controllers/quiz_controller.dart';
 import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/chat/chat_group_list.dart';
@@ -10,6 +11,7 @@ import 'package:myskul/screens/quiz/leaderboard.dart';
 import 'package:myskul/screens/shop/product_list_page.dart';
 import 'package:myskul/screens/shop/shop2.dart';
 import 'package:myskul/utilities/colors.dart';
+import 'package:myskul/utilities/constants.dart';
 import 'package:myskul/utilities/gradients.dart';
 import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
@@ -34,6 +36,39 @@ class _HomeState extends State<Home> {
     var userString = await prefs.getString('user');
     var userJson = jsonDecode(userString!);
     user = User.fromJson(userJson);
+    if (user.speciality['speciality']
+        .toString()
+        .toLowerCase()
+        .contains('toe')) {
+           ChatController().addUser(user, Constant().PTOE);
+    } else if (user.speciality['speciality']
+        .toString()
+        .toLowerCase()
+        .contains('tcf')) {
+          ChatController().addUser(user, Constant().PTCL);
+    } else if (user.speciality['speciality']
+        .toString()
+        .toLowerCase()
+        .contains('phar')) {
+          ChatController().addUser(user, Constant().PH);
+    } else if (user.speciality['speciality']
+        .toString()
+        .toLowerCase()
+        .contains('dent')) {
+          ChatController().addUser(user, Constant().MD);
+    } else if (user.speciality['speciality']
+        .toString()
+        .toLowerCase()
+        .contains('gen')) {
+          ChatController().addUser(user, Constant().MG);
+    } else if (user.speciality['speciality']
+        .toString()
+        .toLowerCase()
+        .contains('ide')) {
+          ChatController().addUser(user, Constant().PIDE);
+    } else {
+      ChatController().addUser(user, Constant().PMD);
+    }
     return user;
   }
 
@@ -158,10 +193,12 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                             onTap: () {
                               if (widget
                                   .scaffoldKey.currentState!.isEndDrawerOpen) {
-                                widget.scaffoldKey.currentState!.closeEndDrawer();
+                                widget.scaffoldKey.currentState!
+                                    .closeEndDrawer();
                                 //close drawer, if drawer is open
                               } else {
-                                widget.scaffoldKey.currentState!.openEndDrawer();
+                                widget.scaffoldKey.currentState!
+                                    .openEndDrawer();
                                 //open drawer, if drawer is closed
                               }
                             },

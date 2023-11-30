@@ -160,7 +160,7 @@ class Home1 extends StatefulWidget {
 
 class _Home1State extends State<Home1> {
   Map<int, Color> color = {
-    50:  ColorHelper().green.withOpacity(0.5),
+    50: ColorHelper().green.withOpacity(0.5),
     100: ColorHelper().green.withOpacity(0.5),
     200: ColorHelper().green.withOpacity(0.5),
     300: ColorHelper().green.withOpacity(0.5),
@@ -174,7 +174,7 @@ class _Home1State extends State<Home1> {
 
   late ConnectivityResult result;
   late StreamSubscription subscription;
-  bool isConnected = false ;
+  bool isConnected = false;
 
   showDialogBox() {
     showDialog(
