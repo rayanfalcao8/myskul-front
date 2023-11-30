@@ -342,7 +342,8 @@ class _QuestionsState extends State<Questions> {
                                 ),
                                 Container(
                                     width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height/1.4,
+                                    height: MediaQuery.of(context).size.height /
+                                        1.4,
                                     child: ListView.builder(
                                       physics: NeverScrollableScrollPhysics(),
                                       itemCount:
@@ -356,6 +357,7 @@ class _QuestionsState extends State<Questions> {
                                           return answered == true
                                               ? Column(
                                                   children: [
+                                                    SizedBox(height: 20),
                                                     NewButtonG(
                                                       text: 'next',
                                                       function: () async {
@@ -465,7 +467,9 @@ class _QuestionsState extends State<Questions> {
                                                 }
 
                                                 answered = true;
-                                               widget.mod==1 ? timer.cancel():null;
+                                                widget.mod == 1
+                                                    ? timer.cancel()
+                                                    : null;
                                                 questionsWidget = Row(
                                                   children: [
                                                     AnimatedOpacity(
