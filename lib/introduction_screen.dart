@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:myskul/screens/auth/login.dart';
+import 'package:myskul/screens/terms_of_use/terms_of_use.dart';
 import 'package:myskul/utilities/helpers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -56,7 +57,7 @@ class IntroScreen extends StatelessWidget {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool("ON_BOARDING", false);
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Login()));
+        context, MaterialPageRoute(builder: (context) => TermsOfUse()));
   }
 
   Widget _buildPage(String title, String body, String imagePath) {
