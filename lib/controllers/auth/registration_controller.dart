@@ -146,15 +146,15 @@ class RegisterationController extends GetxController {
   }
 
   void updatePlan(
-      {required idController,
+      {idController,
       domainController,
       speController,
       schoolController,
       lvController,
-      required token}) async {
+      token}) async {
     try {
       var headers = {
-        "Authorization": "Bearer" + " " + token.toString(),
+        "Authorization": "Bearer" + " " + '258|4qLj2MDw8gLN48Qqk8fQwJUUzOvRp8344YH8EU9jd8ff0701',
         "Content-Type": "application/json; charset=UTF-8",
         "Accept": "application/json",
       };
@@ -169,10 +169,12 @@ class RegisterationController extends GetxController {
         "school_id": schoolController,
       };
 
+
       EasyLoading.show();
 
       http.Response res = await http.post(url,
           body: utf8.encode(jsonEncode(body)), headers: headers);
+          print(res);
 
       EasyLoading.dismiss();
 

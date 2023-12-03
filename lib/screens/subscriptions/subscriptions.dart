@@ -140,14 +140,13 @@ class _SubscriptionsState extends State<Subscriptions> {
     return InkWell(
       onTap: () {
         RegisterationController().updatePlan(
+             
             idController: user.id!.toString(),
             domainController: subscription.domainId!.toString(),
             speController: subscription.specialityId!.toString(),
             lvController: subscription.levelId!.toString(),
+            schoolController: '3',
             token: token);
-            setState(() {
-              
-            });
       },
       child: Card(
           elevation: 1,
