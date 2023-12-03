@@ -9,7 +9,6 @@ import 'package:myskul/screens/drawer.dart';
 import 'package:myskul/screens/quiz/category_list.dart';
 import 'package:myskul/screens/quiz/leaderboard.dart';
 import 'package:myskul/screens/shop/product_list_page.dart';
-import 'package:myskul/screens/shop/shop2.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/constants.dart';
 import 'package:myskul/utilities/gradients.dart';
@@ -288,7 +287,7 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nEtiam semper lacinia nunc . ",
+                                    "Test numéro 1 de publication d'une nouvelle information",
                                     style: TextHelper()
                                         .h4l
                                         .copyWith(color: ColorHelper().white),
@@ -304,7 +303,7 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nEtiam semper lacinia nunc . ",
+                                    "Test numéro 2 de publication d'une nouvelle information",
                                     style: TextHelper()
                                         .h4l
                                         .copyWith(color: ColorHelper().white),
@@ -320,7 +319,7 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nEtiam semper lacinia nunc . ",
+                                    "Test numéro 3 de publication d'une nouvelle information",
                                     style: TextHelper()
                                         .h4l
                                         .copyWith(color: ColorHelper().white),

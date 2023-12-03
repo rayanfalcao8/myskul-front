@@ -13,6 +13,7 @@ import 'package:myskul/models/user.dart';
 import 'package:myskul/screens/auth/login.dart';
 import 'package:myskul/screens/chat/chat_group_list.dart';
 import 'package:myskul/screens/home.dart';
+import 'package:myskul/screens/terms_of_use/terms_of_use.dart';
 import 'package:myskul/utilities/colors.dart';
 import 'package:myskul/utilities/constants.dart';
 import 'screens/splash.dart';
@@ -38,6 +39,7 @@ User? user; // Ici sera stocké l'utilisateur principal
 bool?
     notif; // Ici sera stocké si oui ou non l'utilisateur veut recevoir les notifications
 bool show = true; // Show onBoarding
+bool? acceptTerms = false;
 
 //fonction pour capture les notification et faire des actions lorsqu'on les reçoit
 @pragma("vm:entry-point")
@@ -56,6 +58,7 @@ shMethods(SharedPreferences prefs) async {
   fmToken = await prefs.getString('fmToken');
   locale = await prefs.getString('locale');
   notif = await prefs.getBool('notif');
+  acceptTerms = await prefs.getBool('ACCEPT_TERMS');
 
   if (locale != null) {
     Get.updateLocale(Locale(locale!));
@@ -140,7 +143,8 @@ void main() async {
   // Initialisation du package SharedPreferences
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  // show = await prefs.getBool("ON_BOARDING") ?? true;
+  show = await prefs.getBool("ON_BOARDING") ?? true;
+  acceptTerms = await prefs.getBool('ACCEPT_TERMS');
 
   // lignes de codes afférentes aux SharedPreferences
   seen = await prefs.getBool('first');
@@ -288,8 +292,9 @@ class _Home1State extends State<Home1> {
             : token == null
                 ? show
                     ? IntroScreen()
-                    : Login()
-                // ? Login()
+                    : acceptTerms == true
+                        ? Login()
+                        : TermsOfUse()
                 : user!.speciality == null
                     ? Domain()
                     : Home(),

@@ -103,8 +103,7 @@ class LibraryPageState extends State<LibraryPage> {
               flex: 4,
               child: Padding(
                 padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: ListView(
                   children: [
                     Text(
                       product.name!,
@@ -147,13 +146,16 @@ class LibraryPageState extends State<LibraryPage> {
               flex: 1,
               child: InkWell(
                 onTap: () {
-                  downloadFile(product.file!);
+                  if (product.file != null && product.file!.isNotEmpty)
+                    downloadFile(product.file!);
                 },
                 child: Container(
                   height: _height,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: const Color(0xff2bb799),
+                    color: (product.file != null && product.file!.isNotEmpty)
+                        ? const Color(0xff2bb799)
+                        : Color.fromARGB(255, 199, 199, 199),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -21,8 +21,7 @@ class Question extends StatefulWidget {
 }
 
 class _QuestionState extends State<Question> {
-
-double c=100;
+  double c = 100;
 
   @override
   Widget build(BuildContext context) {
@@ -59,11 +58,11 @@ double c=100;
                               color: Colors.green,
                             ),
                           ),
-                           SizedBox(
+                          SizedBox(
                             width: 5,
                           ),
                           Container(
-                            width: (widget.correct*100)/widget.total,
+                            width: (widget.correct * 100) / widget.total,
                             height: 6,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25),
@@ -72,7 +71,7 @@ double c=100;
                           ),
                           const Spacer(),
                           Container(
-                            width: (widget.wrong*100)/widget.total,
+                            width: (widget.wrong * 100) / widget.total,
                             height: 6,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25),
@@ -83,7 +82,7 @@ double c=100;
                             width: 5,
                           ),
                           Text(
-                             widget.wrong.toString(),
+                            widget.wrong.toString(),
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -112,9 +111,9 @@ double c=100;
                           // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis purus, blandit ?",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 15,
                             height: 1.2,
-                            fontWeight: FontWeight.w200,
+                            fontWeight: FontWeight.w300,
                           ),
                         ),
                       ),
@@ -155,10 +154,10 @@ double c=100;
 }
 
 class Answer extends StatelessWidget {
-  Answer({required this.answer,required  this.color});
+  Answer({required this.answer, required this.color});
   var answer;
   var color;
- 
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -170,7 +169,7 @@ class Answer extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
         border: Border.all(
-          color: color,//Colors.black.withOpacity(.24),
+          color: color, //Colors.black.withOpacity(.24),
           width: 2,
         ),
       ),
@@ -179,8 +178,8 @@ class Answer extends StatelessWidget {
         answer.name,
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w200,
+          fontSize: 15,
+          fontWeight: FontWeight.w300,
           height: 1.7,
         ),
       ),

@@ -6,18 +6,16 @@ import 'package:myskul/utilities/icons.dart';
 import 'package:myskul/utilities/texts.dart';
 
 class NewButtonG extends StatelessWidget {
-  const NewButtonG({
-    required this.text,
-    this.function,
-  });
+  const NewButtonG({required this.text, this.function, this.active = true});
 
   final String text;
   final Function()? function;
+  final bool? active;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width/1.5,
+      width: MediaQuery.of(context).size.width / 1.5,
       height: 50,
       child: TextButton(
         onPressed: function,
