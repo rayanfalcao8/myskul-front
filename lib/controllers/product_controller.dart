@@ -25,7 +25,7 @@ class ProductController {
     final json = jsonDecode(res.body);
 
     EasyLoading.dismiss();
-
+//print(json['data']['products']);
     return (json['data']['products'] as List)
         .map((e) => Product.fromJson(e))
         .toList();

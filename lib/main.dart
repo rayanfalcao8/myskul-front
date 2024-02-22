@@ -29,15 +29,15 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 bool?
-    seen; // Cette variable va permettre d'afficher le splash screen une seule fois
+seen; // Cette variable va permettre d'afficher le splash screen une seule fois
 String? token; // Token d'authentification de l'utlisateur
 
 String? locale; // Cette variable nous permettra de gérer la langue utilisée
 String?
-    fmToken; // Cette variable nous permettra d'envoyer des notifications sur chaque appareil
+fmToken; // Cette variable nous permettra d'envoyer des notifications sur chaque appareil
 User? user; // Ici sera stocké l'utilisateur principal
 bool?
-    notif; // Ici sera stocké si oui ou non l'utilisateur veut recevoir les notifications
+notif; // Ici sera stocké si oui ou non l'utilisateur veut recevoir les notifications
 bool show = true; // Show onBoarding
 bool? acceptTerms = false;
 
@@ -105,7 +105,7 @@ Future<void> messagingInit() async {
   FirebaseMessaging.instance
       .setForegroundNotificationPresentationOptions(alert: true, sound: true);
   FirebaseMessaging.onMessage.listen(
-    (m) {
+        (m) {
       var tmp = m.data;
       if (tmp['type'] != 'chat') {
         notify(m);
@@ -153,7 +153,7 @@ void main() async {
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then(
-    (_) => runApp(Home1()),
+        (_) => runApp(Home1()),
   );
 }
 
@@ -185,17 +185,17 @@ class _Home1State extends State<Home1> {
         barrierDismissible: false,
         context: Get.context as BuildContext,
         builder: (context) => CupertinoAlertDialog(
-              title: Text('no-internet'.tr),
-              content: Text('internet-check'.tr),
-              actions: [
-                CupertinoButton.filled(
-                    child: Text('retry'.tr),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      checkConnection();
-                    })
-              ],
-            ));
+          title: Text('no-internet'.tr),
+          content: Text('internet-check'.tr),
+          actions: [
+            CupertinoButton.filled(
+                child: Text('retry'.tr),
+                onPressed: () {
+                  Navigator.pop(context);
+                  checkConnection();
+                })
+          ],
+        ));
   }
 
   checkConnection() async {
@@ -290,14 +290,14 @@ class _Home1State extends State<Home1> {
         body: seen == null || seen == false
             ? Splash()
             : token == null
-                ? show
-                    ? IntroScreen()
-                    : acceptTerms == true
-                        ? Login()
-                        : TermsOfUse()
-                : user!.speciality == null
-                    ? Domain()
-                    : Home(),
+            ? show
+            ? IntroScreen()
+            : acceptTerms == true
+            ? Login()
+            : TermsOfUse()
+            : user!.speciality == null
+            ? Domain()
+            : Home(),
       ),
     );
   }
@@ -325,7 +325,7 @@ Future notify(RemoteMessage m) async {
           NotificationActionButton(
               key: 'key',
               label:
-                  Get.locale.toString().contains('en') ? 'ANSWER' : 'REPONDRE')
+              Get.locale.toString().contains('en') ? 'ANSWER' : 'REPONDRE')
         ]);
   } else {
     AwesomeNotifications().createNotification(
