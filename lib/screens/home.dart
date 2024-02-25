@@ -220,7 +220,7 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                               margin: EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage("assets/images/image1.png"),
+                                  image: AssetImage("assets/images/1.jpeg"),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -229,7 +229,7 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                               margin: EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage("assets/images/phone.jpg"),
+                                  image: AssetImage("assets/images/2.jpeg"),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -238,7 +238,25 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                               margin: EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage("assets/images/image1.png"),
+                                  image: AssetImage("assets/images/3.jpeg"),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage("assets/images/4.jpeg"),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage("assets/images/5.jpeg"),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -287,7 +305,7 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Test numéro 1 de publication d'une nouvelle information",
+                                    "Pourquoi tant de souffrances ? alors que MYSKUL est là",
                                     style: TextHelper()
                                         .h4l
                                         .copyWith(color: ColorHelper().white),
@@ -303,7 +321,7 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Test numéro 2 de publication d'une nouvelle information",
+                                    "J'ai téléchargé MYSKUL et toi ?",
                                     style: TextHelper()
                                         .h4l
                                         .copyWith(color: ColorHelper().white),
@@ -319,10 +337,45 @@ class _HomepageScaffoldState extends State<HomepageScaffold> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Test numéro 3 de publication d'une nouvelle information",
+                                    "Prépares ton examen dès maintenant grâce \nà l'application MYSKUL",
                                     style: TextHelper()
                                         .h4l
                                         .copyWith(color: ColorHelper().white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  gradient: GradientHelper().greenGradient),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "GATEWAY SMART",
+                                    style: TextHelper()
+                                        .h4l
+                                        .copyWith(color: ColorHelper().white),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  gradient: GradientHelper().greenGradient),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "La préparation aux examens de médécine \ndevient une partie de plaisir",
+                                    style: TextHelper()
+                                        .h4l
+                                        .copyWith(color: ColorHelper().white),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ],
                               ),
